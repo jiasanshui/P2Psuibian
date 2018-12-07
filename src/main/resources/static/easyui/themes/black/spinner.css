@@ -99,16 +99,16 @@
   filter: alpha(opacity=60);
 }
 .spinner-arrow-up {
-  background: url('images/spinner_arrows.png') no-repeat 1px center;
+  background: url('../images/spinner_arrows.png') no-repeat 1px center;
   background-color: #3d3d3d;
 }
 .spinner-arrow-down {
-  background: url('images/spinner_arrows.png') no-repeat -15px center;
+  background: url('../images/spinner_arrows.png') no-repeat -15px center;
   background-color: #3d3d3d;
 }
 .spinner-button-up {
-  background: url('images/spinner_arrows.png') no-repeat -32px center;
+  background: url('../images/spinner_arrows.png') no-repeat -32px center;
 }
 .spinner-button-down {
-  background: url('images/spinner_arrows.png') no-repeat -48px center;
+  background: url('../images/spinner_arrows.png') no-repeat -48px center;
 }
