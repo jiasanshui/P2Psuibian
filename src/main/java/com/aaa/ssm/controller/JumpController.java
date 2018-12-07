@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/jump")
-public class jumpController {
+public class JumpController {
     @RequestMapping("/index")
     public String jumpIndex(){
         return "qiantai/index";
