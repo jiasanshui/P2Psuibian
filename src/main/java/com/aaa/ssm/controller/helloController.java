@@ -1,7 +1,7 @@
 package com.aaa.ssm.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * className:helloController
@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
  * author:jiasanshui
  * createTime:2018-11-29 19:18
  */
-@RestController
+@Controller
 public class helloController {
 
     @RequestMapping("hello")
     public Object demo(){
-        return "hello world.....";
+        return "houtai/index";
     }
 }
