@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * createTime:2018-11-29 18:41
  */
 @SpringBootApplication
-@MapperScan("com.aaa.ssm.dao")
+@MapperScan({"com.aaa.ssm.dao","com.aaa.ssm.mapper"})
  public class SpringBootMainApp {
     public static void main(String[] args) {
         // TODO Auto-generated method stub
