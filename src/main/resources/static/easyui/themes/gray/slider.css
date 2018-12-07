@@ -87,7 +87,7 @@
   left: 23px;
 }
 .slider-handle {
-  background: url('images/slider_handle.png') no-repeat;
+  background: url('../images/slider_handle.png') no-repeat;
 }
 .slider-inner {
   border-color: #D3D3D3;

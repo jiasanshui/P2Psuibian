@@ -311,13 +311,13 @@
   margin-left: -1px;
 }
 .tabs-scroller-left {
-  background: #ffffff url('images/tabs_icons.png') no-repeat 1px center;
+  background: #ffffff url('../images/tabs_icons.png') no-repeat 1px center;
 }
 .tabs-scroller-right {
-  background: #ffffff url('images/tabs_icons.png') no-repeat -15px center;
+  background: #ffffff url('../images/tabs_icons.png') no-repeat -15px center;
 }
 .tabs li a.tabs-close {
-  background: url('images/tabs_icons.png') no-repeat -34px center;
+  background: url('../images/tabs_icons.png') no-repeat -34px center;
 }
 .tabs li a.tabs-inner:hover {
   background: #E6E6E6;

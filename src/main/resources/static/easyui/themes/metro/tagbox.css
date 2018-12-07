@@ -19,7 +19,7 @@
   color: #444;
 }
 .tagbox-remove {
-  background: url('images/tagbox_icons.png') no-repeat -16px center;
+  background: url('../images/tagbox_icons.png') no-repeat -16px center;
   position: absolute;
   display: block;
   width: 16px;
