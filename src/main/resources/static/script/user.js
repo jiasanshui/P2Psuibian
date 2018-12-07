@@ -19,7 +19,7 @@ $(function(){
 		$(".top-wx").css("display","none");}
 	)
 	
-	//顶部手机亿人宝 
+	//顶部手机你我贷
 	fnPhtg();
 	function fnPhtg(){
 		var timer = null;
