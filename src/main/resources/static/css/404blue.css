@@ -14,14 +14,14 @@ a:hover, ul.links li a {
 	color: #2E7BB8; 
 }
 #error {
-	background:transparent url('../images/blue/404e.png') right 35px no-repeat;
+	background:transparent url('../../images/blue/404e.png') right 35px no-repeat;
 }
 #error #pacman {
 
-	background:transparent url('../images/blue/pacman_eats.png') 0 0 no-repeat;
+	background:transparent url('../../images/blue/pacman_eats.png') 0 0 no-repeat;
 }
 .pacman_eats {
-	background:transparent url('../images/blue/pacman_eats.png') 0 -207px no-repeat!important;
+	background:transparent url('../../images/blue/pacman_eats.png') 0 -207px no-repeat!important;
 }
 input[type="text"]:focus{
     border:1px solid #2E7BB8;

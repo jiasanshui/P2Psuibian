@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
+
 /**
  *className:TestController
  *discription:
@@ -28,8 +30,7 @@ public class ShiroController {
      * @return
      */
     @RequestMapping("login")
-    public String login(String username,String password,Model model){
-        System.out.println("name"+username+password);
+    public String login(String username, String password, Model model, HttpSession session){
         /**
          * 使用shiro认证操作
          */
@@ -42,7 +43,8 @@ public class ShiroController {
             subject.login(token);
             //没有异常，则登录成功
             //跳转到test.html
-            return "redirect:/test";
+            session.setAttribute("username",token.getUsername());
+            return "forward:/personal";
         } catch (UnknownAccountException e) {
             e.printStackTrace();
             //登录失败：用户名不存在

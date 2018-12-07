@@ -81,7 +81,7 @@ body {
 	filter: dropshadow(color=#ffffff, offx=0, offy=1); 
 	text-align: center;
 	background-color:#aaa;
-	background-image:url('../images/maze_bg.png');
+	background-image:url('../../images/maze_bg.png');
 } 
 #container {
 	width:760px;
@@ -165,7 +165,7 @@ ul.links li:hover {
 	padding-bottom:40px;
 }
 #error {
-	background:transparent url('../images/blue/404e.png') right 35px no-repeat;
+	background:transparent url('../../images/blue/404e.png') right 35px no-repeat;
 	width:680px;
 	height:280px; 
 	position:relative;
@@ -177,14 +177,14 @@ ul.links li:hover {
 	position:absolute;
 	left:0px; 
 	top:16px;
-	background:transparent url('../images/blue/pacman_eats.png') 0 0 no-repeat;
+	background:transparent url('../../images/blue/pacman_eats.png') 0 0 no-repeat;
 	animation:eats 2s linear 0s infinite alternate;
 	-moz-animation:eats 2s linear 0s infinite alternate;
 	-webkit-animation:eats 2s linear 0s infinite alternate;
 	-ms-animation:eats 2s linear 0s infinite alternate;
 }
 .pacman_eats {
-	background:transparent url('../images/blue/pacman_eats.png') 0 -207px no-repeat!important;
+	background:transparent url('../../images/blue/pacman_eats.png') 0 -207px no-repeat!important;
 }
 @-webkit-keyframes eats {
 	from {

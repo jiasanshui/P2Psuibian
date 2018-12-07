@@ -56,19 +56,19 @@
 }
 .calendar-prevmonth {
   left: 20px;
-  background: url('images/calendar_arrows.png') no-repeat -16px 0;
+  background: url('../images/calendar_arrows.png') no-repeat -16px 0;
 }
 .calendar-nextmonth {
   right: 20px;
-  background: url('images/calendar_arrows.png') no-repeat -32px 0;
+  background: url('../images/calendar_arrows.png') no-repeat -32px 0;
 }
 .calendar-prevyear {
   left: 3px;
-  background: url('images/calendar_arrows.png') no-repeat 0px 0;
+  background: url('../images/calendar_arrows.png') no-repeat 0px 0;
 }
 .calendar-nextyear {
   right: 3px;
-  background: url('images/calendar_arrows.png') no-repeat -48px 0;
+  background: url('../images/calendar_arrows.png') no-repeat -48px 0;
 }
 .calendar-body {
   position: relative;
@@ -138,11 +138,11 @@
 }
 .calendar-menu-prev {
   margin-right: 10px;
-  background: url('images/calendar_arrows.png') no-repeat 5px center;
+  background: url('../images/calendar_arrows.png') no-repeat 5px center;
 }
 .calendar-menu-next {
   margin-left: 10px;
-  background: url('images/calendar_arrows.png') no-repeat -44px center;
+  background: url('../images/calendar_arrows.png') no-repeat -44px center;
 }
 .calendar-menu-month {
   text-align: center;
