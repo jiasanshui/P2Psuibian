@@ -20,12 +20,33 @@ public class JumpController {
     public String login(){
         return "qiantai/login";
     }
+
+
     @RequestMapping("/register")
     public String register(){
         return "qiantai/register";
     }
+
     @RequestMapping("/register1")
     public String register1(){
         return "qiantai/register1";
+    }
+
+    /**
+     * 跳转到个人中心
+     * @return
+     */
+    @RequestMapping("personal")
+    public String personal(){
+        return "qiantai/personal";
+    }
+
+    /**
+     * 
+     * @return
+     */
+    @RequestMapping("renzheng")
+    public String renZheng(){
+        return "qiantai/renzheng";
     }
 }
