@@ -3,9 +3,11 @@ package com.aaa.ssm.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * className:jumpController
- * discription:
+ * discription:前台跳转
  * author:yb
  * createTime:2018-12-07 17:24
  */
@@ -26,7 +28,9 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/login")
-    public String login(){
+    public String login(HttpSession session){
+        session.setAttribute("userName",null);
+        session.setAttribute("user",null);
         return "qiantai/login";
     }
 
