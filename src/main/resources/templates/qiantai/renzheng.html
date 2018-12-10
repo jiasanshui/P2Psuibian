@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/XSL/Transform">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>p2p网贷平台</title>
@@ -9,7 +10,6 @@
 <link rel="stylesheet" type="text/css" href="../css/user.css" />
 <link rel="stylesheet" type="text/css" href="../css/jquery.datetimepicker.css"/>
   <script type="text/javascript" src="../script/jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="../script/jquery.min.js"></script>
 <script src="../script/user.js" type="text/javascript"></script>
 <!--easyui-->
   <link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
@@ -162,7 +162,7 @@
     <div class="personal-main">
       <div class="personal-pay">
         <h3><i>认证个人信息</i></h3>
-        <form id="form" name="form" method="post" action="" enctype="application/x-www-form-urlencoded">
+        <form id="form" name="form" method="post" action="" enctype="multipart/form-data">
           <div>
             <p><h3>请您按以下步骤进行个人身份信息认证！</h3></p>
           </div>
@@ -171,45 +171,66 @@
             <ul>
               <li>
                 <label for="username">用户姓名</label>
-                <input type="text" class="pay-txt" maxlength="16"  value="贾三水" readonly="readonly">
+                <input type="text"  class="pay-txt" maxlength="16"  value="贾三水" readonly="readonly">
                 <div id="usernameErrorDiv"></div>
               </li>
               <li>
                 <label for="realname">真实姓名</label>
-                <input type="text"  class="pay-txt" maxlength="16"  placeholder="您的真实姓名">
+                <input type="text" name="realname" class="pay-txt" maxlength="16"  placeholder="您的真实姓名">
                 <div id="realnameErrorDiv"></div>
               </li>
               <li>
                 <label for="birthday">出生日期</label>
-                <input class="easyui-datetimebox" maxlength="16" style="width:240px">
+                <input id="birthday" name="birth" class="easyui-datetimebox" maxlength="16" style="width:240px">
                 <div id="realnameErrorDiv"></div>
               </li>
               <li>
                 <label for="age">年龄</label>
-                <input type="text"  class="pay-txt" maxlength="16"  placeholder="年龄" readonly="readonly">
+                <input id="age" name="age" type="text" class="pay-txt" maxlength="16"  placeholder="年龄" readonly="readonly">
                 <div id="realnameErrorDiv"></div>
+                <!--级联年龄-->
+                <script type="text/javascript">
+                    $(function(){
+                        $("#age").click(function(){
+                            var birth = $("#birthday").val();
+                            var byear = birth.substr(6,4);
+                            var now = new Date();
+                            var nyear = now.getFullYear();
+                            var age = nyear - byear;
+                            $("#age").val(age);
+                        })
+                    })
+                </script>
+              </li>
+              <li>
+                <label for="paypwd">支付密码</label>
+                <input type="password" name="paypwd" class="pay-txt" maxlength="16"  placeholder="请设置支付密码">
+              </li>
+              <li>
+                <label for="paypwd">确认密码</label>
+                <input type="password" class="pay-txt" maxlength="16"  placeholder="请再次输入支付密码">
               </li>
               <li>
                 <label for="idcard">身份证号</label>
-                <input type="file" class="pay-txt" maxlength="16">
+                <input name="idcard" type="text" class="pay-txt" maxlength="16">
               </li>
               <li>
                 <label for="idcardA">身份证正面</label>
-                <input type="file" class="pay-txt" maxlength="16">
+                <input name="idcardA" type="file" class="pay-txt" maxlength="16">
               </li>
               <li>
-                <label for="idcardA">身份证反面</label>
-                <input type="file" class="pay-txt" maxlength="16">
+                <label for="idcardB">身份证反面</label>
+                <input name="idcardB" type="file" class="pay-txt" maxlength="16">
               </li>
               <li>
                 <label for="address">地址</label>
-                <select id="province" class="pay-txt" style="width: 100px;height:40px">
-                      <option selected>请选择省份</option>
+                <select id="province" name="pro" class="pay-txt" style="width: 100px;height:40px">
+                  <option selected>请选择省份</option>
                 </select>
-                <select id="city" class="pay-txt" style="width: 100px;height:40px">
+                <select id="city" name="city" class="pay-txt" style="width: 100px;height:40px">
                   <option selected>请选择城市</option>
                 </select>
-                <select id="area" class="pay-txt" style="width: 120px;height:40px">
+                <select id="area" name="area" class="pay-txt" style="width: 120px;height:40px">
                   <option selected>请选择县(区)</option>
                 </select>
                 <input type="text" class="pay-txt" placeholder="具体地址"/>
@@ -217,17 +238,18 @@
             </ul>
             <h6>邮箱已绑定</h6>
             <ul>
-              <li>
-                <label for="email">邮箱</label>
-                <label id="form:email"> 348****@qq.com</label>
+              <li th:if="${session.email} ne null">
+                <span>&nbsp;&nbsp;&nbsp;邮箱:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span th:text="${session.email}"></span>
+                <!--<label id="form:email"></label>-->
               </li>
             </ul>
             <h6>手机号已绑定</h6>
             <ul>
               <li>
-                <label for="phone">手机号</label>
-                <input type="hidden" name="" value="15055100139">
-                <label> 150****0139</label>
+                <!--<label for="phone">手机号</label>-->
+                <span>&nbsp;&nbsp;&nbsp;手机号:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span th:text="${session.phone}"></span>
+                <!--<input type="hidden" name="" value="15055100139">-->
+                <!--<label> 150****0139</label>-->
               </li>
               <li>
                 <input type="submit" name="" value="开户" style="border:none;" class="btn-paykh">
@@ -257,6 +279,7 @@
 
             <!-- 查询市 -->
             $("#province").change(function(){
+                $("#city").empty();
                 var pid = $(this).val();
                 $.ajax({
                     type:"post",
@@ -277,6 +300,7 @@
 
           <!-- 根据城市查询县 -->
             $("#city").change(function(){
+                $("#area").empty();
                 var cid = $(this).val();
                 $.ajax({
                     type:"post",

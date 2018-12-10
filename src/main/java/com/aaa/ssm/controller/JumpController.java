@@ -38,11 +38,18 @@ public class JumpController {
      * 跳转到注册页面
      * @return
      */
-
-
     @RequestMapping("/register")
     public String register(){
         return "qiantai/register";
+    }
+
+    /**
+     * 跳转到认证页面
+     * @return
+     */
+    @RequestMapping("renzheng")
+    public Object renzheng(){
+        return "qiantai/renzheng";
     }
 
     /**
@@ -222,14 +229,7 @@ public class JumpController {
     public String myred_packets(){
         return "qiantai/myred_packets";
     }
-    /**
-     * 跳转到开通第三方页面
-     * @return
-     */
-    @RequestMapping("/open_three")
-    public String open_three(){
-        return "qiantai/open_three";
-    }
+
     /**
      * 跳转到开通第三方页面
      * @return
