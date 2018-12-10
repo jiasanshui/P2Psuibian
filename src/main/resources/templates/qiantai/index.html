@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -25,7 +26,11 @@
 	padding-left: 10px;
 }
 </style>
-<script type="text/javascript">
+<script th:inline="javascript">
+  $(function () {
+      var message = [[${userName}]];
+      console.log(message);
+  })
 // 上下滚动
 function AutoScroll(obj) {
     $(obj).find("ul:first").animate({
@@ -48,7 +53,6 @@ $(document).ready(function() {
     }); //当鼠标放上去的时候，滚动停止，鼠标离开的时候滚动开始
 });
 
-
 </script>
 </head>
 <body>
@@ -65,12 +69,43 @@ $(document).ready(function() {
         <li class="c_4"><a href="#" target="_blank" title="新浪微博" alt="新浪微博"><b class="ico_head_sina"></b></a></li>
       </ul>
       <ul class="fn-right header-top-ul">
-        <li>
-          <div class=""><a href="/jump/register" class="" title="免费注册">免费注册</a></div>
+        <!--用户名为空-->
+        <li th:if="${userName} eq null">
+          <div class="" >
+            <a href="/user/register" class="" title="免费注册" >免费注册</a>
+          </div>
+        </li>
+        <li th:if="${userName} eq null">
+          <div class="" >
+            <a href="/jump/login" class="js-login" title="登录" >登录</a>
+          </div>
+        </li>
+        <!--用户名不为空-->
+        <li th:if="${userName} ne null">
+          <div class="">
+            <span th:text="欢迎您 "></span>
+            <span th:text="${userName}"></span>
+          </div>
+        </li>
+        <li th:if="${userName} ne null">
+          <div class="" >
+            <a href="/jump/login" class="js-login" title="退出">退出</a>
+          </div>
+        </li>
+
+        <!--<li>
+          <div class="">
+            <a href="/jump/register" class="" title="免费注册" th:if="${userName} eq null">免费注册</a>
+            <a href="#" class=""  th:if="${userName} ne null" th:text="'欢迎您 ' + ${userName} + '!'"></a>
+          </div>
         </li>
         <li>
-          <div class=""><a href="/jump/login" class="js-login" title="登录">登录</a></div>
+          <div class="">
+            <a href="/jump/login" class="js-login" title="登录" th:if="${userName} eq null">登录</a>
+            <a href="/jump/login" class="js-login" title="退出" th:if="${userName} ne null">退出</a>
+          </div>
         </li>
+-->
       </ul>
     </div>
   </div>
