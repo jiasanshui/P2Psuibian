@@ -31,12 +31,12 @@ public class PCAServiceImpl implements PCAService{
     }
 
     @Override
-    public List<Map> getCity(Integer Pid) {
-        return pcaDao.getCity(Pid);
+    public List<Map> getCity(String pname) {
+        return pcaDao.getCity(pname);
     }
 
     @Override
-    public List<Map> getArea(Integer Cid) {
-        return pcaDao.getArea(Cid);
+    public List<Map> getArea(String cname) {
+        return pcaDao.getArea(cname);
     }
 }
