@@ -51,8 +51,9 @@ public class UserLoginController {
                 return "qiantai/login";
             }else {
                 //密码正确
-                model.addAttribute("userName",user.getUname());
-                session.setAttribute("userName",user.getEmail());
+                session.setAttribute("userName",user.getUname());
+                session.setAttribute("email",user.getEmail());
+                session.setAttribute("phone",user.getPhone());
                 session.setAttribute("user",user);
                 return "qiantai/index";
             }
@@ -71,8 +72,9 @@ public class UserLoginController {
                 return "qiantai/login";
             }else {
                 //密码正确
-                model.addAttribute("userName",user.getUname());
-                session.setAttribute("userName",user.getPhone());
+                session.setAttribute("userName",user.getUname());
+                session.setAttribute("phone",user.getPhone());
+                session.setAttribute("email",user.getEmail());
                 session.setAttribute("user",user);
                 return "qiantai/index";
             }
@@ -91,8 +93,9 @@ public class UserLoginController {
                 return "qiantai/login";
             }else {
                 //密码正确
-                model.addAttribute("userName",user.getUname());
                 session.setAttribute("userName",user.getUname());
+                session.setAttribute("phone",user.getPhone());
+                session.setAttribute("email",user.getEmail());
                 session.setAttribute("user",user);
                 return "qiantai/index";
             }
