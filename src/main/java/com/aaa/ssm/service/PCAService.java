@@ -17,15 +17,15 @@ public interface PCAService {
 
     /**
      * 根据省份查询市
-     * @param Pid
+     * @param pname
      * @return
      */
-    List<Map> getCity(Integer Pid);
+    List<Map> getCity(String pname);
 
     /**
      * 根据城市Id查询县区
-     * @param Cid
+     * @param cname
      * @return
      */
-    List<Map> getArea(Integer Cid);
+    List<Map> getArea(String cname);
 }
