@@ -44,9 +44,19 @@ public class JumpController {
     }
 
     /**
+     * 跳转到认证页面
+     * @return
+     */
+    @RequestMapping("renzheng")
+    public Object renzheng(){
+        return "qiantai/renzheng";
+    }
+
+    /**
      * 跳转到注册成功页面
      * @return
      */
+
     @RequestMapping("/register1")
     public String register1(){
         return "qiantai/register1";
@@ -219,14 +229,7 @@ public class JumpController {
     public String myred_packets(){
         return "qiantai/myred_packets";
     }
-    /**
-     * 跳转到开通第三方页面
-     * @return
-     */
-    @RequestMapping("/open_three")
-    public String open_three(){
-        return "qiantai/open_three";
-    }
+
     /**
      * 跳转到开通第三方页面
      * @return

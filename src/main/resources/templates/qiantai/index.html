@@ -70,24 +70,24 @@ $(document).ready(function() {
       </ul>
       <ul class="fn-right header-top-ul">
         <!--用户名为空-->
-        <li th:if="${userName} eq null">
+        <li th:if="${session.userName} eq null">
           <div class="" >
             <a href="/jump/register" class="" title="免费注册" >免费注册</a>
           </div>
         </li>
-        <li th:if="${userName} eq null">
+        <li th:if="${session.userName} eq null">
           <div class="" >
             <a href="/jump/login" class="js-login" title="登录" >登录</a>
           </div>
         </li>
         <!--用户名不为空-->
-        <li th:if="${userName} ne null">
+        <li th:if="${session.userName} ne null">
           <div class="">
             <span th:text="欢迎您 "></span>
-            <span th:text="${userName}"></span>
+            <span th:text="${session.userName}"></span>
           </div>
         </li>
-        <li th:if="${userName} ne null">
+        <li th:if="${session.userName}ne null">
           <div class="" >
             <a href="/jump/login" class="js-login" title="退出">退出</a>
           </div>

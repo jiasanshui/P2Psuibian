@@ -62,7 +62,6 @@
 	  	    	   	  <span class="bor_decurspan">房产抵押</span>
 	  	    	   	  <span>车辆抵押</span>
 	  	    	   	  <span>信用贷款</span>
-	  	    	   	  <span>零首付车贷</span>
 	  	    	   </h2>
 	  	    	   <div class="bor_detail_box">
 	  	    	   	    <div class="bor_det_one clearfix pt30 pb30">
@@ -96,8 +95,6 @@
 											 </li>
 											 <li><img src="../images/bor_pic07.png" alt="">其他
 											 </li>
-											
-											 
 										</ul>
 	  	    	   	    	  </div>  
 	  	    	   	    	  <!-- end l -->
@@ -106,53 +103,59 @@
 	  	    	   	    	  	     	  <fieldset>
 	  	    	   	    	  	     	  	   <div>
 	  	    	   	    	  	     	  	   	   <label>申请人</label>
-	  	    	   	    	  	     	  	   	   <input type="" >
+	  	    	   	    	  	     	  	   	   <input type="text" name="applicant" >
 	  	    	   	    	  	     	  	   </div>
 	  	    	   	    	  	     	  	   <div class="mt15">
 	  	    	   	    	  	     	  	   	   <label>*借款金额</label>
-	  	    	   	    	  	     	  	   	   <input type="" class="bor_inputbg01">
+	  	    	   	    	  	     	  	   	   <input type="" class="bor_inputbg01" name="borrowmoney" >
 	  	    	   	    	  	     	  	   </div>
                                                <div class="mt15">
 	  	    	   	    	  	     	  	   	   <label>*借款期限</label>
-	  	    	   	    	  	     	  	   	   <input type="" class="bor_inputbg02">
+	  	    	   	    	  	     	  	   	   <input type="" class="bor_inputbg02" name="timelimit">
 	  	    	   	    	  	     	  	   </div>
 	  	    	   	    	  	     	  	   <div class="mt15">
 	  	    	   	    	  	     	  	   	   <label>*手机号码</label>
-	  	    	   	    	  	     	  	   	   <input type="" >
+	  	    	   	    	  	     	  	   	   <input type="" name="tel">
 	  	    	   	    	  	     	  	   </div>
 	  	    	   	    	  	     	  	   <div class="mt15 guarmethod clearfix">
 	  	    	   	    	  	     	  	   	   <label class="guarmethod_l fl">*担保方式</label>
 	  	    	   	    	  	     	  	   	   <div class="fl">
-	  	    	   	    	  	     	  	   	   	  <span>房屋数量</span>
-	  	    	   	    	  	     	  	   	   	  <input type="text" class="bor_inputbg03 input2"><br><br>
+	  	    	   	    	  	     	  	   	   	  <span>数量</span>
+	  	    	   	    	  	     	  	   	   	  <input type="number" class="bor_inputbg03 input2" name="quantity"><br><br>
 	  	    	   	    	  	     	  	   	   	  <span>总价值</span>
-	  	    	   	    	  	     	  	   	   	  <input type="text" class="bor_inputbg04 input2"><br>
+	  	    	   	    	  	     	  	   	   	  <input type="text" class="bor_inputbg04 input2" name="cost"><br>
 	  	    	   	    	  	     	  	   	   </div>
-	  	    	   	    	  	     	  	   	   
 	  	    	   	    	  	     	  	   </div>
 	  	    	   	    	  	     	  	   <div class="mt15">
 	  	    	   	    	  	     	  	   	   <label>*借款用途</label>
-	  	    	   	    	  	     	  	   	   <select>
+	  	    	   	    	  	     	  	   	   <select name="purpose">
 	  	    	   	    	  	     	  	   	   	  <option>选择借款类别</option>
-	  	    	   	    	  	     	  	   	   	  <option>1</option>
+													   <option value="买房">买房</option>
+													   	<option>买车</option>
+													   <option>娶媳妇</option>
 	  	    	   	    	  	     	  	   	   </select>
 	  	    	   	    	  	     	  	   </div>
 	  	    	   	    	  	     	  	    <div class="mt15">
 	  	    	   	    	  	     	  	   	   <label>*借款描述</label> 
-	  	    	   	    	  	     	  	   	   <textarea></textarea>
+	  	    	   	    	  	     	  	   	   <textarea name="des"></textarea>
 	  	    	   	    	  	     	  	   	 
 	  	    	   	    	  	     	  	   </div>
-	  	    	   	    	  	     	  	   <div class="mt15">
-	  	    	   	    	  	     	  	   	   <label>*借款情况</label>
-	  	    	   	    	  	     	  	   	   <input type="radio" class="input3">
-	  	    	   	    	  	     	  	   	   普通借款
-	  	    	   	    	  	     	  	  	   <input type="radio" class="input3">
-	  	    	   	    	  	     	  	   	   紧急借款 
+	  	    	   	    	  	     	  	   <div>
+	  	    	   	    	  	     	  	   	   <label>*借款情况</label><br>
+												  普通借款:<input type="radio"  value="1" name="gender"/><br>
+												   紧急借款:<input type="radio" value="2" name="gender"/>
 	  	    	   	    	  	     	  	   </div>
+											  <div class="mt15" >
+												  <label>借款年利率</label>
+												  <input type="text" name="apr">
+											  </div>
+											  <div class="mt15" >
+												  <label>*还款方式</label>
+												  <input type="text" name="payment">
+											  </div>
 	  	    	   	    	  	     	  	   <div class="mt15" >
 	  	    	   	    	  	     	  	   	   <label>*验证码</label>
 	  	    	   	    	  	     	  	   	   <input type="text" class="yanzheng" >
-	  	    	   	    	  	     	  	   	   
 	  	    	   	    	  	     	  	   </div>
 	  	    	   	    	  	     	  	   <div class="mt30">
 	  	    	   	    	  	     	  	   	   <label></label>
