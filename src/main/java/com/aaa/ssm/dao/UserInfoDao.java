@@ -49,7 +49,7 @@ public interface UserInfoDao {
      * @param map
      * @return
      */
-    @Insert("insert into bohui(bid,reason.opraterid) values(seq_bohui_bid.nextval,#{REASON},#{OPRATERID})")
+    @Insert("insert into bohui(bid,reason,opraterid) values(seq_bohui_bid.nextval,#{REASON},#{OPRATERID})")
     int addBohui(Map map);
 
 }
