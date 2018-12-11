@@ -5,7 +5,6 @@ package com.aaa.ssm.entity;/**
  * createTime:2018-12-04 19:29
  */
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,73 +14,43 @@ import java.util.List;
  *createTime:2018-12-04 19:29
  */
 public class TreeNode {
-    private int id;
-    private String text;
-    private int pid;
-    private String state;
-    private String iconcls;
+    private Integer id;
+    private String label;
+    private Integer parentid;
+    private String iconClass;
     private String url;
-    private Date addTime;
     private List<TreeNode> children;
 
-    public Date getAddTime() {
-        return addTime;
-    }
-
-    public void setAddTime(Date addTime) {
-        this.addTime = addTime;
-    }
-
-    /*public TreeNode(Integer id, String name, Integer integer, String state, String iconcls, String url) {
-    }
-*/
-    public TreeNode(int id, String name, int pid, String state, String iconcls, String url) {
-        this.id = id;
-        this.text = name;
-        this.pid = pid;
-        this.state = state;
-        this.iconcls = iconcls;
-        this.url = url;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getText() {
-        return text;
+    public String getLabel() {
+        return label;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
-    public int getPid() {
-        return pid;
+    public Integer getParentid() {
+        return parentid;
     }
 
-    public void setPid(int pid) {
-        this.pid = pid;
+    public void setParentid(Integer parentid) {
+        this.parentid = parentid;
     }
 
-    public String getState() {
-        return state;
+    public String getIconClass() {
+        return iconClass;
     }
 
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getIconcls() {
-        return iconcls;
-    }
-
-    public void setIconcls(String iconcls) {
-        this.iconcls = iconcls;
+    public void setIconClass(String iconClass) {
+        this.iconClass = iconClass;
     }
 
     public String getUrl() {

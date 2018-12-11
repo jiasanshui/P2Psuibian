@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  *className:TreeMenuServiceImpl
@@ -28,104 +27,46 @@ public class TreeMenuServiceImpl implements TreeMenuService {
     @Autowired
     private TreeMenuDao treeMenuDao;
 
-    /**
-     * 查询树的节点
-     * @return
-     */
-    public List<TreeNode> getList(){
-        List<Map> powerAllList = treeMenuDao.getList();
-        System.out.println("========"+powerAllList);
-        List<TreeNode> treeNodeList = new ArrayList();
-        if(powerAllList!=null&&powerAllList.size()>0){
-            TreeNode treeNode = null;
-            for (Map map : powerAllList) {
-                treeNode = new TreeNode(Integer.valueOf(map.get("ID")+""),map.get("NAME")+"",Integer.valueOf(map.get("PID")+""),
-                        map.get("STATE")+"",map.get("ICONCLS")+"",map.get("URL")+"");
-                treeNodeList.add(treeNode);
-            }
-        }
-        return treeNodeList;
-    }
 
-    /**
-     * 查询树列表
-     */
-    public List<TreeNode> getTreeList() {
-        List<TreeNode> powerTreeList = getList();
-        List<TreeNode> powerTempList = new ArrayList<TreeNode>();
-        if(powerTreeList!=null&&powerTreeList.size()>0){
-            for (TreeNode ptreeNode : powerTreeList) {
-                if(ptreeNode.getPid()==0){ //如果父节点为0，说明是一级节点
-                    System.out.println("--------------"+ptreeNode.getId());
-                    System.out.println("--------------+++"+ptreeNode.getPid());
-                    powerTempList.add(ptreeNode);
-                    bindChildren(ptreeNode,powerTreeList);
+    @Override
+    public List<TreeNode> getList() {
+        List<TreeNode> list = treeMenuDao.getList();
+        //临时集合，用于返回数据
+        List<TreeNode> tempList = new ArrayList<TreeNode>();
+        if (list!=null&&list.size()>0){
+            for (TreeNode node : list) {
+                if(node.getParentid()==0){
+                    tempList.add(node);
+                    //递归方法，查询子节点
+                    bindChildren(node,list);
                 }
             }
         }
-        return powerTempList;
+        return tempList;
     }
 
-    /**
-     * 递归绑定子节点
-     * @param ptreeNode
-     * @param powerTreeList
-     */
-    private void bindChildren(TreeNode ptreeNode, List<TreeNode> powerTreeList) {
-        //遍历所有节点找孩子节点
-        for (TreeNode childrenTreeNode : powerTreeList) {
-            if (ptreeNode.getId() == childrenTreeNode.getPid()) {//是孩子节点
-                List<TreeNode> children = ptreeNode.getChildren();
-                if (children == null) { // 如果孩子节点为空
-                    List<TreeNode> childrenList = new ArrayList<TreeNode>();
-                    childrenList.add(childrenTreeNode);
-                    ptreeNode.setChildren(childrenList);
-                } else { // 如果不为空
-                    children.add(childrenTreeNode);
-                }
-                bindChildren(childrenTreeNode, powerTreeList);
-            }
-        }
-    }
 
     /**
-     * 查询树列表
-     * @return
+     * 递归查询子节点
+     * @param pNode
+     * @param list
      */
-    /*public List<TreeNode> getTreeList(){
-        List<TreeNode> powerTreeList = getList();
-        System.out.println(powerTreeList);
-        List<TreeNode> powerTempList = new ArrayList();
-        if(powerTreeList!=null&&powerTreeList.size()>0){
-            for (TreeNode treeNode : powerTreeList) {
-                if (treeNode.getPid()==0){      //如果该节点的父节点是0，则说明是一级节点
-                    powerTempList.add(treeNode);
-                    bindChildren(treeNode,powerTreeList); //绑定子节点
-                }
-            }
-        }
-        return powerTempList;
-    }*/
-
-    /**
-     * 绑定子节点
-     * @param treeNode
-     * @param powerTreeList
-     */
-    /*public void bindChildren(TreeNode treeNode,List<TreeNode> powerTreeList){
-        //遍历所有节点，找该节点的子节点
-        for (TreeNode node : powerTreeList) {
-            if (node.getPid()==treeNode.getId()){   //是孩子节点
-                List<TreeNode> children = treeNode.getChildren();
+    private void bindChildren(TreeNode pNode,List<TreeNode> list){
+        for (TreeNode node : list) {
+            //如果当前节点的id和循环节点的父id相等，说明是当前节点的孩子
+            if(pNode.getId()==node.getParentid()){
+                List<TreeNode> children = pNode.getChildren();
+                //如果没有孩子，第一次取出是空的
                 if(children==null){
-                    List<TreeNode> childrenList = new ArrayList();
-                    childrenList.add(node);
-                    treeNode.setChildren(childrenList);
-                }else{
-                    children.add(node);
+                    children = new ArrayList<TreeNode>();
                 }
-                bindChildren(node,powerTreeList);
+                //添加孩子
+                children.add(node);
+                //设置当前孩子集合
+                pNode.setChildren(children);
+                //自己调用自己
+                bindChildren(node,list);
             }
         }
-    }*/
+    }
 }
