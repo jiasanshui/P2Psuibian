@@ -24,12 +24,12 @@ public interface PCADao {
     /**
      * 根据省份id查询城市
      */
-    @Select("select * from city where father = #{Pid}")
-    List<Map> getCity(Integer Pid);
+    @Select("select c.*,p.province as province from province p join city c on p.provinceid=c.father where p.province=#{pname}")
+    List<Map> getCity(String pname);
 
     /**
      * 根据城市Id查询县区
      */
-    @Select("select * from area where father=#{Cid}")
-    List<Map> getArea(Integer Cid);
+    @Select("select a.*,c.city as city from area a join city c on c.cityid=a.father where c.city=#{cname}")
+    List<Map> getArea(String cname);
 }

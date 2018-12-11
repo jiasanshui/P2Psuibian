@@ -162,7 +162,7 @@
     <div class="personal-main">
       <div class="personal-pay">
         <h3><i>认证个人信息</i></h3>
-        <form id="form" name="form" method="post" action="" enctype="multipart/form-data">
+        <form method="post" action="/renzheng/update" enctype="multipart/form-data">
           <div>
             <p><h3>请您按以下步骤进行个人身份信息认证！</h3></p>
           </div>
@@ -171,7 +171,7 @@
             <ul>
               <li>
                 <label for="username">用户姓名</label>
-                <input type="text"  class="pay-txt" maxlength="16"  value="贾三水" readonly="readonly">
+                <input type="text" name="username" class="pay-txt" th:value="${session.userName}" maxlength="16" readonly="readonly">
                 <div id="usernameErrorDiv"></div>
               </li>
               <li>
@@ -182,12 +182,10 @@
               <li>
                 <label for="birthday">出生日期</label>
                 <input id="birthday" name="birth" class="easyui-datetimebox" maxlength="16" style="width:240px">
-                <div id="realnameErrorDiv"></div>
               </li>
               <li>
                 <label for="age">年龄</label>
                 <input id="age" name="age" type="text" class="pay-txt" maxlength="16"  placeholder="年龄" readonly="readonly">
-                <div id="realnameErrorDiv"></div>
                 <!--级联年龄-->
                 <script type="text/javascript">
                     $(function(){
@@ -216,11 +214,11 @@
               </li>
               <li>
                 <label for="idcardA">身份证正面</label>
-                <input name="idcardA" type="file" class="pay-txt" maxlength="16">
+                <input name="idcarda" type="file" class="pay-txt" maxlength="16">
               </li>
               <li>
                 <label for="idcardB">身份证反面</label>
-                <input name="idcardB" type="file" class="pay-txt" maxlength="16">
+                <input name="idcardb" type="file" class="pay-txt" maxlength="16">
               </li>
               <li>
                 <label for="address">地址</label>
@@ -233,7 +231,7 @@
                 <select id="area" name="area" class="pay-txt" style="width: 120px;height:40px">
                   <option selected>请选择县(区)</option>
                 </select>
-                <input type="text" class="pay-txt" placeholder="具体地址"/>
+                <input type="text" name="house" class="pay-txt" placeholder="具体地址"/>
               </li>
             </ul>
             <h6>邮箱已绑定</h6>
@@ -252,7 +250,7 @@
                 <!--<label> 150****0139</label>-->
               </li>
               <li>
-                <input type="submit" name="" value="开户" style="border:none;" class="btn-paykh">
+                <input type="submit" value="开户" style="border:none;" class="btn-paykh">
               </li>
             </ul>
           </div>
@@ -270,7 +268,7 @@
                     if(data!=''){
                         var Str = "";
                         for (var i = 0; i < data.length; i++) {
-                            Str += "<option value='"+data[i].PROVINCEID+"'>"+data[i].PROVINCE+"</option>";
+                            Str += "<option value='"+data[i].PROVINCE+"'>"+data[i].PROVINCE+"</option>";
                         }
                         $("#province").append(Str);
                     }
@@ -280,17 +278,17 @@
             <!-- 查询市 -->
             $("#province").change(function(){
                 $("#city").empty();
-                var pid = $(this).val();
+                var pname = $(this).val();
                 $.ajax({
                     type:"post",
                     dataType:"json",
-                    data:{Pid:pid},
+                    data:{pname:pname},
                     url:"/pca/city",
                     success:function(data){
                         if(data!=''){
                             var Str = "";
                             for (var i = 0; i < data.length; i++) {
-                                Str += "<option value='"+data[i].CITYID+"'>"+data[i].CITY+"</option>";
+                                Str += "<option value='"+data[i].CITY+"'>"+data[i].CITY+"</option>";
                             }
                             $("#city").append(Str);
                         }
@@ -301,17 +299,17 @@
           <!-- 根据城市查询县 -->
             $("#city").change(function(){
                 $("#area").empty();
-                var cid = $(this).val();
+                var cname = $(this).val();
                 $.ajax({
                     type:"post",
                     dataType:"json",
-                    data:{Cid:cid},
+                    data:{cname:cname},
                     url:"/pca/area",
                     success:function(data){
                         if(data!=''){
                             var Str = "";
                             for (var i = 0; i < data.length; i++) {
-                                Str += "<option value='"+data[i].AREAID+"'>"+data[i].AREA+"</option>";
+                                Str += "<option value='"+data[i].AREA+"'>"+data[i].AREA+"</option>";
                             }
                             $("#area").append(Str);
                         }
