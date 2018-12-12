@@ -1,9 +1,15 @@
 package com.aaa.ssm.controller;
 
+import com.aaa.ssm.service.UserInfoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * className:jumpController
@@ -14,6 +20,11 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/jump")
 public class JumpController {
+
+    //依赖注入service层
+    @Autowired
+    private UserInfoService userInfoService;
+
     /**
      * 跳转到前台首页
      * @return
@@ -74,7 +85,14 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/borrow")
-    public String borrow(){
+    public String borrow(HttpSession session, Model model){
+        String username=(String) session.getAttribute("userName");
+        System.out.println(username);
+        //根据用户名去获取用户信息
+        List<Map> list = userInfoService.getUserList(username);
+        System.out.println(list);
+        model.addAttribute("realName",list.get(0).get("REALNAME"));
+        model.addAttribute("uid",list.get(0).get("USERID"));
         return "qiantai/borrow";
     }
     /**

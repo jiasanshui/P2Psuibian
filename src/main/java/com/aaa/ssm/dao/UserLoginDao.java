@@ -25,4 +25,5 @@ public interface UserLoginDao {
             "<when test=\"uname!=null and uname!=''\">uname=#{uname}</when>"+
             "</choose></script>")
     List<UserRegister> getUser(Map map);
+
 }
