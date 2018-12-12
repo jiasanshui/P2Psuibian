@@ -12,6 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/backjump")
 public class BackJumpController {
+
+    @RequestMapping("index")
+    public String toIndex(){
+        return "houtai/index";
+    }
+
     /**
      * 跳转到后台用户列表
      * @return
