@@ -1,18 +1,19 @@
 <!doctype html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>borrow</title>
-<link rel="stylesheet" type="text/css" href="../css/style.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
 	<link href="../css/common.css" rel="stylesheet" />
 	<link href="../css/index.css" rel="stylesheet" type="text/css">
-<!-- <link rel="stylesheet/less" type="text/css" href="css/style.less" /> -->
-<script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="../js/all.js"></script>
-<!--[if IE 6]> 
-<script src="../js/iepng.js" type="text/javascript"></script>
-<script type="text/javascript">
+	<!-- <link rel="stylesheet/less" type="text/css" href="css/style.less" /> -->
+	<script type="text/javascript" src="../script/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="../script/all.js"></script>
+<!--[if IE 6]>
+	<script src="../script/iepng.js" type="text/javascript"></script>
+	<script type="text/javascript">
    EvPNG.fix('div, ul, img, li, input,span, p');
+
 </script>
 <![endif]-->
 </head>
@@ -99,23 +100,22 @@
 	  	    	   	    	  </div>  
 	  	    	   	    	  <!-- end l -->
 	  	    	   	    	  <div class="bor_det_oner fl">
-	  	    	   	    	  	     <form>
-	  	    	   	    	  	     	  <fieldset>
+	  	    	   	    	  	     <form action="/usermaterials/addMaterials" method="post">
 	  	    	   	    	  	     	  	   <div>
 	  	    	   	    	  	     	  	   	   <label>申请人</label>
 	  	    	   	    	  	     	  	   	   <input type="text" name="applicant" >
 	  	    	   	    	  	     	  	   </div>
 	  	    	   	    	  	     	  	   <div class="mt15">
 	  	    	   	    	  	     	  	   	   <label>*借款金额</label>
-	  	    	   	    	  	     	  	   	   <input type="" class="bor_inputbg01" name="borrowmoney" >
+	  	    	   	    	  	     	  	   	   <input type="text" class="bor_inputbg01" name="borrowmoney" >
 	  	    	   	    	  	     	  	   </div>
                                                <div class="mt15">
 	  	    	   	    	  	     	  	   	   <label>*借款期限</label>
-	  	    	   	    	  	     	  	   	   <input type="" class="bor_inputbg02" name="timelimit">
+	  	    	   	    	  	     	  	   	   <input type="text" class="bor_inputbg02" name="timelimit">
 	  	    	   	    	  	     	  	   </div>
 	  	    	   	    	  	     	  	   <div class="mt15">
 	  	    	   	    	  	     	  	   	   <label>*手机号码</label>
-	  	    	   	    	  	     	  	   	   <input type="" name="tel">
+	  	    	   	    	  	     	  	   	   <input type="text" name="tel">
 	  	    	   	    	  	     	  	   </div>
 	  	    	   	    	  	     	  	   <div class="mt15 guarmethod clearfix">
 	  	    	   	    	  	     	  	   	   <label class="guarmethod_l fl">*担保方式</label>
@@ -142,8 +142,8 @@
 	  	    	   	    	  	     	  	   </div>
 	  	    	   	    	  	     	  	   <div>
 	  	    	   	    	  	     	  	   	   <label>*借款情况</label><br>
-												  普通借款:<input type="radio"  value="1" name="gender"/><br>
-												   紧急借款:<input type="radio" value="2" name="gender"/>
+												  普通借款:<input type="radio"  value="1" name="condition"/><br>
+												   紧急借款:<input type="radio" value="2" name="condition"/>
 	  	    	   	    	  	     	  	   </div>
 											  <div class="mt15" >
 												  <label>借款年利率</label>
@@ -158,10 +158,9 @@
 	  	    	   	    	  	     	  	   	   <input type="text" class="yanzheng" >
 	  	    	   	    	  	     	  	   </div>
 	  	    	   	    	  	     	  	   <div class="mt30">
-	  	    	   	    	  	     	  	   	   <label></label>
-	  	    	   	    	  	     	  	   	   <a href="#" class="bor_btn">提交材料</a>
+												   <input type="submit"  value="提交材料">
+	  	    	   	    	  	     	  	   	   <!--<a href="#" class="bor_btn">提交材料</a>-->
 	  	    	   	    	  	     	  	   </div>
-	  	    	   	    	  	     	  </fieldset>
 	  	    	   	    	  	     </form>
 	  	    	   	    	  </div>
 	  	    	   	    </div>
