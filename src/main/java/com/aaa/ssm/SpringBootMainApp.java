@@ -4,6 +4,7 @@ package com.aaa.ssm;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 
 /**
  * className:SpringBootApplication
@@ -11,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * author:jiasanshui
  * createTime:2018-11-29 18:41
  */
+@ServletComponentScan
 @SpringBootApplication
 @MapperScan({"com.aaa.ssm.dao","com.aaa.ssm.mapper"})
  public class SpringBootMainApp {

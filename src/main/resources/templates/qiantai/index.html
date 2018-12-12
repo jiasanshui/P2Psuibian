@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -25,7 +26,11 @@
 	padding-left: 10px;
 }
 </style>
-<script type="text/javascript">
+<script th:inline="javascript">
+  $(function () {
+      var message = [[${userName}]];
+      console.log(message);
+  })
 // 上下滚动
 function AutoScroll(obj) {
     $(obj).find("ul:first").animate({
@@ -48,7 +53,6 @@ $(document).ready(function() {
     }); //当鼠标放上去的时候，滚动停止，鼠标离开的时候滚动开始
 });
 
-
 </script>
 </head>
 <body>
@@ -65,12 +69,43 @@ $(document).ready(function() {
         <li class="c_4"><a href="#" target="_blank" title="新浪微博" alt="新浪微博"><b class="ico_head_sina"></b></a></li>
       </ul>
       <ul class="fn-right header-top-ul">
-        <li>
-          <div class=""><a href="/jump/register" class="" title="免费注册">免费注册</a></div>
+        <!--用户名为空-->
+        <li th:if="${session.userName} eq null">
+          <div class="" >
+            <a href="/jump/register" class="" title="免费注册" >免费注册</a>
+          </div>
+        </li>
+        <li th:if="${session.userName} eq null">
+          <div class="" >
+            <a href="/jump/login" class="js-login" title="登录" >登录</a>
+          </div>
+        </li>
+        <!--用户名不为空-->
+        <li th:if="${session.userName} ne null">
+          <div class="">
+            <span th:text="欢迎您 "></span>
+            <span th:text="${session.userName}"></span>
+          </div>
+        </li>
+        <li th:if="${session.userName}ne null">
+          <div class="" >
+            <a href="/jump/login" class="js-login" title="退出">退出</a>
+          </div>
+        </li>
+
+        <!--<li>
+          <div class="">
+            <a href="/jump/register" class="" title="免费注册" th:if="${userName} eq null">免费注册</a>
+            <a href="#" class=""  th:if="${userName} ne null" th:text="'欢迎您 ' + ${userName} + '!'"></a>
+          </div>
         </li>
         <li>
-          <div class=""><a href="/jump/login" class="js-login" title="登录">登录</a></div>
+          <div class="">
+            <a href="/jump/login" class="js-login" title="登录" th:if="${userName} eq null">登录</a>
+            <a href="/jump/login" class="js-login" title="退出" th:if="${userName} ne null">退出</a>
+          </div>
         </li>
+-->
       </ul>
     </div>
   </div>
@@ -81,9 +116,9 @@ $(document).ready(function() {
         <li class="on"> <a href="/jump/index">首页</a> </li>
         <li> <a href="/jump/list" class="">我要投资</a> </li>
         <li><a href="/jump/borrow" class="">我要借款</a> </li>
-        <li> <a href="/jump/帮助中心">安全保障</a> </li>
-        <li class="top-nav-safe"> <a href="/jump/个人中心首页">我的账户</a> </li>
-        <li> <a href="/jump/公司简介">关于我们</a> </li>
+        <li> <a href="/jump/help">安全保障</a> </li>
+        <li class="top-nav-safe"> <a href="/jump/personal">我的账户</a> </li>
+        <li> <a href="/jump/about">关于我们</a> </li>
       </ul>
     </div>
   </div>
@@ -175,8 +210,8 @@ $(function(){
   <div class="new-announcement-content">
     <div id="scrollDiv">
       <ul style="margin-top: 0px;">
-        <li><a class="black-link" href="公司公告详细.html" target="_blank"> 2015年9月8日还款公告</a></li>
-        <li><a class="black-link" href="公司公告详细.html" target="_blank"> 2015年纪念抗日战争胜利放假公告</a></li>
+        <li><a class="black-link" href="/jump/company_announce" target="_blank"> 2015年9月8日还款公告</a></li>
+        <li><a class="black-link" href="/jump/company_announce" target="_blank"> 2015年纪念抗日战争胜利放假公告</a></li>
       </ul>
     </div>
   </div>
@@ -530,19 +565,19 @@ $(function(){
     <div class="ft-helper clearfix">
       <dl>
         <dt>关于我们</dt>
-        <dd><a href="/jump/公司简介">公司简介</a><a href="/jump/管理团队">管理团队</a><a href="/jump/网站公告">网站公告</a></dd>
+        <dd><a href="/jump/about">公司简介</a><a href="/jump/manage_team">管理团队</a><a href="/jump/site_notice">网站公告</a></dd>
       </dl>
       <dl>
         <dt>相关业务</dt>
-        <dd><a href="/jump/list">我要投资</a><a href="/jump/我要借款">我要借款</a></dd>
+        <dd><a href="/jump/list">我要投资</a><a href="/jump/borrow">我要借款</a></dd>
       </dl>
       <dl>
         <dt>帮助中心</dt>
-        <dd><a href="/jump/帮助中心">新手入门</a><a href="/jump/个人中心首页">我的账户</a><a href="/jump/list">债权转让</a></dd>
+        <dd><a href="/jump/help">新手入门</a><a href="/jump/personal">我的账户</a><a href="/jump/list">债权转让</a></dd>
       </dl>
       <dl>
         <dt>联系我们</dt>
-        <dd><a href="/jump/联系我们">联系我们</a></dd>
+        <dd><a href="/jump/contact_us">联系我们</a></dd>
       </dl>
     </div>
     <div class="ft-service">
