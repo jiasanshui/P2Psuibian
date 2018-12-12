@@ -21,14 +21,11 @@ public class LoginFilter implements Filter{
 
     @Override
     public void doFilter(ServletRequest arg0, ServletResponse arg1, FilterChain arg2) throws IOException, ServletException {
-        System.out.println("登陆过滤器。。。。。");
         HttpServletRequest request=(HttpServletRequest)arg0;
         HttpServletResponse response=(HttpServletResponse)arg1;
         Object username= request.getSession().getAttribute("userName");
-        //System.out.println(username);
         String requestURI = ((HttpServletRequest) arg0).getRequestURI();
-        //System.out.println(requestURI);
-        if(requestURI.contains("/jump/register1")){
+        if(requestURI.contains("/jump/register1")||requestURI.contains("/jump/list")||requestURI.contains("/jump/borrow")||requestURI.contains("/jump/personal")){
             if(username==null){
                 //跳转到登录页面
                 request.getRequestDispatcher("/jump/login").forward(arg0,arg1);

@@ -68,7 +68,7 @@
 </header>
 <!--注册-->
 <div class="wrap">
- <form name="LonginForm" action="/user/login" method="post">
+ <form name="LonginForm" action="/user/login" method="post" id="form1">
 	<div class="tdbModule loginPage">
 		<div class="registerTitle">用户登录</div>
 		<div class="registerCont">
@@ -87,13 +87,13 @@
 				</li>
 				<li>
                     <span class="dis">验证码:</span>
-                    <input type="text" id="jpgVerify" class="input input1 _yanzhengma" name="yzm" maxlength="4" tabindex="1">
+                    <input type="text" id="jpgVerify" class="input input1 _yanzhengma" name="yzm" maxlength="4" tabindex="1" onblur="checkYZM()">
                     <input type="text" id="checkNode" disabled="disabled"/>
                     <a class="look blue _changeCapcherButton" id="look" href="javascript:void(0);" onclick="createCode()">看不清？换一张</a>
                     <span class="info" id="jpgVerifys"></span>
                 </li>
 				<li class="btn">
-					<input type="submit" class="radius1" value="立即登录"  id="submitBtn">
+					<input type="button" class="radius1" value="立即登录"  onclick="checkAll()" id="submitBtn">
 				</li>
 			</ul>
 		</div>
@@ -146,7 +146,6 @@
   </div>
 </div>
 <script type="text/javascript">
-
     window.onload=function(){
         createCode();
     }
@@ -167,19 +166,21 @@
         $("#checkNode").val(code);
     }
     //验证图片验证码
-    var flagJPG=0;
-    $("#jpgVerify").blur(function(){
+    function checkYZM(){
         var inputCode =document.getElementById("jpgVerify").value.toUpperCase();
         var codeToUp=code.toUpperCase();
         if(inputCode.length <= 0){
             $("#jpgVerifys").html("验证码不能为空").css("color","red");
+            return false;
         }else if(inputCode != codeToUp){
             $("#jpgVerifys").html("验证码输入错误").css("color","red");
+            return false;
         }else {
             $("#jpgVerifys").html("验证码输入正确").css("color","green");
-            flagJPG=1;
+            return true;
         }
-    });
+    }
+
     //验证用户名
     function checkuser(){
         var user=document.getElementById("userName");
@@ -200,21 +201,13 @@
         pass.focus();
         return false;
     }
-   /* $("#submitBtn").click(function(){
-        $.post(
-            "/user/login",
-            {
-                "userName":$("#userName").val(),
-                "password":$("#password").val()
-            },
-            function(data){
-                if(data.msg=="1"){
-                    location.href="/jump/register1"
-                }
-            },
-            'json'
-        );
-    });*/
+    //登陆提交
+    function checkAll(){
+        if(checkuser()&&checkpass()&&checkYZM()){
+            var form = document.getElementById("form1");
+            form.submit();
+        }
+    }
 </script>
 
 </body>

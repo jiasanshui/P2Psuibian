@@ -13,5 +13,5 @@ import java.util.List;
 
 public interface TreeMenuService {
 
-    List<TreeNode> getTreeList();
+    List<TreeNode> getList();
 }

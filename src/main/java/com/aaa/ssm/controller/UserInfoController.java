@@ -34,8 +34,6 @@ public class UserInfoController {
     //取出配置文件中upload.path的值  赋给uploadPath类变量
     @Value(value = "${upload.path}")
     private String uploadPath;
-
-
     /**
      * 用户分页列表数据
      * @param map
