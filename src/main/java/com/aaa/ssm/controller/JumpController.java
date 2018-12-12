@@ -87,10 +87,8 @@ public class JumpController {
     @RequestMapping("/borrow")
     public String borrow(HttpSession session, Model model){
         String username=(String) session.getAttribute("userName");
-        System.out.println(username);
         //根据用户名去获取用户信息
         List<Map> list = userInfoService.getUserList(username);
-        System.out.println(list);
         model.addAttribute("realName",list.get(0).get("REALNAME"));
         model.addAttribute("uid",list.get(0).get("USERID"));
         return "qiantai/borrow";

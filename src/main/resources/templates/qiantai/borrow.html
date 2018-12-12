@@ -140,7 +140,7 @@
 										</div>
 										<div class="mt15 guarmethod clearfix">
 											<label class="guarmethod_l fl">*担保方式</label>
-											<select id="danbao" name="danbaostyleid">
+											<select id="danbao" name="danbaostyle">
 												<option selected="selected" disabled="disabled">选择担保方式</option>
 												<option>信用贷</option>
 												<option>车辆抵押</option>
@@ -224,14 +224,13 @@
         $("#timelimit").change(function(){
             var timelimit=$("#timelimit").val();
             if(timelimit=='1个月'){
-                $("#apr").val("5%");
-
+                $("#apr").val("0.05");
             }else if(timelimit=='3个月'){
-                $("#apr").val("6%");
+                $("#apr").val("0.06");
 			}else if(timelimit=='6个月'){
-                $("#apr").val("7%");
+                $("#apr").val("0.07");
 			}else{
-                $("#apr").val("8%");
+                $("#apr").val("0.08");
 			}
         });
     })
