@@ -134,6 +134,13 @@
             </el-form-item>
             <el-form-item label="操作人">
                 <el-input v-model="editForm.OPRATERID" auto-complete="off"></el-input>
+                <!--<el-select v-model="editForm.DEPTNO" placeholder="请选择">
+                    <el-option
+                            v-for="item in options"
+                            :key="item.DEPTNO"
+                            :label="item.DNAME"
+                            :value="item.DEPTNO">
+                    </el-option>-->
                 </el-select>
             </el-form-item>
         </el-form>
