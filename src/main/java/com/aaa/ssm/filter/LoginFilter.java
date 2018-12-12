@@ -29,13 +29,9 @@ public class LoginFilter implements Filter{
             if(username==null){
                 //跳转到登录页面
                 request.getRequestDispatcher("/jump/login").forward(arg0,arg1);
-            }else{
-                //程序继续运行
-                arg2.doFilter(arg0, arg1);
             }
         }
         arg2.doFilter(arg0, arg1);
-
     }
 
     @Override
