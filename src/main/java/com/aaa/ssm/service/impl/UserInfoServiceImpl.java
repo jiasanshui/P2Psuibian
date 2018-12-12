@@ -40,4 +40,9 @@ public class UserInfoServiceImpl implements UserInfoService {
     public int addBohui(Map map) {
         return userInfoDao.addBohui(map);
     }
+
+    @Override
+    public List<Map> getUserList(String username) {
+        return userInfoDao.getUserList(username);
+    }
 }

@@ -26,4 +26,5 @@ public interface BorrowDao {
      */
     @Select("select id,des from condition")
     List<Map> getConditionList();
+
 }
