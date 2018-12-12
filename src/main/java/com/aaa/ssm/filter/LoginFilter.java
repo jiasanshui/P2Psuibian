@@ -35,7 +35,6 @@ public class LoginFilter implements Filter{
             }
         }
         arg2.doFilter(arg0, arg1);
-
     }
 
     @Override

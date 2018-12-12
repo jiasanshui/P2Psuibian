@@ -1,9 +1,14 @@
 package com.aaa.ssm.controller;
 
+import com.aaa.ssm.service.ProjectService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Map;
 
 /**
  * className:jumpController
@@ -14,12 +19,18 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/jump")
 public class JumpController {
+    @Autowired
+    private ProjectService projectService;
+
     /**
      * 跳转到前台首页
      * @return
      */
     @RequestMapping("/index")
-    public String jumpIndex(){
+    public String jumpIndex(Model model){
+        //显示房屋抵押招标
+        List<Map> housePro = projectService.getHousePro();
+        model.addAttribute("houseProList",housePro);
         return "qiantai/index";
     }
 

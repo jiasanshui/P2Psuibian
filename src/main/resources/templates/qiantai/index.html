@@ -219,17 +219,19 @@ $(function(){
         <div class="bd">
           <div class="des"><span class="fn-left">期限1-29天，期限短，收益见效快</span><a href="/jump/list" class="fn-right">查看更多&gt;&gt;</a></div>
           <div class="borrow-list">
-            <ul>
+            <ul th:each="house : ${houseProList}">
               <li>
-                <div class="title"><a href="/jump/infor" target="_blank"><i class="icon icon-zhai" title="债权贷"></i></a>
-                  <a href="infor.html" class="f18" title="金女士债权质押借款1万元" target="_blank">金女士债权质押借款1万元</a>
+                <div class="title">
+                    <a href="/jump/infor" target="_blank"><i class="icon icon-zhai" title="债权贷"></i></a>
+                    <a href="/jump/infor" class="f18" title="金女士债权质押借款1万元" target="_blank"><span th:text="${house.DES}" style="font-size: 20px;"></span></a>
+
                 </div>
                 <table width="100%" border="0" cellpadding="0" cellspacing="0">
                   <tbody>
                     <tr>
-                      <td width="260">借款金额<span class="f24 c-333" id="sum">10000.00</span>元</td>
-                      <td width="165">年利率<span class="f24 c-333">10.70% </span></td>
-                      <td width="180" align="center">期限<span class="f24 c-orange">4</span>天</td>
+                      <td width="260">借款金额<span class="f24 c-333" id="sum" th:text="${house.BORROWMONEY}"></span>元</td>
+                      <td width="165">年利率<span class="f24 c-orange" th:text="${house.APR}"></span></td>
+                      <td width="180" align="center">期限<span class="f24 c-orange" th:text="${house.TIMELIMIT}"></span>个月</td>
                       <td><div class="circle">
                           <div class="left progress-bar">
                             <div class="progress-bgPic progress-bfb5">
@@ -237,7 +239,7 @@ $(function(){
                             </div>
                           </div>
                         </div></td>
-                      <td align="right"><a class="ui-btn btn-gray" href="#">还款中</a> </td>
+                      <td align="right"><a class="ui-btn btn-gray" href="#">我要放款</a> </td>
                     </tr>
                   </tbody>
                 </table>
