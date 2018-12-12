@@ -52,4 +52,11 @@ public interface UserInfoDao {
     @Insert("insert into bohui(bid,reason,opraterid) values(seq_bohui_bid.nextval,#{REASON},#{OPRATERID})")
     int addBohui(Map map);
 
+    /**
+     * 根据用户名获取用户信息
+     * @param username
+     * @return
+     */
+    @Select("select * from userinfo where uname=#{username}")
+    List<Map> getUserList(String username);
 }
