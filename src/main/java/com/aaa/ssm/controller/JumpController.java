@@ -102,14 +102,6 @@ public class JumpController {
         return "qiantai/about";
     }
     /**
-     * 跳转到404页面
-     * @return
-     */
-    @RequestMapping("/unexist")
-    public String unexist(){
-        return "qiantai/404";
-    }
-    /**
      * 跳转到账户设置页面
      * @return
      */
@@ -231,14 +223,6 @@ public class JumpController {
     }
 
     /**
-     * 跳转到开通第三方页面
-     * @return
-     */
-    @RequestMapping("/open_three1")
-    public String open_three1(){
-        return "qiantai/open_three1";
-    }
-    /**
      * 跳转到合作伙伴页面
      * @return
      */
@@ -286,14 +270,7 @@ public class JumpController {
     public String withdraw1(){
         return "qiantai/withdraw1";
     }
-    /**
-     * 跳转到借款成功页面
-     * @return
-     */
-    @RequestMapping("/succeed")
-    public String succeed(){
-        return "qiantai/succeed";
-    }
+
     /**
      * 跳转到还款页面
      * @return
@@ -301,6 +278,14 @@ public class JumpController {
     @RequestMapping("/huankuan")
     public String huankuan(){
         return "qiantai/huankuan";
+    }
+    /**
+     * 跳转到提现页面
+     * @return
+     */
+    @RequestMapping("/pay1")
+    public String pay1(){
+        return "qiantai/pay1";
     }
 
 
