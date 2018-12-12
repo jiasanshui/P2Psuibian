@@ -19,6 +19,6 @@ public interface UserMaterialsDao {
     /**
      * 添加用户借款
      */
-    //@Insert("insert into borrow values(seq_tbborrowid.nextval,#{APPLICANT},#{TEL},#{TIMELIMIT},#{PURPOSE},#{DES},#{CONDITIONID},#{PAYMENTID},#{QUANTITY},#{COST},#{APR},#{BORROWMONEY})")
+    @Insert("insert into borrow values(seq_tbborrowid.nextval,#{APPLICANT},#{BORROWMONEY},#{TIMELIMIT},#{TEL},#{DANBAOSTYLEID},#{QUANTITY},#{COST},#{PURPOSE},#{DES},#{PAYMENT},#{APR})")
     int addUserMaterials(Map map);
 }

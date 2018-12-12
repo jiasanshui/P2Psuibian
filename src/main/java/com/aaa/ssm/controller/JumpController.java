@@ -286,7 +286,22 @@ public class JumpController {
     public String withdraw1(){
         return "qiantai/withdraw1";
     }
-
+    /**
+     * 跳转到借款成功页面
+     * @return
+     */
+    @RequestMapping("/succeed")
+    public String succeed(){
+        return "qiantai/succeed";
+    }
+    /**
+     * 跳转到还款页面
+     * @return
+     */
+    @RequestMapping("/huankuan")
+    public String huankuan(){
+        return "qiantai/huankuan";
+    }
 
 
 }

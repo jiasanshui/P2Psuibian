@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,8 +30,10 @@ public class UserMaterialsController {
      */
     @RequestMapping("/addMaterials")
     public  Object addUserMaterials(@RequestParam Map map){
-        userMaterialsService.addUserMaterials(map);
-        return "qiantai/succeed";
+        System.out.println(map);
+        int i = userMaterialsService.addUserMaterials(map);
+
+        return i;
         }
 
     }

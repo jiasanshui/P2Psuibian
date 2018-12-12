@@ -31,25 +31,55 @@
         <li class="c_4"><a href="#" target="_blank" title="新浪微博" alt="新浪微博"><b class="ico_head_sina"></b></a></li>
       </ul>
       <ul class="fn-right header-top-ul">
-        <li> <a href="index.html" class="app">返回首页</a> </li>
-        <li>
-          <div class=""><a href="register.html" class="c-orange" title="免费注册">免费注册</a></div>
+        <!--用户名为空-->
+        <li th:if="${session.userName} eq null">
+          <div class="" >
+            <a href="/jump/register" class="" title="免费注册" >免费注册</a>
+          </div>
+        </li>
+        <li th:if="${session.userName} eq null">
+          <div class="" >
+            <a href="/jump/login" class="js-login" title="登录" >登录</a>
+          </div>
+        </li>
+        <!--用户名不为空-->
+        <li th:if="${session.userName} ne null">
+          <div class="">
+            <span th:text="欢迎您 "></span>
+            <span th:text="${session.userName}"></span>
+          </div>
+        </li>
+        <li th:if="${session.userName}ne null">
+          <div class="" >
+            <a href="/jump/login" class="js-login" title="退出">退出</a>
+          </div>
+        </li>
+
+        <!--<li>
+          <div class="">
+            <a href="/jump/register" class="" title="免费注册" th:if="${userName} eq null">免费注册</a>
+            <a href="#" class=""  th:if="${userName} ne null" th:text="'欢迎您 ' + ${userName} + '!'"></a>
+          </div>
         </li>
         <li>
-          <div class=""><a href="login.html" class="js-login" title="登录">登录</a></div>
+          <div class="">
+            <a href="/jump/login" class="js-login" title="登录" th:if="${userName} eq null">登录</a>
+            <a href="/jump/login" class="js-login" title="退出" th:if="${userName} ne null">退出</a>
+          </div>
         </li>
+-->
       </ul>
     </div>
   </div>
   <div class="header min-width">
     <div class="container">
-      <div class="fn-left logo"> <a class="" href="index.html"> <img src="../images/logo.png"  title=""> </a> </div>
+      <div class="fn-left logo"> <a class="" href="index.html"> <img src="../images/logo.jpg"  title=""> </a> </div>
       <ul class="top-nav fn-clear">
-        <li class="on"> <a href="index.html">首页</a> </li>
-        <li> <a href="list.html" class="">我要投资</a> </li>
-        <li> <a href="帮助中心.html">安全保障</a> </li>
-        <li class="top-nav-safe"> <a href="个人中心首页.html">我的账户</a> </li>
-        <li> <a href="公司简介.html">关于我们</a> </li>
+        <li class="on"> <a href="/jump/index">首页</a> </li>
+        <li> <a href="/jump/list" class="">我要投资</a> </li>
+        <li> <a href="/jump/help">安全保障</a> </li>
+        <li class="top-nav-safe"> <a href="/jump/personal">我的账户</a> </li>
+        <li> <a href="/jump/about">关于我们</a> </li>
       </ul>
     </div>
   </div>
@@ -60,17 +90,18 @@
     <div class="credit-ad"><img src="../images/clist1.jpg" width="1200" height="96"></div>
     <div id="personal-left" class="personal-left">
       <ul>
-        <li class="pleft-cur"><span><a href="personal"><i class="dot dot1"></i>账户总览</a></span></li>
-        <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="个人中心-资金记录 .html">资金记录</a></span></li>
-        <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="个人中心-投资记录.html">投资记录</a></span></li>
-        <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="个人中心-回款计划.html">回款计划</a></span></li>
-        <li class=""><span><a href="#"><i class="dot dot02"></i>开通第三方</a> </span> </li>
-        <li><span><a href="个人中心-充值1.html"><i class="dot dot03"></i>充值</a></span></li>
-        <li class=""><span><a href="个人中心-提现1.html"><i class="dot dot04"></i>提现</a></span></li>
-        <li style="position:relative;" class=""> <span> <a href="个人中心-我的红包.html"> <i class="dot dot06"></i> 我的红包 </a> </span> </li>
-        <li class=""><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="个人中心-兑换历史.html">兑换历史</a></span></li>
-        <li style="position:relative;"> <span> <a href="个人中心-系统消息.html"><i class="dot dot08"></i>系统信息 </a> </span> </li>
-        <li><span><a href="个人中心-账户设置.html"><i class="dot dot09"></i>账户设置</a></span></li>
+        <li class="pleft-cur"><span><a href="/jump/personal"><i class="dot dot1"></i>账户总览</a></span></li>
+        <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/money_record">资金记录</a></span></li>
+        <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/deposits_record">投资记录</a></span></li>
+        <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/money_plan">回款计划</a></span></li>
+        <li class=""><span><a href="/jump/renzheng"><i class="dot dot02"></i>个人身份认证</a> </span> </li>
+        <li><span><a href="/jump/withdraw1"><i class="dot dot03"></i>充值</a></span></li>
+        <li class=""><span><a href="/jump/pay1"><i class="dot dot04"></i>提现</a></span></li>
+        <li style="position:relative;" class=""> <span> <a href="/jump/myred_packets"> <i class="dot dot06"></i> 我的红包 </a> </span> </li>
+        <li class=""><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/change_history">兑换历史</a></span></li>
+        <li style="position:relative;"> <span> <a href="/jump/system_message"><i class="dot dot08"></i>系统信息 </a> </span> </li>
+        <li><span><a href="/jump/account_setting"><i class="dot dot09"></i>账户设置</a></span></li>
+        <li><span><a href="/jump/huankuan"><i class="dot dot09"></i>我的还款</a></span></li>
       </ul>
     </div>
     <style>
@@ -162,7 +193,7 @@
     <div class="personal-main">
       <div class="personal-pay">
         <h3><i>认证个人信息</i></h3>
-        <form id="form" name="form" method="post" action="" enctype="multipart/form-data">
+        <form method="post" action="/renzheng/update" enctype="multipart/form-data">
           <div>
             <p><h3>请您按以下步骤进行个人身份信息认证！</h3></p>
           </div>
@@ -171,7 +202,7 @@
             <ul>
               <li>
                 <label for="username">用户姓名</label>
-                <input type="text"  class="pay-txt" maxlength="16"  value="贾三水" readonly="readonly">
+                <input type="text" name="username" class="pay-txt" th:value="${session.userName}" maxlength="16" readonly="readonly">
                 <div id="usernameErrorDiv"></div>
               </li>
               <li>
@@ -182,12 +213,10 @@
               <li>
                 <label for="birthday">出生日期</label>
                 <input id="birthday" name="birth" class="easyui-datetimebox" maxlength="16" style="width:240px">
-                <div id="realnameErrorDiv"></div>
               </li>
               <li>
                 <label for="age">年龄</label>
                 <input id="age" name="age" type="text" class="pay-txt" maxlength="16"  placeholder="年龄" readonly="readonly">
-                <div id="realnameErrorDiv"></div>
                 <!--级联年龄-->
                 <script type="text/javascript">
                     $(function(){
@@ -216,11 +245,11 @@
               </li>
               <li>
                 <label for="idcardA">身份证正面</label>
-                <input name="idcardA" type="file" class="pay-txt" maxlength="16">
+                <input name="idcarda" type="file" class="pay-txt" maxlength="16">
               </li>
               <li>
                 <label for="idcardB">身份证反面</label>
-                <input name="idcardB" type="file" class="pay-txt" maxlength="16">
+                <input name="idcardb" type="file" class="pay-txt" maxlength="16">
               </li>
               <li>
                 <label for="address">地址</label>
@@ -233,7 +262,7 @@
                 <select id="area" name="area" class="pay-txt" style="width: 120px;height:40px">
                   <option selected>请选择县(区)</option>
                 </select>
-                <input type="text" class="pay-txt" placeholder="具体地址"/>
+                <input type="text" name="house" class="pay-txt" placeholder="具体地址"/>
               </li>
             </ul>
             <h6>邮箱已绑定</h6>
@@ -252,7 +281,7 @@
                 <!--<label> 150****0139</label>-->
               </li>
               <li>
-                <input type="submit" name="" value="开户" style="border:none;" class="btn-paykh">
+                <input type="submit" value="开户" style="border:none;" class="btn-paykh">
               </li>
             </ul>
           </div>
@@ -270,7 +299,7 @@
                     if(data!=''){
                         var Str = "";
                         for (var i = 0; i < data.length; i++) {
-                            Str += "<option value='"+data[i].PROVINCEID+"'>"+data[i].PROVINCE+"</option>";
+                            Str += "<option value='"+data[i].PROVINCE+"'>"+data[i].PROVINCE+"</option>";
                         }
                         $("#province").append(Str);
                     }
@@ -280,17 +309,17 @@
             <!-- 查询市 -->
             $("#province").change(function(){
                 $("#city").empty();
-                var pid = $(this).val();
+                var pname = $(this).val();
                 $.ajax({
                     type:"post",
                     dataType:"json",
-                    data:{Pid:pid},
+                    data:{pname:pname},
                     url:"/pca/city",
                     success:function(data){
                         if(data!=''){
                             var Str = "";
                             for (var i = 0; i < data.length; i++) {
-                                Str += "<option value='"+data[i].CITYID+"'>"+data[i].CITY+"</option>";
+                                Str += "<option value='"+data[i].CITY+"'>"+data[i].CITY+"</option>";
                             }
                             $("#city").append(Str);
                         }
@@ -301,17 +330,17 @@
           <!-- 根据城市查询县 -->
             $("#city").change(function(){
                 $("#area").empty();
-                var cid = $(this).val();
+                var cname = $(this).val();
                 $.ajax({
                     type:"post",
                     dataType:"json",
-                    data:{Cid:cid},
+                    data:{cname:cname},
                     url:"/pca/area",
                     success:function(data){
                         if(data!=''){
                             var Str = "";
                             for (var i = 0; i < data.length; i++) {
-                                Str += "<option value='"+data[i].AREAID+"'>"+data[i].AREA+"</option>";
+                                Str += "<option value='"+data[i].AREA+"'>"+data[i].AREA+"</option>";
                             }
                             $("#area").append(Str);
                         }

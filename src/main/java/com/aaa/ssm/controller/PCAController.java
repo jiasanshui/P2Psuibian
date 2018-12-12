@@ -34,21 +34,21 @@ public class PCAController {
 
     /**
      * 根据省查询城市
-     * @param Pid
+     * @param pname
      * @return
      */
     @RequestMapping("city")
-    public Object getCity(Integer Pid){
-        return pcaService.getCity(Pid);
+    public Object getCity(String pname){
+        return pcaService.getCity(pname);
     }
 
     /**
      * 根据城市查询县区
-     * @param Cid
+     * @param cname
      * @return
      */
     @RequestMapping("area")
-    public Object getArea(Integer Cid){
-        return pcaService.getArea(Cid);
+    public Object getArea(String cname){
+        return pcaService.getArea(cname);
     }
 }
