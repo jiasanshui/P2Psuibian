@@ -82,12 +82,18 @@
             </el-table-column>
             <el-table-column prop="ICPICA" label="身份证正面"width="120">
                 <template slot-scope="scope">
-                    <img :src="'/userInfo/show?fileName='+scope.row.ICPICA"  min-width="70" height="70" />
+                    <el-popover placement="right" title="身份证正面" trigger="hover">
+                    <img :src="'/userInfo/show?fileName='+scope.row.ICPICA" width="270" height="170"/>
+                    <img slot="reference" :src="'/userInfo/show?fileName='+scope.row.ICPICA"  min-width="70" height="70" />
+                    </el-popover>
                 </template>
             </el-table-column>
-            <el-table-column prop="ICPICA" label="身份证正面"width="120">
+            <el-table-column prop="ICPICB" label="身份证反面"width="120">
                 <template slot-scope="scope">
-                    <img :src="'/userInfo/show?fileName='+scope.row.ICPICA"  min-width="70" height="70" />
+                    <el-popover placement="right" title="身份证反面" trigger="hover">
+                        <img :src="'/userInfo/show?fileName='+scope.row.ICPICB" width="270" height="170"/>
+                        <img slot="reference" :src="'/userInfo/show?fileName='+scope.row.ICPICB"  min-width="70" height="70" />
+                    </el-popover>
                 </template>
             </el-table-column>
             <el-table-column
@@ -197,19 +203,30 @@
             <el-row>
                 <el-col :span="10">
                     <el-form-item label="身份证正面" prop="ICPICA">
-                        <!-- 图片的显示
-                        <template slot-scope="scope">
-                            <img :src="scope.row.ICPICA" min-width="50" height="50" />
-                        </template>-->
-                        <el-input v-model="lookForm.ICPICA" auto-complete="off"></el-input>
+                        <template>
+                            <el-popover
+                                    placement="top-start"
+                                    title="标题"
+                                    width="200"
+                                    trigger="hover">
+                                <img :src="'/userInfo/show?fileName='+lookForm.ICPICA" width="270" height="170"/>
+                                <el-button slot="reference" style="background-color: #00bbee">显示图片</el-button>
+                            </el-popover>
+                        </template>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
                     <el-form-item label="身份证反面" prop="ICPICB">
-                        <!--<template slot-scope="scope">
-                            <img :src="scope.row.ICPICB" min-width="50" height="50" />
-                        </template>-->
-                        <el-input v-model="lookForm.ICPICB" auto-complete="off"></el-input>
+                        <template>
+                            <el-popover
+                                    placement="top-start"
+                                    title="标题"
+                                    width="200"
+                                    trigger="hover">
+                                <img :src="'/userInfo/show?fileName='+lookForm.ICPICB" width="270" height="170"/>
+                                <el-button slot="reference" style="background-color: #00bbee">显示图片</el-button>
+                            </el-popover>
+                        </template>
                     </el-form-item>
                 </el-col>
             </el-row>

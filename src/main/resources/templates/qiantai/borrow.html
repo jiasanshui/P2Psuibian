@@ -132,7 +132,8 @@
 	  	    	   	    	  </div>  
 	  	    	   	    	  <!-- end l -->
 	  	    	   	    	  <div class="bor_det_oner fl">
-	  	    	   	    	  	     <form action="/usermaterials/addMaterials" method="post">
+	  	    	   	    	  	     <form>
+	  	    	   	    	  	     	  <fieldset>
 	  	    	   	    	  	     	  	   <div>
 	  	    	   	    	  	     	  	   	   <label>申请人</label>
 	  	    	   	    	  	     	  	   	   <input type="text" name="applicant" >
@@ -180,7 +181,7 @@
 	  	    	   	    	  	     	  	   <div class="mt15">
 	  	    	   	    	  	     	  	   	   <label>*借款用途</label>
 	  	    	   	    	  	     	  	   	   <select name="purpose">
-	  	    	   	    	  	     	  	   	   	  <option>选择借款类别</option>
+													   <option selected="selected" disabled="disabled" name="borType">选择借款类别</option>
 													   <option value="买房">买房</option>
 													   	<option>买车</option>
 													   <option>娶媳妇</option>
@@ -220,7 +221,6 @@
 	  	    	   	    	  	     	  	   	   <input type="submit" value="提交材料">
 	  	    	   	    	  	     	  	   </div>
 	  	    	   	    	  	     	  </fieldset>
-
 	  	    	   	    	  	     </form>
 	  	    	   	    	  </div>
 	  	    	   	    </div>
