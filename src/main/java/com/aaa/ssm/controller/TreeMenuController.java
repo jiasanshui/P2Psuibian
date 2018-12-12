@@ -25,7 +25,6 @@ public class TreeMenuController {
 
     @Autowired
     private TreeMenuService treeMenuService;
-
     @RequestMapping("list")
     public Object getTreeList(){
         List<TreeNode> treeList = treeMenuService.getList();

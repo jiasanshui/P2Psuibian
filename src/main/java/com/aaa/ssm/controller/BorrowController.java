@@ -22,20 +22,22 @@ import java.util.Map;
 @RequestMapping("/borrow")
 public class BorrowController {
 
+    //依赖注入
     @Autowired
     private BorrowService borrowService;
 
-    @ResponseBody
-    @RequestMapping("getPayList")
-    public Object getPayList(){
-        List<Map> payList = borrowService.getPayList();
-        return payList;
-    }
-    @ResponseBody
-    @RequestMapping("getConditionList")
-    public Object getConditionList(){
-        List<Map> conditionList = borrowService.getConditionList();
-        return conditionList;
+    /**
+     * 借款人提交数据到后台
+     * @param map
+     * @return
+     */
+    @RequestMapping("/addBorrow")
+    public Object addBorrow(@RequestParam Map map){
+        int add = borrowService.add(map);
+        if(add==0){
+            return "qiantai/borrow";
+        }
+        return "qiantai/index";
     }
 
 }
