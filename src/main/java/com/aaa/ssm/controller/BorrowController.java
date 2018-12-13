@@ -37,7 +37,7 @@ public class BorrowController {
         if(add==0){
             return "qiantai/borrow";
         }
-        return "qiantai/index";
+        return "qiantai/list";
     }
 
 }
