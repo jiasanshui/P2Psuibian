@@ -1,17 +1,15 @@
 package com.aaa.ssm.controller;
 
 import com.aaa.ssm.service.ProjectService;
+import com.aaa.ssm.util.RandomUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import com.aaa.ssm.service.UserInfoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +24,6 @@ import java.util.Map;
 public class JumpController {
     @Autowired
     private ProjectService projectService;
-
 
     //依赖注入service层
     @Autowired
@@ -87,7 +84,9 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/list")
-    public String list(){
+    public String list(Model model){
+        List<Map> housePro = projectService.getHouseProAll();
+        model.addAttribute("houseProList",housePro);
         return "qiantai/list";
     }
     /**
@@ -101,6 +100,9 @@ public class JumpController {
         List<Map> list = userInfoService.getUserList(username);
         model.addAttribute("realName",list.get(0).get("REALNAME"));
         model.addAttribute("uid",list.get(0).get("USERID"));
+        //调用生成随机数工具类生成随机数
+        String num = RandomUtil.getBorrowNumByTime();
+        model.addAttribute("num",num);
         return "qiantai/borrow";
     }
     /**

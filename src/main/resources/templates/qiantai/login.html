@@ -77,12 +77,11 @@
 			    </li>
 				<li>
 					<span class="dis">用户名：</span><input class="input" type="text" onblur="checkuser()" name="userName" id="userName" maxlength="24" tabindex="1" autocomplete="off">
-				    <a id="sssdfasdfas" href="/jump/register" class="blue">注册用户</a>
-				</li>
-	                
+				    <a id="sssdfasdfas" href="/jump/register" class="blue">注册用户</a><span id="user"></span>
+                </li>
 				<li>
-				   <span class="dis">密码：</span><input class="input" type="password" name="password" id="password" maxlength="24" tabindex="1" autocomplete="off" onblur="checkpass()">
-				   <a href="#" id="pawHide" class="blue">忘记密码</a>
+                    <span class="dis">密码：</span><input class="input" type="password" name="password" id="password" maxlength="24" tabindex="1" autocomplete="off" onblur="checkpass()">
+				   <a href="#" id="pawHide" class="blue">忘记密码</a><span id="pd"></span>
 				</li>
 				<li>
                     <span class="dis">验证码:</span>
@@ -90,6 +89,7 @@
                     <input type="text" id="checkNode" disabled="disabled"/>
                     <a class="look blue _changeCapcherButton" id="look" href="javascript:void(0);" onclick="createCode()">看不清？换一张</a>
                     <span class="info" id="jpgVerifys"></span>
+                    <span id="yz"></span>
                 </li>
 				<li class="btn">
 					<input type="button" class="radius1" value="立即登录"  onclick="checkAll()" id="submitBtn">
@@ -184,9 +184,10 @@
     function checkuser(){
         var user=document.getElementById("userName");
         if(user.value.length>0){
+            $("#user").html("");
             return true;
         }
-        alert("用户名不能为空");
+        $("#user").html("用户名不能为空").css("color","red");
         user.focus();
         return false;
     }
@@ -194,9 +195,10 @@
     function checkpass(){
         var pass=document.getElementById("password");
         if(pass.value.length>0){
+            $("#pd").html("");
             return true;
         }
-        alert("密码不能为空");
+        $("#pd").html("密码不能为空").css("color","red");
         pass.focus();
         return false;
     }
@@ -210,4 +212,5 @@
 </script>
 
 </body>
+</html>
 </html>

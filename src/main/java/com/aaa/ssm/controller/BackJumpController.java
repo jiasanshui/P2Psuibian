@@ -26,4 +26,13 @@ public class BackJumpController {
     public String userList(){
         return "houtai/user/list";
     }
+
+    /**
+     * 跳转后台招标页面
+     * @return
+     */
+    @RequestMapping("/tender")
+    public String tender(){
+        return "houtai/user/tender";
+    }
 }

@@ -114,6 +114,7 @@
 								<form id="form1" method="post" action="/borrow/addBorrow">
 									<fieldset>
 										<input type="hidden" th:value="${uid}" name="userid">
+										<input type="hidden" th:value="${num}" name="borrownum">
 										<div>
 											<label>申请人</label>
 											<input type="" readonly="true" th:value="${realName}" name="applicant">
@@ -138,7 +139,7 @@
 										</div>
 										<div class="mt15" id="price">
 											<label>*总价值</label>
-											<input type="text" name="cost" id="cost" onblur="checkCost()"><span id="co"></span>
+											<input type="number"name="cost" id="cost" onblur="checkCost()"><span id="co"></span>
 										</div>
 										<div class="mt15" >
 											<label>*投标天数</label>
@@ -147,6 +148,20 @@
 										<div class="mt15">
 											<label>*借款金额</label>
 											<input type="number" class="bor_inputbg01" name="borrowmoney" id="bor" onblur="checkbor()"><span id="bo"></span>
+										</div>
+										<div class="mt15">
+											<label>*借款期限</label>
+											<select id="timelimit" name="timelimit">
+												<option>选择借款期限</option>
+												<option>1</option>
+												<option>3</option>
+												<option>6</option>
+												<option>12</option>
+											</select>个月
+										</div>
+										<div class="mt15" >
+											<label>借款年利率</label>
+											<input type="text" name="apr" id="apr" readonly="true">
 										</div>
 										<div class="mt15">
 											<label>*借款用途</label>
@@ -159,22 +174,8 @@
 											</select>
 										</div>
 										<div class="mt15">
-											<label>*借款期限</label>
-											<select id="timelimit" name="timelimit">
-												<option>选择借款期限</option>
-												<option>1</option>
-												<option>3</option>
-												<option>6</option>
-												<option>12</option>
-											</select>个月
-										</div>
-										<div class="mt15">
 											<label>*借款描述</label>
 											<textarea name="des"></textarea>
-										</div>
-										<div class="mt15" >
-											<label>借款年利率</label>
-											<input type="text" name="apr" id="apr" readonly="true">
 										</div>
 										<div class="mt15" >
 											<label>*还款方式</label>
@@ -261,13 +262,14 @@
 	function  checkCost(){
         var cost = document.getElementById("cost");
         var co = document.getElementById("co");
+
         var reg=/^[1-9]\d*$/;
         if(cost.value.length>=0&&cost.value.length<=7&&reg.test(cost.value)){
             co.style.color="green";
             co.innerHTML="金额符合提交";
             cost.style.borderWidth="1px gray solid";
             return true;
-        }
+            }
         else{
             co.style.color="red";
             cost.focus();
@@ -279,20 +281,34 @@
     //校验借款金额
     function checkbor(){
         var cost = document.getElementById("cost");
-        if(cost==null&&cost==''){
-            $("#co").html("请先输入总价值").css("color","red");
-		}
+        var co = document.getElementById("co");
         var bor = document.getElementById("bor");
         var bo = document.getElementById("bo");
         var reg=/^[1-9]\d*$/;
+        if(cost.value==0){
+            co.style.color="red";
+            cost.focus();
+            co.innerHTML="请先输入总价值";
+            bor.value=0;
+            co.style.borderWidth="1px red solid";
+            return false;
+		}
         if(bor.value.length>=0&&bor.value.length<=7&&reg.test(bor.value)){
+            alert("总价值"+cost.value+"--借款金额"+bor.value);
+            if(parseFloat(cost.value)<parseFloat(bor.value)){
+                bo.style.color="red";
+                bor.focus();
+                bo.innerHTML="借款金额不能超过总价值";
+                bor.value=0;
+                bo.style.borderWidth="1px red solid";
+                return false;
+			}else{
             bo.style.color="green";
             bo.innerHTML="金额符合提交";
             bor.style.borderWidth="1px gray solid";
             return true;
-        } else if(bor>cost){
-            $("#bo").html("借款不能大于总价值").css("color","red");
-		} else{
+            }
+        }else{
             bo.style.color="red";
             bor.focus();
             bo.innerHTML="金额不符合提交";
