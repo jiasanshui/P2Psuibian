@@ -49,20 +49,6 @@
             <a href="/jump/login" class="js-login" title="退出">退出</a>
           </div>
         </li>
-
-        <!--<li>
-          <div class="">
-            <a href="/jump/register" class="" title="免费注册" th:if="${userName} eq null">免费注册</a>
-            <a href="#" class=""  th:if="${userName} ne null" th:text="'欢迎您 ' + ${userName} + '!'"></a>
-          </div>
-        </li>
-        <li>
-          <div class="">
-            <a href="/jump/login" class="js-login" title="登录" th:if="${userName} eq null">登录</a>
-            <a href="/jump/login" class="js-login" title="退出" th:if="${userName} ne null">退出</a>
-          </div>
-        </li>
--->
       </ul>
     </div>
   </div>
@@ -87,6 +73,7 @@
     <div id="personal-left" class="personal-left">
       <ul>
         <li class="pleft-cur"><span><a href="/jump/personal"><i class="dot dot1"></i>账户总览</a></span></li>
+        <li><span><a href="/jump/huankuan"><i class="dot dot09"></i>我的还款</a></span></li>
         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/money_record">资金记录</a></span></li>
         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/deposits_record">投资记录</a></span></li>
         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/money_plan">回款计划</a></span></li>
@@ -334,13 +321,6 @@
 					$(".quick-error3").html($span);
 					return false;
 				}
-				/*$("#recharge\\:rechargeWay").val($("#showpay").html());
-				var bankProtocol = $("#bankProtocol").attr('class');
-				if(!bankProtocol)
-				{
-					$("#bankProtocol_message").show();
-					 return false;
-				}*/
 				return payflag;
 			}
 
@@ -400,27 +380,8 @@
 				var rechargeFlag=checkRecharge2();
 				var agreeFlag=validateAgree2();
 				var payflag=rechargeFlag && agreeFlag;
-				/*$("#recharge\\:rechargeWay").val($("#showpay").html());
-				var bankProtocol = $("#bankProtocol").attr('class');
-				if(!bankProtocol)
-				{
-					$("#bankProtocol_message").show();
-					 return false;
-				}*/
 				return payflag;
 			}
-
-			/* function showSpan(op){
-				$("body").append("<div id='maskCommon'></div>");
-				$("#maskCommon").addClass("mask1").css("display","block");
-				$("#"+op).css("display","block");
-			} */
-
-			/* function displaySpan(op){
-				$("#alert-ClickDialog").hide();
-				$("#maskCommon").hide();
-			} */
-			
 			$(document).ready(function(){
 				  if("false"=='true'){
 					 showSpan("alert-ClickDialog");
@@ -679,7 +640,7 @@
       </dl>
       <dl>
         <dt>帮助中心</dt>
-        <dd><a href="/jump/help">新手入门</a><a href="/jump/personal">我的账户</a><a href="/jump/404">债权转让</a></dd>
+        <dd><a href="/jump/help">新手入门</a><a href="/jump/personal">我的账户</a></dd>
       </dl>
       <dl>
         <dt>联系我们</dt>

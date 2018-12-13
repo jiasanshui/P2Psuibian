@@ -49,20 +49,6 @@
             <a href="/jump/login" class="js-login" title="退出">退出</a>
           </div>
         </li>
-
-        <!--<li>
-          <div class="">
-            <a href="/jump/register" class="" title="免费注册" th:if="${userName} eq null">免费注册</a>
-            <a href="#" class=""  th:if="${userName} ne null" th:text="'欢迎您 ' + ${userName} + '!'"></a>
-          </div>
-        </li>
-        <li>
-          <div class="">
-            <a href="/jump/login" class="js-login" title="登录" th:if="${userName} eq null">登录</a>
-            <a href="/jump/login" class="js-login" title="退出" th:if="${userName} ne null">退出</a>
-          </div>
-        </li>
--->
       </ul>
     </div>
   </div>
@@ -87,6 +73,7 @@
     <div id="personal-left" class="personal-left">
       <ul>
         <li class="pleft-cur"><span><a href="/jump/personal"><i class="dot dot1"></i>账户总览</a></span></li>
+        <li><span><a href="/jump/huankuan"><i class="dot dot09"></i>我的还款</a></span></li>
         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/money_record">资金记录</a></span></li>
         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/deposits_history">投资记录</a></span></li>
         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/money_plan">回款计划</a></span></li>
@@ -97,7 +84,6 @@
         <li class=""><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/change_history">兑换历史</a></span></li>
         <li style="position:relative;"> <span> <a href="/jump/system_message"><i class="dot dot08"></i>系统信息 </a> </span> </li>
         <li><span><a href="/jump/account_setting"><i class="dot dot09"></i>账户设置</a></span></li>
-        <li><span><a href="/jump/huankuan"><i class="dot dot09"></i>我的还款</a></span></li>
       </ul>
     </div>
     <label id="typeValue" style="display:none;"> </label>
@@ -118,25 +104,6 @@
 												changeStatusTag = true;
 											}
 											$(this).children(".pxtxx-notice").show();
-											/*var displayValue = $(this).children(".pxtxx-notice").css("display");
-											if("block"==displayValue || "inline"==displayValue){
-												$(this).css("background-color","#fff");
-												$(this).mouseover(function(){
-													$(this).css("background-color","#fff");
-												});
-												$(this).mouseout(function(){
-													$(this).css("background-color","#fff");
-												});
-											}else if("none"==$(this).children(".pxtxx-notice").css("display")){
-												$(this).css("background-color","#F8F8F8");
-												$(this).mouseover(function(){
-													$(this).css("background-color","#F8F8F8");
-												});
-												$(this).mouseout(function(){
-													$(this).css("background-color","#fff");
-												});
-												
-											}*/
 											$(this).siblings().children(".pxtxx-notice").css("display","none");
 											if(changeStatusTag){
 												$(this).children("a").click();
@@ -183,7 +150,7 @@
       </dl>
       <dl>
         <dt>帮助中心</dt>
-        <dd><a href="/jump/help">新手入门</a><a href="/jump/personal">我的账户</a><a href="/jump/list">债权转让</a></dd>
+        <dd><a href="/jump/help">新手入门</a><a href="/jump/personal">我的账户</a></dd>
       </dl>
       <dl>
         <dt>联系我们</dt>

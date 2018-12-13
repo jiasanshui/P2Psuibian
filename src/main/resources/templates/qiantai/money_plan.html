@@ -49,20 +49,6 @@
             <a href="/jump/login" class="js-login" title="退出">退出</a>
           </div>
         </li>
-
-        <!--<li>
-          <div class="">
-            <a href="/jump/register" class="" title="免费注册" th:if="${userName} eq null">免费注册</a>
-            <a href="#" class=""  th:if="${userName} ne null" th:text="'欢迎您 ' + ${userName} + '!'"></a>
-          </div>
-        </li>
-        <li>
-          <div class="">
-            <a href="/jump/login" class="js-login" title="登录" th:if="${userName} eq null">登录</a>
-            <a href="/jump/login" class="js-login" title="退出" th:if="${userName} ne null">退出</a>
-          </div>
-        </li>
--->
       </ul>
     </div>
   </div>
@@ -87,17 +73,17 @@
     <div id="personal-left" class="personal-left">
       <ul>
         <li class="pleft-cur"><span><a href="/jump/personal"><i class="dot dot1"></i>账户总览</a></span></li>
+        <li><span><a href="/jump/huankuan"><i class="dot dot09"></i>我的还款</a></span></li>
         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/money_record">资金记录</a></span></li>
         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/deposits_record">投资记录</a></span></li>
         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/money_plan">回款计划</a></span></li>
         <li class=""><span><a href="/jump/renzheng"><i class="dot dot02"></i>个人身份认证</a> </span> </li>
         <li><span><a href="/jump/withdraw1"><i class="dot dot03"></i>充值</a></span></li>
-        <li class=""><span><a href="/jump/pay"><i class="dot dot04"></i>提现</a></span></li>
+        <li class=""><span><a href="/jump/pay1"><i class="dot dot04"></i>提现</a></span></li>
         <li style="position:relative;" class=""> <span> <a href="/jump/myred_packets"> <i class="dot dot06"></i> 我的红包 </a> </span> </li>
         <li class=""><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/change_history">兑换历史</a></span></li>
         <li style="position:relative;"> <span> <a href="/jump/system_message"><i class="dot dot08"></i>系统信息 </a> </span> </li>
         <li><span><a href="/jump/account_setting"><i class="dot dot09"></i>账户设置</a></span></li>
-        <li><span><a href="/jump/huankuan"><i class="dot dot09"></i>我的还款</a></span></li>
       </ul>
     </div>
     <div class="personal-main">
@@ -131,9 +117,6 @@
               <li> <span class="pmain-titledate">2015-10-1</span> <span class="pmain-titleproject">债权转让</span> <span class="pmain-titletype">房易贷</span> <span class="pmain-titlemoney">100000.00</span> </li>
               <li> <span class="pmain-titledate">2015-10-1</span> <span class="pmain-titleproject">债权转让</span> <span class="pmain-titletype">房易贷</span> <span class="pmain-titlemoney">100000.00</span> </li>
               <li> <span class="pmain-titledate">2015-10-1</span> <span class="pmain-titleproject">债权转让</span> <span class="pmain-titletype">房易贷</span> <span class="pmain-titlemoney">100000.00</span> </li>
-              <!--<div style=" width:760px;height:200px;padding-top:100px; text-align:center;color:#d4d4d4; font-size:16px;">
-										    <img src="images/nondata.png" width="60" height="60"><br><br>
-										   暂无回款计划</div>-->
             </ul>
           </div>
           </span>
@@ -157,7 +140,7 @@
       </dl>
       <dl>
         <dt>帮助中心</dt>
-        <dd><a href="/jump/help">新手入门</a><a href="/jump/personal">我的账户</a><a href="/jump/list">债权转让</a></dd>
+        <dd><a href="/jump/help">新手入门</a><a href="/jump/personal">我的账户</a></dd>
       </dl>
       <dl>
         <dt>联系我们</dt>
