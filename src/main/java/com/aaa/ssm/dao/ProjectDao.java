@@ -19,7 +19,7 @@ public interface ProjectDao {
      * 查询房屋抵押项目
      * @return
      */
-    @Select("select borrowid,applicant,tel,timelimit,purpose,des,quantity,cost,CONCAT(TO_CHAR(apr*100,'990.99'),'%') apr,borrowmoney,danbaostyle,payment,userid,stateid from borrow where rownum<3")
+    @Select("select borrowid,applicant,tel,timelimit,purpose,des,quantity,cost,CONCAT(TO_CHAR(apr*100,'990.99'),'%') apr,borrowmoney,danbaostyle,payment,userid,stateid,borrownum,winbidmoney,concat((winbidmoney/borrowmoney*100),'%') jindu from borrow where rownum<3")
     List<Map> getHousePro();
 
     /**
@@ -28,4 +28,14 @@ public interface ProjectDao {
      */
     @Select("select borrowid,applicant,tel,timelimit,purpose,des,quantity,cost,CONCAT(TO_CHAR(apr*100,'990.99'),'%') apr,borrowmoney,danbaostyle,payment,userid,stateid from borrow")
     List<Map> getHouseProAll();
+
+    /**
+     * 根据编号查询招标进度
+     * @param borrowNum
+     * @return
+     */
+    @Select("select borrowid,applicant,tel,timelimit,purpose,des,quantity,cost," +
+            "CONCAT(TO_CHAR(apr*100,'990.99'),'%') apr,borrowmoney,danbaostyle,payment,userid,stateid," +
+            "borrownum,winbidmoney from borrow where rownum<3")
+    List<Map> getJinduByNum(String borrowNum);
 }
