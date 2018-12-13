@@ -36,6 +36,7 @@ public class JumpController {
     public String jumpIndex(Model model){
         //显示房屋抵押招标
         List<Map> housePro = projectService.getHousePro();
+        System.out.println(housePro);
         model.addAttribute("houseProList",housePro);
         return "qiantai/index";
     }

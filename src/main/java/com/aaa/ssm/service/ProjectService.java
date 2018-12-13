@@ -22,4 +22,11 @@ public interface ProjectService {
      * @return
      */
     List<Map> getHouseProAll();
+
+    /**
+     * 根据编号查询招标进度
+     * @param borrowNum
+     * @return
+     */
+    List<Map> getJinduByNum(String borrowNum);
 }
