@@ -175,7 +175,7 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/infor")
-    public String infor(){
+    public String infor(String borrowNum){
         return "qiantai/infor";
     }
     /**

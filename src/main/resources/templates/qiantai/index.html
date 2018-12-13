@@ -53,6 +53,13 @@ $(document).ready(function() {
     }); //当鼠标放上去的时候，滚动停止，鼠标离开的时候滚动开始
 });
 
+  <!-- 跳转到详情页面 -->
+  $(function () {
+      $("#Project").click(function () {
+          var borrownum = $("#borrownum").val();
+          location.href="/jump/infor?borrowNum="+borrownum;
+      })
+  })
 </script>
 </head>
 <body>
@@ -235,9 +242,8 @@ $(function(){
               <input id="borrownum" type="hidden" th:value="${house.BORROWNUM}">
               <li>
                 <div class="title">
-                    <a href="/jump/infor" target="_blank"><i class="icon icon-zhai" title="债权贷"></i></a>
-                    <a href="/jump/infor" class="f18" title="金女士债权质押借款1万元" target="_blank"><span th:text="${house.DES}" style="font-size: 20px;"></span></a>
-
+                    <i class="icon icon-zhai" title="债权贷"></i>
+                    <p id="Project" class="f18" title="金女士债权质押借款1万元" target="_blank"><span th:text="${house.DES}" style="font-size: 20px;"></span></p>
                 </div>
                 <table width="100%" border="0" cellpadding="0" cellspacing="0">
                   <tbody>
