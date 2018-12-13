@@ -24,4 +24,9 @@ public class ProjectServiceImpl implements ProjectService{
     public List<Map> getHousePro() {
         return projectDao.getHousePro();
     }
+
+    @Override
+    public List<Map> getHouseProAll() {
+        return projectDao.getHouseProAll();
+    }
 }
