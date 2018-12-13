@@ -16,4 +16,10 @@ public interface ProjectService {
      * @return
      */
     List<Map> getHousePro();
+
+    /**
+     * 查询全部房屋抵押项目
+     * @return
+     */
+    List<Map> getHouseProAll();
 }

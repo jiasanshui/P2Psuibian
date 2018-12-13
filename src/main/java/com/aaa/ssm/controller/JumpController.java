@@ -1,7 +1,6 @@
 package com.aaa.ssm.controller;
 
 import com.aaa.ssm.service.ProjectService;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.aaa.ssm.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,9 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -87,7 +83,9 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/list")
-    public String list(){
+    public String list(Model model){
+        List<Map> housePro = projectService.getHouseProAll();
+        model.addAttribute("houseProList",housePro);
         return "qiantai/list";
     }
     /**
