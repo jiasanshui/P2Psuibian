@@ -52,4 +52,14 @@ public interface UserInfoDao {
     @Insert("insert into bohui(bid,reason,opraterid) values(seq_bohui_bid.nextval,#{REASON},#{OPRATERID})")
     int addBohui(Map map);
 
+    /**
+     * 查询当前ID所有信息(投标审核页面用)
+     * @param userId
+     * @return
+     */
+    @Select("<script>select userid,uname,realname,age,to_char(birthday,'yyyy-mm-dd') birthday, " +
+            " phone,email,address,idcard,icpica,icpicb,remark from userinfo where userid=#{USERID} "+
+            "</script>")
+            List<Map> getAllList(Integer userId);
+
 }

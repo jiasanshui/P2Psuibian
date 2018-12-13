@@ -1,40 +1,40 @@
 package com.aaa.ssm.controller;
 
-import com.aaa.ssm.service.UserInfoService;
+import com.aaa.ssm.service.TenderService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.core.io.ResourceLoader;
+
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
- * className:UserInfoController
+ * className:TenderController
  * discription:
- * author:fhm
- * createTime:2018-12-10 17:15
+ * author:hulu
+ * createTime:2018-12-12 14:52
  */
 @Controller
-@RequestMapping("/userInfo")
-public class UserInfoController {
-    //依赖注入service层
+@RequestMapping("/tenderCheck")
+public class TenderController {
     @Autowired
-    private UserInfoService userInfoService;
+    private TenderService tenderService;
 
     private final ResourceLoader resourceLoader;
 
     @Autowired
-    public UserInfoController(ResourceLoader resourceLoader) {
+    public TenderController(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
     }
     //取出配置文件中upload.path的值  赋给uploadPath类变量
     @Value(value = "${upload.path}")
     private String uploadPath;
+
     /**
      * 用户分页列表数据
      * @param map
@@ -43,10 +43,11 @@ public class UserInfoController {
     @ResponseBody //返回json
     @RequestMapping("/page")
     public Object page(@RequestBody Map map){
+
         //设置当前第几页和每页显示数量
         PageHelper.startPage(Integer.valueOf(map.get("pageNo")+""),Integer.valueOf(map.get("pageSize")+""));
         //用pageInfo对结果进行封装
-        PageInfo<Map> pageInfo=new PageInfo<Map>(userInfoService.getList(map));
+        PageInfo<Map> pageInfo=new PageInfo<Map>(tenderService.getList(map));
         //System.out.println(map);
         Map resultMap=new HashMap();
         //获取当前页数据
@@ -82,7 +83,7 @@ public class UserInfoController {
     @ResponseBody
     @RequestMapping("/update/{userId}")
     public Object update(@PathVariable("userId") Integer userId){
-        return userInfoService.update(userId);
+        return tenderService.update(userId);
     }
 
     /**
@@ -92,19 +93,17 @@ public class UserInfoController {
     @ResponseBody
     @RequestMapping("/edit")
     public Object edit(@RequestBody Map map){
-        int edit = userInfoService.edit(map);
-        int bohui = userInfoService.addBohui(map);
+        int edit = tenderService.edit(map);
+        int bohui = tenderService.addBohui(map);
         if(edit!=0 && bohui!=0){
             return 1;
         }
         return 0;
     }
-
-    @ResponseBody
+    /*@ResponseBody
     @RequestMapping("/list")
-    public Object getAllList(Integer userId){
-        List<Map> allList = userInfoService.getAllList(userId);
-        return allList.get(0);
-
-    }
+    public Object getAllList(@RequestBody Map map){
+        List<Map> allList = userInfoService.getAllList(Integer.valueOf(map.get("userId")+""));
+        return allList;
+    }*/
 }
