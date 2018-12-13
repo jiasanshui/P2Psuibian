@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.core.io.ResourceLoader;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -97,5 +98,13 @@ public class UserInfoController {
             return 1;
         }
         return 0;
+    }
+
+    @ResponseBody
+    @RequestMapping("/list")
+    public Object getAllList(Integer userId){
+        List<Map> allList = userInfoService.getAllList(userId);
+        return allList.get(0);
+
     }
 }

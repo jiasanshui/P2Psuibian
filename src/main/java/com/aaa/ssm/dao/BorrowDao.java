@@ -21,6 +21,6 @@ public interface BorrowDao {
      */
     @Insert("insert into borrow(borrowid,applicant,tel,timelimit,purpose,des,quantity,cost,apr,borrowmoney,danbaostyle,payment,userid,stateid,days,borrownum) " +
             "values(seq_tbborrowid.nextval,#{applicant},#{tel},#{timelimit},#{purpose},#{des},#{quantity},#{cost}," +
-            "#{apr},#{borrowmoney},#{danbaostyle},#{payment},#{userid},1,#{days},'BD'||lpad(trunc(dbms_random.value*10000),7,0))")
+            "#{apr},#{borrowmoney},#{danbaostyle},#{payment},#{userid},1,#{days},#{borrownum})")
     int add(Map map);
 }
