@@ -62,4 +62,10 @@ public interface UserInfoDao {
             "</script>")
             List<Map> getAllList(Integer userId);
 
+     /** 根据用户名获取用户信息
+     * @param username
+     * @return
+     */
+    @Select("select * from userinfo where uname=#{username}")
+    List<Map> getUserList(String username);
 }

@@ -93,25 +93,12 @@ $(document).ready(function() {
           </div>
         </li>
 
-        <!--<li>
-          <div class="">
-            <a href="/jump/register" class="" title="免费注册" th:if="${userName} eq null">免费注册</a>
-            <a href="#" class=""  th:if="${userName} ne null" th:text="'欢迎您 ' + ${userName} + '!'"></a>
-          </div>
-        </li>
-        <li>
-          <div class="">
-            <a href="/jump/login" class="js-login" title="登录" th:if="${userName} eq null">登录</a>
-            <a href="/jump/login" class="js-login" title="退出" th:if="${userName} ne null">退出</a>
-          </div>
-        </li>
--->
       </ul>
     </div>
   </div>
   <div class="header min-width">
     <div class="container">
-      <div class="fn-left logo"> <a class="" href="jump/index"> <img src="../images/logo.jpg"  title=""> </a> </div>
+      <div class="fn-left logo"> <a class="" href="/jump/index"> <img src="../images/logo.jpg"  title=""> </a> </div>
       <ul class="top-nav fn-clear">
         <li class="on"> <a href="/jump/index">首页</a> </li>
         <li> <a href="/jump/list" class="">我要投资</a> </li>
@@ -126,17 +113,18 @@ $(document).ready(function() {
 <!--banner-->
 <div class="flexslider">
   <ul class="slides">
-    <li style="background-image: url(../images/banner.jpg); width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1; background-position: 50% 0px; background-repeat: no-repeat no-repeat;" class=""><a href="#" target="_blank"></a></li>
-    <li style="background-image: url(../images/banner.jpg); width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1; background-position: 50% 0px; background-repeat: no-repeat no-repeat;" class=""><a href="#" target="_blank"></a></li>
-    <li style="background-image: url(../images/banner.jpg); width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1; background-position: 50% 0px; background-repeat: no-repeat no-repeat;" class=""><a href="#" target="_blank"></a></li>
-    <li style="background-image: url(../images/banner.jpg); width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1; background-position: 50% 0px; background-repeat: no-repeat no-repeat;" class=""><a href="# " target="_blank"></a></li>
-    <li style="background-image: url(../images/banner.jpg); width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1; background-position: 50% 0px; background-repeat: no-repeat no-repeat;" class=""><a href="#" target="_blank"></a></li>
+    <li style="background-image: url(../images/banner.jpg); width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1; background-position: 50% 0px; background-repeat: no-repeat no-repeat;" class=""></li>
+    <li style="background-image: url(../images/index1.jpg); width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1; background-position: 50% 0px; background-repeat: no-repeat no-repeat;" class=""></li>
+    <li style="background-image: url(../images/banner.jpg); width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1; background-position: 50% 0px; background-repeat: no-repeat no-repeat;" class=""></li>
+    <li style="background-image: url(../images/banner.jpg); width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1; background-position: 50% 0px; background-repeat: no-repeat no-repeat;" class=""></li>
+    <li style="background-image: url(../images/banner.jpg); width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1; background-position: 50% 0px; background-repeat: no-repeat no-repeat;" class=""></li>
   </ul>
 </div>
 <script src="../script/jquery.flexslider-min.js"></script>
 <script>
 $(function(){
     $('.flexslider').flexslider({
+        slideshowSpeed:2000,
         directionNav: true,
         pauseOnAction: false
     });
@@ -178,17 +166,6 @@ $(function(){
     //alert(pLength);
 });
 </script>
-<!--注册登陆模块-->
-<!--<div class="login_float">
-  <div class="index_login">
-    <div class="login_name">你我贷年化收益率</div>
-    <div class="login_num">10<font>%</font>~17<font>%</font></div>
-    <div class="login_info"> <span class="login_info1"><font>3~4倍</font>定期存款收益</span> <span class="login_info2"><font>30倍</font>活期存款收益</span> </div>
-    <div class="clear"></div>
-    <div class="login_btn"><a href="register.html">立即注册</a></div>
-    <p class="login_reg">已有账号，<a href="login.html">立即登录</a></p>
-  </div>
-</div>-->
 <script type="text/javascript">
 var gaintop;
 $(function(){
@@ -215,9 +192,9 @@ $(function(){
       </ul>
     </div>
   </div>
-  <a class="more" href="#">更多</a> </div>
+  <a class="more">更多</a> </div>
 <div class="ipubs"><span class="o1">累计投资金额:<strong>1,047,288,128.79</strong>元</span> <span class="o2">已还本息:<strong>400,507,750.81</strong>元</span><span class="o2">余额:<strong>677,679,983.07</strong>元</span><span class="o4">注册人数:<strong>20649</strong>人</span></div>
-<div class="feature"> <a class="fea1" href="#"> <i></i>
+<div class="feature"> <a class="fea1"> <i></i>
   <h3>高收益</h3>
   <span>年化收益率最高达“20%<br>
   50元起投，助您轻松获收益</span> </a> <a class="fea2" href="#"> <i></i>
@@ -242,15 +219,19 @@ $(function(){
         <div class="bd">
           <div class="des"><span class="fn-left">期限1-29天，期限短，收益见效快</span><a href="/jump/list" class="fn-right">查看更多&gt;&gt;</a></div>
           <div class="borrow-list">
-            <ul>
+            <ul th:each="house : ${houseProList}">
               <li>
-                <div class="title"><a href="/jump/infor" target="_blank"><i class="icon icon-zhai" title="债权贷"></i></a><a href="infor.html" class="f18" title="金女士债权质押借款1万元" target="_blank">金女士债权质押借款1万元</a></div>
+                <div class="title">
+                    <a href="/jump/infor" target="_blank"><i class="icon icon-zhai" title="债权贷"></i></a>
+                    <a href="/jump/infor" class="f18" title="金女士债权质押借款1万元" target="_blank"><span th:text="${house.DES}" style="font-size: 20px;"></span></a>
+
+                </div>
                 <table width="100%" border="0" cellpadding="0" cellspacing="0">
                   <tbody>
                     <tr>
-                      <td width="260">借款金额<span class="f24 c-333">10000.00</span>元</td>
-                      <td width="165">年利率<span class="f24 c-333">10.70% </span></td>
-                      <td width="180" align="center">期限<span class="f24 c-orange">4</span>天</td>
+                      <td width="260">借款金额<span class="f24 c-333" id="sum" th:text="${house.BORROWMONEY}"></span>元</td>
+                      <td width="165">年利率<span class="f24 c-orange" th:text="${house.APR}"></span></td>
+                      <td width="180" align="center">期限<span class="f24 c-orange" th:text="${house.TIMELIMIT}"></span>个月</td>
                       <td><div class="circle">
                           <div class="left progress-bar">
                             <div class="progress-bgPic progress-bfb5">
@@ -258,13 +239,15 @@ $(function(){
                             </div>
                           </div>
                         </div></td>
-                      <td align="right"><a class="ui-btn btn-gray" href="#">还款中</a> </td>
+                      <td align="right"><a class="ui-btn btn-gray" href="#">我要放款</a> </td>
                     </tr>
                   </tbody>
                 </table>
               </li>
-              <li>
-                <div class="title"><a href="/jump/infor" target="_blank"><i class="icon icon-zhai" title="债权贷"></i></a><a href="infor.html" class="f18" title="周先生债权质押借款0.1万元" target="_blank">周先生债权质押借款0.1万元</a></div>
+              <!--<li>
+                <div class="title"><a href="/jump/infor" target="_blank"><i class="icon icon-zhai" title="债权贷"></i></a>
+                  <span><a href="infor.html" class="f18" title="周先生债权质押借款0.1万元" target="_blank">周先生债权质押借款0.1万元</a></span>
+                </div>
                 <table width="100%" border="0" cellpadding="0" cellspacing="0">
                   <tbody>
                     <tr>
@@ -282,7 +265,7 @@ $(function(){
                     </tr>
                   </tbody>
                 </table>
-              </li>
+              </li>-->
             </ul>
           </div>
         </div>

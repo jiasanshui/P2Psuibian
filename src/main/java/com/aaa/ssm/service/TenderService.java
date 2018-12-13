@@ -1,5 +1,4 @@
 package com.aaa.ssm.service;
-
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -40,4 +39,27 @@ public interface TenderService {
      * @return
      */
     int addBohui(Map map);
+
+    /**
+     * 根据借款人查询投标信息
+     * @param map
+     * @return
+     */
+    List<Map> getPage(Map map);
+
+
+    /**
+     * 带参查询投标信息
+     * @param map
+     * @return
+     */
+    List<Map> getPageByParams(Map map);
+
+
+    /**
+     * 添加投标信息
+     * @param map
+     * @return
+     */
+    int add(Map map);
 }

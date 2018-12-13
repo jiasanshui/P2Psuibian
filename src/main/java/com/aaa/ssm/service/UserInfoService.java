@@ -1,5 +1,6 @@
 package com.aaa.ssm.service;
 
+
 import java.util.List;
 import java.util.Map;
 
@@ -44,4 +45,9 @@ public interface UserInfoService {
      * @return
      */
     List<Map> getAllList(Integer userId);
+     /** 根据用户名获取用户信息
+     * @param username
+     * @return
+     */
+    List<Map> getUserList(String username);
 }

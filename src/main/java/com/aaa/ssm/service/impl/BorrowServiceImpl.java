@@ -16,18 +16,12 @@ import java.util.Map;
  */
 @Service
 public class BorrowServiceImpl implements BorrowService {
-
-
+    //依赖注入dao
     @Autowired
     private BorrowDao borrowDao;
-    @Override
-    public List<Map> getPayList() {
-        System.out.println(borrowDao.getPayList()+"hjhgggg");
-        return borrowDao.getPayList();
-    }
-    @Override
-    public List<Map> getConditionList() {
-        return borrowDao.getConditionList();
-    }
 
+    @Override
+    public int add(Map map) {
+        return borrowDao.add(map);
+    }
 }

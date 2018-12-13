@@ -1,26 +1,21 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+	<meta charset="UTF-8">
 	<title>borrow</title>
-<link rel="stylesheet" type="text/css" href="../css/style.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
 	<link href="../css/common.css" rel="stylesheet" />
 	<link href="../css/index.css" rel="stylesheet" type="text/css">
-<!-- <link rel="stylesheet/less" type="text/css" href="css/style.less" /> -->
-<script type="text/javascript" src="../script/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="../script/all.js"></script>
-<!--[if IE 6]> 
-<script src="../js/iepng.js" type="text/javascript"></script>
-<script type="text/javascript">
-   EvPNG.fix('div, ul, img, li, input,span, p');
-
-</script>
-
-
-<![endif]-->
+	<script type="text/javascript" src="../script/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="../script/all.js"></script>
+	<!--<script src="../script/iepng.js" type="text/javascript"></script>-->
+	<!--<script type="text/javascript">-->
+   		<!--EvPNG.fix('div, ul, img, li, input,span, p');-->
+	<!--</script>-->
 </head>
 <body>
-<!-- header start -->
+<div >
 <div class="header-top min-width">
     <div class="container fn-clear"> <strong class="fn-left">咨询热线：400-668-6698<span class="s-time">服务时间：9:00 - 18:00</span></strong>
       <ul class="header_contact">
@@ -32,14 +27,31 @@
         <li class="c_2"><a href="#" target="_blank" title="官方QQ" alt="官方QQ"><b class="ico_head_QQ"></b></a></li>
         <li class="c_4"><a href="#" target="_blank" title="新浪微博" alt="新浪微博"><b class="ico_head_sina"></b></a></li>
       </ul>
-      <ul class="fn-right header-top-ul">
-        <li>
-          <div class=""><a href="/jump/register" class="app" title="免费注册">免费注册</a></div>
-        </li>
-        <li>
-          <div class=""><a href="/jump/login" class="js-login" title="登录">登录</a></div>
-        </li>
-      </ul>
+		<ul class="fn-right header-top-ul">
+			<!--用户名为空-->
+			<li th:if="${session.userName} eq null">
+				<div class="" >
+					<a href="/jump/register" class="" title="免费注册" >免费注册</a>
+				</div>
+			</li>
+			<li th:if="${session.userName} eq null">
+				<div class="" >
+					<a href="/jump/login" class="js-login" title="登录" >登录</a>
+				</div>
+			</li>
+			<!--用户名不为空-->
+			<li th:if="${session.userName} ne null">
+				<div class="">
+					<span th:text="欢迎您 "></span>
+					<span th:text="${session.userName}"></span>
+				</div>
+			</li>
+			<li th:if="${session.userName}ne null">
+				<div class="" >
+					<a href="/jump/login" class="js-login" title="退出">退出</a>
+				</div>
+			</li>
+		</ul>
     </div>
   </div>
 
@@ -56,8 +68,6 @@
 		</ul>
 	</div>
 </div>
-<!-- end  -->
-<!-- end banner -->
 <div class="bor_con_wper">
 	  <div class="bor_con px1000">
 	  	    <div class="bor_detail">
@@ -88,114 +98,101 @@
 											 <li><img src="../images/bor_pic04.png" alt="">
 											  无现有诉讼记录
 											 </li>
-											 
 										</ul>
 										<h3 class="bor_onel_tit"><span>提交资料</span></h3>
 										<ul class="bor_onel_ul">
-											 <li>&nbsp;<img src="../images/bor_pic05.png" alt="">省份证
+											 <li>&nbsp;<img src="../images/bor_pic05.png" alt="">身份证
 											 </li>
 											 <li><img src="../images/bor_pic06.png" alt="">申请资料
 											 </li>
 											 <li><img src="../images/bor_pic07.png" alt="">其他
 											 </li>
 										</ul>
-	  	    	   	    	  </div>  
-	  	    	   	    	  <!-- end l -->
-	  	    	   	    	  <div class="bor_det_oner fl">
-	  	    	   	    	  	     <form >
-	  	    	   	    	  	     	  <fieldset>
-
-	  	    	   	    	  	     	  	   <div>
-	  	    	   	    	  	     	  	   	   <label>申请人</label>
-	  	    	   	    	  	     	  	   	   <input type="text" name="applicant" >
-	  	    	   	    	  	     	  	   </div>
-	  	    	   	    	  	     	  	   <div class="mt15">
-	  	    	   	    	  	     	  	   	   <label>*借款金额</label>
-	  	    	   	    	  	     	  	   	   <input type="" class="bor_inputbg01" name="borrowmoney" >
-	  	    	   	    	  	     	  	   </div>
-                                               <div class="mt15">
-	  	    	   	    	  	     	  	   	   <label>*借款期限</label>
-	  	    	   	    	  	     	  	   	   <input type="" class="bor_inputbg02" name="timelimit">
-	  	    	   	    	  	     	  	   </div>
-	  	    	   	    	  	     	  	   <div class="mt15">
-	  	    	   	    	  	     	  	   	   <label>*手机号码</label>
-	  	    	   	    	  	     	  	   	   <input type="" name="tel">
-	  	    	   	    	  	     	  	   </div>
-	  	    	   	    	  	     	  	   <div class="mt15 ">
-	  	    	   	    	  	     	  	   	   <label class="guarmethod_l fl">*担保方式</label>
-												   <!--<select>
-													   <option selected="selected" disabled="disabled">贷款方式</option>
-													   <option>车辆抵押</option>
-													   <option>房屋抵押</option>
-													   <option>信用贷款</option>
-												   </select>-->
-												   <select id="" name="showWay" onchange="show_input(this.value)">
-													   <option value="1">车辆抵押</option>
-													   <option value="2">房屋抵押</option>
-													   <option value="0">信用贷</option>
-
-
-
-												   </select>
-
-												  <input type="input" name="borNum" value="数量" id="my_input1"/>
-												  <input type="input" name="borVal" value="价值" id="my_input2"/>
-											   </div>
-	  	    	   	    	  	     	  	   	   <!--<div class="mt15">
-													   <label>数量</label>
-	  	    	   	    	  	     	  	   	   	  <input type="number" class="bor_inputbg03 input2" name="quantity" oninput="if(value<0)value=0">
-												   </div>
-											  		<div class="mt15">
-														<label>价值</label>
-	  	    	   	    	  	     	  	   	   	  <input type="text" class="bor_inputbg04 input2" name="cost">
-													</div>-->
-	  	    	   	    	  	     	  	   <div class="mt15">
-	  	    	   	    	  	     	  	   	   <label>*借款用途</label>
-	  	    	   	    	  	     	  	   	   <select name="purpose">
-													   <option selected="selected" disabled="disabled" name="borType">选择借款类别</option>
-													   <option value="买房">买房</option>
-													   	<option>买车</option>
-													   <option>娶媳妇</option>
-	  	    	   	    	  	     	  	   	   </select>
-	  	    	   	    	  	     	  	   </div>
-	  	    	   	    	  	     	  	    <div class="mt15">
-	  	    	   	    	  	     	  	   	   <label>*借款描述</label> 
-	  	    	   	    	  	     	  	   	   <textarea name="des"></textarea>
-	  	    	   	    	  	     	  	   	 
-	  	    	   	    	  	     	  	   </div>
-											  <div class="mt15" >
-												  <label>*借款情况</label>
-												  <select id="jiekuan">
-												  </select>
-											  </div>
-											  <div class="mt15" >
-												  <label>借款年利率</label>
-												  <select name="par">
-													  <option selected="selected" disabled="disabled">请选择</option>
-													  <option value="0.05">5%</option>
-													  <option value="0.10">10%</option>
-													  <option value="0.15">15%</option>
-												  </select>
-											  </div>
-											  <div class="mt15" >
-												  <label>*还款方式</label>
-												  <select id="huankuan">
-													  <option selected="selected" disabled="disabled">请选择</option>
-												  </select>
-											  </div> 
-											  <div class="mt15" >
-	  	    	   	    	  	     	  	   	   <label>*验证码</label>
-	  	    	   	    	  	     	  	   	   <input type="text" class="yanzheng" >
-	  	    	   	    	  	     	  	   </div>
-	  	    	   	    	  	     	  	   <div class="mt30">
-	  	    	   	    	  	     	  	   	   <label></label>
-	  	    	   	    	  	     	  	   	   <a href="#" class="bor_btn">提交材料</a>
-	  	    	   	    	  	     	  	   </div>
-	  	    	   	    	  	     	  </fieldset>
-
-	  	    	   	    	  	     </form>
 	  	    	   	    	  </div>
-	  	    	   	    </div>
+							<!-- end l -->
+							<div class="bor_det_oner fl">
+								<form id="form1" method="post" action="/borrow/addBorrow">
+									<fieldset>
+										<input type="hidden" th:value="${uid}" name="userid">
+										<div>
+											<label>申请人</label>
+											<input type="" readonly="true" th:value="${realName}" name="applicant">
+										</div>
+										<div class="mt15">
+											<label>*手机号码</label>
+											<input type="" name="tel"  id="tel" onblur="checkTel()"><span id="te"></span>
+										</div>
+										<div class="mt15 guarmethod clearfix">
+											<label class="guarmethod_l fl">*担保方式</label>
+											<select id="danbao" name="danbaostyle">
+												<option selected="selected" disabled="disabled">选择担保方式</option>
+												<option>信用贷款</option>
+												<option>车辆之押贷款</option>
+												<option>房屋之押贷款</option>
+											</select>
+										</div>
+										<div class="mt15" id="house">
+											<label>*数量</label>
+											<input type="" name="quantity">
+											<span value="辆/栋">辆/栋</span>
+										</div>
+										<div class="mt15" id="price">
+											<label>*总价值</label>
+											<input type="text" name="cost" id="cost" onblur="checkCost()"><span id="co"></span>
+										</div>
+										<div class="mt15" >
+											<label>*投标天数</label>
+											<input type="text" name="days" id="days" onblur="checkdays()"><span id="day"></span>
+										</div>
+										<div class="mt15">
+											<label>*借款金额</label>
+											<input type="number" class="bor_inputbg01" name="borrowmoney" id="bor" onblur="checkbor()"><span id="bo"></span>
+										</div>
+										<div class="mt15">
+											<label>*借款用途</label>
+											<select name="purpose">
+												<option selected="selected" disabled="disabled">请选择借款类别</option>
+												<option>旅游</option>
+												<option>教育</option>
+												<option>购物</option>
+												<option>其它</option>
+											</select>
+										</div>
+										<div class="mt15">
+											<label>*借款期限</label>
+											<select id="timelimit" name="timelimit">
+												<option>选择借款期限</option>
+												<option>1</option>
+												<option>3</option>
+												<option>6</option>
+												<option>12</option>
+											</select>个月
+										</div>
+										<div class="mt15">
+											<label>*借款描述</label>
+											<textarea name="des"></textarea>
+										</div>
+										<div class="mt15" >
+											<label>借款年利率</label>
+											<input type="text" name="apr" id="apr" readonly="true">
+										</div>
+										<div class="mt15" >
+											<label>*还款方式</label>
+											<select id="huankuan" name="payment">
+												<option selected="selected" disabled="disabled">请选择</option>
+												<option >到期付本付息</option>
+												<option >按月付息，到期还本</option>
+												<option >等额本息</option>
+											</select>
+										</div>
+										<div class="mt30">
+											<label></label>
+											<button class="bor_btn" onclick="submitBtn()">提交材料</button>
+										</div>
+									</fieldset>
+								</form>
+							</div>
+						</div>
 	  	    	   	    <!-- end 房产抵押 -->
 	  	    	   	    <div class="bor_det_one" style="display:none;">
 	  	    	   	    	  2  
@@ -213,54 +210,113 @@
 	  	    </div>
 	  </div>
 </div>
-
+</div>
+</body>
 <script>
     $(function(){
-        $.ajax({
-            type:"post",
-            dataType:"json",
-            url:"/borrow/getPayList",
-            success:function(data){
-                if(data!=''){
-                    var Str = "";
-                    for (var i = 0; i < data.length; i++) {
-                        Str +="<option value='"+data[i].ID+"'>"+data[i].DES+"</option>";
-                    }
-                    $("#huankuan").append(Str);
-                }
+        $("#danbao").change(function(){
+            var danbao=$("#danbao").val();
+            if(danbao=='信用贷款'){
+                $("#house").css("display","none");
+                $("#price").css("display","none");
+            }
+            if(danbao=='车辆之押贷款'||danbao=='房屋之押贷款'){
+                $("#house").css("display","");
+                $("#price").css("display","");
             }
         });
-    });
-    $(function(){
-        $.ajax({
-            type:"post",
-            dataType:"json",
-            url:"/borrow/getConditionList",
-            success:function(data){
-                if(data!=''){
-                    var Str = "";
-                    for (var i = 0; i < data.length; i++) {
-                        Str +="<option value='"+data[i].ID+"'>"+data[i].DES+"</option>";
-                    }
-                    $("#jiekuan").append(Str);
-                }
-            }
+        $("#timelimit").change(function(){
+            var timelimit=$("#timelimit").val();
+            if(timelimit=='1'){
+                $("#apr").val("0.05");
+            }else if(timelimit=='3'){
+                $("#apr").val("0.06");
+			}else if(timelimit=='6'){
+                $("#apr").val("0.07");
+			}else{
+                $("#apr").val("0.08");
+			}
         });
-    });
-    function show_input(test_value){
-
-        if(test_value==0){
-
-            document.getElementById("my_input1").style.display="none";
-            document.getElementById("my_input2").style.display="none";
-
-        }else{
-            document.getElementById("my_input2").style.display="block";
-            document.getElementById("my_input1").style.display="block";
-
+    })
+    //校验电话
+    function checkTel(){
+        var tel = document.getElementById("tel");
+        var te = document.getElementById("te");
+        var reg=/^1[3|5|7|8][0-9]{9}$/;
+        if(reg.test(tel.value)){
+            te.style.color="green";
+            te.innerHTML="手机号格式正确";
+            tel.style.borderWidth="1px gray solid";
+            return true;
         }
-
+        else{
+            te.style.color="red";
+            tel.focus();
+            te.innerHTML="手机号格式错误";
+            te.style.borderWidth="1px red solid";
+            return false;
+        }
+	}
+	//校验总价值
+	function  checkCost(){
+        var cost = document.getElementById("cost");
+        var co = document.getElementById("co");
+        var reg=/^[1-9]\d*$/;
+        if(cost.value.length>=0&&cost.value.length<=7&&reg.test(cost.value)){
+            co.style.color="green";
+            co.innerHTML="金额符合提交";
+            cost.style.borderWidth="1px gray solid";
+            return true;
+        }
+        else{
+            co.style.color="red";
+            cost.focus();
+            co.innerHTML="金额不符合提交";
+            co.style.borderWidth="1px red solid";
+            return false;
+        }
+	}
+    //校验借款金额
+    function checkbor(){
+        var cost = document.getElementById("cost");
+        if(cost==null&&cost==''){
+            $("#co").html("请先输入总价值").css("color","red");
+		}
+        var bor = document.getElementById("bor");
+        var bo = document.getElementById("bo");
+        var reg=/^[1-9]\d*$/;
+        if(bor.value.length>=0&&bor.value.length<=7&&reg.test(bor.value)){
+            bo.style.color="green";
+            bo.innerHTML="金额符合提交";
+            bor.style.borderWidth="1px gray solid";
+            return true;
+        } else if(bor>cost){
+            $("#bo").html("借款不能大于总价值").css("color","red");
+		} else{
+            bo.style.color="red";
+            bor.focus();
+            bo.innerHTML="金额不符合提交";
+            bo.style.borderWidth="1px red solid";
+            return false;
+        }
+    }
+	//校验天数
+	function checkdays() {
+        var reg=/^[1-9]\d*$/;
+        var days=$("#days").val();
+        if(days.length>0&&days.length<=3&&reg.test(days)){
+            $("#day").html("天数符合提交").css("color","green");
+		}else{
+            $("#day").html("天数必须小于或等于3位数").css("color","red");
+		}
+    }
+    //提交表单数据
+	function submitBtn(){
+	    if(checkbor()&&checkTel()&&checkCost()) {
+            var form = document.getElementById("form1");
+            form.submit();
+        }
     }
 </script>
-</body>
+
 </html>

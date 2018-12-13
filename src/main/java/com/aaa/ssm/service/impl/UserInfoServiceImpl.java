@@ -46,4 +46,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         return userInfoDao.getAllList(userId);
     }
 
+    public List<Map> getUserList(String username) {
+        return userInfoDao.getUserList(username);
+    }
 }
