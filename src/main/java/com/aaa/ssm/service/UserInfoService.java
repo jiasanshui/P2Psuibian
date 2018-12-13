@@ -40,7 +40,12 @@ public interface UserInfoService {
     int addBohui(Map map);
 
     /**
-     * 根据用户名获取用户信息
+     * 查询当前ID所有信息
+     * @param userId
+     * @return
+     */
+    List<Map> getAllList(Integer userId);
+     /** 根据用户名获取用户信息
      * @param username
      * @return
      */

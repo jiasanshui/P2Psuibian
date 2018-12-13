@@ -53,7 +53,16 @@ public interface UserInfoDao {
     int addBohui(Map map);
 
     /**
-     * 根据用户名获取用户信息
+     * 查询当前ID所有信息(投标审核页面用)
+     * @param userId
+     * @return
+     */
+    @Select("<script>select userid,uname,realname,age,to_char(birthday,'yyyy-mm-dd') birthday, " +
+            " phone,email,address,idcard,icpica,icpicb,remark from userinfo where userid=#{USERID} "+
+            "</script>")
+            List<Map> getAllList(Integer userId);
+
+     /** 根据用户名获取用户信息
      * @param username
      * @return
      */

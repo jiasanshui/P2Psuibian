@@ -21,4 +21,11 @@ public interface ProjectDao {
      */
     @Select("select borrowid,applicant,tel,timelimit,purpose,des,quantity,cost,CONCAT(TO_CHAR(apr*100,'990.99'),'%') apr,borrowmoney,danbaostyle,payment,userid,stateid from borrow where rownum<3")
     List<Map> getHousePro();
+
+    /**
+     *查询全部房屋抵押项目
+     * @return
+     */
+    @Select("select borrowid,applicant,tel,timelimit,purpose,des,quantity,cost,CONCAT(TO_CHAR(apr*100,'990.99'),'%') apr,borrowmoney,danbaostyle,payment,userid,stateid from borrow")
+    List<Map> getHouseProAll();
 }

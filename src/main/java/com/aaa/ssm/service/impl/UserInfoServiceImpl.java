@@ -42,6 +42,10 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
+    public List<Map> getAllList(Integer userId) {
+        return userInfoDao.getAllList(userId);
+    }
+
     public List<Map> getUserList(String username) {
         return userInfoDao.getUserList(username);
     }
