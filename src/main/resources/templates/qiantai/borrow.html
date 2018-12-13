@@ -294,7 +294,6 @@
             return false;
 		}
         if(bor.value.length>=0&&bor.value.length<=7&&reg.test(bor.value)){
-            alert("总价值"+cost.value+"--借款金额"+bor.value);
             if(parseFloat(cost.value)<parseFloat(bor.value)){
                 bo.style.color="red";
                 bor.focus();
