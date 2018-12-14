@@ -27,10 +27,7 @@ public interface TenderDao {
      * @param map
      * @return
      */
-    @Insert("insert into tender(realname,taomount,ttime,tway values(#{realName},#{tAmount},#{tTime},#{tWay}))")
+    @Insert("insert into tender(id,realname,tamount,ttime,tway,userid) values(seq_tender_id.nextval,#{realName},#{tamount},to_date(to_char(sysdate,'yyyy-mm-dd','yyyy-mm-dd'),#{tway},#{userid})")
     int add(Map map);
 
 }
-
-
-

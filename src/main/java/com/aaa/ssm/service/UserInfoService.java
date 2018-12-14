@@ -45,4 +45,11 @@ public interface UserInfoService {
      * @return
      */
     List<Map> getUserList(String username);
+    /**
+     * 根据用户ID获取用户信息
+     * @param userid
+     * @return
+     */
+    List<Map> getUserListById(Integer userid);
+
 }

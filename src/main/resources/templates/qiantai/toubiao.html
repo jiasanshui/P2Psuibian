@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>p2p网贷平台</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="../css/common.css" rel="stylesheet" />
+<link href="../css/register.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../script/jquery.min.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<!--<script src="script/login.js" type="../text/javascript"></script>-->
+</head>
+<body>
+<header>
+  <div class="header-top min-width">
+    <div class="container fn-clear"> <strong class="fn-left">咨询热线：400-668-6698<span class="s-time">服务时间：9:00 - 18:00</span></strong>
+      <ul class="header_contact">
+        <li class="c_1"> <a class="ico_head_weixin" id="wx"></a>
+          <div class="ceng" id="weixin_xlgz" style="display: none;">
+            <div class="cnr"> <img src="../images/code.png"> </div>
+            <b class="ar_up ar_top"></b> <b class="ar_up_in ar_top_in"></b> </div>
+        </li>
+        <li class="c_2"><a href="#" target="_blank" title="官方QQ" alt="官方QQ"><b class="ico_head_QQ"></b></a></li>
+        <li class="c_4"><a href="#" target="_blank" title="新浪微博" alt="新浪微博"><b class="ico_head_sina"></b></a></li>
+      </ul>
+      <ul class="fn-right header-top-ul">
+          <!--用户名为空-->
+          <li th:if="${session.userName} eq null">
+              <div class="" >
+                  <a href="/jump/register" class="" title="免费注册" >免费注册</a>
+              </div>
+          </li>
+          <li th:if="${session.userName} eq null">
+              <div class="" >
+                  <a href="/jump/login" class="js-login" title="登录" >登录</a>
+              </div>
+          </li>
+          <!--用户名不为空-->
+          <li th:if="${session.userName} ne null">
+              <div class="">
+                  <span th:text="欢迎您 "></span>
+                  <span th:text="${session.userName}"></span>
+              </div>
+          </li>
+          <li th:if="${session.userName}ne null">
+              <div class="" >
+                  <a href="/jump/login" class="js-login" title="退出">退出</a>
+              </div>
+          </li>
+      </ul>
+    </div>
+  </div>
+  <div class="header min-width">
+    <div class="container">
+      <div class="fn-left logo"> <a class="" href="index.html"> <img src="../images/logo.jpg"  title=""> </a> </div>
+      <ul class="top-nav fn-clear">
+        <li> <a href="/jump/index">首页</a> </li>
+        <li> <a href="/jump/list" class="">我要投资</a> </li>
+          <li> <a href="/jump/borrow" class="">我要借款</a> </li>
+        <li> <a href="/jump/help">安全保障</a> </li>
+        <li class="top-nav-safe"> <a href="/jump/personal">我的账户</a> </li>
+        <li> <a href="/jump/about">关于我们</a> </li>
+      </ul>
+    </div>
+  </div>
+</header>
+<!--注册-->
+<div class="wrap">
+ <form name="LonginForm" action="/tender/add" method="post" id="form1">
+	<div class="tdbModule loginPage">
+		<div class="registerTitle">投标信息</div>
+		<div class="registerCont">
+            <input type="hidden" th:value="${uid}" name="userid" id="uid">
+			<ul>
+				<li>
+					<span class="dis">投标人：</span><input class="input" type="text"  readonly="true" name="realName"  maxlength="24" id="user" tabindex="1" autocomplete="off" th:value="${realName}">
+				</li>
+	                
+				<li>
+				   <span class="dis">投资金额：</span><input class="input" type="text" name="tamount"  id="bor" maxlength="24" tabindex="1" autocomplete="off" onblur="checkmoney()">
+                    <span id="bo"></span>
+				</li>
+                <li>
+                    <span class="dis">支付密码：</span><input class="input" type="password" name="password"  id="paynum" maxlength="24" tabindex="1" autocomplete="off" onblur="checkPaypwd()">
+                    <span id="pay"></span>
+                </li>
+                <li>
+                    <span class="dis">投标方式：</span>
+                    <select  name="tway">
+                        <option>选择借款期限</option>
+                        <option>自动</option>
+                        <option>手动</option>
+                    </select>
+                </li>
+				<li class="btn">
+					<input type="button" class="radius1" value="立即提交"  onclick="checkAll()" id="submitBtn">
+				</li>
+			</ul>
+		</div>
+	</div>
+ </form>
+</div>
+<!--网站底部-->
+<div id="footer" class="ft">
+  <div class="ft-inner clearfix">
+    <div class="ft-helper clearfix">
+      <dl>
+        <dt>关于我们</dt>
+        <dd><a href="/jump/about">公司简介</a><a href="/jump/manage_team">管理团队</a><a href="/jump/site_notice">网站公告</a></dd>
+      </dl>
+      <dl>
+        <dt>相关业务</dt>
+        <dd><a href="/jump/list">我要投资</a><a href="/jump/borrow">我要借款</a></dd>
+      </dl>
+      <dl>
+        <dt>帮助中心</dt>
+        <dd><a href="/jump/help">新手入门</a><a href="/jump/personal">我的账户</a><a href="/jump/list">债权转让</a></dd>
+      </dl>
+      <dl>
+        <dt>联系我们</dt>
+        <dd><a href="/jump/contact">联系我们</a></dd>
+      </dl>
+    </div>
+    <div class="ft-service">
+      <dl>
+        <dd>
+          <p><strong>400-660-1268</strong><br>
+            工作日 9:00-22:00<br>
+            官方交流群:<em>12345678</em><br>
+            工作日 9:00-22:00 / 周六 9:00-18:00<br>
+          </p>
+          <div class="ft-serv-handle clearfix"><a class="icon-hdSprite icon-ft-sina a-move a-moveHover" title="你我贷新浪微博" target="_blank" href="#"></a><a class="icon-hdSprite icon-ft-qqweibo a-move a-moveHover" title="你我贷腾讯微博" target="_blank" href="#"></a><a class="icon-ft-qun a-move a-moveHover" title="你我贷QQ群" target="_blank" href="#"></a><a class="icon-hdSprite icon-ft-email a-move a-moveHover mrn" title="阳光易贷email" target="_blank" href="mailto:xz@yirenbao.com"></a></div>
+        </dd>
+      </dl>
+    </div>
+    <div class="ft-wap clearfix">
+      <dl>
+        <dt>官方二维码</dt>
+        <dd><span class="icon-ft-erweima"><img src="../images/code.png" style="display: inline;"></span></dd>
+      </dl>
+    </div>
+  </div>
+  <div class="ft-record">
+    <div class="ft-approve clearfix"><a class="icon-approve approve-0 fadeIn-2s" target="_blank" href="#"></a><a class="icon-approve approve-1 fadeIn-2s" target="_blank" href="#"></a><a class="icon-approve approve-2 fadeIn-2s" target="_blank" href="#"></a><a class="icon-approve approve-3 fadeIn-2s" target="_blank" href="#"></a></div>
+    <div class="ft-identity">©2015 你我贷 All rights reserved&nbsp;&nbsp;&nbsp;<span class="color-e6">|</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="color-e6">|</span>&nbsp;&nbsp;&nbsp;<a target="_blank" href="http://www.miitbeian.gov.cn/">皖ICP备12345678号-1</a></div>
+  </div>
+</div>
+<script type="text/javascript">
+   //校验投资金额
+   var ss = 0;
+   function checkmoney(){
+       //var bor=$("#bor").val();
+       var bor = document.getElementById("bor");
+       var bo = document.getElementById("bo");
+       var reg=/^[1-9]\d*$/;
+       if(bor.value.length>=0&&bor.value.length<=7&&reg.test(bor.value)){
+           bo.style.color="green";
+           bo.innerHTML="金额符合提交";
+           bor.style.borderWidth="1px gray solid";
+           ss=1;
+       }
+       else{
+           bo.style.color="red";
+           bor.focus();
+           bo.innerHTML="金额不符合提交";
+           bo.style.borderWidth="1px red solid";
+       }
+   }
+   //校验支付密码
+   var sb = 0;
+    function checkPaypwd() {
+        var payPwd = $("#paynum").val();
+        var uid = $("#uid").val();
+        $.post(
+            "/tender/checkPayPwd",
+            {userid: uid, payPwd: payPwd},
+            function (result) {
+                if (result.suc == 'true') {
+                    $("#pay").html("密码正确").css("color", "green");
+                    sb = 1;
+                }else{
+                    $("#pay").html("支付密码不正确").css("color", "red");
+                }
+            }, "json"
+        )
+    }
+    //表单提交
+   function checkAll(){
+       if(ss!=1){
+           alert(ss);
+           return false;
+       }else if(sb!=1){
+           alert(sb);
+           return false;
+       }else {
+           var form = document.getElementById("form1");
+           form.submit();
+       }
+   }
+</script>
+
+</body>
+</html>
+</html>
