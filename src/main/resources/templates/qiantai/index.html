@@ -130,16 +130,6 @@ $(document).ready(function() {
 <script src="../script/jquery.flexslider-min.js"></script>
 <script>
 $(function(){
-    //首页进度显示
-    /*var size = $("#size").val();
-    for (var i = 1; i <=size ; i++) {
-        var jinduId = "jindu"+i;
-        var jindu = $("#"+jinduId).html();
-        $("#diva").attr("class", "progress-bgPic progress-bfb" + Math.floor(jindu.substr(0, 2) / 10));
-    }*/
-    var jindu = $("#jindu").html();
-    $("#diva").attr("class", "progress-bgPic progress-bfb" + Math.floor(jindu.substr(0, 2) / 10));
-
     //首页图片播放
     $('.flexslider').flexslider({
         slideshowSpeed:2000,
@@ -253,8 +243,8 @@ $(function(){
                       <td width="180" align="center">期限<span class="f24 c-orange" th:text="${house.TIMELIMIT}"></span>个月</td>
                       <td><div class="circle">
                           <div class="left progress-bar">
-                              <div id="diva" class="progress-bgPic progress-bfb5">
-                                <div class="show-bar"><span id="jindu" th:text="${house.JINDU}"></span></div>
+                              <div id="diva" th:class="'progress-bgPic progress-bfb'+${house.JINDUA}">
+                                <div class="show-bar"><span  th:text="${house.JINDU}"></span></div>
                               </div>
                           </div>
                         </div></td>

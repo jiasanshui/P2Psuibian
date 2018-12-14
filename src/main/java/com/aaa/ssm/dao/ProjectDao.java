@@ -19,14 +19,14 @@ public interface ProjectDao {
      * 查询房屋抵押项目
      * @return
      */
-    @Select("select borrowid,applicant,tel,timelimit,purpose,des,quantity,cost,CONCAT(TO_CHAR(apr*100,'990.99'),'%') apr,borrowmoney,danbaostyle,payment,userid,stateid,borrownum,winbidmoney,concat((winbidmoney/borrowmoney*100),'%') jindu from borrow where rownum<3")
+    @Select("select borrowid,applicant,tel,timelimit,purpose,des,quantity,cost,CONCAT(TO_CHAR(apr*100,'990.99'),'%') apr,borrowmoney,danbaostyle,payment,username,stateid,borrownum,winbidmoney,concat((winbidmoney/borrowmoney*100),'%') jindu,round(winbidmoney/borrowmoney*10) jindua  from borrow where rownum<3")
     List<Map> getHousePro();
 
     /**
      *查询全部房屋抵押项目
      * @return
      */
-    @Select("select borrowid,applicant,tel,timelimit,purpose,des,quantity,cost,CONCAT(TO_CHAR(apr*100,'990.99'),'%') apr,borrowmoney,danbaostyle,payment,userid,stateid from borrow")
+    @Select("select borrowid,applicant,tel,timelimit,purpose,des,quantity,cost,CONCAT(TO_CHAR(apr*100,'990.99'),'%') apr,borrowmoney,danbaostyle,payment,username,stateid from borrow")
     List<Map> getHouseProAll();
 
     /**
@@ -35,7 +35,7 @@ public interface ProjectDao {
      * @return
      */
     @Select("select borrowid,applicant,tel,timelimit,purpose,des,quantity,cost," +
-            "CONCAT(TO_CHAR(apr*100,'990.99'),'%') apr,borrowmoney,danbaostyle,payment,userid,stateid," +
+            "CONCAT(TO_CHAR(apr*100,'990.99'),'%') apr,borrowmoney,danbaostyle,payment,username,stateid," +
             "borrownum,winbidmoney from borrow where rownum<3")
     List<Map> getJinduByNum(String borrowNum);
 }

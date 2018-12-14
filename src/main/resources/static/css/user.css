@@ -661,7 +661,8 @@ transition: transform 1s linear;}
 
 
 /*个人中心右侧*/
-.personal-main{ float:left; width:940px; height:auto; margin-top:10px; color:#848484}
+.personal-huan{ float:left;width:1200px;height:auto;margin-top:10px; color:#848484}
+.personal-main{ float:left;width: 940px;height:auto;margin-top:10px; color:#848484}
 .pmain-profile{ width:940px; height:340px; background-color:#fff;}
 /*叹号*/
 .markicon{ background:url(../../images/grzx.png) 0 -240px; width:21px; height:18px; display:inline-block; margin-left:5px; cursor:pointer;}
@@ -728,8 +729,8 @@ transition: transform 1s linear;}
 .icon-show-li{position:absolute; top:-10px; left:-5px; background:url(../../images/grzx.png) -75px -240px; width:19px; height:7px; display:block;}
 
 
-.pmain-money ul{width:760px;  height:104px; margin-left:30px;}
-.pmain-money li{ float:left; width:200px; padding:0 25px; height:55px; margin:25px 0; border-left:1px solid #F2F2F2;}
+.pmain-money ul{width:1000px;  height:104px; margin-left:30px;}
+.pmain-money li{ float:left; width:160px; padding:0 25px; height:55px; margin:25px 0; border-left:1px solid #F2F2F2;}
 .pmain-money li.none{ border:none;}
 .pmain-money li span{ display:block; margin-bottom:10px;}
 
@@ -805,7 +806,7 @@ transition: transform 1s linear;}
 
 .personal-page span.on,.personal-page span:hover{ background-color:#0caffe; color:#fff; cursor:pointer}
 /*个人中心右侧*/
-.personal-zhsz,.personal-xtxx,.personal-pay,.personal-back,.personal-invest,.personal-investnote,.personal-deposit,.personal-money,.personal-wdhb,.personal-yqjl{float:left; width:880px;color:#848484; height:560px; background:#fff; padding:0 30px 30px; font-size:14px;}
+.personal-zhsz,.personal-xtxx,.personal-pay,.personal-back,.personal-invest,.personal-investnote,.personal-deposit,.personal-money,.personal-wdhb,.personal-yqjl{float:left; width:1100px;color:#848484; height:560px; background:#fff; padding:0 30px 30px; font-size:14px;}
 
 
 /*账户设置*/
