@@ -59,4 +59,14 @@ public interface UserInfoDao {
      */
     @Select("select * from userinfo where uname=#{username}")
     List<Map> getUserList(String username);
+
+    /**
+     * 根据用户ID获取用户信息
+     * @param userid
+     * @return
+     */
+    @Select("select * from userinfo where userid=#{userid}")
+    List<Map> getUserListById(Integer userid);
+
+
 }
