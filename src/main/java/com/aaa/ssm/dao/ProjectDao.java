@@ -36,7 +36,7 @@ public interface ProjectDao {
      * @return
      */
     @Select("select borrowid,applicant,tel,timelimit,purpose,des,quantity,cost," +
-            "CONCAT(TO_CHAR(apr*100,'990.99'),'%') apr,borrowmoney,danbaostyle,payment,userid,stateid," +
+            "CONCAT(TO_CHAR(apr*100,'990.99'),'%') apr,borrowmoney,danbaostyle,payment,username,stateid," +
             "borrownum,winbidmoney from borrow where rownum<3")
     List<Map> getJinduByNum(String borrowNum);
 }
