@@ -68,4 +68,11 @@ public interface UserInfoDao {
      */
     @Select("select * from userinfo where uname=#{username}")
     List<Map> getUserList(String username);
+
+    /** 根据用户名获取用户信息，判断用户是否实名认证
+     * @param username
+     * @return
+     */
+    @Select("select * from userinfo where uname=#{username}")
+    List<Map> getUser(String username);
 }

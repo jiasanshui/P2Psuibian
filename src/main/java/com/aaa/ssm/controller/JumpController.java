@@ -2,6 +2,7 @@ package com.aaa.ssm.controller;
 
 import com.aaa.ssm.service.ProjectService;
 import com.aaa.ssm.util.RandomUtil;
+import com.aaa.ssm.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.aaa.ssm.service.UserInfoService;
@@ -97,13 +98,19 @@ public class JumpController {
     public String borrow(HttpSession session, Model model){
         String username=(String) session.getAttribute("userName");
         //根据用户名去获取用户信息
-        List<Map> list = userInfoService.getUserList(username);
-        model.addAttribute("realName",list.get(0).get("REALNAME"));
-        model.addAttribute("uid",list.get(0).get("USERID"));
-        //调用生成随机数工具类生成随机数
-        String num = RandomUtil.getBorrowNumByTime();
-        model.addAttribute("num",num);
-        return "qiantai/borrow";
+        Map map= userInfoService.getUser(username);
+        Object msg = map.get("msg");
+        if (StringUtil.isEmpty(msg)){
+            //审核通过
+            //调用生成随机数工具类生成随机数
+            String num = RandomUtil.getBorrowNumByTime();
+            model.addAttribute("num",num);
+            model.addAttribute("userName",username);
+            model.addAttribute("realName",map.get("REALNAME"));
+            return "qiantai/borrow";
+
+        }
+        return "qiantai/renzheng";
     }
     /**
      * 跳转到安全保障页面
