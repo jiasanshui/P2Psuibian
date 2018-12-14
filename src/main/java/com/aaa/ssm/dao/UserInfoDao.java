@@ -3,8 +3,6 @@ package com.aaa.ssm.dao;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import java.util.List;
 import java.util.Map;
 
@@ -53,7 +51,16 @@ public interface UserInfoDao {
     int addBohui(Map map);
 
     /**
-     * 根据用户名获取用户信息
+     * 查询当前ID所有信息(投标审核页面用)
+     * @param userId
+     * @return
+     */
+    @Select("<script>select userid,uname,realname,age,to_char(birthday,'yyyy-mm-dd') birthday, " +
+            " phone,email,address,idcard,icpica,icpicb,remark from userinfo where userid=#{USERID} "+
+            "</script>")
+            List<Map> getAllList(Integer userId);
+
+     /** 根据用户名获取用户信息
      * @param username
      * @return
      */
@@ -69,4 +76,11 @@ public interface UserInfoDao {
     List<Map> getUserListById(Integer userid);
 
 
+
+    /** 根据用户名获取用户信息，判断用户是否实名认证
+     * @param username
+     * @return
+     */
+    @Select("select * from userinfo where uname=#{username}")
+    List<Map> getUser(String username);
 }

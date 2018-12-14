@@ -49,20 +49,6 @@
             <a href="/jump/login" class="js-login" title="退出">退出</a>
           </div>
         </li>
-
-        <!--<li>
-          <div class="">
-            <a href="/jump/register" class="" title="免费注册" th:if="${userName} eq null">免费注册</a>
-            <a href="#" class=""  th:if="${userName} ne null" th:text="'欢迎您 ' + ${userName} + '!'"></a>
-          </div>
-        </li>
-        <li>
-          <div class="">
-            <a href="/jump/login" class="js-login" title="登录" th:if="${userName} eq null">登录</a>
-            <a href="/jump/login" class="js-login" title="退出" th:if="${userName} ne null">退出</a>
-          </div>
-        </li>
--->
       </ul>
     </div>
   </div>
@@ -87,6 +73,7 @@
     <div id="personal-left" class="personal-left">
       <ul>
         <li class="pleft-cur"><span><a href="/jump/personal"><i class="dot dot1"></i>账户总览</a></span></li>
+        <li><span><a href="/jump/huankuan"><i class="dot dot09"></i>我的还款</a></span></li>
         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/money_record">资金记录</a></span></li>
         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/deposits_history">投资记录</a></span></li>
         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/money_plan">回款计划</a></span></li>
@@ -97,7 +84,6 @@
         <li class=""><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/change_history">兑换历史</a></span></li>
         <li style="position:relative;"> <span> <a href="/jump/system_message"><i class="dot dot08"></i>系统信息 </a> </span> </li>
         <li><span><a href="/jump/account_setting"><i class="dot dot09"></i>账户设置</a></span></li>
-        <li><span><a href="/jump/huankuan"><i class="dot dot09"></i>我的还款</a></span></li>
       </ul>
     </div>
     <label id="typeValue" style="display:none;"> </label>
@@ -114,9 +100,6 @@
               <li><span class="wdhb-yzm">12345678</span><span class="wdhb-con">现金红包50元</span><span class="wdhb-deadline">2015-10-1</span></li>
             </ul>
           </div>
-          <!--<div style="float:left; width:760px;height:200px;padding-top:100px; text-align:center;color:#d4d4d4; font-size:16px;">
-					 <img src="/site/themes/default/style/../images/nondata.png" width="60" height="60"><br><br>
-					   暂无兑换记录</div>-->
         </form>
       </div>
     </div>

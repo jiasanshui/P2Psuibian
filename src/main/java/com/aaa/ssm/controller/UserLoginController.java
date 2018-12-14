@@ -97,7 +97,7 @@ public class UserLoginController {
                 session.setAttribute("phone",user.getPhone());
                 session.setAttribute("email",user.getEmail());
                 session.setAttribute("user",user);
-                return "qiantai/index";
+                return "redirect:/jump/index";
             }
         }
     }

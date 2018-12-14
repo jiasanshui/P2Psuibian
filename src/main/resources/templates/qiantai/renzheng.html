@@ -54,29 +54,16 @@
             <a href="/jump/login" class="js-login" title="退出">退出</a>
           </div>
         </li>
-
-        <!--<li>
-          <div class="">
-            <a href="/jump/register" class="" title="免费注册" th:if="${userName} eq null">免费注册</a>
-            <a href="#" class=""  th:if="${userName} ne null" th:text="'欢迎您 ' + ${userName} + '!'"></a>
-          </div>
-        </li>
-        <li>
-          <div class="">
-            <a href="/jump/login" class="js-login" title="登录" th:if="${userName} eq null">登录</a>
-            <a href="/jump/login" class="js-login" title="退出" th:if="${userName} ne null">退出</a>
-          </div>
-        </li>
--->
       </ul>
     </div>
   </div>
   <div class="header min-width">
     <div class="container">
-      <div class="fn-left logo"> <a class="" href="index.html"> <img src="../images/logo.jpg"  title=""> </a> </div>
+      <div class="fn-left logo"> <a class="" href="/jump/index"> <img src="../images/logo.jpg"  title=""> </a> </div>
       <ul class="top-nav fn-clear">
         <li class="on"> <a href="/jump/index">首页</a> </li>
         <li> <a href="/jump/list" class="">我要投资</a> </li>
+        <li> <a href="/jump/borrow" class="">我要借款</a> </li>
         <li> <a href="/jump/help">安全保障</a> </li>
         <li class="top-nav-safe"> <a href="/jump/personal">我的账户</a> </li>
         <li> <a href="/jump/about">关于我们</a> </li>
@@ -91,6 +78,7 @@
     <div id="personal-left" class="personal-left">
       <ul>
         <li class="pleft-cur"><span><a href="/jump/personal"><i class="dot dot1"></i>账户总览</a></span></li>
+        <li><span><a href="/jump/huankuan"><i class="dot dot09"></i>我的还款</a></span></li>
         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/money_record">资金记录</a></span></li>
         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/deposits_record">投资记录</a></span></li>
         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/money_plan">回款计划</a></span></li>
@@ -101,7 +89,6 @@
         <li class=""><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/change_history">兑换历史</a></span></li>
         <li style="position:relative;"> <span> <a href="/jump/system_message"><i class="dot dot08"></i>系统信息 </a> </span> </li>
         <li><span><a href="/jump/account_setting"><i class="dot dot09"></i>账户设置</a></span></li>
-        <li><span><a href="/jump/huankuan"><i class="dot dot09"></i>我的还款</a></span></li>
       </ul>
     </div>
     <style>
@@ -275,10 +262,7 @@
             <h6>手机号已绑定</h6>
             <ul>
               <li>
-                <!--<label for="phone">手机号</label>-->
                 <span>&nbsp;&nbsp;&nbsp;手机号:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span th:text="${session.phone}"></span>
-                <!--<input type="hidden" name="" value="15055100139">-->
-                <!--<label> 150****0139</label>-->
               </li>
               <li>
                 <input type="submit" value="开户" style="border:none;" class="btn-paykh">
@@ -380,11 +364,6 @@
 			           }
 			//]]>
 		</script>
-        <!--<div class="pay-tipcon"> 1、为切实保障投资人的利益，亿人宝将理财资金托管在<a href="http://www.sumapay.com/" target="_blank">丰付第三方支付</a>平台。平台是2012年6月获批中国人民银行支付许可证和中国证监会基金支付许可的第三方支付公司，在金融支付领域业界领先地位。详情请登录<a href="http://www.sumapay.com/" target="_blank">丰付支付</a>官方网站查看。<br>
-          2、根据相关法律规定，亿人宝在开通资金托管账户时，需要验证您的身份信息。该信息一经设置，无法修改，请慎重选择。为了确保您可以顺利提现，请确认您拥有一张使用该身份证开户的有效储蓄卡。<br>
-          3、亿人宝将最大限度的尊重和保护您的个人隐私，详情请阅读<a href="#" target="_blank">《亿人宝隐私条款》</a>。<br>
-          4、您在开通第三方账号过程中，如有遇到问题，可以查看理财帮助，也可以联系我们的客服进行咨询，咨询电话：400-999-8850。 </div>
-      </div>-->
       <script type="text/javascript">
 				//<![CDATA[
 		    	if(window.ActiveXObject)
@@ -499,19 +478,19 @@
     <div class="ft-helper clearfix">
       <dl>
         <dt>关于我们</dt>
-        <dd><a href="公司简介.html">公司简介</a><a href="管理团队.html">管理团队</a><a href="网站公告.html">网站公告</a></dd>
+        <dd><a href="/jump/about">公司简介</a><a href="/jump/manage_team">管理团队</a><a href="/jump/site_notice">网站公告</a></dd>
       </dl>
       <dl>
         <dt>相关业务</dt>
-        <dd><a href="list.html">我要投资</a><a href="我要借款.html">我要借款</a></dd>
+        <dd><a href="/jump/list">我要投资</a><a href="/jump/borrow">我要借款</a></dd>
       </dl>
       <dl>
         <dt>帮助中心</dt>
-        <dd><a href="帮助中心.html">新手入门</a><a href="个人中心首页.html">我的账户</a><a href="list.html">债权转让</a></dd>
+        <dd><a href="/jump/help">新手入门</a><a href="/jump/personal">我的账户</a></dd>
       </dl>
       <dl>
         <dt>联系我们</dt>
-        <dd><a href="联系我们.html">联系我们</a></dd>
+        <dd><a href="/jump/contact">联系我们</a></dd>
       </dl>
     </div>
     </div>
@@ -536,7 +515,7 @@
   </div>
   <div class="ft-record">
     <div class="ft-approve clearfix"><a class="icon-approve approve-0 fadeIn-2s" target="_blank" href="#"></a><a class="icon-approve approve-1 fadeIn-2s" target="_blank" href="#"></a><a class="icon-approve approve-2 fadeIn-2s" target="_blank" href="#"></a><a class="icon-approve approve-3 fadeIn-2s" target="_blank" href="#"></a></div>
-    <div class="ft-identity">©2015 亿人宝 All rights reserved&nbsp;&nbsp;&nbsp;<span class="color-e6">|</span>&nbsp;&nbsp;&nbsp;安徽省亿人宝投资管理有限公司&nbsp;&nbsp;&nbsp;<span class="color-e6">|</span>&nbsp;&nbsp;&nbsp;<a target="_blank" href="http://www.miitbeian.gov.cn/">皖ICP备12345678号-1</a></div>
+    <div class="ft-identity">©2015 你我贷 All rights reserved&nbsp;&nbsp;&nbsp;<span class="color-e6">|</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="color-e6">|</span>&nbsp;&nbsp;&nbsp;<a target="_blank" href="http://www.miitbeian.gov.cn/">皖ICP备12345678号-1</a></div>
   </div>
 </div>
 <script src="../script/jquery.datetimepicker.js" type="text/javascript"></script>

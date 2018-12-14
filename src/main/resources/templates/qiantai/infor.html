@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>p2p网贷平台</title>
@@ -11,13 +10,6 @@
 <link href="../css/detail.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="../script/jquery.min.js"></script>
 <script type="text/javascript" src="../script/common.js"></script>
-  <!-- 引入样式 -->
-  <script type="text/javascript" src="../js/vue.js"></script>
-  <script type="text/javascript" src="../js/axios.min.js"></script>
-  <!-- 引入样式 -->
-  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-  <!-- 引入组件库 -->
-  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script src="../script/ablumn.js"></script>
 <script src="../script/plugins.js"></script>
 <script src="../script/detail.js"></script>
@@ -113,9 +105,8 @@
     </div>
   </div>
 </header>
-
 <!--信息详细-->
-<div class="item-detail wrap" >
+<div class="item-detail wrap">
   <div class="breadcrumbs"> <a href="/jump/index">首页</a>&gt; <a href="#">散标投资列表</a>&gt; <span class="cur">项目详情</span> </div>
   <div class="item-detail-head clearfix" data-target="sideMenu">
     <div class="hd"> <i class="icon icon-che" title="车易贷"></i>
@@ -141,7 +132,6 @@
             <span class="c-green">100%</span> </li>
           <li> <span class="c-888">投资范围：</span> <span id="account_range"> 50元~
             不限 </span> </li>
-          <li><button onclick="addTender()" class="btn">投标</button></li>
         </ul>
       </div>
       <div class="mod-right mod-status">
@@ -153,7 +143,6 @@
       </div>
     </div>
   </div>
-
   <div class="item-detail-body clearfix mrt30 ui-tab">
     <div class="ui-tab-nav hd"> <i class="icon-cur" style="left: 39px;"></i>
       <ul>
@@ -162,7 +151,6 @@
         <li class="nav_li" id="nav_3"><a href="javascript:;">还款列表</a></li>
       </ul>
     </div>
-
     <div class="bd">
       <div class="ui-tab-item active" style="display: block;">
         <div class="borrow-info">
@@ -497,42 +485,5 @@
     <div class="ft-identity">©2015 你我贷 All rights reserved&nbsp;&nbsp;&nbsp;<span class="color-e6">|</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="color-e6">|</span>&nbsp;&nbsp;&nbsp;<a target="_blank" href="http://www.miitbeian.gov.cn/">皖ICP备12345678号-1</a></div>
   </div>
 </div>
-<script>
-    var tableView = new Vue({
-        el: '#tableView',
-        data: {
-            //deptNo:'',
-            //部门select 下拉菜单
-            options:[],
-            //列表数据
-            tableData: [],
-            //显示加载中样式
-            loading:false,
-            //搜索表单
-            searchForm: {
-                id: '',
-                name: '',
-                typeId: ''
-            },
-            //多选值
-            multipleSelection: [],
-            //当前页
-            currentPage:1,
-            //分页大小
-            pageSize:2,
-            //总记录数
-            total:800,
-            //删除的弹出框
-            deleteVisible:false,
-            //编辑界面是否显示
-            editFormVisible: false,
-            editLoading: false,
-            goUrl:'',
-            editFormRules: {
-                name: [
-                    { required: true, message: '请输入姓名', trigger: 'blur' }
-                ]
-            },
-</script>
 </body>
 </html>

@@ -3,9 +3,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>P2P网贷平台全套网站模板下载</title>
-<meta name="keywords" content="P2P,网贷平台,全套,网站模板,模板下载" />
-<meta name="description" content="P2P网贷平台全套网站模板下载，下载文件包含33张静态网页，有包括个人中心、登录、注册等，部分页面不提供在线演示，下载文件为完整版！" />
+<title>P2P网贷平台</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
 
 <meta name="keywords" content="" />
 <meta name="description" content="" />
@@ -53,6 +53,13 @@ $(document).ready(function() {
     }); //当鼠标放上去的时候，滚动停止，鼠标离开的时候滚动开始
 });
 
+  <!-- 跳转到详情页面 -->
+  $(function () {
+      $("#Project").click(function () {
+          var borrownum = $("#borrownum").val();
+          location.href="/jump/infor?borrowNum="+borrownum;
+      })
+  })
 </script>
 </head>
 <body>
@@ -116,13 +123,24 @@ $(document).ready(function() {
     <li style="background-image: url(../images/banner.jpg); width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1; background-position: 50% 0px; background-repeat: no-repeat no-repeat;" class=""></li>
     <li style="background-image: url(../images/index1.jpg); width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1; background-position: 50% 0px; background-repeat: no-repeat no-repeat;" class=""></li>
     <li style="background-image: url(../images/banner.jpg); width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1; background-position: 50% 0px; background-repeat: no-repeat no-repeat;" class=""></li>
-    <li style="background-image: url(../images/banner.jpg); width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1; background-position: 50% 0px; background-repeat: no-repeat no-repeat;" class=""></li>
+    <li style="background-image: url(../images/index1.jpg); width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1; background-position: 50% 0px; background-repeat: no-repeat no-repeat;" class=""></li>
     <li style="background-image: url(../images/banner.jpg); width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1; background-position: 50% 0px; background-repeat: no-repeat no-repeat;" class=""></li>
   </ul>
 </div>
 <script src="../script/jquery.flexslider-min.js"></script>
 <script>
 $(function(){
+    //首页进度显示
+    /*var size = $("#size").val();
+    for (var i = 1; i <=size ; i++) {
+        var jinduId = "jindu"+i;
+        var jindu = $("#"+jinduId).html();
+        $("#diva").attr("class", "progress-bgPic progress-bfb" + Math.floor(jindu.substr(0, 2) / 10));
+    }*/
+    var jindu = $("#jindu").html();
+    $("#diva").attr("class", "progress-bgPic progress-bfb" + Math.floor(jindu.substr(0, 2) / 10));
+
+    //首页图片播放
     $('.flexslider').flexslider({
         slideshowSpeed:2000,
         directionNav: true,
@@ -150,6 +168,7 @@ $(function(){
             }
         }
     });
+
     $('.pListLeft').on('click',function(){
         if(n>0){
             n--;
@@ -217,53 +236,33 @@ $(function(){
           <div class="fn-right f14 c-888">常规发标时间每天<span class="c-555">10:00，13:00和20:00</span>，其余时间根据需要随机发</div>
         </div>
         <div class="bd">
-          <div class="des"><span class="fn-left">期限1-29天，期限短，收益见效快</span><a href="/jump/list" class="fn-right">查看更多&gt;&gt;</a></div>
+          <div class="des"><span class="fn-left">期限1-29天，期限短，收益见效快</span><a href="/jump/list" class="fn-right">查看更多</a></div>
           <div class="borrow-list">
-            <ul>
+            <ul th:each="house : ${houseProList}">
+              <input id="borrownum" type="hidden" th:value="${house.BORROWNUM}">
               <li>
-                <div class="title"><a href="/jump/infor" target="_blank"><i class="icon icon-zhai" title="债权贷"></i></a>
-                  <a href="infor.html" class="f18" title="金女士债权质押借款1万元" target="_blank">金女士债权质押借款1万元</a>
+                <div class="title">
+                    <i class="icon icon-zhai" title="债权贷"></i>
+                    <p id="Project" class="f18" title="金女士债权质押借款1万元" target="_blank"><span th:text="${house.DES}" style="font-size: 20px;"></span></p>
                 </div>
                 <table width="100%" border="0" cellpadding="0" cellspacing="0">
                   <tbody>
                     <tr>
-                      <td width="260">借款金额<span class="f24 c-333" id="sum">10000.00</span>元</td>
-                      <td width="165">年利率<span class="f24 c-333">10.70% </span></td>
-                      <td width="180" align="center">期限<span class="f24 c-orange">4</span>天</td>
+                      <td width="260">借款金额<span class="f24 c-333" id="sum" th:text="${house.BORROWMONEY}"></span>元</td>
+                      <td width="165">年利率<span class="f24 c-orange" th:text="${house.APR}"></span></td>
+                      <td width="180" align="center">期限<span class="f24 c-orange" th:text="${house.TIMELIMIT}"></span>个月</td>
                       <td><div class="circle">
                           <div class="left progress-bar">
-                            <div class="progress-bgPic progress-bfb5">
-                              <div class="show-bar"> 56.3% </div>
-                            </div>
+                              <div id="diva" class="progress-bgPic progress-bfb5">
+                                <div class="show-bar"><span id="jindu" th:text="${house.JINDU}"></span></div>
+                              </div>
                           </div>
                         </div></td>
-                      <td align="right"><a class="ui-btn btn-gray" href="#">还款中</a> </td>
+                      <td align="right"><a class="ui-btn btn-gray" href="#">我要放款</a> </td>
                     </tr>
                   </tbody>
                 </table>
               </li>
-              <!--<li>
-                <div class="title"><a href="/jump/infor" target="_blank"><i class="icon icon-zhai" title="债权贷"></i></a>
-                  <span><a href="infor.html" class="f18" title="周先生债权质押借款0.1万元" target="_blank">周先生债权质押借款0.1万元</a></span>
-                </div>
-                <table width="100%" border="0" cellpadding="0" cellspacing="0">
-                  <tbody>
-                    <tr>
-                      <td width="260">借款金额<span class="f24 c-333">1000.00</span>元</td>
-                      <td width="165">年利率<span class="f24 c-333">10.85% </span></td>
-                      <td width="180" align="center">期限<span class="f24 c-orange">7</span>天</td>
-                      <td><div class="circle">
-                          <div class="left progress-bar">
-                            <div class="progress-bgPic progress-bfb1">
-                              <div class="show-bar"> 10.07% </div>
-                            </div>
-                          </div>
-                        </div></td>
-                      <td align="right"><a class="ui-btn btn-gray" href="#">还款中</a> </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </li>-->
             </ul>
           </div>
         </div>
@@ -554,7 +553,7 @@ $(function(){
       </dl>
       <dl>
         <dt>帮助中心</dt>
-        <dd><a href="/jump/help">新手入门</a><a href="/jump/personal">我的账户</a><a href="/jump/list">债权转让</a></dd>
+        <dd><a href="/jump/help">新手入门</a><a href="/jump/personal">我的账户</a></dd>
       </dl>
       <dl>
         <dt>联系我们</dt>

@@ -19,6 +19,8 @@ public interface BorrowDao {
      * @param map
      * @return
      */
-    @Insert("insert into borrow values(seq_tbborrowid.nextval,#{applicant},#{tel},#{timelimit},#{purpose},#{des},#{quantity},#{cost},#{apr},#{borrowmoney},#{danbaostyle},#{payment},#{userid},1)")
+    @Insert("insert into borrow(borrowid,applicant,tel,timelimit,purpose,des,quantity,cost,apr,borrowmoney,danbaostyle,payment,username,stateid,days,borrownum) " +
+            "values(seq_tbborrowid.nextval,#{applicant},#{tel},#{timelimit},#{purpose},#{des},#{quantity},#{cost}," +
+            "#{apr},#{borrowmoney},#{danbaostyle},#{payment},#{username},1,#{days},#{borrownum})")
     int add(Map map);
 }
