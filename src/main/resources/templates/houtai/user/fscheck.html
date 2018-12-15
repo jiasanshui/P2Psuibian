@@ -43,49 +43,23 @@
                     width="55">
             </el-table-column>
             <el-table-column
-                    prop="APPLICANT"
-                    label="申请人"
+                    prop="BORROWNUM"
+                    label="借款编号"
                     width="100">
             </el-table-column>
             <el-table-column
-                    prop="REALNAME"
-                    label="真实姓名"
-                    width="100">
-            </el-table-column>
-
-            <el-table-column
-                    prop="TEL"
-                    label="电话"
-                    width="100">
-            </el-table-column>
-            <el-table-column
-                    prop="TIMELIMIT"
-                    label="期限"
-                    width="70">
-            </el-table-column>
+                prop="USERNAME"
+                label="用户名"
+                width="100">
+        </el-table-column>
             <el-table-column
                     prop="PURPOSE"
                     label="目的"
                     width="100">
             </el-table-column>
             <el-table-column
-                    prop="DES"
-                    label="描述"
-                    width="250">
-            </el-table-column>
-            <el-table-column
-                    prop="DANBAOSTYLE"
-                    label="担保方式"
-                    width="100">
-            </el-table-column>
-            <el-table-column
-                    prop="QUANTITY"
-                    label="数量"
-                    width="100">
-            </el-table-column>
-            <el-table-column
-                    prop="COST"
-                    label="抵押价值"
+                    prop="APPLICANT"
+                    label="借款人"
                     width="100">
             </el-table-column>
             <el-table-column
@@ -95,10 +69,26 @@
             </el-table-column>
 
             <el-table-column
-                    prop="PAYMENT"
-                    label="年利率"
-                    width="150">
+                    prop="MELTMONEY"
+                    label="已融金额"
+                    width="100">
             </el-table-column>
+            <el-table-column
+                    prop="TIMELIMIT"
+                    label="期限"
+                    width="70">
+            </el-table-column>
+            <el-table-column
+                    prop="REPAYSTYLE"
+                    label="还款方式"
+                    width="100">
+            </el-table-column>
+            <el-table-column
+                    prop="MANAGER"
+                    label="审核人"
+                    width="250">
+            </el-table-column>
+
             <el-table-column
                     label="操作">
                 <template scope="scope">
@@ -157,68 +147,56 @@
         <el-form :model="lookForm" label-width="100px" :rules="lookFormRules" ref="lookForm">
             <el-row>
                 <el-col :span="10">
-                    <el-form-item label="用户ID" prop="USERID">
-                        <el-input v-model="lookForm.USERID" auto-complete="off"></el-input>
+                    <el-form-item label="借款编号" prop="BORROWNUM">
+                        <el-input v-model="lookForm.BORROWNUM" auto-complete="off"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
-                    <el-form-item label="用户名" prop="UNAME">
-                        <el-input v-model="lookForm.UNAME" auto-complete="off"></el-input>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :span="10">
-                    <el-form-item label="真实姓名" prop="REALNAME">
-                        <el-input v-model="lookForm.REALNAME" auto-complete="off"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="10">
-                    <el-form-item label="年龄" prop="AGE">
-                        <el-input v-model="lookForm.AGE" auto-complete="off"></el-input>
+                    <el-form-item label="用户名" prop="USERNAME">
+                        <el-input v-model="lookForm.USERNAME" auto-complete="off"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="10">
-                    <el-form-item label="联系电话" prop="PHONE">
-                        <el-input v-model="lookForm.PHONE" auto-complete="off"></el-input>
+                    <el-form-item label="目的" prop="PURPOSE">
+                        <el-input v-model="lookForm.PURPOSE" auto-complete="off"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
-                    <el-form-item label="地址" prop="ADDRESS">
-                        <el-input v-model="lookForm.ADDRESS" auto-complete="off"></el-input>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :span="10">
-                    <el-form-item label="身份证号" prop="IDCARD">
-                        <el-input v-model="lookForm.IDCARD" auto-complete="off"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="10">
-                    <el-form-item label="邮箱" prop="EMAIL">
-                        <el-input v-model="lookForm.EMAIL" auto-complete="off"></el-input>
+                    <el-form-item label="借款人" prop="APPLICANT">
+                        <el-input v-model="lookForm.APPLICANT" auto-complete="off"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="10">
-                    <el-form-item label="身份证正面" prop="ICPICA">
-                        <!-- 图片的显示
-                        <template slot-scope="scope">
-                            <img :src="scope.row.ICPICA" min-width="50" height="50" />
-                        </template>-->
-                        <el-input v-model="lookForm.ICPICA" auto-complete="off"></el-input>
+                    <el-form-item label="借款金额" prop="BORROWMONEY">
+                        <el-input v-model="lookForm.BORROWMONEY" auto-complete="off"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
-                    <el-form-item label="身份证反面" prop="ICPICB">
-                        <!--<template slot-scope="scope">
-                            <img :src="scope.row.ICPICB" min-width="50" height="50" />
-                        </template>-->
-                        <el-input v-model="lookForm.ICPICB" auto-complete="off"></el-input>
+                    <el-form-item label="已融金额" prop="MELTMONEY">
+                        <el-input v-model="lookForm.MELTMONEY" auto-complete="off"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="10">
+                    <el-form-item label="期限" prop="TIMELIMIT">
+                        <el-input v-model="lookForm.TIMELIMIT" auto-complete="off"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="10">
+                    <el-form-item label="还款方式" prop="REPAYSTYLE">
+                        <el-input v-model="lookForm.REPAYSTYLE" auto-complete="off"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="10">
+                    <el-form-item label="审核人" prop="MANAGER">
+                        <el-input v-model="lookForm.MANAGER" auto-complete="off"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -230,7 +208,7 @@
     var app = new Vue({
         el: '#app',
         data: {
-            message: '用户投标信息审核列表'
+            message: '用户满标信息审核列表'
         }
     });
 
@@ -243,8 +221,7 @@
             loading:false,
             //搜索表单
             searchForm: {
-                APPLICANT: '',
-                TEL: ''
+                APPLICANT: ''
             },
             //多选值
             multipleSelection: [],
@@ -279,16 +256,15 @@
             },
             //查看详情界面数据
             lookForm: {
-                USERID: 0,
-                UNAME: '',
-                REALNAME: '',
-                AGE: 0,
-                PHONE:'',
-                ADDRESS: '',
-                IDCARD:'',
-                EMAIL:'',
-                ICPICA:'',
-                ICPICB:''
+                BORROWNUM: 0,
+                USERNAME: '',
+                PURPOSE: '',
+                APPLICANT:'',
+               BORROWMONEY:0,
+               MELTMONEY:0,
+                TIMELIMIT:0,
+               REPAYSTYLE:'',
+                MANAGER:''
             },
         },
         created:function(){
@@ -296,13 +272,9 @@
             var self = this;
             //var start =(this.currentPage-1)*this.pageSize;
             //var end =this.currentPage*this.pageSize+1;
-            axios.post('/tenderCheck/page',{'pageNo':this.currentPage,'pageSize':this.pageSize}).then(function(response){
-                // console.log(response.data);
-                //alert(response.data.total);
+            axios.post('/fscheck/page',{'pageNo':this.currentPage,'pageSize':this.pageSize}).then(function(response){
                 self.total=response.data.total;
                 self.tableData = response.data.pageData;
-                //alert(JSON.stringify(response.data.pageData));
-                // self.multipleSelection=response.data.data;
             })
         },
         methods:{
@@ -311,16 +283,10 @@
                 var _self = this;
                 _self.loading = true;
                 var self = this;
-                //var start =(this.currentPage-1)*this.pageSize;
-                //var end =this.currentPage*this.pageSize+1;
-                var searchForm={'pageNo':this.currentPage,'pageSize':this.pageSize,'applicant':this.searchForm.applicant,'tel':this.searchForm.tel};
-                //alert(JSON.stringify(searchForm));
-                axios.post('/tenderCheck/page',searchForm).then(function(response){
-                    // console.log(response.data);
-                    // alert(222);
+                var searchForm={'pageNo':this.currentPage,'pageSize':this.pageSize,'applicant':this.searchForm.applicant};
+                axios.post('/fscheck/page',searchForm).then(function(response){
                     _self.total=response.data.total;
                     _self.tableData = response.data.pageData;
-                    //_self.multipleSelection=response.data.data;
                 })
                 console.log(_self.currentPage);
                 setTimeout(function(){
@@ -330,7 +296,7 @@
             },
             //驳回事件
             editClick:function(row) {
-                this.goUrl="/tenderCheck/edit";
+                this.goUrl="/fscheck/edit";
                 this.editFormVisible = true;
                 //alert(JSON.stringify(row));
                 this.editForm = Object.assign({}, row);
@@ -339,7 +305,7 @@
             lookClick:function(row) {
                 var  _self=this;
                 this.lookFormVisible = true;
-                var  url="/userInfo/list?userId="+row.USERID;
+                var  url="/fscheck/list?userId="+row.USERID;
                 axios.get(url).then(function (response) {
                     if(response.data!=null&&response.data!=''){
                         _self.lookForm = Object.assign({}, response.data);

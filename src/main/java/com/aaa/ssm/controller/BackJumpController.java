@@ -35,4 +35,13 @@ public class BackJumpController {
     public String biaode(){
         return "houtai/user/biaode";
     }
+    /**
+     * 跳转后台满标页面
+     * @return
+     */
+    @RequestMapping("/fscheck")
+    public String fscheck(){
+        return "houtai/user/fscheck";
+    }
+
 }

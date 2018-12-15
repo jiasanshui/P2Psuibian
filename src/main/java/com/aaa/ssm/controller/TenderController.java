@@ -24,7 +24,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/tender")
-public class TenderController {
+public class    TenderController {
     //依赖注入
     @Autowired
     private TenderService tenderService;
