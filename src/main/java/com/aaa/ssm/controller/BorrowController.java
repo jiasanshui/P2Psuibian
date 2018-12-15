@@ -38,9 +38,9 @@ public class BorrowController {
         System.out.println(map);
         int add = borrowService.add(map);
         if(add==0){
-            return "qiantai/borrow";
+            return "redirect:/jump/borrow";
         }
-        return "qiantai/list";
+        return "redirect:/jump/list";
     }
 
 }

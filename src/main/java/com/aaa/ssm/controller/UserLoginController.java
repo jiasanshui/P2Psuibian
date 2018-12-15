@@ -55,7 +55,7 @@ public class UserLoginController {
                 session.setAttribute("email",user.getEmail());
                 session.setAttribute("phone",user.getPhone());
                 session.setAttribute("user",user);
-                return "qiantai/index";
+                return "redirect:jump/index";
             }
         }else if(userName.matches(phonePattern)){
             //手机号登录

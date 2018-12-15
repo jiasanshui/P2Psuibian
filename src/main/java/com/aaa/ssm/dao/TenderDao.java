@@ -4,31 +4,10 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-
 import java.util.List;
 import java.util.Map;
 
-
-/**
- * className:TenderDao
- * discription:
- * author:hulu
- * createTime:2018-12-12 15:29
- */
 public interface TenderDao {
-    /**
-     * 用户投标审核信息列表查询
-     * @param map
-     * @return
-     * 如果使用注解的方式，动态sql必须在标签<script></script>
-     * 如果使用<script></script>标签，mybatis 大于小于，必须使用&gt; &lt;
-     */
-    @Select("<script>select u.realname,b.userid,b.applicant,b.tel,b.timelimit,b.purpose,b.des,b.danbaostyle,b.quantity,b.cost,b.borrowmoney,b.payment,b.borrowid \n" +
-            "from borrow b left join userInfo u on b.USERID=u.USERID where b.STATEID=1 \n "+
-            "<if test=\"applicant!=null and applicant!=''\">  and applicant like '%'||#{applicant}||'%'</if>" +
-            "<if test=\"tel!=null and tel!=''\">  and tel =#{tel}</if>" +
-            "</script>")
-    List<Map> getList(Map map);
 
     /**
      * 审核通过，更新用户信息表审核状态
@@ -72,8 +51,11 @@ public interface TenderDao {
      * @param map
      * @return
      */
-    @Insert("insert into tender(realname,taomount,ttime,tway values(#{realName},#{tAmount},#{tTime},#{tWay}))")
+    @Insert("insert into tender(id,realname,tamount,ttime,tway,userid) values(seq_tender_id.nextval,#{realName},#{tamount},to_date(to_char(sysdate,'yyyy-mm-dd','yyyy-mm-dd'),#{tway},#{userid})")
     int add(Map map);
 
+    List<Map> getList(Map map);
 }
+
+
 
