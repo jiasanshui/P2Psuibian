@@ -35,4 +35,13 @@ public class BackJumpController {
     public String tender(){
         return "houtai/user/tender";
     }
+    /**
+     * 跳转后台满标页面
+     * @return
+     */
+    @RequestMapping("/fscheck")
+    public String fscheck(){
+        return "houtai/user/fscheck";
+    }
+
 }
