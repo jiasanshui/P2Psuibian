@@ -50,6 +50,13 @@ public interface UserInfoService {
      * @return
      */
     List<Map> getUserList(String username);
+    /**
+     * 根据用户ID获取用户信息
+     * @param userid
+     * @return
+     */
+    List<Map> getUserListById(Integer userid);
+
 
     /** 根据用户名获取用户信息，判断用户是否实名认证
      * @param username

@@ -324,5 +324,19 @@ public class JumpController {
         return "qiantai/pay1";
     }
 
+    /**
+     * 跳转到投标页面
+     * @return
+     */
+    @RequestMapping("/toubiao")
+    public String toubiao(HttpSession session,Model model){
+        String username=(String) session.getAttribute("userName");
+        //根据用户名去获取用户信息
+        List<Map> list = userInfoService.getUserList(username);
+        model.addAttribute("realName",list.get(0).get("REALNAME"));
+        model.addAttribute("uid",list.get(0).get("USERID"));
+        return "qiantai/toubiao";
+    }
+
 
 }

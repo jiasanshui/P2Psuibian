@@ -86,4 +86,9 @@ public class UserInfoServiceImpl implements UserInfoService {
         }
         return null;
     }
+
+    @Override
+    public List<Map> getUserListById(Integer userid) {
+        return userInfoDao.getUserListById(userid);
+    }
 }
