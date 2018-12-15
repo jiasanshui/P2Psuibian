@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>p2p网贷平台</title>
@@ -13,6 +13,29 @@
 <script src="../script/ablumn.js"></script>
 <script src="../script/plugins.js"></script>
 <script src="../script/detail.js"></script>
+  <style>
+      .btn{ /* 按钮美化 */
+          width: 270px; /* 宽度 */
+          height: 60px; /* 高度 */
+          border-width: 0px; /* 边框宽度 */
+          border-radius: 3px; /* 边框半径 */
+          background: #1E90FF; /* 背景颜色 */
+          cursor: pointer; /* 鼠标移入按钮范围时出现手势 */
+          outline: none; /* 不显示轮廓线 */
+          font-family: Microsoft YaHei; /* 设置字体 */
+          color: white; /* 字体颜色 */
+          font-size: 17px; /* 字体大小 */
+      }
+      .btn:hover { /* 鼠标移入按钮范围时改变颜色 */
+          background: #5599FF;
+      }
+  </style>
+  <script>
+    function addTender() {
+        location.href="/jump/toubiao";
+    }
+
+  </script>
 </head>
 <body>
 <header>
@@ -51,6 +74,20 @@
             <a href="/jump/login" class="js-login" title="退出">退出</a>
           </div>
         </li>
+
+        <!--<li>
+          <div class="">
+            <a href="/jump/register" class="" title="免费注册" th:if="${userName} eq null">免费注册</a>
+            <a href="#" class=""  th:if="${userName} ne null" th:text="'欢迎您 ' + ${userName} + '!'"></a>
+          </div>
+        </li>
+        <li>
+          <div class="">
+            <a href="/jump/login" class="js-login" title="登录" th:if="${userName} eq null">登录</a>
+            <a href="/jump/login" class="js-login" title="退出" th:if="${userName} ne null">退出</a>
+          </div>
+        </li>
+-->
       </ul>
     </div>
   </div>
@@ -68,12 +105,11 @@
     </div>
   </div>
 </header>
-<!-------------信息详细--------------->
+<!--信息详细-->
 <div class="item-detail wrap">
   <div class="breadcrumbs"> <a href="/jump/index">首页</a>&gt; <a href="#">散标投资列表</a>&gt; <span class="cur">项目详情</span> </div>
   <div class="item-detail-head clearfix" data-target="sideMenu">
-    <div class="hd">
-      <i class="icon icon-che" title="车易贷"></i>
+    <div class="hd"> <i class="icon icon-che" title="车易贷"></i>
       <h2>赵女士长安福特福克斯汽车质押贷款4万元</h2>
     </div>
     <div class="bd clearfix">
@@ -107,7 +143,6 @@
       </div>
     </div>
   </div>
-  <!-- ------------------------------------------------------------- -->
   <div class="item-detail-body clearfix mrt30 ui-tab">
     <div class="ui-tab-nav hd"> <i class="icon-cur" style="left: 39px;"></i>
       <ul>
@@ -419,7 +454,7 @@
       </dl>
       <dl>
         <dt>帮助中心</dt>
-        <dd><a href="/jump/help">新手入门</a><a href="/jump/personal">我的账户</a></dd>
+        <dd><a href="/jump/help">新手入门</a><a href="/jump/personal">我的账户</a><a href="/jump/list">债权转让</a></dd>
       </dl>
       <dl>
         <dt>联系我们</dt>

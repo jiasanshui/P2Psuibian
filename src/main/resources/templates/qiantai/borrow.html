@@ -113,7 +113,7 @@
 							<div class="bor_det_oner fl">
 								<form id="form1" method="post" action="/borrow/addBorrow">
 									<fieldset>
-										<input type="hidden" th:value="${uid}" name="userid">
+										<input type="hidden" th:value="${userName}" name="username">
 										<input type="hidden" th:value="${num}" name="borrownum">
 										<div>
 											<label>申请人</label>
@@ -175,7 +175,7 @@
 										</div>
 										<div class="mt15">
 											<label>*借款描述</label>
-											<textarea name="des"></textarea>
+											<textarea name="des" placeholder="200字以内"></textarea>
 										</div>
 										<div class="mt15" >
 											<label>*还款方式</label>
