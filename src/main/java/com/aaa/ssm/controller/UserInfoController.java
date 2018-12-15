@@ -100,6 +100,11 @@ public class UserInfoController {
         return 0;
     }
 
+    /**
+     * 根据用户ID查询用户信息
+     * @param userId
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/list")
     public Object getAllList(Integer userId){
