@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>用户投标信息审核列表</title>
+    <title>用户招标信息审核列表</title>
     <!-- 引入样式 -->
     <script type="text/javascript" src="../js/vue.js"></script>
     <script type="text/javascript" src="../js/axios.min.js"></script>
@@ -21,7 +20,7 @@
     <!--列表顶部搜索和工具条-->
     <el-row>
         <el-form :inline="true" :model="searchForm" class="demo-form-inline">
-            <el-form-item label="用户名">
+            <el-form-item label="申请人">
                 <el-input v-model="searchForm.applicant" placeholder="名称"></el-input>
             </el-form-item>
             <el-form-item label="联系电话">
@@ -51,14 +50,28 @@
                     width="100">
             </el-table-column>
             <el-table-column
-                    prop="REALNAME"
-                    label="真实姓名"
-                    width="100">
-            </el-table-column>
-
-            <el-table-column
                     prop="TEL"
                     label="电话"
+                    width="120">
+            </el-table-column>
+            <el-table-column
+                    prop="DANBAOSTYLE"
+                    label="担保方式"
+                    width="120">
+            </el-table-column>
+            <el-table-column
+                    prop="PAYMENT"
+                    label="还款方式"
+                    width="150">
+            </el-table-column>
+            <el-table-column
+                    prop="DAYS"
+                    label="投标天数"
+                    width="70">
+            </el-table-column>
+            <el-table-column
+                    prop="BORROWMONEY"
+                    label="借款金额"
                     width="100">
             </el-table-column>
             <el-table-column
@@ -67,47 +80,26 @@
                     width="70">
             </el-table-column>
             <el-table-column
+                    prop="APR"
+                    label="年利率"
+                    width="70">
+            </el-table-column>
+            <el-table-column
                     prop="PURPOSE"
-                    label="目的"
+                    label="借款用途"
                     width="100">
             </el-table-column>
             <el-table-column
                     prop="DES"
                     label="描述"
-                    width="250">
-            </el-table-column>
-            <el-table-column
-                    prop="DANBAOSTYLE"
-                    label="担保方式"
-                    width="100">
-            </el-table-column>
-            <el-table-column
-                    prop="QUANTITY"
-                    label="数量"
-                    width="100">
-            </el-table-column>
-            <el-table-column
-                    prop="COST"
-                    label="抵押价值"
-                    width="100">
-            </el-table-column>
-            <el-table-column
-                    prop="BORROWMONEY"
-                    label="借款金额"
-                    width="100">
-            </el-table-column>
-
-            <el-table-column
-                    prop="PAYMENT"
-                    label="年利率"
                     width="150">
             </el-table-column>
             <el-table-column
                     label="操作">
                 <template scope="scope">
                     <el-button :plain="true" type="success" size="small" icon="edit" @click="lookClick(scope.row)">查看详情</el-button>
-                    <el-button :plain="true" type="danger" size="small" icon="delete" @click="deleteClick(scope.row)">通过</el-button>
-                    <el-button :plain="true" type="success" size="small" icon="edit" @click="editClick(scope.row)">驳回</el-button>
+                    <el-button :plain="true" type="success" size="small" icon="delete" @click="deleteClick(scope.row)">通过</el-button>
+                    <el-button :plain="true" type="danger" size="small" icon="edit" @click="editClick(scope.row)">驳回</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -160,70 +152,80 @@
         <el-form :model="lookForm" label-width="100px" :rules="lookFormRules" ref="lookForm">
             <el-row>
                 <el-col :span="10">
-                    <el-form-item label="用户ID" prop="USERID">
-                        <el-input v-model="lookForm.USERID" auto-complete="off"></el-input>
+                    <el-form-item label="用户名" prop="USERNAME">
+                        <el-input v-model="lookForm.USERNAME" auto-complete="off" readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
-                    <el-form-item label="用户名" prop="UNAME">
-                        <el-input v-model="lookForm.UNAME" auto-complete="off"></el-input>
+                    <el-form-item label="申请人" prop="APPLICANT">
+                        <el-input v-model="lookForm.APPLICANT" auto-complete="off"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="10">
-                    <el-form-item label="真实姓名" prop="REALNAME">
-                        <el-input v-model="lookForm.REALNAME" auto-complete="off"></el-input>
+                    <el-form-item label="联系电话" prop="TEL">
+                        <el-input v-model="lookForm.TEL" auto-complete="off"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
-                    <el-form-item label="年龄" prop="AGE">
-                        <el-input v-model="lookForm.AGE" auto-complete="off"></el-input>
+                    <el-form-item label="担保方式" prop="DANBAOSTYLE">
+                        <el-input v-model="lookForm.DANBAOSTYLE" auto-complete="off"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="10">
-                    <el-form-item label="联系电话" prop="PHONE">
-                        <el-input v-model="lookForm.PHONE" auto-complete="off"></el-input>
+                    <el-form-item label="数量" prop="QUANTITY">
+                        <el-input v-model="lookForm.QUANTITY" auto-complete="off"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
-                    <el-form-item label="地址" prop="ADDRESS">
-                        <el-input v-model="lookForm.ADDRESS" auto-complete="off"></el-input>
+                    <el-form-item label="价值" prop="COST">
+                        <el-input v-model="lookForm.COST" auto-complete="off"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="10">
-                    <el-form-item label="身份证号" prop="IDCARD">
-                        <el-input v-model="lookForm.IDCARD" auto-complete="off"></el-input>
+                    <el-form-item label="借款金额" prop="BORROWMONEY">
+                        <el-input v-model="lookForm.BORROWMONEY" auto-complete="off"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
-                    <el-form-item label="邮箱" prop="EMAIL">
-                        <el-input v-model="lookForm.EMAIL" auto-complete="off"></el-input>
+                    <el-form-item label="还款方式" prop="PAYMENT">
+                        <el-input v-model="lookForm.PAYMENT" auto-complete="off"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="10">
-                    <el-form-item label="身份证正面" prop="ICPICA">
-                        <!-- 图片的显示
-                        <template slot-scope="scope">
-                            <img :src="scope.row.ICPICA" min-width="50" height="50" />
-                        </template>-->
-                        <el-input v-model="lookForm.ICPICA" auto-complete="off"></el-input>
+                    <el-form-item label="借款期限" prop="TIMELIMIT">
+                        <el-input v-model="lookForm.TIMELIMIT" auto-complete="off"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
-                    <el-form-item label="身份证反面" prop="ICPICB">
-                        <!--<template slot-scope="scope">
-                            <img :src="scope.row.ICPICB" min-width="50" height="50" />
-                        </template>-->
-                        <el-input v-model="lookForm.ICPICB" auto-complete="off"></el-input>
+                    <el-form-item label="年利率" prop="APR">
+                        <el-input v-model="lookForm.APR" auto-complete="off"></el-input>
                     </el-form-item>
                 </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="10">
+                    <el-form-item label="借款用途" prop="PURPOSE">
+                        <el-input v-model="lookForm.PURPOSE" auto-complete="off"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="10">
+                    <el-form-item label="标的编号" prop="BORROWNUM">
+                        <el-input v-model="lookForm.BORROWNUM" auto-complete="off"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row :span="20">
+                <el-form-item label="借款用途" prop="PURPOSE">
+                    <el-input type="textarea" v-model="lookForm.DES" auto-complete="off"></el-input>
+                </el-form-item>
             </el-row>
         </el-form>
     </el-dialog>
@@ -246,8 +248,8 @@
             loading:false,
             //搜索表单
             searchForm: {
-                APPLICANT: '',
-                TEL: ''
+                applicant: '',
+                tel: ''
             },
             //多选值
             multipleSelection: [],
@@ -282,30 +284,27 @@
             },
             //查看详情界面数据
             lookForm: {
-                USERID: 0,
-                UNAME: '',
-                REALNAME: '',
-                AGE: 0,
-                PHONE:'',
-                ADDRESS: '',
-                IDCARD:'',
-                EMAIL:'',
-                ICPICA:'',
-                ICPICB:''
+                USERNAME: '',
+                APPLICANT: '',
+                TEL:'',
+                DANBAOSTYLE: '',
+                QUANTITY:'',
+                COST: '',
+                BORROWMONEY:'',
+                PAYMENT:'',
+                TIMELIMIT:'',
+                APR:'',
+                PURPOSE:'',
+                BORROWNUM:'',
+                DES:''
             },
         },
         created:function(){
             //在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
             var self = this;
-            //var start =(this.currentPage-1)*this.pageSize;
-            //var end =this.currentPage*this.pageSize+1;
-            axios.post('/tenderCheck/page',{'pageNo':this.currentPage,'pageSize':this.pageSize}).then(function(response){
-                // console.log(response.data);
-                //alert(response.data.total);
+            axios.post('/biaode/page',{'pageNo':this.currentPage,'pageSize':this.pageSize}).then(function(response){
                 self.total=response.data.total;
                 self.tableData = response.data.pageData;
-                //alert(JSON.stringify(response.data.pageData));
-                // self.multipleSelection=response.data.data;
             })
         },
         methods:{
@@ -314,16 +313,10 @@
                 var _self = this;
                 _self.loading = true;
                 var self = this;
-                //var start =(this.currentPage-1)*this.pageSize;
-                //var end =this.currentPage*this.pageSize+1;
                 var searchForm={'pageNo':this.currentPage,'pageSize':this.pageSize,'applicant':this.searchForm.applicant,'tel':this.searchForm.tel};
-                //alert(JSON.stringify(searchForm));
-                axios.post('/tenderCheck/page',searchForm).then(function(response){
-                    // console.log(response.data);
-                    // alert(222);
+                axios.post('/biaode/page',searchForm).then(function(response){
                     _self.total=response.data.total;
                     _self.tableData = response.data.pageData;
-                    //_self.multipleSelection=response.data.data;
                 })
                 console.log(_self.currentPage);
                 setTimeout(function(){
@@ -333,16 +326,18 @@
             },
             //驳回事件
             editClick:function(row) {
-                this.goUrl="/tenderCheck/edit";
+                this.goUrl="/biaode/edit";
                 this.editFormVisible = true;
                 //alert(JSON.stringify(row));
                 this.editForm = Object.assign({}, row);
             },
             //查看详情事件
             lookClick:function(row) {
-                var  _self=this;
+                //var  _self=this;
                 this.lookFormVisible = true;
-                var  url="/userInfo/list?userId="+row.USERID;
+                this.lookForm = Object.assign({}, row);
+                //alert(JSON.stringify(row));
+               /* var  url="/userInfo/list?userId="+row.USERID;
                 axios.get(url).then(function (response) {
                     if(response.data!=null&&response.data!=''){
                         _self.lookForm = Object.assign({}, response.data);
@@ -353,7 +348,7 @@
                         });
                     }
                     _self.loadingData();//重新加载数据
-                });
+                });*/
 
             },
             //通过事件
@@ -362,8 +357,20 @@
                 this.$confirm('确认通过吗?', '提示', {
                     type: 'warning'
                 }).then(function(){
-                    var  url="/tenderCheck/update/"+row.USERID;
-                    axios.get(url).then(function (response) {
+                    var  url="/biaode/update";
+                    axios.post(url,row).then(function (response) {
+                        alert(111);
+                        if(response.data>0){
+                            _self.$message({
+                                message: row.APPLICANT + '已通过审核',
+                                type: 'success'
+                            });
+                        }else{
+                            _self.$message({
+                                message: row.APPLICANT + '审核失败',
+                                type: 'error'
+                            });
+                        }
                         _self.loadingData();//重新加载数据
                     });
                 }).catch(function(e){

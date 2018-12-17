@@ -5,6 +5,7 @@ package com.aaa.ssm.shiro;/**
  * createTime:2018-12-06 18:45
  */
 
+import com.aaa.ssm.entity.Admin;
 import com.aaa.ssm.entity.User;
 import com.aaa.ssm.service.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -38,8 +39,8 @@ public class UserRealm extends AuthorizingRealm {
         //到数据库当前用户的授权字符串
         Subject subject = SecurityUtils.getSubject();
         User user = (User)subject.getPrincipal();
-        User dbUser = userService.findById(user.getUserId());
-        info.addStringPermission(dbUser.getPerms());
+        Admin admin = userService.getUserById(user.getUserId());
+        //info.addStringPermission(admin.getPerms());
         return info;
     }
 
@@ -54,12 +55,12 @@ public class UserRealm extends AuthorizingRealm {
         //shiro判断逻辑，判断用户名和密码
         //1、判断用户名
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
-        User user = userService.findByUserName(token.getUsername());
-        System.out.println(user);
+        Admin user = userService.getUserByuserName(token.getUsername());
         if(user==null){
-            return null;
+            //用户名不存在
+            return null; //shiro底层会抛出UnknownAccountException
         }
         //2、判断密码
-        return new SimpleAuthenticationInfo(user,user.getPassword(),"");
+        return new SimpleAuthenticationInfo(user,user.getApassword(),"");
     }
 }

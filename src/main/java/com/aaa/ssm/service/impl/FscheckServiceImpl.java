@@ -28,4 +28,14 @@ public class FscheckServiceImpl implements FscheckService {
     public int add(Map map) {
         return fscheckDao.add(map);
     }
+
+    @Override
+    public int edit(Map map) {
+        return 0;
+    }
+
+    @Override
+    public int addBohui(Map map) {
+        return 0;
+    }
 }

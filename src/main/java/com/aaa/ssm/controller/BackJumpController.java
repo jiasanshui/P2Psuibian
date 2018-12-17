@@ -19,7 +19,7 @@ public class BackJumpController {
     }
 
     /**
-     * 跳转到后台用户列表
+     * 跳转到后台用户信息审核列表
      * @return
      */
     @RequestMapping("/userList")
@@ -28,11 +28,28 @@ public class BackJumpController {
     }
 
     /**
-     * 跳转后台招标页面
+     * 跳转后台借款标的审核页面
      * @return
      */
-    @RequestMapping("/tender")
-    public String tender(){
-        return "houtai/user/tender";
+    @RequestMapping("/biaode")
+    public String biaode(){
+        return "houtai/user/biaode";
     }
+    /**
+     * 跳转后台满标页面
+     * @return
+     */
+    @RequestMapping("/fscheck")
+    public String fscheck(){
+        return "houtai/user/fscheck";
+    }
+    /**
+     * 跳转后台登录页面
+     * @return
+     */
+    @RequestMapping("/login")
+    public String login(){
+        return "houtai/login";
+    }
+
 }

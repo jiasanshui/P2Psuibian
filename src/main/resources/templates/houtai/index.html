@@ -14,8 +14,11 @@
 <body>
 <div class="diva">
     <el-container>
-        <el-header><h1 style="color:cornflowerblue;line-height:20px">随便贷后台管理系统</h3></el-header>
+        <!--头部-->
+        <el-header><h1 style="color:cornflowerblue;line-height:20px">随便贷后台管理系统</h1></el-header>
+        <!--身体-->
         <el-container>
+            <!--左边树-->
             <el-aside width="150px">
                 <el-tree
                         :data="treeData"
@@ -25,7 +28,9 @@
                 >
                 </el-tree>
             </el-aside>
+            <!--右边主体-->
             <el-container>
+                <!--上边tab-->
                 <el-main height="400px">
                     <el-tabs v-model="editableTabsValue2" type="card" closable @tab-remove="removeTab">
                         <el-tab-pane
@@ -38,6 +43,7 @@
                         </el-tab-pane>
                     </el-tabs>
                 </el-main>
+                <!--底部footer-->
                 <el-footer>Footer</el-footer>
             </el-container>
         </el-container>
@@ -58,7 +64,7 @@
         },
         created:function(){
             var _self = this;
-            axios.post("/tree/list").then(function(response){
+            axios.post("/power/powerTree").then(function(response){
                 _self.treeData = response.data;
             })
         },

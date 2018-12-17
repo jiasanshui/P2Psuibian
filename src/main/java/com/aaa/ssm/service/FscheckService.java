@@ -18,4 +18,16 @@ public interface FscheckService {
      * 添加满标信息
      */
     int add(Map map);
+    /**
+     * 审核驳回，更新用户信息表审核状态
+     * @param map
+     * @return
+     */
+    int edit(Map map);
+    /**
+     *审核驳回,向驳回表中插入数据
+     * @param map
+     * @return
+     */
+    int addBohui(Map map);
 }

@@ -151,7 +151,7 @@
     </el-dialog>
     <!--查看详情界面-->
     <el-dialog title="用户信息" :visible.sync="lookFormVisible" :close-on-click-modal="false">
-        <el-form :model="lookForm" label-width="100px" :rules="lookFormRules" ref="lookForm">
+        <el-form :model="lookForm" label-width="100px" :rules="lookFormRules" ref="lookForm" >
             <el-row>
                 <el-col :span="10">
                     <el-form-item label="用户ID" prop="USERID">
