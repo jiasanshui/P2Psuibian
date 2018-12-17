@@ -57,7 +57,7 @@
             <el-table-column
                     prop="DANBAOSTYLE"
                     label="担保方式"
-                    width="150">
+                    width="120">
             </el-table-column>
             <el-table-column
                     prop="PAYMENT"
@@ -67,7 +67,7 @@
             <el-table-column
                     prop="DAYS"
                     label="投标天数"
-                    width="100">
+                    width="70">
             </el-table-column>
             <el-table-column
                     prop="BORROWMONEY"
@@ -77,12 +77,12 @@
             <el-table-column
                     prop="TIMELIMIT"
                     label="期限"
-                    width="100">
+                    width="70">
             </el-table-column>
             <el-table-column
                     prop="APR"
                     label="年利率"
-                    width="100">
+                    width="70">
             </el-table-column>
             <el-table-column
                     prop="PURPOSE"
@@ -92,14 +92,14 @@
             <el-table-column
                     prop="DES"
                     label="描述"
-                    width="250">
+                    width="150">
             </el-table-column>
             <el-table-column
                     label="操作">
                 <template scope="scope">
                     <el-button :plain="true" type="success" size="small" icon="edit" @click="lookClick(scope.row)">查看详情</el-button>
-                    <el-button :plain="true" type="danger" size="small" icon="delete" @click="deleteClick(scope.row)">通过</el-button>
-                    <el-button :plain="true" type="success" size="small" icon="edit" @click="editClick(scope.row)">驳回</el-button>
+                    <el-button :plain="true" type="success" size="small" icon="delete" @click="deleteClick(scope.row)">通过</el-button>
+                    <el-button :plain="true" type="danger" size="small" icon="edit" @click="editClick(scope.row)">驳回</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -153,7 +153,7 @@
             <el-row>
                 <el-col :span="10">
                     <el-form-item label="用户名" prop="USERNAME">
-                        <el-input v-model="lookForm.USERNAME" auto-complete="off"></el-input>
+                        <el-input v-model="lookForm.USERNAME" auto-complete="off" readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
@@ -359,6 +359,7 @@
                 }).then(function(){
                     var  url="/biaode/update";
                     axios.post(url,row).then(function (response) {
+                        alert(111);
                         if(response.data>0){
                             _self.$message({
                                 message: row.APPLICANT + '已通过审核',

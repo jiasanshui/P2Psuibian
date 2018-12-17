@@ -3,6 +3,7 @@ package com.aaa.ssm.dao;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import java.util.Map;
  * author:fhm
  * createTime:2018-12-15 09:32
  */
+@Component
 public interface BiaodeDao {
     /**
      * 用户借款标的列表查询

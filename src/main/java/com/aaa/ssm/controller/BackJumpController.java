@@ -43,5 +43,13 @@ public class BackJumpController {
     public String fscheck(){
         return "houtai/user/fscheck";
     }
+    /**
+     * 跳转后台登录页面
+     * @return
+     */
+    @RequestMapping("/login")
+    public String login(){
+        return "houtai/login";
+    }
 
 }

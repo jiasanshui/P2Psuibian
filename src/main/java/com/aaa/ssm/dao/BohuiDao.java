@@ -1,6 +1,7 @@
 package com.aaa.ssm.dao;
 
 import org.apache.ibatis.annotations.Insert;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import java.util.Map;
  * author:fhm
  * createTime:2018-12-15 16:37
  */
+@Component
 public interface BohuiDao {
     /**
      * 审核驳回,向借款驳回表中插入数据

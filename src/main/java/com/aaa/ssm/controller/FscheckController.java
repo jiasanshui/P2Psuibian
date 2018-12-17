@@ -23,6 +23,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/fscheck")
 public class FscheckController {
+
     @Autowired
     private FscheckService fscheckService;
 
@@ -35,7 +36,6 @@ public class FscheckController {
     @ResponseBody //返回json
     @RequestMapping("/page")
     public Object page(@RequestBody Map map) {
-
         //设置当前第几页和每页显示数量
         PageHelper.startPage(Integer.valueOf(map.get("pageNo") + ""), Integer.valueOf(map.get("pageSize") + ""));
         //用pageInfo对结果进行封装
@@ -47,26 +47,6 @@ public class FscheckController {
         //获取分页总数量
         resultMap.put("total", pageInfo.getTotal());
         return resultMap;
-    }
-
-    /**
-     * 添加满标
-     *
-     * @param map
-     * @param model
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("/add")
-    public Object add(@RequestBody Map map, Model model) {
-        int result = fscheckService.add(map);
-        if (result == 1) {
-            model.addAttribute("showInfo", "投标成功");
-            return fscheckService.add(map);
-        } else {
-            model.addAttribute("showInfo", "投标失败");
-            return 0;
-        }
     }
 
     /**

@@ -5,11 +5,15 @@ package com.aaa.ssm.service.impl;/**
  * createTime:2018-12-06 20:40
  */
 
+import com.aaa.ssm.dao.UserDao;
+import com.aaa.ssm.entity.Admin;
 import com.aaa.ssm.entity.User;
 import com.aaa.ssm.mapper.UserMapper;
 import com.aaa.ssm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  *className:UserServiceImpl
@@ -20,15 +24,26 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
 
+    //依赖注入
     @Autowired
-    private UserMapper userMapper;
+    private UserDao userDao;
+
     @Override
-    public User findByUserName(String username) {
-        return userMapper.findByUserName(username);
+    public Admin getUserByuserName(String username) {
+        List<Admin> userList = userDao.getUserByuserName(username);
+        //System.out.println(userList.get(0).getId()+"----------"+userList.get(0).getAname());
+        if (userList!=null&&userList.size()>0){
+            return userList.get(0);
+        }
+        return null;
     }
 
     @Override
-    public User findById(Integer userid) {
-        return userMapper.findById(userid);
+    public Admin getUserById(Integer userid) {
+        List<Admin> userList = userDao.getUserById(userid);
+        if (userList!=null&&userList.size()>0){
+            return userList.get(0);
+        }
+        return null;
     }
 }
