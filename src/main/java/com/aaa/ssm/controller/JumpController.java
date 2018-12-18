@@ -337,6 +337,14 @@ public class JumpController {
         return "qiantai/huankuan";
     }
     /**
+     * 跳转到我的还款页面
+     * @return
+     */
+    @RequestMapping("/yihuankuan")
+    public String yihuankuan(){
+        return "qiantai/reimbursement";
+    }
+    /**
      * 跳转到提现页面
      * @return
      */
