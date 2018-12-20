@@ -42,10 +42,18 @@ public interface TenderService {
 
     /**
      * 根据借款人查询投标信息
+     * @param userid
+     * @return
+     */
+    List<Map> getPage(Integer userid);
+
+
+    /**
+     * 根据借款人查询投标信息
      * @param map
      * @return
      */
-    List<Map> getPage(Map map);
+    List<Map> getTenderPage(Map map);
 
 
     /**

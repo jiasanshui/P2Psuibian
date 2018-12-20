@@ -17,4 +17,11 @@ public interface BorrowService {
      * @return
      */
     int add(Map map);
+
+    /**
+     * 根据用户名查询投标中的标的
+     * @param userName
+     * @return
+     */
+    List<Map> getListByUsername(String userName);
 }

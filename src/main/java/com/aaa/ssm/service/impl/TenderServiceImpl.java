@@ -36,9 +36,15 @@ public class TenderServiceImpl implements TenderService {
     @Override
     public int addBohui(Map map) {
         return tenderDao.addBohui(map);}
+
     @Override
-    public List<Map> getPage(Map map) {
-        return tenderDao.getPage(map);
+    public List<Map> getTenderPage(Map map) {
+        return tenderDao.getTenderPage(map);
+    }
+
+    @Override
+    public List<Map> getPage(Integer userid) {
+        return tenderDao.getPage(userid);
     }
 
     @Override

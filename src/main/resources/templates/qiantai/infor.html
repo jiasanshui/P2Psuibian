@@ -1,4 +1,4 @@
-<!DOCTYPE>
+<!DOCTYPE >
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -13,6 +13,13 @@
 <script src="../script/ablumn.js"></script>
 <script src="../script/plugins.js"></script>
 <script src="../script/detail.js"></script>
+  <!-- 引入样式 -->
+  <script type="text/javascript" src="../js/vue.js"></script>
+  <script type="text/javascript" src="../js/axios.min.js"></script>
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <!-- 引入组件库 -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
   <style>
       .btn{ /* 按钮美化 */
           width: 270px; /* 宽度 */
@@ -116,24 +123,26 @@
     <div class="bd clearfix">
       <div class="data">
         <ul>
-          <li> <span class="f16">借款金额</span><br>
-            <span class="f30 c-333" id="account">40,000.00</span>元 </li>
+          <ul th:each="list : ${uList}">
+          <li><span class="f16">借款金额</span><br>
+            <span class="f30 c-333" id="account" th:text="${list.BORROWMONEY}"></span>元 </li>
           <li class="relative"><span class="f16">年利率</span><br>
-            <span class="f30 c-orange">12.00% </span> </li>
+            <span class="f30 c-orange" th:text="${list.APR}"> </span> </li>
           <li><span class="f16">借款期限</span><br>
-            <span class="f30 c-333">1</span>个月 </li>
-          <li><span class="c-888">借款编号：</span>20150921617</li>
-          <li><span class="c-888">发标日期：</span>2015-09-13</li>
+            <span class="f30 c-333" th:text="${list.TIMELIMIT}"></span>个月 </li>
+          <li><span class="c-888">借款编号：</span><span th:text="${list.BORROWNUM}"></span></li>
+          <li><span class="c-888">发标日期：</span><span th:text="${list.STARTTIME}"></span></span></li>
           <li><span class="c-888">保障方式：</span>100%本息垫付</li>
-          <li><span class="c-888">还款方式：</span>按月付息,到期还本</li>
+          <li><span class="c-888">还款方式：</span><span th:text="${list.PAYMENT}"></span></li>
           <li><span class="c-888">需还本息：</span> 40,400.00元 </li>
-          <li><span class="c-888">借款用途：</span>临时周转</li>
+          <li><span class="c-888">借款用途：</span><span th:text="${list.PURPOSE}"></span></li>
           <li class="colspan"> <span class="c-888 fl">投标进度：</span>
-            <div class="progress-bar f1"> <span th:style="width:50%"></span> </div>
-            <span class="c-green">50%</span> </li>
+            <div class="progress-bar fl"> <span style="width:100%"></span> </div>
+            <span class="c-green" th:text="${list.JINDU}"></span> </li>
           <li> <span class="c-888">投资范围：</span> <span id="account_range"> 50元~
             不限 </span> </li>
         </ul>
+        <li><button onclick="addTender()" class="btn">投标</button></li>
       </div>
       <div class="mod-right mod-status">
         <div class="inner">
@@ -267,6 +276,7 @@
         </div>
       </div>
       <div class="ui-tab-item" style="display: none;">
+        <input type="hidden" th:value="${uid}" name="userid" id="uid">
         <div class="repayment-list"> 目前投标总额：<span class="c-orange">40,000.00 元</span>&nbsp;&nbsp;
           剩余投标金额：<span class="c-orange">0.00 元</span>
           <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -278,126 +288,12 @@
                 <th>投标方式</th>
               </tr>
             </tbody>
-            <tbody id="repayment_content">
+            <tbody id="repayment_content" th:each="pList : ${pList}">
               <tr>
-                <td>筱*** </td>
-                <td><span class="c-orange">￥652.00</span></td>
-                <td>2015-09-13 14:22:01</td>
-                <td>自动</td>
-              </tr>
-              <tr>
-                <td>大*** </td>
-                <td><span class="c-orange">￥94.00</span></td>
-                <td>2015-09-13 14:22:01</td>
-                <td>自动</td>
-              </tr>
-              <tr>
-                <td>p*** </td>
-                <td><span class="c-orange">￥796.00</span></td>
-                <td>2015-09-13 14:22:01</td>
-                <td>自动</td>
-              </tr>
-              <tr>
-                <td>t*** </td>
-                <td><span class="c-orange">￥4,000.00</span></td>
-                <td>2015-09-13 14:22:01</td>
-                <td>自动</td>
-              </tr>
-              <tr>
-                <td>湘*** </td>
-                <td><span class="c-orange">￥5,642.00</span></td>
-                <td>2015-09-13 14:22:01</td>
-                <td>自动</td>
-              </tr>
-              <tr>
-                <td>A*** </td>
-                <td><span class="c-orange">￥3,336.00</span></td>
-                <td>2015-09-13 14:22:01</td>
-                <td>自动</td>
-              </tr>
-              <tr>
-                <td>蒲*** </td>
-                <td><span class="c-orange">￥2,582.00</span></td>
-                <td>2015-09-13 14:22:01</td>
-                <td>自动</td>
-              </tr>
-              <tr>
-                <td>c*** </td>
-                <td><span class="c-orange">￥683.00</span></td>
-                <td>2015-09-13 14:22:01</td>
-                <td>自动</td>
-              </tr>
-              <tr>
-                <td>豆*** </td>
-                <td><span class="c-orange">￥8,000.00</span></td>
-                <td>2015-09-13 14:22:01</td>
-                <td>自动</td>
-              </tr>
-              <tr>
-                <td>j*** </td>
-                <td><span class="c-orange">￥2,725.00</span></td>
-                <td>2015-09-13 14:22:01</td>
-                <td>自动</td>
-              </tr>
-              <tr>
-                <td>l*** </td>
-                <td><span class="c-orange">￥1,242.00</span></td>
-                <td>2015-09-13 14:22:01</td>
-                <td>自动</td>
-              </tr>
-              <tr>
-                <td>郑*** </td>
-                <td><span class="c-orange">￥624.00</span></td>
-                <td>2015-09-13 14:22:01</td>
-                <td>自动</td>
-              </tr>
-              <tr>
-                <td>神*** </td>
-                <td><span class="c-orange">￥100.00</span></td>
-                <td>2015-09-13 14:22:01</td>
-                <td>自动</td>
-              </tr>
-              <tr>
-                <td>快*** </td>
-                <td><span class="c-orange">￥2,279.00</span></td>
-                <td>2015-09-13 14:22:01</td>
-                <td>自动</td>
-              </tr>
-              <tr>
-                <td>一*** </td>
-                <td><span class="c-orange">￥500.00</span></td>
-                <td>2015-09-13 14:22:01</td>
-                <td>自动</td>
-              </tr>
-              <tr>
-                <td>思*** </td>
-                <td><span class="c-orange">￥54.00</span></td>
-                <td>2015-09-13 14:22:01</td>
-                <td>自动</td>
-              </tr>
-              <tr>
-                <td>b*** </td>
-                <td><span class="c-orange">￥1,027.00</span></td>
-                <td>2015-09-13 14:22:01</td>
-                <td>自动</td>
-              </tr>
-              <tr>
-                <td>林*** </td>
-                <td><span class="c-orange">￥969.00</span></td>
-                <td>2015-09-13 14:22:01</td>
-                <td>自动</td>
-              </tr>
-              <tr>
-                <td>小*** </td>
-                <td><span class="c-orange">￥81.00</span></td>
-                <td>2015-09-13 14:22:01</td>
-                <td>自动</td>
-              </tr>
-              <tr>
-                <td>V*** </td>
-                <td><span class="c-orange">￥77.00</span></td>
-                <td>2015-09-13 14:22:01</td>
-                <td>自动</td>
+                <td th:text="${pList.REALNAME}"></td>
+                <td><span class="c-orange" th:text="${pList.TAMOUNT}">元</span></td>
+                <td th:text="${pList.TTIME}"></td>
+                <td th:text="${pList.TWAY}"></td>
               </tr>
             </tbody>
             <tfoot>
@@ -487,4 +383,5 @@
   </div>
 </div>
 </body>
+</html>
 </html>
