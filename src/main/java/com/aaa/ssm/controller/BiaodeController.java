@@ -56,7 +56,6 @@ public class BiaodeController {
     @ResponseBody
     @RequestMapping("/update")
     public Object update(@RequestBody Map map){
-        System.out.println("1111");
         return biaodeService.update(map);
     }
 

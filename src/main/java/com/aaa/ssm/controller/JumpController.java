@@ -38,7 +38,6 @@ public class JumpController {
     public String jumpIndex(Model model){
         //显示房屋抵押招标
         List<Map> housePro = projectService.getHousePro();
-        System.out.println(housePro);
         model.addAttribute("houseProList",housePro);
         return "qiantai/index";
     }
@@ -92,7 +91,12 @@ public class JumpController {
         return "qiantai/list";
     }
     /**
-     * 跳转到我要借款页面
+     * 前台跳转到我要借款页面
+     * 首先判断个人信息是否完善
+     * 是否进行实名认证
+     * 是否通过实名认证
+     * 是否有正在借款记录（未还清的借款）
+     * 跳转借款页面
      * @return
      */
     @RequestMapping("/borrow")
@@ -101,8 +105,7 @@ public class JumpController {
         //根据用户名去获取用户信息
         Map map= userInfoService.getUser(username);
         Object msg = map.get("msg");
-        if (StringUtil.isEmpty(msg)){
-            //审核通过
+        if (StringUtil.isEmpty(msg)){ //审核通过
             //调用生成随机数工具类生成随机数
             String num = RandomUtil.getBorrowNumByTime();
             model.addAttribute("num",num);

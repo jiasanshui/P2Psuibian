@@ -12,6 +12,10 @@ import java.util.List;
  */
 
 public interface TreeMenuService {
-
+    /**
+     * 获取树的json数据
+     * @return
+     */
     List<TreeNode> getList();
+
 }
