@@ -29,7 +29,6 @@ public class ProjectServiceImpl implements ProjectService{
     public List<Map> getHouseProAll() {
         return projectDao.getHouseProAll();
     }
-
     @Override
     public List<Map> getJinduByNum(String borrowNum) {
         return projectDao.getJinduByNum(borrowNum);

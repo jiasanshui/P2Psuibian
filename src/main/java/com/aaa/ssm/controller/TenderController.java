@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +52,7 @@ public class    TenderController {
         //设置当前第几页和每页显示数量
         PageHelper.startPage(Integer.valueOf(map.get("pageNo")+""),Integer.valueOf(map.get("pageSize")+""));
         //用pageInfo对结果进行封装
-        PageInfo<Map> pageInfo=new PageInfo<Map>(tenderService.getPage(map));
+        PageInfo<Map> pageInfo=new PageInfo<Map>(tenderService.getTenderPage(map));
         //System.out.println(map);
         Map resultMap=new HashMap();
         //获取当前页数据
@@ -69,7 +70,7 @@ public class    TenderController {
      */
     @ResponseBody
     @RequestMapping("/page2")
-    public Object getPageByParams(@RequestBody Map map){
+    public Object getPageByParams(@RequestBody Map map,Model model,HttpSession session){
         //设置当前第几页和每页显示数量
         PageHelper.startPage(Integer.valueOf(map.get("pageNo")+""),Integer.valueOf(map.get("pageSize")+""));
         //用pageInfo对结果进行封装
@@ -80,6 +81,10 @@ public class    TenderController {
         resultMap.put("pageData",pageInfo.getList());
         //获取分页总数量
         resultMap.put("total",pageInfo.getTotal());
+        String username=(String) session.getAttribute("userName");
+        //根据用户名去获取用户信息
+        List<Map> list = userInfoService.getUserList(username);
+        model.addAttribute("uid",list.get(0).get("USERID"));
         return resultMap;
     }
 
@@ -92,9 +97,6 @@ public class    TenderController {
      */
     @RequestMapping("/add")
     public Object add(@RequestParam Map map, Model model){
-        System.out.println(map);
-        System.out.println(map.get("userid"));
-        System.out.println(map.get("realName"));
         int result = tenderService.add(map);
         if (result==1){
             model.addAttribute("showInfo","投标成功");

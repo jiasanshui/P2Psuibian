@@ -38,8 +38,19 @@ public interface TenderDao {
      * @param map
      * @return
      */
-    @Select("<script>select t.realname,t.tamount,t.ttime,t.tway from tender t,borrow b where t.borrower=b.applicant</script>")
-    List<Map> getPage(Map map);
+    @Select("<script>select t.realname,t.tamount,t.ttime,t.tway \n" +
+            "from tender t left join borrow b on t.userid=b.userid where t.userid = #{userid}</script>")
+    List<Map> getPage(Integer userid);
+
+
+    /**
+     * 根据借款人查询投标信息
+     * @param map
+     * @return
+     */
+    @Select("<script>select t.realname,t.tamount,t.ttime,t.tway \n" +
+            "from tender t left join borrow b on t.userid=b.userid where t.userid = #{userid}</script>")
+    List<Map> getTenderPage(Map map);
 
 
     @Select("<script>select t.realname,t.tamount,t.ttime,t.tway from tender t,borrow b where t.borrower=b.applicant " +
@@ -51,7 +62,7 @@ public interface TenderDao {
      * @param map
      * @return
      */
-    @Insert("insert into tender(id,realname,tamount,ttime,tway,userid) values(seq_tender_id.nextval,#{realName},#{tamount},to_date(to_char(sysdate,'yyyy-mm-dd','yyyy-mm-dd'),#{tway},#{userid})")
+    @Insert("insert into tender(id,realname,tamount,ttime,tway,userid) values(seq_tender_id.nextval,#{realName},#{tamount},to_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd'),#{tway},#{userid})")
     int add(Map map);
 
     List<Map> getList(Map map);

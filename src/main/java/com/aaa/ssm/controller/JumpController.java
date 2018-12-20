@@ -1,8 +1,12 @@
 package com.aaa.ssm.controller;
 
+import com.aaa.ssm.service.BorrowService;
 import com.aaa.ssm.service.ProjectService;
+import com.aaa.ssm.service.TenderService;
 import com.aaa.ssm.util.RandomUtil;
 import com.aaa.ssm.util.StringUtil;
+
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.aaa.ssm.service.UserInfoService;
@@ -29,6 +33,14 @@ public class JumpController {
     //依赖注入service层
     @Autowired
     private UserInfoService userInfoService;
+
+    //依赖注入
+    @Autowired
+    private BorrowService borrowService;
+
+    //依赖注入
+    @Autowired
+    private TenderService tenderService;
 
     /**
      * 跳转到前台首页
@@ -86,8 +98,9 @@ public class JumpController {
      */
     @RequestMapping("/list")
     public String list(Model model){
-        List<Map> housePro = projectService.getHouseProAll();
-        model.addAttribute("houseProList",housePro);
+        List<Map> houseProAll = projectService.getHouseProAll();
+        model.addAttribute("proList",houseProAll);
+        System.out.println(houseProAll);
         return "qiantai/list";
     }
     /**
@@ -185,10 +198,19 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/infor")
-    public String infor(String borrowNum){
+    public String infor(HttpSession session,Model model){
+        String userName=(String) session.getAttribute("userName");
+        List<Map> list = userInfoService.getUserList(userName);
+        Integer userid = Integer.valueOf(list.get(0).get("USERID")+"");
+        List<Map> listByUsername = borrowService.getListByUsername(userName);
+        List<Map> pageList = tenderService.getPage(userid);
+        model.addAttribute("uList",listByUsername);
+        model.addAttribute("pList",pageList);
+        //根据用户名去获取用户信息
         return "qiantai/infor";
     }
     /**
+     *
      * 跳转到招贤纳士页面
      * @return
      */
@@ -317,6 +339,14 @@ public class JumpController {
     @RequestMapping("/huankuan")
     public String huankuan(){
         return "qiantai/huankuan";
+    }
+    /**
+     * 跳转到我的还款页面
+     * @return
+     */
+    @RequestMapping("/yihuankuan")
+    public String yihuankuan(){
+        return "qiantai/reimbursement";
     }
     /**
      * 跳转到提现页面
