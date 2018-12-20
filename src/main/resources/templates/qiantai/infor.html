@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>p2p网贷平台</title>
@@ -69,6 +69,7 @@
             <span th:text="${session.userName}"></span>
           </div>
         </li>
+
         <li th:if="${session.userName}ne null">
           <div class="" >
             <a href="/jump/login" class="js-login" title="退出">退出</a>
@@ -128,8 +129,8 @@
           <li><span class="c-888">需还本息：</span> 40,400.00元 </li>
           <li><span class="c-888">借款用途：</span>临时周转</li>
           <li class="colspan"> <span class="c-888 fl">投标进度：</span>
-            <div class="progress-bar fl"> <span style="width:100%"></span> </div>
-            <span class="c-green">100%</span> </li>
+            <div class="progress-bar f1"> <span th:style="width:50%"></span> </div>
+            <span class="c-green">50%</span> </li>
           <li> <span class="c-888">投资范围：</span> <span id="account_range"> 50元~
             不限 </span> </li>
         </ul>
