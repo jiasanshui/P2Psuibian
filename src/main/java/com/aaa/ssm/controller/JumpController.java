@@ -190,7 +190,7 @@ public class JumpController {
         return "qiantai/deposits_record";
     }
     /**
-     * 跳转到借款详细页面
+     * 跳转到投资页面
      * @return
      */
     @RequestMapping("/infor")
