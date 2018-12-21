@@ -2,6 +2,7 @@ package com.aaa.ssm.dao;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 import java.util.Map;
@@ -19,19 +20,25 @@ public interface BorrowDao {
      * @param map
      * @return
      */
-    @Insert("insert into borrow(borrowid,applicant,tel,timelimit,purpose,des,quantity,cost,apr,borrowmoney,danbaostyle,payment,username,stateid,days,borrownum) " +
+    @Insert("insert into borrow(borrowid,applicant,tel,timelimit,purpose,des,quantity,cost,apr,borrowmoney,danbaostyle,payment,username,stateid,days,borrownum,winbidmoney) " +
             "values(seq_tbborrowid.nextval,#{applicant},#{tel},#{timelimit},#{purpose},#{des},#{quantity},#{cost}," +
-            "#{apr},#{borrowmoney},#{danbaostyle},#{payment},#{username},1,#{days},#{borrownum})")
+            "#{apr},#{borrowmoney},#{danbaostyle},#{payment},#{username},1,#{days},#{borrownum},0)")
     int add(Map map);
 
     /**
-     * 根据用户名查询投标中的标的
-     * @param userName
+     * 根据借款标的编号查询投标中的标的
+     * 根据借款标的编号查询投标中的标的
+     * @param BORROWNUM
      * @return
      */
-    @Select("select borrowid,applicant,tel,timelimit,purpose,starttime,des,quantity,cost," +
-            "CONCAT(TO_CHAR(apr*100,'990.99'),'%') apr,borrowmoney,danbaostyle,payment," +
-            "username,stateid,borrownum,winbidmoney,concat((winbidmoney/borrowmoney*100),'%') jindu," +
-            "round(winbidmoney/borrowmoney*10) jindua  from borrow where username=#{userName} and stateid=2")
-    List<Map> getListByUsername(String userName);
+    @Select("select borrowid,applicant,starttime,tel,timelimit,purpose,des,quantity,cost,CONCAT(TO_CHAR(apr*100,'990.99'),'%') apr,borrowmoney,danbaostyle,payment,username,stateid,borrownum,winbidmoney,concat((round(winbidmoney/borrowmoney,4)*100),'%') jindu,round(winbidmoney/borrowmoney*10) jindua  from borrow where borrownum=#{BORROWNUM}")
+    List<Map> getListByUsername(String BORROWNUM);
+
+    /**
+     * 投标成功后修改借款表里已借金额
+     * @param map
+     * @return
+     */
+    @Update("update borrow set winbidmoney = winbidmoney+#{tamount} where borrownum = #{borrowNum}")
+    int update(Map map);
 }
