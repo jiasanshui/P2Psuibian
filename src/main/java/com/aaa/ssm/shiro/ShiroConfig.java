@@ -57,7 +57,7 @@ public class ShiroConfig {
         filterMap.put("/backjump/*","authc");
 
         //修改调整的登录页面
-        shiroFilterFactoryBean.setLoginUrl("/backjump/login");
+        shiroFilterFactoryBean.setLoginUrl("/backjump/backlogin");
         //设置未授权提示页面
         //shiroFilterFactoryBean.setUnauthorizedUrl("/unAuth");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);

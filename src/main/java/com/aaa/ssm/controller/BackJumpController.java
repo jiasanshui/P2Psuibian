@@ -47,9 +47,51 @@ public class BackJumpController {
      * 跳转后台登录页面
      * @return
      */
-    @RequestMapping("/login")
-    public String login(){
-        return "houtai/login";
+    @RequestMapping("/backlogin")
+    public String backLogin(){
+        return "houtai/backLogin";
+    }
+    /**
+     * 跳转权限菜单更新和删除页面（power）
+     * @return
+     */
+    @RequestMapping("/powermenu")
+    public String powermenu(){
+        return "houtai/power/powermenu";
+    }
+    /**
+     * 跳转后台权限菜单添加页面(power)
+     * @return
+     */
+    @RequestMapping("/menuadd")
+    public String powermenuAdd(){
+        return "houtai/power/add";
     }
 
+    /**
+     * 跳转后台角色列表页面
+     * @return
+     */
+    @RequestMapping("/role")
+    public String rolelist(){
+        return "houtai/role/list";
+    }
+
+    /**
+     * 跳转后台权限菜单管理页面(easyui)
+     * @return
+     */
+    @RequestMapping("/permission")
+    public String permission(){
+        return "houtai/permission/power";
+    }
+
+    /**
+     * 跳转后台权限菜单管理页面(vue+element ui)
+     * @return
+     */
+    @RequestMapping("/powerList")
+    public String powerList(){
+        return "houtai/power/powerList";
+    }
 }

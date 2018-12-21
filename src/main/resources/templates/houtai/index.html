@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>首页</title>
-
     <script type="text/javascript" src="../js/vue.js"></script>
     <script type="text/javascript" src="../js/axios.min.js"></script>
     <!-- 引入样式 -->
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../css/elementui.css">
     <!-- 引入组件库 -->
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="../js/elementui.js"></script>
 </head>
 <body>
 <div class="diva">
@@ -54,6 +53,7 @@
         el:".diva",
         data:{
             treeData:[],
+            icon:'el-icon-menu',
             editableTabsValue2: '2',
             editableTabs2: [{
                 title: '默认页',

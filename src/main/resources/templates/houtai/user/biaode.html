@@ -7,15 +7,14 @@
     <script type="text/javascript" src="../js/vue.js"></script>
     <script type="text/javascript" src="../js/axios.min.js"></script>
     <!-- 引入样式 -->
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../css/elementui.css">
     <!-- 引入组件库 -->
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="../js/elementui.js"></script>
 </head>
 <body>
 <div id="app">
     <h2>{{ message }}</h2>
 </div>
-
 <div id="tableView">
     <!--列表顶部搜索和工具条-->
     <el-row>
@@ -177,12 +176,12 @@
             <el-row>
                 <el-col :span="10">
                     <el-form-item label="数量" prop="QUANTITY">
-                        <el-input v-model="lookForm.QUANTITY" auto-complete="off"></el-input>
+                         <el-input v-model="lookForm.QUANTITY" auto-complete="off" ></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
                     <el-form-item label="价值" prop="COST">
-                        <el-input v-model="lookForm.COST" auto-complete="off"></el-input>
+                            <el-input v-model="lookForm.COST" auto-complete="off"  ></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -230,7 +229,6 @@
         </el-form>
     </el-dialog>
 </div>
-
 <script type="text/javascript">
     var app = new Vue({
         el: '#app',
@@ -333,6 +331,8 @@
             },
             //查看详情事件
             lookClick:function(row) {
+
+
                 //var  _self=this;
                 this.lookFormVisible = true;
                 this.lookForm = Object.assign({}, row);
