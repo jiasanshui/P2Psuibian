@@ -55,13 +55,13 @@ public class UserShiroController {
             session.setAttribute("user",user);
             return "redirect:/backjump/index";
         } catch (UnknownAccountException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             //登录失败：用户名不存在
             model.addAttribute("msg","用户名不存在");
-            return "forward:/backjump/login";
+            return "forward:/backjump/backlogin";
         } catch (IncorrectCredentialsException e){
             model.addAttribute("msg","密码错误");
-            return "forward:/backjump/login";
+            return "forward:/backjump/backlogin";
         }
     }
 }

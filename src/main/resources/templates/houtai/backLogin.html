@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>p2p后台登录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="../css/supersized.css">
+    <link rel="stylesheet" href="../css/login.css">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <script src="../js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.form.js"></script>
+    <script type="text/javascript" src="../js/tooltips.js"></script>
+    <script type="text/javascript" src="../js/login.js"></script>
+</head>
+<body>
+<div class="page-container">
+        <div class="main_box">
+        <div class="login_box">
+        <div class="login_form">
+        <form action="/usershiro/login" id="form1" method="post">
+        <center><h2>P2P随便贷后台管理系统</h2></center><br><br>
+    <h3 style="color: red" th:text="${msg}"></h3>
+        <div class="form-group">
+        <label for="j_username" class="t">用户名：</label>
+    <input id="username" value="" name="name" type="text" class="form-control x319 in"
+        autocomplete="off" onblur="checkuser()"><span id="user"></span>
+            </div>
+            <div class="form-group">
+            <label for="j_password" class="t">密　码：</label>
+        <input id="password" value="" name="password" type="password"
+    class="password form-control x319 in" onblur="checkpass()"><span id="pd"></span>
+            </div>
+            <div class="form-group" style="float: left;margin-right: 6px;" >
+            <label class="t">验证码：</label>
+        <input id="j_captcha" name="j_captcha" type="text" class="form-control x164 in" onblur="checkyzm()">
+            </div>
+            <div id="v_container" style="width: 150px;height: 40px;float: left;"></div><span id="yan" style="height: 40px;"></span>
+
+        <div class="form-group" align="center">
+            <label class="t"></label>　　　
+            <button type="button"  id="submit_btn"
+    class="btn btn-primary btn-lg" onclick="checkAll()">&nbsp;登&nbsp;录&nbsp </button>
+        <input type="reset" value="&nbsp;重&nbsp;置&nbsp;" class="btn btn-default btn-lg">
+            </div>
+            </form>
+            </div>
+            </div>
+            </div>
+            </div>
+
+            <!-- Javascript -->
+            <script type="text/javascript" src="../js/gVerify.js"></script>
+<script type="text/javascript">
+    var verifyCode = new GVerify("v_container");
+    //校验验证码
+    function checkyzm(){
+        $("#j_captcha").empty();
+        var res = verifyCode.validate($("#j_captcha").val());
+        if(res==true){
+            $("#yan").html("正确").css("color","green");
+            return true;
+        }else{
+            $("#yan").html("错误").css("color","red");
+            return false;
+        }
+    }
+    //验证用户名
+    function checkuser(){
+        var user=document.getElementById("username");
+        if(user.value.length>0){
+            $("#user").html("");
+            return true;
+        }
+        $("#user").html("用户名不能为空").css("color","red");
+        user.focus();
+        return false;
+    }
+    //验证密码
+    function checkpass(){
+        var pass=document.getElementById("password");
+        if(pass.value.length>0){
+            $("#pd").html("");
+            return true;
+        }
+        $("#pd").html("密码不能为空").css("color","red");
+        pass.focus();
+        return false;
+    }
+    //登陆提交
+    function checkAll(){
+        if(checkuser()&&checkpass()&&checkyzm()){
+            var form = document.getElementById("form1");
+            form.submit();
+        }
+    }
+</script>
+</body>
+</html>
+</html>

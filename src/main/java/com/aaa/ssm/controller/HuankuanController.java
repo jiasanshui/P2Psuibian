@@ -32,7 +32,6 @@ public class HuankuanController {
     @ResponseBody
     @RequestMapping("page")
     public Object page(@RequestBody Map map){
-        System.out.println(map);
         PageHelper.startPage(Integer.valueOf(map.get("pageNo")+""),Integer.valueOf(map.get("pageSize")+""));
         PageInfo<Map> pageInfo = new PageInfo<Map>(huankuanService.getListByUName(map));
         Map resultMap = new HashMap();
