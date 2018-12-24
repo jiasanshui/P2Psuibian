@@ -12,6 +12,7 @@ public class UserRegister {
     private String upwd;
     private String phone;
     private String email;
+    private String paypwd;
 
     public String getEmail() {
         return email;
@@ -51,5 +52,13 @@ public class UserRegister {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getPaypwd() {
+        return paypwd;
+    }
+
+    public void setPaypwd(String paypwd) {
+        this.paypwd = paypwd;
     }
 }

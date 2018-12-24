@@ -1,5 +1,6 @@
 package com.aaa.ssm.dao;
 
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Component;
 
@@ -17,4 +18,12 @@ public interface RenzhengDao {
     @Update("update userinfo set realname=#{realname},age=#{age},birthday=to_date(substr(#{birth},1,10),'yyyy-mm-dd'),paypwd=#{paypwd}," +
             "idcard=#{idcard},icpica=#{picA},icpicb=#{picB},address=#{address} where uname=#{username}")
     int update(Map map);
+
+    /**
+     *
+     * @param userName
+     * @return
+     */
+    @Select("select * from userinfo where uname=#{userName}")
+    Map isRenZheng(String userName);
 }

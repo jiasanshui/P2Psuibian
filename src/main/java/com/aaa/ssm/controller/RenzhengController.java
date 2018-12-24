@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.text.ParseException;
@@ -55,5 +56,21 @@ public class RenzhengController {
             System.out.println("认证成功");
         }
         return "redirect:/jump/index";
+    }
+
+    /**
+     * 判断账户是否已经实名认证
+     * @param userName
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("isRen")
+    public Object isRenZheng(String userName){
+        Map user = renzhengService.isRenZheng(userName);
+        if(user.get("PAYPWD")!=null&&!"".equals(user.get("PAYPWD"))){
+            return 1;
+        }else {
+            return 0;
+        }
     }
 }

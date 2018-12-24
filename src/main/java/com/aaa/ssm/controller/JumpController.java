@@ -1,12 +1,9 @@
 package com.aaa.ssm.controller;
 
-import com.aaa.ssm.service.ProjectService;
-import com.aaa.ssm.service.UserInfoService;
+import com.aaa.ssm.service.*;
 import com.aaa.ssm.util.RandomUtil;
 import com.aaa.ssm.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.aaa.ssm.service.HuankuanService;
-import com.aaa.ssm.service.UserInfoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -100,8 +97,8 @@ public class JumpController {
     public String list(Model model){
         List<Map> houseProAll = projectService.getHouseProAll();
         model.addAttribute("proList",houseProAll);
-        System.out.println(houseProAll);
         return "qiantai/list";
+
     }
     /**
      * 前台跳转到我要借款页面
@@ -198,12 +195,11 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/infor")
-    public String infor(HttpSession session,Model model){
+    public String infor(HttpSession session,Model model,String BORROWNUM){
         String userName=(String) session.getAttribute("userName");
         List<Map> list = userInfoService.getUserList(userName);
-        Integer userid = Integer.valueOf(list.get(0).get("USERID")+"");
-        List<Map> listByUsername = borrowService.getListByUsername(userName);
-        List<Map> pageList = tenderService.getPage(userid);
+        List<Map> listByUsername = borrowService.getListByUsername(BORROWNUM);
+        List<Map> pageList = tenderService.getPage(BORROWNUM);
         model.addAttribute("uList",listByUsername);
         model.addAttribute("pList",pageList);
         //根据用户名去获取用户信息
@@ -362,12 +358,17 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/toubiao")
-    public String toubiao(HttpSession session,Model model){
+    public String toubiao(HttpSession session,Model model,String BORROWNUM){
         String username=(String) session.getAttribute("userName");
         //根据用户名去获取用户信息
         List<Map> list = userInfoService.getUserList(username);
+        List<Map> listByUsername = borrowService.getListByUsername(BORROWNUM);
         model.addAttribute("realName",list.get(0).get("REALNAME"));
         model.addAttribute("uid",list.get(0).get("USERID"));
+        model.addAttribute("bankNum",list.get(0).get("BANKNUM"));
+        model.addAttribute("amount",list.get(0).get("AMOUNT"));
+        model.addAttribute("BORROWNUM",BORROWNUM);
+        model.addAttribute("bList",listByUsername);
         return "qiantai/toubiao";
     }
 

@@ -20,8 +20,16 @@ public interface BorrowService {
 
     /**
      * 根据用户名查询投标中的标的
-     * @param userName
+     * @param t
      * @return
      */
-    List<Map> getListByUsername(String userName);
+    List<Map> getListByUsername(String BORROWNUM);
+
+
+    /**
+     * 投标成功后修改借款表里已借金额
+     * @param map
+     * @return
+     */
+    int update(Map map);
 }

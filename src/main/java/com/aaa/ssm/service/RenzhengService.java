@@ -16,4 +16,11 @@ public interface RenzhengService {
      * @return
      */
     int update(Map map);
+
+    /**
+     * 判断是否已经实名认证
+     * @param userName
+     * @return
+     */
+    Map isRenZheng(String userName);
 }

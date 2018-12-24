@@ -54,6 +54,7 @@ public class UserLoginController {
                 session.setAttribute("userName",user.getUname());
                 session.setAttribute("email",user.getEmail());
                 session.setAttribute("phone",user.getPhone());
+                session.setAttribute("paypwd",user.getPaypwd());
                 session.setAttribute("user",user);
                 return "redirect:jump/index";
             }
@@ -75,6 +76,7 @@ public class UserLoginController {
                 session.setAttribute("userName",user.getUname());
                 session.setAttribute("phone",user.getPhone());
                 session.setAttribute("email",user.getEmail());
+                session.setAttribute("paypwd",user.getPaypwd());
                 session.setAttribute("user",user);
                 return "qiantai/index";
             }
@@ -96,6 +98,7 @@ public class UserLoginController {
                 session.setAttribute("userName",user.getUname());
                 session.setAttribute("phone",user.getPhone());
                 session.setAttribute("email",user.getEmail());
+                session.setAttribute("paypwd",user.getPaypwd());
                 session.setAttribute("user",user);
                 return "redirect:/jump/index";
             }
