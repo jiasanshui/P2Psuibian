@@ -370,6 +370,7 @@ public class JumpController {
         model.addAttribute("uid",list.get(0).get("USERID"));
         model.addAttribute("bankNum",list.get(0).get("BANKNUM"));
         model.addAttribute("amount",list.get(0).get("AMOUNT"));
+        model.addAttribute("freezamount",list.get(0).get("FREEZAMOUNT"));
         model.addAttribute("BORROWNUM",BORROWNUM);
         model.addAttribute("bList",listByUsername);
         return "qiantai/toubiao";

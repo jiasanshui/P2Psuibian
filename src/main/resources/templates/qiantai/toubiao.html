@@ -75,6 +75,7 @@
             <input type="hidden" th:value="${BORROWNUM}" name="borrowNum"/>
             <input type="hidden" th:value="${bankNum}" name="bankNum" id="bankNum">
             <input type="hidden" th:value="${amount}" name="amount" id="amount">
+            <input type="hidden" th:value="${freezamount}" name="freezamount" id="freezamount">
             <ul th:each="list:${bList}">
 				<li>
 					<span class="dis">投标人：</span><input class="input" type="text"  readonly="true" name="realName"  maxlength="24" id="user" tabindex="1" autocomplete="off" th:value="${realName}">
@@ -160,14 +161,24 @@
        var a = (borr-win);
        a=a*0.1;
        var b = borr - win;
+       var amount = document.getElementById("amount").value;
        var bor = document.getElementById("bor");
+       var borr = bor.value;
        var bo = document.getElementById("bo");
+       var c = amount - borr;
        var reg=/^[1-9]\d*$/;
        if(bor.value.length>=0&&bor.value.length<=7&&reg.test(bor.value)&&bor.value>=a&&bor.value<=b){
-           bo.style.color="green";
-           bo.innerHTML="金额符合提交";
-           bor.style.borderWidth="1px gray solid";
-           ss=1;
+           if(c<0){
+               bo.style.color="red";
+               bor.focus();
+               bo.innerHTML="账户余额不足"+c+"，请先充值！";
+               bo.style.borderWidth="1px red solid";
+           }else {
+           bo.style.color = "green";
+           bo.innerHTML = "金额符合提交";
+           bor.style.borderWidth = "1px gray solid";
+           ss = 1;
+        }
        }
        else{
            bo.style.color="red";

@@ -119,13 +119,16 @@
 <div class="item-detail wrap">
   <div class="breadcrumbs"> <a href="/jump/index">首页</a>&gt; <a href="#">散标投资列表</a>&gt; <span class="cur">项目详情</span> </div>
   <div class="item-detail-head clearfix" data-target="sideMenu">
-    <div class="hd"> <i class="icon icon-che" title="车易贷"></i>
-      <h2>赵女士长安福特福克斯汽车质押贷款4万元</h2>
+    <ul th:each="list : ${uList}">
+    <div class="hd"> <i class="icon icon-che
+" title="车易贷" ></i>
+      <h2 th:text="${list.DES}"></h2>
     </div>
     <ul class="bd clearfix">
       <div class="data">
         <ul>
-          <ul th:each="list : ${uList}">
+          <ul>
+            <input id="borrownum" type="hidden" th:value="${list.BAIFEN}">
           <li><span class="f16">借款金额</span><br>
             <span class="f30 c-333" id="account" th:text="${list.BORROWMONEY}"></span>元 </li>
           <li class="relative"><span class="f16">年利率</span><br>
@@ -143,8 +146,8 @@
             <span class="c-green" th:text="${list.JINDU}"></span> </li>
           <li> <span class="c-888">投资范围：</span> <span id="account_range" th:text="(${list.BORROWMONEY}-${list.WINBIDMONEY})*0.10 +'~'+(${list.BORROWMONEY}-${list.WINBIDMONEY})*1.00+'￥'">
           </span> </li>
-            <li th:if="${list.JINDU } ne '100%' "><a th:href="@{/jump/toubiao(BORROWNUM=${list.BORROWNUM})}" class="btn">投标</a></li>
-            <li th:if="${list.JINDU } eq '100%' "><a href="#" onclick="return false" class="btn">已满标</a></li>
+            <li th:if="${list.BAIFEN} lt 1" ><a th:href="@{/jump/toubiao(BORROWNUM=${list.BORROWNUM})}" class="btn">投标</a></li>
+            <li th:if="${list.BAIFEN} ge 1"><a href="#" onclick="return false" class="btn">已满标</a></li>
           </ul>
           </ul>
       </div>
@@ -155,6 +158,8 @@
             下期还款日： <span class="f20 c-333">2015-10-13</span> </div>
           <i class="icon icon-status icon-status1"></i> </div>
       </div>
+    </ul>
+    </ul>
     </div>
   </div>
   <div class="item-detail-body clearfix mrt30 ui-tab">

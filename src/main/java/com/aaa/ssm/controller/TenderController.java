@@ -114,7 +114,9 @@ public class    TenderController {
         int result1 = tenderService.add(map);
         int result2 = borrowService.update(map);
         int result3 = accountFlowService.add(map);
-        if (result1==1&&result2==1&&result3==1){
+        int result4 = userInfoService.updateAmount(map);
+        int result5 = userInfoService.updateFreezAmount(map);
+        if (result1==1&&result2==1&&result3==1&&result4==1){
             return "redirect:/jump/list";
         }else {
             return "redirect:/jump/toubiao";
