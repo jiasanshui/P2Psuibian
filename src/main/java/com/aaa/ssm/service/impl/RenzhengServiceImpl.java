@@ -23,4 +23,9 @@ public class RenzhengServiceImpl implements RenzhengService{
     public int update(Map map) {
         return renzhengDao.update(map);
     }
+
+    @Override
+    public Map isRenZheng(String userName) {
+        return renzhengDao.isRenZheng(userName);
+    }
 }

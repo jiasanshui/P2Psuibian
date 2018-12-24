@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/XSL/Transform">
+<!DOCTYPE>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -176,21 +175,49 @@
 			//]]>
 		</script>
     <input id="investorValiCodeError" type="hidden" name="investorValiCodeError">
-
+    <!--判断是否已经认证过个人信息-->
+    <script type="text/javascript">
+        $(function(){
+            var username=$("#userName").val();
+            $.ajax({
+                type:"post",
+                dataType:"json",
+                url:"/renzheng/isRen",
+                data:{userName:username},
+                success:function (data) {
+                    if(data==1){
+                        $("#liRen").show();
+                        $("#liRenA").hide();
+                    }else {
+                        $("#liRen").hide();
+                        $("#liRenA").show();
+                    }
+                }
+            })
+        })
+    </script>
 
     <div class="personal-main">
       <div class="personal-pay">
         <h3><i>认证个人信息</i></h3>
         <form method="post" action="/renzheng/update" enctype="multipart/form-data">
           <div>
-            <p><h3>请您按以下步骤进行个人身份信息认证！</h3></p>
+
           </div>
-          <div class="pay-form">
+          <input type="hidden" id="userName" th:value="${session.userName}">
+          <div>
+            <ul>
+              <li id="liRen"  style="display: none;">
+                <p><h3>您已经实名认证了</h3></p>
+              </li>
+              <li id="liRenA"  style="display: none;">
+                <p><h3>请您按以下步骤进行个人身份信息认证！</h3></p>
+                <div class="pay-form">
             <h6>请输入您的身份证信息</h6>
             <ul>
               <li>
                 <label for="username">用户姓名</label>
-                <input type="text" name="username" class="pay-txt" th:value="${session.userName}" maxlength="16" readonly="readonly">
+                <input type="text"  name="username" class="pay-txt" th:value="${session.userName}" maxlength="16" readonly="readonly">
                 <div id="usernameErrorDiv"></div>
               </li>
               <li>
@@ -288,6 +315,10 @@
               </li>
             </ul>
           </div>
+              </li>
+            </ul>
+          </div>
+
         </form>
 
         <!--省市县级联-->

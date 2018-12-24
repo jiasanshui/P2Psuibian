@@ -1,15 +1,9 @@
 package com.aaa.ssm.controller;
 
-import com.aaa.ssm.service.BorrowService;
-import com.aaa.ssm.service.ProjectService;
-import com.aaa.ssm.service.TenderService;
+import com.aaa.ssm.service.*;
 import com.aaa.ssm.util.RandomUtil;
 import com.aaa.ssm.util.StringUtil;
-
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.aaa.ssm.service.UserInfoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +27,9 @@ public class JumpController {
     //依赖注入service层
     @Autowired
     private UserInfoService userInfoService;
+
+    @Autowired
+    private HuankuanService huankuanService;
 
     //依赖注入
     @Autowired
@@ -202,7 +199,7 @@ public class JumpController {
         return "qiantai/deposits_record";
     }
     /**
-     * 跳转到借款详细页面
+     * 跳转到投资页面
      * @return
      */
     @RequestMapping("/infor")
@@ -382,6 +379,28 @@ public class JumpController {
         model.addAttribute("BORROWNUM",BORROWNUM);
         model.addAttribute("bList",listByUsername);
         return "qiantai/toubiao";
+    }
+
+    /**
+     * 跳转到付款页面
+     * @return
+     */
+    @RequestMapping("/fukuan")
+    public String fukuan(String borrownum,String limits,Model model){
+        double moneyAll = huankuanService.getMoneyAll(borrownum,limits);
+        model.addAttribute("allMoney",moneyAll);
+        model.addAttribute("limits",limits);
+        model.addAttribute("borrownum",borrownum);
+        return "qiantai/fukuan/fukuan";
+    }
+
+    /**
+     * 跳转到付款成功页面
+     * @return
+     */
+    @RequestMapping("/fkcg")
+    public String fkcg(){
+        return "qiantai/fukuan/fkcg";
     }
 
 

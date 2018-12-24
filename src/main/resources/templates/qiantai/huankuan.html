@@ -15,9 +15,10 @@
 	<script type="text/javascript" src="../js/vue.js"></script>
 	<script type="text/javascript" src="../js/axios.min.js"></script>
 	<!-- 引入样式 -->
-	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<!-- 引入样式 -->
+	<link rel="stylesheet" href="../css/elementui.css">
 	<!-- 引入组件库 -->
-	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<script src="../js/elementui.js"></script>
 </head>
 <body>
 <!-- header start -->
@@ -88,10 +89,10 @@
 						<el-row>
 							<el-form :inline="true" :model="searchForm" class="demo-form-inline">
 								<el-form-item label="订单编号">
-									<el-input v-model="searchForm.uname" placeholder="订单编号"></el-input>
+									<el-input v-model="searchForm.borrownum" placeholder="订单编号"></el-input>
 								</el-form-item>
 								<el-form-item label="担保方式">
-									<el-input v-model="searchForm.phone" placeholder="担保方式"></el-input>
+									<el-input v-model="searchForm.danbaostyle" placeholder="担保方式"></el-input>
 								</el-form-item>
 								<el-form-item>
 									<el-button type="primary" icon="search" @click="searchClick">查询</el-button>
@@ -153,19 +154,98 @@
 								</el-table-column>
 								<el-table-column label="操作">
 									<template scope="scope">
-										<el-button :plain="true" type="success" size="small" icon="edit" @click="lookClick(scope.row)">查看详情</el-button>
-										<el-button :plain="true" type="danger" size="small" icon="delete" @click="deleteClick(scope.row)">通过</el-button>
-										<el-button :plain="true" type="success" size="small" icon="edit" @click="editClick(scope.row)">驳回</el-button>
+										<el-button :plain="true" type="success" size="small" icon="edit" @click="returnClick(scope.row)">我要还款</el-button>
+										<!--<el-button :plain="true" type="danger" size="small" icon="delete" @click="deleteClick(scope.row)">通过</el-button>
+										<el-button :plain="true" type="success" size="small" icon="edit" @click="editClick(scope.row)">驳回</el-button>-->
 									</template>
 								</el-table-column>
 							</el-table>
 						</el-row>
+						<!--支付界面-->
+						<!--还款界面-->
+						<el-dialog title="我要还款" :visible.sync="returnFormVisible" :close-on-click-modal="true" >
+							<el-row style="margin-top: 0px">
+								<el-menu :default-active="activeIndex"
+										 class="el-menu-demo"
+										 mode="horizontal"
+										 @select="handleSelect"
+										 background-color="#545c64"
+										 text-color="#fff"
+										 active-text-color="#ffd04b">
+									<el-menu-item index="1">本期还款</el-menu-item>
+									<el-menu-item index="2">提前还款</el-menu-item>
+									<el-menu-item index="3">未还款</el-menu-item>
+									<el-menu-item index="4">还款记录</el-menu-item>
+								</el-menu>
+							</el-row>
+							<el-row>
+								<el-table
+										:data="returnData"
+										v-loading.body="loading"
+										border
+										@selection-change="selectionChangeA"
+										style="width: 650px;height: 350px;">
+									<el-table-column
+											type="selection"
+											v-if='show'
+											width="50">
+									</el-table-column>
+									<el-table-column
+											prop="BORROWNUM"
+											v-if="show1">
+									</el-table-column>
+									<el-table-column
+											prop="TIMELIMIT"
+											label="当前期数"
+											width="120">
+									</el-table-column>
+									<el-table-column
+											prop="CURRENTMONEY"
+											label="还款金额"
+											width="120">
+									</el-table-column>
+									<el-table-column
+											prop="REPAYLIMIT"
+											label="还款期限"
+											width="120">
+									</el-table-column>
+									<el-table-column
+											prop="OVERTIMELIXI"
+											label="逾期利息"
+											width="120">
+									</el-table-column>
+									<el-table-column
+											prop="STATE"
+											label="还款状态"
+											width="120">
+									</el-table-column>
+								</el-table>
+							</el-row>
+							<el-row style="margin-top: 20px" type="flex" justify="end">
+								<el-col :span="6" >
+									<el-button :plain="true" type="primary"  v-if="isDisabled"  disabled size="small" icon="delete">一键还清</el-button>
+									<el-button :plain="true" type="primary"  v-else="!isDisabled"  size="small" icon="delete" @click="returnSelection">一键还清</el-button>
+								</el-col>
+								<el-col :span="18" >
+									<el-pagination
+											style="float: right"
+											@size-change="pageSizeChangeA"
+											@current-change="currentPageChangeA"
+											:current-page="currentPageA"
+											:page-sizes="[5]"
+											:page-size="pageSizeA"
+											layout="total, sizes, prev, pager, next, jumper"
+											:total="total">
+									</el-pagination>
+								</el-col>
+							</el-row>
+						</el-dialog>
 
 						<!--列表底部工具条和分页符-->
 						<el-row style="margin-top: 20px" type="flex" justify="end">
-							<!--<el-col :span="6" >
+							<el-col :span="6" >
                                 <el-button :plain="true" type="danger" size="small" icon="delete" @click="removeSelection">删除所选</el-button>
-                            </el-col>-->
+                            </el-col>
 							<el-col :span="18" >
 								<el-pagination
 										style="float: right"
@@ -190,10 +270,20 @@
 			var vm = new Vue({
 				el:"#diva",
 				data:{
+                    isDisabled:false,
 					tableData:[],
+                    returnData:[],
+					//获取session中的值，需要两个中括号
                     userName:'[[${session.userName}]]',
+					//还款数据长度
+                    datalen:'',
+					//数据最高长度
+                    sumlen:'',
                     //显示加载中样式
                     loading:false,
+					//默认让还款界面的勾选框显示
+					show:true,
+					show1:false,
                     //搜索表单
                     searchForm: {
                         borrownum: '',
@@ -201,13 +291,34 @@
                     },
                     //多选值
                     multipleSelection: [],
+					huanmultipleSelection:[],
                     //当前页
                     currentPage:1,
                     //分页大小
                     pageSize:5,
+                    //当前页A
+                    currentPageA:1,
+                    //分页大小A
+                    pageSizeA:5,
                     //总记录数
                     total:800,
+                    //还款页面是否显示
+                    returnFormVisible:false,
                     goUrl:'',
+					borrowid:'',
+                    //查看详情界面数据
+                    returnForm: {
+                        USERID: 0,
+                        UNAME: '',
+                        REALNAME: '',
+                        AGE: 0,
+                        PHONE:'',
+                        ADDRESS: '',
+                        IDCARD:'',
+                        EMAIL:'',
+                        ICPICA:'',
+                        ICPICB:''
+                    },
 				},
 				created:function () {
 					var self = this;
@@ -217,11 +328,29 @@
                     })
                 },
 				methods:{
+				    //确认还款
+                    returnSelection:function () {
+                        var huanmultipleSelection = this.huanmultipleSelection;
+                        var borrownum = huanmultipleSelection[0].BORROWNUM;
+						var self = this;
+						var huanmultipleSelection = this.huanmultipleSelection;
+						if(huanmultipleSelection.length<1){
+							self.$message({
+								message:'请至少选择一条记录',
+								type:'error'
+							});
+							return;
+						}
+						var limits = '';
+                        for (var i = 0; i < huanmultipleSelection.length; i++) {
+							limits += huanmultipleSelection[i].TIMELIMIT+",";
+                        }
+						location.href="/jump/fukuan?borrownum="+borrownum+"&&limits="+limits;
+                    },
                     //表格重新加载数据
                     loadingData:function() {
                         var _self = this;
                         _self.loading = true;
-                        var self = this;
                         var searchForm={'pageNo':this.currentPage,'pageSize':this.pageSize,'borrowNum':this.searchForm.borrownum,'danbaoStyle':this.searchForm.danbaostyle,'userName':this.userName};
                         axios.post('/huankuan/page',searchForm).then(function(response){
                             _self.total=response.data.total;
@@ -232,6 +361,32 @@
                             console.info("加载数据成功");
                             _self.loading = false;
                         },300);
+                    },
+					//还款页面重新加载
+                    loadingDataA:function() {
+                        var _self = this;
+                        _self.loading = true;
+                        axios.post(this.goUrl,{'borrownum':this.borrowid,'pageNo':this.currentPageA,'pageSize':this.pageSizeA}).then(function (response) {
+                            _self.total=response.data.total;
+                            _self.returnData=response.data.huanData;
+                            _self.sumlen=response.data.sumlimit;
+                        })
+                    },
+					//我要还款
+                    returnClick:function(row) {
+                        //显示还款时判断当前期是否已还
+                        this.returnFormVisible = true;
+							this.returnForm = Object.assign({}, row);
+                        this.borrowid=row.BORROWNUM;
+                        this.goUrl='/huankuan/getReturnCurrent';
+                        this.loadingDataA();
+                    },
+					//不同还款信息通用事件
+					loadingReturn:function () {
+                        var _self = this;
+						axios.post(this.goUrl,{'borrowid':this.borrowid}).then(function (response) {
+							_self.returnData = response.data.huanData;
+                        })
                     },
                     //分页大小修改事件
                     pageSizeChange:function(val) {
@@ -247,6 +402,13 @@
                         var _self = this;
                         _self.loadingData();//重新加载数据
                     },
+                    //当前页修改事件A
+                    currentPageChangeA:function(val) {
+                        this.currentPageA = val;
+                        console.log('当前页: ' + val);
+                        var _self = this;
+                        _self.loadingDataA();//重新加载数据
+                    },
                     //表格查询事件
                     searchClick:function() {
                         var self = this;
@@ -256,11 +418,73 @@
                     flushClick:function () {
                         var self = this;
                         this.searchForm={
-                            borrownum:'',
-                            danbaostyle:''
+                            borrownum: '',
+                            danbaostyle: ''
                         }
                         this.loadingData();//重新加载数据
-                    }
+                    },
+					//还款页面导航select事件
+                    handleSelect:function (key) {
+                        var self = this;
+						if(key==1){  //重新加载显示当前还款期数
+                            this.show=true;
+                            this.goUrl='/huankuan/reGetReturnCurrent';
+                            self.loadingDataA();
+						}
+						if(key==2){  //提前还款
+							this.show=true;
+						    this.goUrl='/huankuan/getReturnInfo';
+                            self.loadingDataA();
+						}
+						if(key==3){  //查询所有的未还框
+						    this.show=false;
+						    this.goUrl='/huankuan/noReturnInfo';
+                            self.loadingDataA();
+						}
+						if(key==4){  //查询还款记录
+						    this.show=false;
+						    this.goUrl='/huankuan/haveReturnInfo';
+                            self.loadingDataA();
+						}
+                    },
+                    selectionChangeA:function(row){
+                        this.huanmultipleSelection = row;
+                        var lh = row.length;
+						var arr=[];
+						var len = 0;
+                        for(var i=0;i<lh;i++) {
+                            arr.push(row[i].TIMELIMIT);
+                        }
+                        var arrA = arr.sort(function sequence(a,b){
+                                     if (a>b) {
+                                          return 1;
+                                       }else if(a<b){
+										 return -1;
+                                        }else{
+                                            return 0;
+                                        }
+							});
+                        var l = arrA[lh-1]-arrA[0]+1;
+                        len = this.sumlen;
+                        if(arrA.indexOf(len)==-1){
+                            this.isDisabled=true;
+                            this.$message({
+                                message: '必须从下一期开始选择还款',
+                                type: 'error'
+                            });
+                        }else {
+                            this.isDisabled=false;
+                            if(l==lh) {
+                                this.isDisabled = false;
+                            }else {
+                                this.isDisabled=true;
+                                this.$message({
+                                    message: '不能隔期还款',
+                                    type: 'error'
+                                });
+							}
+						}
+					}
 				}
 			})
 		</script>
