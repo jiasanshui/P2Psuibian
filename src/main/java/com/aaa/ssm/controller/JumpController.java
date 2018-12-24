@@ -82,6 +82,14 @@ public class JumpController {
     public Object renzheng(){
         return "qiantai/renzheng";
     }
+    /**
+     * 跳转到资料认证页面
+     * @return
+     */
+    @RequestMapping("zlrenzheng")
+    public Object zlrenzheng(){
+        return "qiantai/zlrenzheng";
+    }
 
     /**
      * 跳转到注册成功页面

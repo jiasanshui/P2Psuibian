@@ -110,6 +110,7 @@ public class    TenderController {
         Double tamount = Double.parseDouble(map.get("tamount")+"");
         amount = amount -tamount;
         map.put("amount",amount);
+        System.out.println(1223);
         System.out.println(map);
         int result1 = tenderService.add(map);
         int result2 = borrowService.update(map);

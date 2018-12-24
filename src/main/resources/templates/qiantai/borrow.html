@@ -13,6 +13,11 @@
 	<!--<script type="text/javascript">-->
    		<!--EvPNG.fix('div, ul, img, li, input,span, p');-->
 	<!--</script>-->
+	<script src="/js/vue.js" type="text/javascript" charset="UTF-8"></script>
+	<!-- 引入样式 -->
+	<link rel="stylesheet" href="https://unpkg.com/element-ui@2.4.11/lib/theme-chalk/index.css">
+	<!-- 引入组件库 -->
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
 </head>
 <body>
 <div >
@@ -141,6 +146,26 @@
 											<label>*总价值</label>
 											<input type="number"name="cost" id="cost" onblur="checkCost()"><span id="co"></span>
 										</div>
+										<div>
+											<!--<li>-->
+												<!--<label for="idcard">请上传真实抵押资料图片:</label>-->
+											<!--</li>-->
+											<!--<li>-->
+												<!--<label for="idcard">实物图片:</label>-->
+												<!--<input name="idcard" type="file" class="pay-txt" maxlength="16">-->
+											<!--</li>-->
+											<!--<li>-->
+												<!--<label for="idcardA">身份证正面</label>-->
+												<!--<input name="idcarda" type="file" class="pay-txt" maxlength="16">-->
+											<!--</li>-->
+										<!--	<div id="app">
+												<el-upload class="upload-demo" drag action="" multiple auto-upload="false">
+													<i class="el-icon-upload"></i>
+													<div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+													<div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+												</el-upload>
+											</div>-->
+										</div>
 										<div class="mt15" >
 											<label>*投标天数</label>
 											<input type="text" name="days" id="days" onblur="checkdays()"><span id="day"></span>
@@ -214,6 +239,7 @@
 </div>
 </body>
 <script>
+    new Vue().$mount('#app');
     $(function(){
         $("#danbao").change(function(){
             var danbao=$("#danbao").val();
