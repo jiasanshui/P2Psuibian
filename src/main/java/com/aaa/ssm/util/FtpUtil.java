@@ -88,7 +88,6 @@ public class FtpUtil {
         }
         return null;
     }
-
     /**
      * FTP文件下载
      * @param fileName
