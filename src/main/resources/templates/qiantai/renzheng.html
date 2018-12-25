@@ -185,12 +185,28 @@
                 url:"/renzheng/isRen",
                 data:{userName:username},
                 success:function (data) {
+                    alert(data);
                     if(data==1){
                         $("#liRen").show();
-                        $("#liRenA").hide();
-                    }else {
+                        $("#liRen3").hide();
+                        $("#liRen1").hide();
+                        $("#liRen2").hide();
+                    } if(data==2){
+                        alert(data);
                         $("#liRen").hide();
-                        $("#liRenA").show();
+                        $("#liRen3").hide();
+                        $("#liRen1").show();
+                        $("#liRen2").hide();
+                    }if(data==3){
+                        $("#liRen").hide();
+                        $("#liRen3").hide();
+                        $("#liRen1").hide();
+                        $("#liRen2").show();
+                    }if(data==0) {
+                        $("#liRen").hide();
+                        $("#liRen3").show();
+                        $("#liRen1").hide();
+                        $("#liRen2").hide();
                     }
                 }
             })
@@ -207,7 +223,13 @@
               <li id="liRen"  style="display: none;">
                 <p><h3>您已经实名认证了</h3></p>
               </li>
-              <li id="liRenA"  style="display: none;">
+              <li id="liRen1"  style="display: none;">
+                <p><h3>您的申请已提交请耐心等待，两个工作日之内给您处理！</h3></p>
+              </li>
+              <li id="liRen2"  style="display: none;">
+                <p><h3>您的申请已经被驳回，请重新！</h3></p>
+              </li>
+              <li id="liRen3"  style="display: none;">
                 <p><h3>请您按以下步骤进行个人身份信息认证！</h3></p>
                 <div class="pay-form">
             <h6>请输入您的身份证信息</h6>
@@ -253,7 +275,7 @@
               </li>
               <li>
                 <label for="idcard">身份证号</label>
-                <input name="idcard" type="text" class="pay-txt" maxlength="16">
+                <input name="idcard" type="text" class="pay-txt" maxlength="18">
               </li>
               <li>
                 <label for="idcardA">身份证正面</label>
@@ -292,7 +314,7 @@
               </li>
               <li>
                 <label for="income">收入</label>
-                <input type="text" name="income" class="pay-txt" placeholder="收入"/>
+                <input type="text" name="income" class="pay-txt" placeholder="收入/月"/>
               </li>
             </ul>
             <h6>邮箱已绑定</h6>

@@ -39,6 +39,7 @@ public class RenzhengController {
      */
     @RequestMapping("update")
     public Object update(@RequestParam Map map, @RequestParam MultipartFile idcarda, @RequestParam MultipartFile idcardb) throws ParseException {
+        System.out.println(map);
         //上传图片
             String newFileNameA = FileUtil.uploadFile(uploadPath, idcarda);
             String newFileNameB = FileUtil.uploadFile(uploadPath, idcardb);
@@ -67,11 +68,19 @@ public class RenzhengController {
     @RequestMapping("isRen")
     public Object isRenZheng(String userName){
         Map user = renzhengService.isRenZheng(userName);
-        System.out.println(user.get("PAYPWD"));
-        if(user.get("PAYPWD")!=null&&!"".equals(user.get("PAYPWD"))){
-            return 1;
-        }else {
+        try {
+            Integer.valueOf(user.get("STATEID")+"");
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
             return 0;
         }
+        if (Integer.valueOf(user.get("STATEID")+"")==2){
+                return 1;
+        }if (Integer.valueOf(user.get("STATEID")+"")==1) {
+                return 2;
+        }if (Integer.valueOf(user.get("STATEID")+"")==3){
+                return 3;
+        }
+        return 0;
     }
 }
