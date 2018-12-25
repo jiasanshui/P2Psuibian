@@ -63,4 +63,12 @@ public interface UserInfoService {
      * @return
      */
     Map getUser(String username);
+
+    /**
+     * 查询用户实名信息、账户、借款标的等信息
+     * @param userid
+     * @return
+     */
+    List<Map> getAllUserByuserid(Integer userid);
+
 }

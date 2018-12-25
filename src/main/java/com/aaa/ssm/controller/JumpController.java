@@ -118,16 +118,23 @@ public class JumpController {
         //根据用户名去获取用户信息
         Map map= userInfoService.getUser(username);
         Object msg = map.get("msg");
+        System.out.println(msg);
         if (StringUtil.isEmpty(msg)){ //审核通过
             //调用生成随机数工具类生成随机数
             String num = RandomUtil.getBorrowNumByTime();
             model.addAttribute("num",num);
             model.addAttribute("userName",username);
+            model.addAttribute("userid",map.get("userid"));
             model.addAttribute("realName",map.get("REALNAME"));
+            model.addAttribute("creditedu",map.get("CREDITEDU"));
             return "qiantai/borrow";
 
         }
-        return "qiantai/renzheng";
+        if("1".equals(msg)){
+            return "qiantai/index";
+        }else{
+            return "qiantai/renzheng";
+        }
     }
     /**
      * 跳转到安全保障页面

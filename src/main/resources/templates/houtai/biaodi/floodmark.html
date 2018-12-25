@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>满标审核</title>
+    <!-- 引入样式 -->
+    <script type="text/javascript" src="/js/vue.js"></script>
+    <script type="text/javascript" src="/js/axios.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="../css/elementui.css">
+    <!-- 引入组件库 -->
+    <script src="../js/elementui.js"></script>
+</head>
+<body>
+<div id="app">
+    <h2>{{ message }}</h2>
+</div>
+<div id="tableView">
+    <!--列表顶部搜索和工具条-->
+    <el-row>
+        <el-form :inline="true" :model="searchForm" class="demo-form-inline">
+            <el-form-item label="用户Id">
+                <el-input v-model="searchForm.USERID" placeholder="用户Id"></el-input>
+            </el-form-item>
+            <el-form-item label="借款人">
+                <el-input v-model="searchForm.APPLICANT" placeholder="借款人"></el-input>
+            </el-form-item>
+            <el-form-item label="借款标号">
+                <el-input v-model="searchForm.BORROWNUM" placeholder="借款标号"></el-input>
+            </el-form-item>
+           <el-form-item>
+                <el-button type="primary" icon="search" @click="searchClick">查询</el-button>
+           </el-form-item>
+        </el-form>
+    </el-row>
+    <!--列表-->
+    <el-row>
+        <el-table
+                :data="tableData"
+                v-loading.body="loading"
+                border
+                style="width: 100%">
+            <el-table-column
+                    prop="USERID"
+                    label="用户Id"
+                    align="center"
+                    v-if="false"
+                    width="120">
+            </el-table-column>
+            <el-table-column
+                    prop="BORROWNUM"
+                    label="借款标号"
+                    align="center"
+                    width="140">
+            </el-table-column>
+            <el-table-column
+                    prop="APPLICANT"
+                    label="借款人"
+                    align="center"
+                    width="70">
+            </el-table-column>
+            <el-table-column
+                    prop="BORROWMONEY"
+                    label="借款金额(元)"
+                    align="center"
+                    width="110">
+            </el-table-column>
+            <el-table-column
+                    prop="TIMELIMIT"
+                    align="center"
+                    label="借款期限(月)"
+                    width="110">
+            </el-table-column>
+            <el-table-column
+                    prop="APR"
+                    label="年利率"
+                    align="center"
+                    width="70">
+            </el-table-column>
+            <el-table-column
+                    prop="PAYMENT"
+                    label="还款方式"
+                    align="center"
+                    width="180">
+            </el-table-column>
+            <el-table-column
+                    prop="DES"
+                    label="借款描述"
+                    align="center"
+                    width="250">
+            </el-table-column>
+            <el-table-column
+                    prop="WINBIDMONEY"
+                    align="center"
+                    label="已投标金额"
+                    width="120">
+            </el-table-column>
+            <el-table-column
+                    label="操作"
+                    align="center">
+                <template scope="scope">
+                    <el-button :plain="true" type="success" size="small" icon="edit" @click="lookClick(scope.row)">查询详情</el-button>
+                    <el-button type="primary" icon="el-icon-edit" size="small" @click="editClick(scope.row)"></el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+    </el-row>
+    <!--列表底部工具条和分页符-->
+    <el-row style="margin-top: 20px" type="flex" justify="end">
+        <el-col :span="24" >
+            <el-pagination
+                    style="float: right"
+                    @size-change="pageSizeChange"
+                    @current-change="currentPageChange"
+                    :current-page="currentPage"
+                    :page-sizes="[10, 20, 30, 50]"
+                    :page-size="pageSize"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="total">
+            </el-pagination>
+        </el-col>
+    </el-row>
+    <!--查看详情界面-->
+    <el-dialog title="查询详情" :visible.sync="lookFormVisible" :close-on-click-modal="false" width="1000px">
+        <el-form :model="lookForm" label-width="100px" :rules="lookFormRules" ref="lookForm" >
+            <fieldset>
+                <legend><h3>**借款人实名信息</h3></legend>
+            <el-row>
+                <el-col :span="12">
+                    <el-form-item label="真实姓名" prop="REALNAME">
+                        <el-input v-model="lookForm.REALNAME" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="联系电话" prop="PHONE">
+                        <el-input v-model="lookForm.PHONE" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="12">
+                    <el-form-item label="身份证号" prop="IDCARD">
+                        <el-input v-model="lookForm.IDCARD" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="地址" prop="ADDRESS">
+                        <el-input v-model="lookForm.ADDRESS" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            </fieldset>
+            <fieldset>
+                <legend><h3>**借款人账户信息</h3></legend>
+            <el-row>
+                <el-col :span="8">
+                    <el-form-item label="账户ID" prop="USERID">
+                        <el-input v-model="lookForm.USERID" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="可用余额" prop="AMOUNT">
+                        <el-input v-model="lookForm.AMOUNT" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="待还金额" prop="REPLACEAMOUNT">
+                        <el-input v-model="lookForm.REPLACEAMOUNT" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="8">
+                    <el-form-item label="代收利息" prop="COLLECTINTEREST">
+                        <el-input v-model="lookForm.COLLECTINTEREST" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="代收本金" prop="COLLECTPRINCIPAL">
+                        <el-input v-model="lookForm.COLLECTPRINCIPAL" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="冻结金额" prop="FREEZAMOUNT">
+                        <el-input v-model="lookForm.FREEZAMOUNT" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            </fieldset>
+            <fieldset>
+                <legend><h3>**投资人信息</h3></legend>
+            <el-row>
+                <el-col :span="24">
+                    <div>
+                        <el-table
+                                :data="submitData"
+                                v-loading.body="loading"
+                                border
+                                style="width:100%">
+                            <el-table-column
+                                    prop="USERID"
+                                    label="账户Id"
+                                    align="center"
+                                    width="70">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="REALNAME"
+                                    label="真实姓名"
+                                    align="center"
+                                    width="100">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="IDCARD"
+                                    label="身份证号"
+                                    align="center"
+                                    width="150">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="PHONE"
+                                    label="联系电话"
+                                    align="center"
+                                    width="100">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="ADDRESS"
+                                    label="地址"
+                                    align="center"
+                                    width="100">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="BORROWNUM"
+                                    label="投资标号"
+                                    align="center"
+                                    width="150">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="TAMOUNT"
+                                    label="投标金额(元)"
+                                    align="center"
+                                    width="110">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="TTIME"
+                                    align="center"
+                                    label="投资日期"
+                                    width="120">
+                            </el-table-column>
+                        </el-table>
+                    </div>
+                </el-col>
+            </el-row>
+            </fieldset>
+            <fieldset>
+                <legend><h3>**标的信息</h3></legend>
+            <el-row>
+                <el-col :span="6">
+                    <el-form-item label="标的编号" prop="BORROWNUM">
+                        <el-input v-model="lookForm.BORROWNUM" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                    <el-form-item label="招标金额" prop="BORROWMONEY">
+                        <el-input v-model="lookForm.BORROWMONEY" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                    <el-form-item label="已投金额" prop="WINBIDMONEY">
+                        <el-input v-model="lookForm.WINBIDMONEY" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                    <el-form-item label="借款用途" prop="PURPOSE">
+                        <el-input v-model="lookForm.PURPOSE" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="6">
+                    <el-form-item label="还款方式" prop="PAYMENT">
+                        <el-input v-model="lookForm.PAYMENT" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                    <el-form-item label="年利率" prop="APR">
+                        <el-input v-model="lookForm.APR" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                    <el-form-item label="担保方式" prop="DANBAOSTYLE">
+                        <el-input v-model="lookForm.DANBAOSTYLE" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                    <el-form-item label="借款描述" prop="DES">
+                        <el-input v-model="lookForm.DES" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="6">
+                    <el-form-item label="开始招标时间" prop="STARTTIME">
+                        <el-input v-model="lookForm.STARTTIME" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                    <el-form-item label="招标天数" prop="DAYS">
+                        <el-input v-model="lookForm.DAYS" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                    <el-form-item label="结束时间" prop="ENDTIME">
+                        <el-input v-model="lookForm.ENDTIME" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                    <el-form-item label="标的状态" prop="NAME">
+                        <el-input v-model="lookForm.NAME" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            </fieldset>
+           <fieldset>
+                <legend><h3>**历史审核信息</h3></legend>
+            <el-row>
+                <el-col :span="8">
+                    <el-form-item label="标的编号" prop="BORROWNUM">
+                        <el-input v-model="lookForm.BORROWNUM" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="审核人" prop="ENAME">
+                        <el-input v-model="lookForm.ENAME" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="审核时间" prop="ADUITTIME">
+                        <el-input v-model="lookForm.ADUITTIME" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="8">
+                    <el-form-item label="审核结果" prop="ADUITRESULT">
+                        <el-input v-model="lookForm.ADUITRESULT" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="16">
+                    <el-form-item label="审核备注" prop="ADUITREMARK">
+                        <el-input type="textarea" v-model="lookForm.ADUITREMARK" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            </fieldset>
+        </el-form>
+    </el-dialog>
+    <!--审核界面-->
+    <el-dialog title="满标一审" :visible.sync="editFormVisible" :close-on-click-modal="true">
+        <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
+            <el-form-item label="借款标号" prop="BORROWNUM">
+                <el-input type="text" v-model="editForm.BORROWNUM" auto-complete="off" readonly="true"></el-input>
+            </el-form-item>
+            <el-form-item label="审核结果" prop="ADUITRESULT">
+                <el-radio-group v-model="editForm.ADUITRESULT">
+                    <el-radio class="radio" label="1">通过</el-radio>
+                    <el-radio class="radio" label="2">驳回</el-radio>
+                </el-radio-group>
+            </el-form-item>
+            <el-form-item label="审核人" >
+                <el-select v-model="editForm.OPERATORID" placeholder="请选择">
+                    <el-option
+                            v-for="item in options"
+                            :key="item.ID"
+                            :label="item.ENAME"
+                            :value="item.ID">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="审核备注" prop="ADUITREMARK">
+                <el-input type="textarea" v-model="editForm.ADUITREMARK" auto-complete="off"></el-input>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click.native="editFormVisible = false">取消</el-button>
+            <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
+        </div>
+    </el-dialog>
+</div>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: '满标一审列表'
+        }
+    });
+    var tableView = new Vue({
+        el: '#tableView',
+        data: {
+            //列表数据
+            options:[],
+            tableData: [],
+            //显示加载中样式
+            loading:false,
+            //搜索表单
+            searchForm: {
+                USERID: '',
+                BIDID: '',
+                REALNAME: ''
+            },
+            //多选值
+            multipleSelection: [],
+            //当前页
+            currentPage:1,
+            //分页大小
+            pageSize:10,
+            //总记录数
+            total:800,
+            BORROWNUM:'',
+            //查看详情界面是否显示
+            lookFormVisible: false,
+            lookLoading: false,
+            lookFormRules: {
+                name: [
+                    { required: true, message: '请输入姓名', trigger: 'blur' }
+                ]
+            },
+            //审核页面
+            editFormVisible: false,
+            editLoading: false,
+            editFormRules: {
+                name: [
+                    { required: true, message: '请输入姓名', trigger: 'blur' }
+                ]
+            },
+            goUrl:'',
+            submitData:[],
+            //查看详情界面数据
+            lookForm: {
+                REALNAME: '',
+                PHONE:'',
+                ADDRESS: '',
+                IDCARD:'',
+                USERID:'',
+                AMOUNT:'',
+                REPLACEAMOUNT:'',
+                COLLECTINTEREST:'',
+                COLLECTPRINCIPAL:'',
+                FREEZAMOUNT:'',
+                BORROWNUM:'',
+                BORROWMONEY:'',
+                WINBIDMONEY:'',
+                PURPOSE:'',
+                PAYMENT:'',
+                APR:'',
+                DANBAOSTYLE:'',
+                DES:'',
+                STARTTIME:'',
+                DAYS:'',
+                ENDTIME:'',
+                NAME:'',
+                ENAME:'',
+                ADUITTIME:'',
+                ADUITRESULT:'',
+                ADUITREMARK:''
+            },
+            //审核界面数据
+            editForm: {
+                BORROWNUM:'',
+                ADUITRESULT:'',
+                OPERATORID:'',
+                ADUITREMARK:''
+            }
+        },
+        created:function(){
+            //在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
+            var self = this;
+            axios.post('/floodmark/page',{'pageNo':this.currentPage,'pageSize':this.pageSize}).then(function(response){
+                self.total=response.data.total;
+                self.tableData = response.data.pageData;
+            })
+            axios.post('/biaode/admin').then(function(response){
+                self.options=response.data;
+            })
+        },
+        methods:{
+            //表格重新加载数据
+            loadingData:function() {
+                var _self = this;
+                _self.loading = true;
+                var searchForm={'pageNo':this.currentPage,'pageSize':this.pageSize,'userid':this.searchForm.USERID,'applicant':this.searchForm.APPLICANT,'borrownum':this.searchForm.BORROWNUM};
+                axios.post('/floodmark/page',searchForm).then(function(response){
+                    _self.total=response.data.total;
+                    _self.tableData = response.data.pageData;
+                })
+                console.log(_self.currentPage);
+                setTimeout(function(){
+                    console.info("加载数据成功");
+                    _self.loading = false;
+                },300);
+            },
+            //表格编辑事件
+            lookClick:function(row) {
+                var _self = this;
+                //_self.loading = true;
+                this.USERID=row.USERID;
+                this.BORROWNUM=row.BORROWNUM;
+                axios.post('/biaode/userinfo',{userid:row.USERID,borrownum:row.BORROWNUM}).then(function(response){
+                    //alert(JSON.stringify(response.data));
+                    //_self.lookForm = Object.assign({}, response.data);
+                    _self.lookForm=response.data;
+                })
+                axios.post('/biaode/tender?borrownum='+row.BORROWNUM).then(function(response){
+                    _self.submitData = response.data;
+                })
+                _self.lookFormVisible=true;
+            },
+            //审核事件
+            editClick:function(row) {
+                this.goUrl="/floodmark/check";
+                this.editFormVisible = true;
+                //alert(JSON.stringify(row));
+                this.editForm = Object.assign({}, row);
+            },
+            //表格查询事件
+            searchClick:function() {
+                var self = this;
+                self.loadingData();//重新加载数据
+            },
+            //分页大小修改事件
+            pageSizeChange:function(val) {
+                console.log('每页 ' + val +' 条');
+                this.pageSize = val;
+                var _self = this;
+                _self.loadingData();//重新加载数据
+            },
+            //当前页修改事件
+            currentPageChange:function(val) {
+                this.currentPage = val;
+                console.log('当前页: ' + val);
+                var _self = this;
+                _self.loadingData();//重新加载数据
+            },
+            //保存点击事件
+            editSubmit:function(){
+                var _self = this;
+                _self.loading = true;
+                var formData =this.editForm;
+                var goUrl=this.goUrl;
+                axios.post(goUrl,formData).then(function(response){
+                    if(response.data>0){
+                        _self.editFormVisible = false;
+                    }else{
+                        _self.$message({
+                            message:'驳回失败',
+                            type: 'error'
+                        });
+                    }
+                    _self.loadingData();//重新加载数据
+                })
+                console.info(this.editForm);
+            }
+        }
+    })
+</script>
+</body>
+</html>
