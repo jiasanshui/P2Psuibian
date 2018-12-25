@@ -64,8 +64,8 @@ public interface TenderDao {
      * @param map,BORROWNUM
      * @return
      */
-    @Insert("insert into tender(id,realname,tamount,ttime,tway,userid,borrownum，tendernum) " +
-            "values(seq_tender_id.nextval,#{realName},#{tamount},sysdate,#{tway},#{userid},#{borrowNum},)")
+    @Insert("insert into tender(id,realname,tamount,ttime,tway,userid,borrownum,tendernum) " +
+            "values(seq_tender_id.nextval,#{realName},#{tamount},sysdate,#{tway},#{userid},#{borrowNum})")
     int add(Map map);
 
     /**
