@@ -510,6 +510,7 @@ public class JumpController {
     public String toubiao(HttpSession session,Model model,String BORROWNUM){
         String username=(String) session.getAttribute("userName");
         //根据用户名去获取用户信息
+        String num = RandomUtil.getBorrowNumByTime();
         List<Map> list = userInfoService.getUserList(username);
         List<Map> listByUsername = borrowService.getListByBorrowNum(BORROWNUM);
         model.addAttribute("realName",list.get(0).get("REALNAME"));
@@ -519,6 +520,7 @@ public class JumpController {
         model.addAttribute("freezamount",list.get(0).get("FREEZAMOUNT"));
         model.addAttribute("BORROWNUM",BORROWNUM);
         model.addAttribute("bList",listByUsername);
+        model.addAttribute("num",num);
         return "qiantai/toubiao";
     }
 
