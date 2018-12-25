@@ -132,41 +132,11 @@
 										<div class="mt15 guarmethod clearfix">
 											<label class="guarmethod_l fl">*担保方式</label>
 											<input type="" readonly="true" value="信用贷款" name="applicant">
-											<!--<select id="danbao" name="danbaostyle">
-												<option selected="selected" disabled="disabled">选择担保方式</option>
-												<option>信用贷款</option>
-												<option>车辆之押贷款</option>
-												<option>房屋之押贷款</option>
-											</select>-->
 										</div>
-										<!--<div class="mt15" id="house">
-											<label>*数量</label>
-											<input type="" name="quantity">
-											<span value="辆/栋">辆/栋</span>
-										</div>
-										<div class="mt15" id="price">
-											<label>*总价值</label>
-											<input type="number"name="cost" id="cost" onblur="checkCost()"><span id="co"></span>
-										</div>-->
+
 										<div>
-											<!--<li>-->
-												<!--<label for="idcard">请上传真实抵押资料图片:</label>-->
-											<!--</li>-->
-											<!--<li>-->
-												<!--<label for="idcard">实物图片:</label>-->
-												<!--<input name="idcard" type="file" class="pay-txt" maxlength="16">-->
-											<!--</li>-->
-											<!--<li>-->
-												<!--<label for="idcardA">身份证正面</label>-->
-												<!--<input name="idcarda" type="file" class="pay-txt" maxlength="16">-->
-											<!--</li>-->
-										<!--	<div id="app">
-												<el-upload class="upload-demo" drag action="" multiple auto-upload="false">
-													<i class="el-icon-upload"></i>
-													<div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-													<div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
-												</el-upload>
-											</div>-->
+										</div>
+										<div>
 										</div>
 										<div class="mt15" >
 											<label>*投标天数</label>
@@ -352,6 +322,7 @@
 </div>
 </body>
 <script>
+    new Vue().$mount('#app');
     $(function(){
         $("#timelimit").change(function(){
             var timelimit=$("#timelimit").val();
