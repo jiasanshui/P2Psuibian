@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -104,7 +103,7 @@
 		} 
 	</style>
       <div class="pmain-profile">
-        <div class="pmain-welcome"> <span class="fl"><span id="outLogin">晚上好，</span>tg_gpdt0139 喝一杯下午茶，让心情放松一下~</span> <span class="fr">上次登录时间：
+        <div class="pmain-welcome"> <span class="fl"><span id="outLogin">晚上好，</span><span th:text="${session.userName}"></span>喝一杯下午茶，让心情放松一下~</span> <span class="fr">上次登录时间：
           2015-09-11 14:05:07 </span> </div>
         <div class="pmain-user">
           <div class="user-head"> <span id="clickHeadImage" class="head-img" title="点击更换头像">
@@ -128,7 +127,7 @@
             </span> <span class="head-icon"> <a href="#"><i title="第三方资金账户未认证" class="headiconbg headicon01"></i></a> <a href="#"><i class="headiconbg headicon2"></i></a> <a href="#"><i class="headiconbg headicon03"></i></a> </span> </div>
           <div class="user-info user-info1">
             <ul>
-              <li>用户名<span>tg_gpdt0139</span></li>
+              <li>用户名<span th:text="${session.userName}"></span></li>
               <li>安全级别<span><i class="safe-level"><i class="onlevel1" style="width:40%;"></i></i></span> <a href="#">[低]</a></li>
               <!--<li>您还未开通第三方支付账户，请 <a class="pmain-log" href="#">立即开通</a>以确保您的正常使用和资金安全。 </li>-->
             </ul>

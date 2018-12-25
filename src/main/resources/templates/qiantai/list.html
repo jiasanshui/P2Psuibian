@@ -15,9 +15,61 @@
   <script type="text/javascript" src="../js/vue.js"></script>
   <script type="text/javascript" src="../js/axios.min.js"></script>
   <!-- 引入样式 -->
-  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <link rel="stylesheet" href="../css/elementui.css">
   <!-- 引入组件库 -->
-  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="../js/elementui.js"></script>
+  <script>
+      var pt ="";
+      var bi ="";
+      var sm ="";
+      var rs ="";
+    $(function(){
+       var tpt='[[${pt}]]';
+       if(tpt!=''){
+            /* $("#post_type_car").attr("class","active").parent().siblings().each(function(){
+                 alert($(this).html());
+                 $(this).firstChild.removeAttr("class");
+             });*/
+             pt=tpt;
+            $("#post_type_").removeAttr("class");
+            $("#post_type_"+pt).attr("class","active");
+       }
+       var tbi='[[${bi}]]';
+       if(tbi!=''){
+            bi =tbi;
+           $("#borrow_interestrate_").removeAttr("class");
+           $("#borrow_interestrate_"+tbi).attr("class","active");
+       }
+       var tsm='[[${sm}]]';
+       if(tsm!=''){
+            sm =tsm;
+            $("#spread_month_").removeAttr("class");
+            $("#spread_month_"+sm).attr("class","active");
+       }
+       var trs='[[${rs}]]';
+        if(trs!=''){
+            rs =trs;
+            $("#repay_style_").removeAttr("class");
+            $("#repay_style_"+rs).attr("class","active");
+        }
+    });
+
+    function url(e,v){
+       if(e=='post_type'){
+           pt=v;
+       }
+       if(e=='borrow_interestrate'){
+           bi=v;
+       }
+       if(e=='spread_month'){
+           sm=v;
+       }
+       if(e=='repay_style'){
+           rs=v;
+        }
+       location.href="/jump/list?pt="+pt+"&bi="+bi+"&sm="+sm+"&rs="+rs;
+    }
+  </script>
 </head>
 <body>
 <header>
@@ -94,7 +146,7 @@
                 <li class="n1"><a href="javascript:url('post_type','');" id="post_type_" class="active">不限</a></li>
                 <li class="n2"><a href="javascript:url('post_type','car');" id="post_type_car">车易贷</a></li>
                 <li class="n3"><a href="javascript:url('post_type','house');" id="post_type_house">房易贷</a></li>
-                <li class="n4"><a href="javascript:url('post_type','bridge');" id="post_type_bridge">赎楼贷</a></li>
+                <li class="n4"><a href="javascript:url('post_type','xinyong');" id="post_type_xinyong">信用贷</a></li>
                 <li class="n5"><a href="javascript:url('post_type','worth');" id="post_type_worth">债权贷</a> </li>
               </ul>
             </dd>
@@ -120,7 +172,7 @@
                 <li class="n3"><a id="spread_month_2" href="javascript:url('spread_month','2');">1-3月</a> </li>
                 <li class="n4"><a id="spread_month_3" href="javascript:url('spread_month','3');">3-6月</a> </li>
                 <li class="n5"><a id="spread_month_4" href="javascript:url('spread_month','4');">6-12月</a> </li>
-                <li class="n6"><a id="spread_month_5" href="javascript:url('spread_month','5');">12月及以上</a> </li>
+                <!--<li class="n6"><a id="spread_month_5" href="javascript:url('spread_month','5');">12月及以上</a> </li>-->
               </ul>
             </dd>
           </dl>
@@ -206,21 +258,8 @@
           </ul>
         </div>
         <!--底部分页工具条-->
-        <div id="divPage">
-           <el-row style="margin-top: 20px" type="flex" justify="end">
-            <el-col :span="18" >
-              <el-pagination
-                      style="float: right"
-                      @size-change="pageSizeChange"
-                      @current-change="currentPageChange"
-                      :current-page="currentPage"
-                      :page-sizes="[2,10, 20, 30, 50]"
-                      :page-size="pageSize"
-                      layout="total, sizes, prev, pager, next, jumper"
-                      :total="total">
-              </el-pagination>
-            </el-col>
-          </el-row>
+        <div class="pagination clearfix mrt30" id="divPage" style="text-align: center">
+          <span class="page" th:utext="${pageString}"></span>
         </div>
         <!------------投资列表-------------->
       </div>
