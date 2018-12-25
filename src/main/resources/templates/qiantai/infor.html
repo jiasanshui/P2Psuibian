@@ -22,6 +22,7 @@
   <script src="https://unpkg.com/element-ui/lib/index.js"></script>
   <style>
       .btn{ /* 按钮美化 */
+          display: block; /* 块状化 */
           width: 270px; /* 宽度 */
           height: 60px; /* 高度 */
           border-width: 0px; /* 边框宽度 */
@@ -32,6 +33,8 @@
           font-family: Microsoft YaHei; /* 设置字体 */
           color: white; /* 字体颜色 */
           font-size: 17px; /* 字体大小 */
+          text-align:center;/* 字体剧中 */
+          line-height:60px;/* 字体剧中 */
       }
       .btn:hover { /* 鼠标移入按钮范围时改变颜色 */
           background: #5599FF;
@@ -76,6 +79,7 @@
             <span th:text="${session.userName}"></span>
           </div>
         </li>
+
         <li th:if="${session.userName}ne null">
           <div class="" >
             <a href="/jump/login" class="js-login" title="退出">退出</a>
@@ -116,13 +120,16 @@
 <div class="item-detail wrap">
   <div class="breadcrumbs"> <a href="/jump/index">首页</a>&gt; <a href="#">散标投资列表</a>&gt; <span class="cur">项目详情</span> </div>
   <div class="item-detail-head clearfix" data-target="sideMenu">
-    <div class="hd"> <i class="icon icon-che" title="车易贷"></i>
-      <h2>赵女士长安福特福克斯汽车质押贷款4万元</h2>
+    <ul th:each="list : ${uList}">
+    <div class="hd"> <i class="icon icon-che
+" title="车易贷" ></i>
+      <h2 th:text="${list.DES}"></h2>
     </div>
-    <div class="bd clearfix">
+    <ul class="bd clearfix">
       <div class="data">
         <ul>
-          <ul th:each="list : ${uList}">
+          <ul>
+            <input id="borrownum" type="hidden" th:value="${list.BAIFEN}">
           <li><span class="f16">借款金额</span><br>
             <span class="f30 c-333" id="account" th:text="${list.BORROWMONEY}"></span>元 </li>
           <li class="relative"><span class="f16">年利率</span><br>
@@ -138,10 +145,12 @@
           <li class="colspan"> <span class="c-888 fl">投标进度：</span>
             <div class="progress-bar fl"> <span style="width:100%"></span> </div>
             <span class="c-green" th:text="${list.JINDU}"></span> </li>
-          <li> <span class="c-888">投资范围：</span> <span id="account_range"> 50元~
-            不限 </span> </li>
-        </ul>
-        <li><button onclick="addTender()" class="btn">投标</button></li>
+          <li> <span class="c-888">投资范围：</span> <span id="account_range" th:text="(${list.BORROWMONEY}-${list.WINBIDMONEY})*0.10 +'~'+(${list.BORROWMONEY}-${list.WINBIDMONEY})*1.00+'￥'">
+          </span> </li>
+            <li th:if="${list.BAIFEN} lt 1" ><a th:href="@{/jump/toubiao(BORROWNUM=${list.BORROWNUM})}" class="btn">投标</a></li>
+            <li th:if="${list.BAIFEN} ge 1"><a href="#" onclick="return false" class="btn">已满标</a></li>
+          </ul>
+          </ul>
       </div>
       <div class="mod-right mod-status">
         <div class="inner">
@@ -150,6 +159,8 @@
             下期还款日： <span class="f20 c-333">2015-10-13</span> </div>
           <i class="icon icon-status icon-status1"></i> </div>
       </div>
+    </ul>
+    </ul>
     </div>
   </div>
   <div class="item-detail-body clearfix mrt30 ui-tab">
@@ -381,6 +392,5 @@
     <div class="ft-identity">©2015 你我贷 All rights reserved&nbsp;&nbsp;&nbsp;<span class="color-e6">|</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="color-e6">|</span>&nbsp;&nbsp;&nbsp;<a target="_blank" href="http://www.miitbeian.gov.cn/">皖ICP备12345678号-1</a></div>
   </div>
 </div>
-</body>
 </html>
 </html>

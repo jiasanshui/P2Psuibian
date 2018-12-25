@@ -44,8 +44,8 @@ public class TenderServiceImpl implements TenderService {
     }
 
     @Override
-    public List<Map> getPage(Integer userid) {
-        return tenderDao.getPage(userid);
+    public List<Map> getPage(String BORROWNUM) {
+        return tenderDao.getPage(BORROWNUM);
     }
 
     @Override

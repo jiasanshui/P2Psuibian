@@ -43,6 +43,16 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
+    public int updateFreezAmount(Map map) {
+        return userInfoDao.updateFreezAmount(map);
+    }
+
+    @Override
+    public int updateAmount(Map map) {
+        return userInfoDao.updateAmount(map);
+    }
+
+    @Override
     public int addBohui(Map map) {
         return userInfoDao.addBohui(map);
     }

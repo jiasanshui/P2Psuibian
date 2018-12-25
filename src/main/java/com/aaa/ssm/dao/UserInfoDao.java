@@ -47,6 +47,22 @@ public interface UserInfoDao {
     int edit(Map map);
 
     /**
+     * 投标成功后改变账户余额
+     * @param map
+     * @return
+     */
+    @Update("update userinfo set amount = amount - #{tamount} where userid = #{userid}")
+    int updateAmount(Map map);
+
+    /**
+     * 投标成功后改变冻结金额
+     * @param map
+     * @return
+     */
+    @Update("update userinfo set freezamount = freezamount + #{tamount} where userid = #{userid}")
+    int updateFreezAmount(Map map);
+
+    /**
      * 审核驳回,向驳回表中插入数据
      * @param map
      * @return

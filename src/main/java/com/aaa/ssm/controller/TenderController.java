@@ -1,11 +1,15 @@
 package com.aaa.ssm.controller;
 
+import com.aaa.ssm.service.AccountFlowService;
+import com.aaa.ssm.service.BorrowService;
 import com.aaa.ssm.service.TenderService;
 import com.aaa.ssm.service.UserInfoService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +28,7 @@ import java.util.Map;
  * createTime:2018-12-11 19:26
  */
 @Controller
+@Transactional//事务
 @RequestMapping("/tender")
 public class    TenderController {
     //依赖注入
@@ -32,6 +37,12 @@ public class    TenderController {
 
     @Autowired
     private UserInfoService userInfoService;
+
+    @Autowired
+    private BorrowService borrowService;
+
+    @Autowired
+    private AccountFlowService accountFlowService;
     /**
      * 跳转分页页面
      * @return
@@ -53,7 +64,6 @@ public class    TenderController {
         PageHelper.startPage(Integer.valueOf(map.get("pageNo")+""),Integer.valueOf(map.get("pageSize")+""));
         //用pageInfo对结果进行封装
         PageInfo<Map> pageInfo=new PageInfo<Map>(tenderService.getTenderPage(map));
-        //System.out.println(map);
         Map resultMap=new HashMap();
         //获取当前页数据
         resultMap.put("pageData",pageInfo.getList());
@@ -75,7 +85,6 @@ public class    TenderController {
         PageHelper.startPage(Integer.valueOf(map.get("pageNo")+""),Integer.valueOf(map.get("pageSize")+""));
         //用pageInfo对结果进行封装
         PageInfo<Map> pageInfo=new PageInfo<Map>(tenderService.getPageByParams(map));
-        //System.out.println(map);
         Map resultMap=new HashMap();
         //获取当前页数据
         resultMap.put("pageData",pageInfo.getList());
@@ -92,17 +101,25 @@ public class    TenderController {
     /**
      * 添加投标
      * @param map
-     * @param model
+     * @param map
      * @return
      */
     @RequestMapping("/add")
-    public Object add(@RequestParam Map map, Model model){
-        int result = tenderService.add(map);
-        if (result==1){
-            model.addAttribute("showInfo","投标成功");
+    public Object add(@RequestParam Map map){
+        Double amount = Double.parseDouble(map.get("amount")+"");
+        Double tamount = Double.parseDouble(map.get("tamount")+"");
+        amount = amount -tamount;
+        map.put("amount",amount);
+        System.out.println(1223);
+        System.out.println(map);
+        int result1 = tenderService.add(map);
+        int result2 = borrowService.update(map);
+        int result3 = accountFlowService.add(map);
+        int result4 = userInfoService.updateAmount(map);
+        int result5 = userInfoService.updateFreezAmount(map);
+        if (result1==1&&result2==1&&result3==1&&result4==1){
             return "redirect:/jump/list";
         }else {
-            model.addAttribute("showInfo","投标失败");
             return "redirect:/jump/toubiao";
         }
     }
@@ -112,6 +129,7 @@ public class    TenderController {
      * @param userid
      * @return
      */
+
     @ResponseBody
     @RequestMapping("/checkPayPwd")
     public Object checkPayPwd(Integer userid,Integer payPwd){

@@ -21,7 +21,7 @@ public interface UserLoginDao {
      * @param map
      * @return
      */
-    @Select("<script>select userid,uname,upwd,phone，email from userinfo where "+
+    @Select("<script>select userid,uname,upwd,phone,email,paypwd from userinfo where "+
             "<choose><when test=\"email!=null and email!=''\">email=#{email}</when>"+
             "<when test=\"phone!=null and phone!=''\">phone=#{phone}</when>"+
             "<when test=\"uname!=null and uname!=''\">uname=#{uname}</when>"+
