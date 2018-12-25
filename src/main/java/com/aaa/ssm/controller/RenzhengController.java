@@ -67,6 +67,7 @@ public class RenzhengController {
     @RequestMapping("isRen")
     public Object isRenZheng(String userName){
         Map user = renzhengService.isRenZheng(userName);
+        System.out.println(user.get("PAYPWD"));
         if(user.get("PAYPWD")!=null&&!"".equals(user.get("PAYPWD"))){
             return 1;
         }else {

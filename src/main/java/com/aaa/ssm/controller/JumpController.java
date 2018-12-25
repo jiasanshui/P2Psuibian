@@ -77,6 +77,7 @@ public class JumpController {
      */
     @RequestMapping("renzheng")
     public Object renzheng(){
+
         return "qiantai/renzheng";
     }
     /**
