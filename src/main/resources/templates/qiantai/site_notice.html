@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>p2p网贷平台</title>
@@ -9,6 +9,15 @@
 <link href="../css/about.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="../script/jquery.min.js"></script>
 <script type="text/javascript" src="../script/common.js"></script>
+    <script>
+        <!-- 跳转到详情页面 -->
+        $(function () {
+            $("#notice").click(function () {
+                var noticeid = $("#noticeid").val();
+                location.href="/jump/company_announce?noticeid="+noticeid;
+            })
+        })
+    </script>
 </head>
 <body>
 <header>
@@ -85,35 +94,12 @@
     <div class="text-box">
 			<div class="text-content" id="text-content">
 				<h1 class="title">网站公告</h1>
-				<ul class="clearfix mt20 new-list">
-					<li class="clearfix list-item">
-						<a href="/jump/company_announce">9月14日最新理财产品预告</a>
-						<span>2015-09-12</span>
-					</li><li class="clearfix list-item">
-						<a href="/jump/company_announce">豆兑换规则</a>
-						<span>2015-09-12</span>
-					</li><li class="clearfix list-item">
-						<a href="/jump/company_announce">9月12日最新理财产品介绍</a>
-						<span>2015-09-12</span>
-					</li><li class="clearfix list-item">
-						<a href="/jump/company_announce">9月11日最新理财产品介绍</a>
-						<span>2015-09-11</span>
-					</li><li class="clearfix list-item">
-						<a href="/jump/company_announce">9月10日最新理财产品预告</a>
-						<span>2015-09-09</span>
-					</li><li class="clearfix list-item">
-						<a href="/jump/company_announce">9月9日最新理财产品介绍</a>
-						<span>2015-09-09</span>
-					</li><li class="clearfix list-item">
-						<a href="/jump/company_announce">9月8日最新理财产品预告</a>
-						<span>2015-09-07</span>
-					</li><li class="clearfix list-item">
-						<a href="公司公告详细.html">9月7日最新理财产品预告</a>
-						<span>2015-09-06</span>
-					</li><li class="clearfix list-item">
-						<a href="/jump/company_announce">9月6日最新理财产品预告</a>
-						<span>2015-09-05</span>
-					</li>				</ul>
+				<ul class="clearfix mt20 new-list" th:each="web : ${webList}">
+                    <li class="clearfix list-item">
+                        <a th:href="'/jump/company_announce?noticeid='+${web.NOTICEID}"><span id="notice" th:text="${web.TITLE}"></span></a>
+                        <span th:text="${web.ADDTIME}"></span>
+                    </li>
+                </ul>
 				<div class="page">
 <span class="all">共有163条信息</span><span class="count"></span><div class="fr pages"><span data-page="1" class="currents">1</span><a data-page="2" href="#">2</a><a data-page="3" href="#">3</a><a data-page="4" href="#">4</a><a data-page="5" href="#">5</a><a data-page="6" href="#">6</a><span>...</span><a data-page="16" href="#">16 </a><a data-page="17" href="#">17 </a><a data-page="2" class="next" href="#">下一页</a><a data-page="17" class="last" href="#">尾页</a></div>
 </div>

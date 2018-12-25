@@ -51,11 +51,11 @@ public interface BorrowDao {
 
     /**
      * 通过用户名查询该用户是否有正在借款记录（未还清的借款）
-     * @param username
+     * @param userName
      * @return
      */
-    @Select("select * from borrow where username=#{username}")
-    List<Map> getListByusername(String username);
+    @Select("select * from borrow where username=#{userName}")
+    List<Map> getListByusername(String userName);
 
     /**
      * 根据借款标的编号查询投标
@@ -63,7 +63,7 @@ public interface BorrowDao {
      * @return
      */
     @Select("select borrowid,applicant,starttime,tel,timelimit,purpose,des,quantity,cost,CONCAT(TO_CHAR(apr*100,'990.99'),'%') apr,borrowmoney,danbaostyle,payment,username,stateid,borrownum,winbidmoney,concat((trunc(winbidmoney/borrowmoney,4)*100),'%') jindu,round(winbidmoney/borrowmoney*10) jindua,(winbidmoney/borrowmoney) as baifen  from borrow where borrownum=#{BORROWNUM}")
-    List<Map> getListByBORROWNUM(String BORROWNUM);
+    List<Map> getListByBorrowNum(String BORROWNUM);
 
     /**
      * 投标成功后修改借款表里已借金额
