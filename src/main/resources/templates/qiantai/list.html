@@ -1,4 +1,3 @@
-
 <!DOCTYPE>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -172,7 +171,6 @@
                 <li class="n3"><a id="spread_month_2" href="javascript:url('spread_month','2');">1-3月</a> </li>
                 <li class="n4"><a id="spread_month_3" href="javascript:url('spread_month','3');">3-6月</a> </li>
                 <li class="n5"><a id="spread_month_4" href="javascript:url('spread_month','4');">6-12月</a> </li>
-                <!--<li class="n6"><a id="spread_month_5" href="javascript:url('spread_month','5');">12月及以上</a> </li>-->
               </ul>
             </dd>
           </dl>
@@ -225,10 +223,17 @@
         </div>
         <!------------投资列表-------------->
         <div class="item" id="tableView">
+         <!-- <el-row>
+            <el-table
+                    :data="tableData"
+                    v-loading.body="loading"
+                    border
+                    @selection-change="selectionChange"
+                    style="width: 100%">-->
           <ul id="house"></ul>
           <ul th:each="rows : ${proList}">
             <input id="borrownum" type="hidden" th:value="${rows.BORROWNUM}">
-            <input id="borrownum" type="hidden" th:value="${rows.BAIFEN}">
+            <!--<input id="borrownum" type="hidden" th:value="${rows.BAIFEN}">-->
             <li class="col-330 col-t"><a href="/jump/infor" target="_blank"><i class="icon icon-che" title="车易贷"></i></a><span th:text="${rows.DES}"></span></li>
             <li class="col-180"><span class="f20 c-333" th:text="${rows.BORROWMONEY}"></span>元</li>
             <li class="col-110 relative"><span class="f20 c-orange" th:text="${rows.APR}" > </span></li>
@@ -252,7 +257,7 @@
           </ul>
         </div>
         <!--底部分页工具条-->
-        <div class="pagination clearfix mrt30" id="divPage" style="text-align: center">
+        <div class="pagination clearfix mrt30" id="divPage">
           <span class="page" th:utext="${pageString}"></span>
         </div>
         <!------------投资列表-------------->
@@ -306,13 +311,11 @@
   </div>
 </div>
 <script>
-   /* var vm = new Vue({
+    var vm = new Vue({
         el:"#divPage",
         data:{
-            tableData: [],
             currentPage:1,
-            pageSize:8，
-             total:800
+            pageSize:8
         },
         created:function(){
             var self = this;
@@ -320,21 +323,8 @@
                 self.total=response.data.total;
                 self.tableData = response.data.pageData;
             })
-        },//分页大小修改事件
-    pageSizeChange:function(val) {
-        console.log('每页 ' + val +' 条');
-        this.pageSize = val;
-        var _self = this;
-        _self.loadingData();//重新加载数据
-    },
-    //当前页修改事件
-    currentPageChange:function(val) {
-        this.currentPage = val;
-        console.log('当前页: ' + val);
-        var _self = this;
-        _self.loadingData();//重新加载数据
-    }
-    })*/
+        },
+    })
 </script>
 </body>
 </html>

@@ -21,7 +21,7 @@ public interface ProjectService {
      * 查询全部房屋抵押项目分页数据
      * @return
      */
-    List<Map> getHouseProAll(Map map);
+    List<Map>  getHouseProAll(Map map);
 
     /**
      * 根据编号查询招标进度
