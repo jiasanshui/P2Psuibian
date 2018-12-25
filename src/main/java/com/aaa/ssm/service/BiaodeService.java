@@ -24,10 +24,51 @@ public interface BiaodeService {
     int update(Map map);
 
     /**
-     * 审核驳回，更新用户借款表审核状态
+     * 初审，更新用户借款表审核状态
      * @param map
      * @return
      */
     int edit(Map map);
 
+    /**
+     * 满标一审操作
+     * @param map
+     * @return
+     */
+    int fkCheck(Map map);
+
+    /**
+     * 查询投标详情
+     * @param borrownum
+     * @return
+     */
+    List<Map> getTenderinfo(String borrownum);
+
+    /**
+     * 招标中的标的分页列表
+     * @param map
+     * @return
+     */
+    List<Map> getPage(Map map);
+
+    /**
+     * 获取待放款的投标信息
+     * @param map
+     * @return
+     */
+    List<Map> getPageByLoan(Map map);
+
+    /**
+     * 更改标的状态
+     * @param map
+     * @return
+     */
+    int updateBidState(Map map);
+
+    /**
+     * 根据标的编号查询历史审核信息
+     * @param borrownum
+     * @return
+     */
+    Map getAduitBid(String borrownum);
 }

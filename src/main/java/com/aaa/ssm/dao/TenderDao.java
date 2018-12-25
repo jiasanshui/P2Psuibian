@@ -4,10 +4,11 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
-
+@Component
 public interface TenderDao {
 
     /**
@@ -67,7 +68,23 @@ public interface TenderDao {
             "values(seq_tender_id.nextval,#{realName},#{tamount},sysdate,#{tway},#{userid},#{borrowNum},)")
     int add(Map map);
 
-    List<Map> getList(Map map);
+    /**
+     * 根据借款编号查询投标详情以及投标人信息
+     * @param borrownum
+     * @return
+     */
+    @Select("select tender.id,tender.realname,tender.tamount,tender.borrownum,tender.userid,tender.tendernum,to_char(tender.ttime,'yyyy-mm-dd') ttime,userinfo.idcard," +
+            "userinfo.phone,userinfo.address from tender left join userinfo on userinfo.userid=tender.userid where borrownum=#{borrownum}")
+    List<Map> getTenderinfoByParam(String borrownum);
+
+    /**
+     * 通过投资人tendernum查询投资列表
+     * @param tendernum
+     * @return
+     */
+    @Select("select id,realname,tamount,ttime,tway,userid,tendernum from tender " +
+            "where tendernum=#{rendernum}")
+    List<Map> getListByTenderNum(String tendernum);
 }
 
 

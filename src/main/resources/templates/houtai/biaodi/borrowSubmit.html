@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>用户招标信息审核列表</title>
+    <title>用户借款审核列表</title>
     <!-- 引入样式 -->
     <script type="text/javascript" src="../js/vue.js"></script>
     <script type="text/javascript" src="../js/axios.min.js"></script>
@@ -19,11 +19,14 @@
     <!--列表顶部搜索和工具条-->
     <el-row>
         <el-form :inline="true" :model="searchForm" class="demo-form-inline">
-            <el-form-item label="申请人">
-                <el-input v-model="searchForm.applicant" placeholder="名称"></el-input>
+            <el-form-item label="用户Id">
+                <el-input v-model="searchForm.USERID" placeholder="用户Id"></el-input>
             </el-form-item>
-            <el-form-item label="联系电话">
-                <el-input v-model="searchForm.tel" placeholder="名称"></el-input>
+            <el-form-item label="借款人">
+                <el-input v-model="searchForm.APPLICANT" placeholder="借款人"></el-input>
+            </el-form-item>
+            <el-form-item label="借款标号">
+                <el-input v-model="searchForm.BORROWNUM" placeholder="借款标号"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" icon="search" @click="searchClick">查询</el-button>
@@ -44,61 +47,85 @@
                     width="55">
             </el-table-column>
             <el-table-column
+                    prop="USERID"
+                    label="用户Id"
+                    align="center"
+                    v-if="false"
+                    width="120">
+            </el-table-column>
+            <el-table-column
                     prop="APPLICANT"
                     label="申请人"
-                    width="100">
+                    align="center"
+                    width="90">
             </el-table-column>
             <el-table-column
                     prop="TEL"
                     label="电话"
-                    width="120">
+                    align="center"
+                    width="110">
             </el-table-column>
             <el-table-column
                     prop="DANBAOSTYLE"
                     label="担保方式"
+                    align="center"
                     width="120">
             </el-table-column>
             <el-table-column
                     prop="PAYMENT"
                     label="还款方式"
+                    align="center"
                     width="150">
             </el-table-column>
             <el-table-column
                     prop="DAYS"
                     label="投标天数"
-                    width="70">
+                    align="center"
+                    width="80">
             </el-table-column>
             <el-table-column
                     prop="BORROWMONEY"
                     label="借款金额"
-                    width="100">
+                    align="center"
+                    width="80">
             </el-table-column>
             <el-table-column
                     prop="TIMELIMIT"
                     label="期限"
+                    align="center"
                     width="70">
             </el-table-column>
             <el-table-column
                     prop="APR"
                     label="年利率"
+                    align="center"
                     width="70">
             </el-table-column>
             <el-table-column
                     prop="PURPOSE"
                     label="借款用途"
-                    width="100">
+                    align="center"
+                    width="70">
             </el-table-column>
             <el-table-column
                     prop="DES"
+                    align="center"
                     label="描述"
-                    width="150">
+                    width="130">
+            </el-table-column>
+            <el-table-column
+                    prop="BORROWNUM"
+                    label="借款标号"
+                    align="center"
+                    width="120">
             </el-table-column>
             <el-table-column
                     label="操作">
                 <template scope="scope">
                     <el-button :plain="true" type="success" size="small" icon="edit" @click="lookClick(scope.row)">查看详情</el-button>
-                    <el-button :plain="true" type="success" size="small" icon="delete" @click="deleteClick(scope.row)">通过</el-button>
-                    <el-button :plain="true" type="danger" size="small" icon="edit" @click="editClick(scope.row)">驳回</el-button>
+                    <!--<el-button :plain="true" type="success" size="small" icon="delete" @click="deleteClick(scope.row)">通过</el-button>
+                    <el-button :plain="true" type="danger" size="small" icon="edit" @click="editClick(scope.row)">驳回</el-button>-->
+                    <el-button type="primary" icon="el-icon-edit" size="small" @click="editClick(scope.row)"></el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -106,10 +133,7 @@
 
     <!--列表底部工具条和分页符-->
     <el-row style="margin-top: 20px" type="flex" justify="end">
-        <el-col :span="6" >
-            <el-button :plain="true" type="danger" size="small" icon="delete" @click="removeSelection">删除所选</el-button>
-        </el-col>
-        <el-col :span="18" >
+        <el-col :span="24" >
             <el-pagination
                     style="float: right"
                     @size-change="pageSizeChange"
@@ -122,23 +146,30 @@
             </el-pagination>
         </el-col>
     </el-row>
-
-    <!--驳回界面-->
-    <el-dialog title="驳回" :visible.sync="editFormVisible" :close-on-click-modal="true">
+    <!--审核界面-->
+    <el-dialog title="初审" :visible.sync="editFormVisible" :close-on-click-modal="true">
         <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
-            <el-form-item label="驳回理由" prop="REASON">
-                <el-input type="textarea" v-model="editForm.REASON" auto-complete="off"></el-input>
+            <el-form-item label="借款标号" prop="BORROWNUM">
+                <el-input type="text" v-model="editForm.BORROWNUM" auto-complete="off" readonly="true"></el-input>
             </el-form-item>
-            <el-form-item label="操作人" >
-                <el-input v-model="editForm.OPRATERID" auto-complete="off"></el-input>
-                <!--<el-select v-model="editForm.DEPTNO" placeholder="请选择">
+            <el-form-item label="审核结果" prop="ADUITRESULT">
+                <el-radio-group v-model="editForm.ADUITRESULT">
+                    <el-radio class="radio" label="1">通过</el-radio>
+                    <el-radio class="radio" label="2">驳回</el-radio>
+                </el-radio-group>
+            </el-form-item>
+            <el-form-item label="审核人" >
+                <el-select v-model="editForm.OPERATORID" placeholder="请选择">
                     <el-option
                             v-for="item in options"
-                            :key="item.DEPTNO"
-                            :label="item.DNAME"
-                            :value="item.DEPTNO">
-                    </el-option>-->
+                            :key="item.ID"
+                            :label="item.ENAME"
+                            :value="item.ID">
+                    </el-option>
                 </el-select>
+            </el-form-item>
+            <el-form-item label="审核备注" prop="ADUITREMARK">
+                <el-input type="textarea" v-model="editForm.ADUITREMARK" auto-complete="off"></el-input>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -233,21 +264,22 @@
     var app = new Vue({
         el: '#app',
         data: {
-            message: '用户投标信息审核列表'
+            message: '借款审核列表'
         }
     });
-
     var tableView = new Vue({
         el: '#tableView',
         data: {
+            options:[],
             //列表数据
             tableData: [],
             //显示加载中样式
             loading:false,
             //搜索表单
             searchForm: {
-                applicant: '',
-                tel: ''
+                USERID: '',
+                APPLICANT: '',
+                BORROWNUM:''
             },
             //多选值
             multipleSelection: [],
@@ -275,10 +307,12 @@
                     { required: true, message: '请输入姓名', trigger: 'blur' }
                 ]
             },
-            //驳回界面数据
+            //审核界面数据
             editForm: {
-                REASON:'',
-                OPRATERID:''
+                BORROWNUM:'',
+                ADUITRESULT:'',
+                OPERATORID:'',
+                ADUITREMARK:''
             },
             //查看详情界面数据
             lookForm: {
@@ -304,6 +338,9 @@
                 self.total=response.data.total;
                 self.tableData = response.data.pageData;
             })
+            axios.post('/biaode/admin').then(function(response){
+                self.options=response.data;
+            })
         },
         methods:{
             //表格重新加载数据
@@ -311,7 +348,7 @@
                 var _self = this;
                 _self.loading = true;
                 var self = this;
-                var searchForm={'pageNo':this.currentPage,'pageSize':this.pageSize,'applicant':this.searchForm.applicant,'tel':this.searchForm.tel};
+                var searchForm={'pageNo':this.currentPage,'pageSize':this.pageSize,'userid':this.searchForm.USERID,'applicant':this.searchForm.APPLICANT,'borrownum':this.searchForm.BORROWNUM};
                 axios.post('/biaode/page',searchForm).then(function(response){
                     _self.total=response.data.total;
                     _self.tableData = response.data.pageData;
@@ -322,7 +359,7 @@
                     _self.loading = false;
                 },300);
             },
-            //驳回事件
+            //审核事件
             editClick:function(row) {
                 this.goUrl="/biaode/edit";
                 this.editFormVisible = true;
@@ -330,26 +367,9 @@
                 this.editForm = Object.assign({}, row);
             },
             //查看详情事件
-            lookClick:function(row) {
-
-
-                //var  _self=this;
+            lookClick:function(row){
                 this.lookFormVisible = true;
                 this.lookForm = Object.assign({}, row);
-                //alert(JSON.stringify(row));
-               /* var  url="/userInfo/list?userId="+row.USERID;
-                axios.get(url).then(function (response) {
-                    if(response.data!=null&&response.data!=''){
-                        _self.lookForm = Object.assign({}, response.data);
-                    }else{
-                        _self.$message({
-                            message: '数据查询失败',
-                            type: 'error'
-                        });
-                    }
-                    _self.loadingData();//重新加载数据
-                });*/
-
             },
             //通过事件
             deleteClick:function(row) {
@@ -400,46 +420,6 @@
                 this.multipleSelection = val;
                 console.info(val);
             },
-            //删除所选，批量删除
-            removeSelection:function() {
-                var _self = this;
-                var multipleSelection = this.multipleSelection;
-                if(multipleSelection.length < 1) {
-                    _self.$message({
-                        message: '请至少选中一条记录',
-                        type: 'error'
-                    });
-                    return;
-                }
-                var ids = "";
-                for(var i=0;i<multipleSelection.length;i++) {
-                    var row = multipleSelection[i];
-                    ids += row.EMPNO + ","
-                }
-                this.$confirm('确认删除' + ids +'吗?', '提示', {
-                    type: 'warning'
-                }).then(function(){
-                    var  url="/user/batchDel/"+ids;
-                    axios.get(url).then(function (response) {
-                        //alert(response.data);
-                        var temp="";
-                        if(response.data>0){
-                            temp="删除成功";
-                        }else {
-                            temp="删除失败";
-                        }
-                        _self.$message({
-                            message: ids + temp,
-                            type: 'success'
-                        });
-                        _self.loadingData();//重新加载数据
-                    });
-
-                }).catch(function(e){
-                    if(e != "cancel")
-                        console.log("出现错误：" + e);
-                });
-            },
             //分页大小修改事件
             pageSizeChange:function(val) {
                 console.log('每页 ' + val +' 条');
@@ -459,14 +439,8 @@
                 var _self = this;
                 _self.loading = true;
                 var formData =this.editForm;
-                //alert(formData);
                 var goUrl=this.goUrl;
-                //alert(goUrl);
-                //alert(JSON.stringify(formData));
                 axios.post(goUrl,formData).then(function(response){
-                    // console.log(response.data);
-                    // alert(222);
-                    // self.total=response.data.total;
                     if(response.data>0){
                         _self.editFormVisible = false;
                     }else{
@@ -480,9 +454,7 @@
                 console.info(this.editForm);
             }
         }
-
     })
 </script>
-
 </body>
 </html>

@@ -1,7 +1,11 @@
 package com.aaa.ssm.controller;
 
+import com.aaa.ssm.entity.Admin;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * className:BackJumpController
@@ -14,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class BackJumpController {
 
     @RequestMapping("index")
-    public String toIndex(){
+    public String toIndex(HttpSession session, Model model){
+        String username=(String) session.getAttribute("username");
+        Admin admin=(Admin) session.getAttribute("user");
+        model.addAttribute("username",username);
         return "houtai/index";
     }
 
@@ -31,9 +38,17 @@ public class BackJumpController {
      * 跳转后台借款标的审核页面
      * @return
      */
-    @RequestMapping("/biaode")
+    @RequestMapping("/borrow")
     public String biaode(){
-        return "houtai/user/biaode";
+        return "houtai/biaodi/borrowSubmit";
+    }
+    /**
+     * 跳转后台招标详情页面
+     * @return
+     */
+    @RequestMapping("/loan")
+    public String loan(){
+        return "houtai/biaodi/loan";
     }
     /**
      * 跳转后台满标页面
@@ -41,14 +56,16 @@ public class BackJumpController {
      */
     @RequestMapping("/fscheck")
     public String fscheck(){
-        return "houtai/user/fscheck";
+        return "houtai/biaodi/floodmark";
     }
     /**
      * 跳转后台登录页面
      * @return
      */
     @RequestMapping("/backlogin")
-    public String backLogin(){
+    public String backLogin(HttpSession session){
+        session.setAttribute("username",null);
+        session.setAttribute("user",null);
         return "houtai/backLogin";
     }
     /**
@@ -94,4 +111,5 @@ public class BackJumpController {
     public String powerList(){
         return "houtai/power/powerList";
     }
+
 }

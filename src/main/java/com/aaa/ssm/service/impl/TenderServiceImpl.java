@@ -18,9 +18,10 @@ import java.util.Map;
 public class TenderServiceImpl implements TenderService {
     @Autowired
     private TenderDao tenderDao;
+
     @Override
     public List<Map> getList(Map map) {
-        return tenderDao.getList(map);
+        return null;
     }
 
     @Override
