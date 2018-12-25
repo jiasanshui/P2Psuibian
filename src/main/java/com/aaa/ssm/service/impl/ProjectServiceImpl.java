@@ -42,4 +42,14 @@ public class ProjectServiceImpl implements ProjectService{
     public int getPageCount(Map map) {
         return projectDao.getPageCount(map);
     }
+
+    @Override
+    public List<Map> getList(Map map) {
+        return projectDao.getList(map);
+    }
+    @Override
+    public List<Map> getBorrowList(String borrownum) {
+        return projectDao.getBorrowList(borrownum);
+    }
+
 }

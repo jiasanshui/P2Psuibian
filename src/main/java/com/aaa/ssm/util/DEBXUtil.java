@@ -133,6 +133,7 @@ public class DEBXUtil {
         double perMonthPrincipalInterest = getPerMonthPrincipalInterest(invest, yearRate, month);
         System.out.println("等额本息---每月还款本息：" + perMonthPrincipalInterest);
         Map<Integer, BigDecimal> mapInterest = getPerMonthInterest(invest, yearRate, month);
+        System.out.println(mapInterest.get(1));
         System.out.println("等额本息---每月还款利息：" + mapInterest);
         Map<Integer, BigDecimal> mapPrincipal = getPerMonthPrincipal(invest, yearRate, month);
         System.out.println("等额本息---每月还款本金：" + mapPrincipal);

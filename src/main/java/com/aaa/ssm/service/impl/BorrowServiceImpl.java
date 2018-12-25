@@ -20,9 +20,35 @@ public class BorrowServiceImpl implements BorrowService {
     @Autowired
     private BorrowDao borrowDao;
 
+    /**
+     * 借款人提交数据到后台(信用贷款)
+     * @param map
+     * @return
+     */
     @Override
     public int add(Map map) {
         return borrowDao.add(map);
+    }
+
+    /**
+     * 借款人提交数据到后台（房屋抵押贷款）
+     * @param map
+     * @return
+     */
+    @Override
+    public int addOne(Map map) {
+        return borrowDao.addOne(map);
+    }
+
+
+    @Override
+    public List<Map> getListByusername(String username) {
+        return borrowDao.getListByusername(username);
+    }
+
+    @Override
+    public List<Map> getListByBorrowNum(String BORROWNUM) {
+        return borrowDao.getListByBorrowNum(BORROWNUM);
     }
 
     @Override

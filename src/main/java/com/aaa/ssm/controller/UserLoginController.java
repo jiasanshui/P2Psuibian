@@ -26,7 +26,7 @@ public class UserLoginController {
     private UserLoginService userLoginService;
 
     /***
-     * 用户登录
+     * 用户登录(前台)
      * @param userName
      * @param password
      * @return

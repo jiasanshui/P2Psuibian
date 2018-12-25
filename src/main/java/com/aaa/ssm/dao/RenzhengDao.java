@@ -16,7 +16,7 @@ import java.util.Map;
 public interface RenzhengDao {
 
     @Update("update userinfo set realname=#{realname},age=#{age},birthday=to_date(substr(#{birth},1,10),'yyyy-mm-dd'),paypwd=#{paypwd}," +
-            "idcard=#{idcard},icpica=#{picA},icpicb=#{picB},address=#{address} where uname=#{username}")
+            "idcard=#{idcard},icpica=#{picA},icpicb=#{picB},address=#{address},creditedu=50000,screditedu=50000,education=#{education},working=#{working},income=#{income} where uname=#{username}")
     int update(Map map);
 
     /**

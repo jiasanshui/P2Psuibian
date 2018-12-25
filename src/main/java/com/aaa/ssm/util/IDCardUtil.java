@@ -59,7 +59,7 @@ public class IDCardUtil {
      * @param args
      */
     public static void main(String[] args) {
-        Map<String, String> birAgeSex = IDCardUtil.getBirAgeSex("411224199507108126");
+        Map<String, String> birAgeSex = IDCardUtil.getBirAgeSex("410523199701242037");
         System.out.println("生日："+birAgeSex.get("birthday")+",年龄："+birAgeSex.get("age")+",性别："+birAgeSex.get("sexCode"));
     }
 }

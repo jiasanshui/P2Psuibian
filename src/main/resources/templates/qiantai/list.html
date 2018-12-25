@@ -225,16 +225,10 @@
         </div>
         <!------------投资列表-------------->
         <div class="item" id="tableView">
-         <!-- <el-row>
-            <el-table
-                    :data="tableData"
-                    v-loading.body="loading"
-                    border
-                    @selection-change="selectionChange"
-                    style="width: 100%">-->
           <ul id="house"></ul>
           <ul th:each="rows : ${proList}">
             <input id="borrownum" type="hidden" th:value="${rows.BORROWNUM}">
+            <input id="borrownum" type="hidden" th:value="${rows.BAIFEN}">
             <li class="col-330 col-t"><a href="/jump/infor" target="_blank"><i class="icon icon-che" title="车易贷"></i></a><span th:text="${rows.DES}"></span></li>
             <li class="col-180"><span class="f20 c-333" th:text="${rows.BORROWMONEY}"></span>元</li>
             <li class="col-110 relative"><span class="f20 c-orange" th:text="${rows.APR}" > </span></li>
@@ -249,10 +243,10 @@
                 </div>
               </div>
             </li>
-            <li class="col-120-2" th:if="${rows.JINDU} eq '100%'">
+            <li class="col-120-2" th:if="${rows.BAIFEN} ge 1">
               <a class="ui-btn btn-gray" th:href="@{/jump/infor(BORROWNUM=${rows.BORROWNUM})}">满标</a>
             </li>
-            <li class="col-120-2" th:if="${rows.JINDU} ne '100%'">
+            <li class="col-120-2" th:if="${rows.BAIFEN} lt 1">
               <a class="ui-btn btn-gray" th:href="@{/jump/infor(BORROWNUM=${rows.BORROWNUM})}">投标</a>
             </li>
           </ul>
@@ -312,11 +306,13 @@
   </div>
 </div>
 <script>
-    var vm = new Vue({
+   /* var vm = new Vue({
         el:"#divPage",
         data:{
+            tableData: [],
             currentPage:1,
-            pageSize:8
+            pageSize:8，
+             total:800
         },
         created:function(){
             var self = this;
@@ -324,8 +320,21 @@
                 self.total=response.data.total;
                 self.tableData = response.data.pageData;
             })
-        },
-    })
+        },//分页大小修改事件
+    pageSizeChange:function(val) {
+        console.log('每页 ' + val +' 条');
+        this.pageSize = val;
+        var _self = this;
+        _self.loadingData();//重新加载数据
+    },
+    //当前页修改事件
+    currentPageChange:function(val) {
+        this.currentPage = val;
+        console.log('当前页: ' + val);
+        var _self = this;
+        _self.loadingData();//重新加载数据
+    }
+    })*/
 </script>
 </body>
 </html>

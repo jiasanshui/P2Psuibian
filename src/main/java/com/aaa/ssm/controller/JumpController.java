@@ -4,7 +4,11 @@ import com.aaa.ssm.service.*;
 import com.aaa.ssm.util.PageUtil;
 import com.aaa.ssm.util.RandomUtil;
 import com.aaa.ssm.util.StringUtil;
+
+import com.github.pagehelper.PageInfo;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.*;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +57,25 @@ public class JumpController {
         //显示房屋抵押招标
         List<Map> housePro = projectService.getHousePro();
         model.addAttribute("houseProList",housePro);
+
+        Map map1=new HashMap();
+        map1.put("parama","车辆");
+        List<Map> listCar = projectService.getList(map1);
+        Map map2=new HashMap();
+        map2.put("parama","房屋");
+        List<Map> listHouse = projectService.getList(map2);
+        Map map3=new HashMap();
+        map3.put("parama","信用");
+        List<Map> listCredit = projectService.getList(map3);
+
+        List<Map> webList = webService.getWebList();
+        List<Map> mediaList = webService.getMediaList();
+        model.addAttribute("webList",webList);
+        model.addAttribute("mediaList",mediaList);
+
+        model.addAttribute("listCar",listCar);
+        model.addAttribute("listHouse",listHouse);
+        model.addAttribute("listCredit",listCredit);
         return "qiantai/index";
     }
 
@@ -80,7 +105,16 @@ public class JumpController {
      */
     @RequestMapping("renzheng")
     public Object renzheng(){
+
         return "qiantai/renzheng";
+    }
+    /**
+     * 跳转到资料认证页面
+     * @return
+     */
+    @RequestMapping("zlrenzheng")
+    public Object zlrenzheng(){
+        return "qiantai/zlrenzheng";
     }
 
     /**
@@ -175,6 +209,8 @@ public class JumpController {
         model.addAttribute("bi",map.get("bi"));
         model.addAttribute("sm",map.get("sm"));
         model.addAttribute("rs",map.get("rs"));
+
+
         return "qiantai/list";
 
     }
@@ -192,17 +228,27 @@ public class JumpController {
         String username=(String) session.getAttribute("userName");
         //根据用户名去获取用户信息
         Map map= userInfoService.getUser(username);
-        Object msg = map.get("msg");
-        if (StringUtil.isEmpty(msg)){ //审核通过
-            //调用生成随机数工具类生成随机数
-            String num = RandomUtil.getBorrowNumByTime();
-            model.addAttribute("num",num);
-            model.addAttribute("userName",username);
-            model.addAttribute("realName",map.get("REALNAME"));
-            return "qiantai/borrow";
+        try {
+            Object msg = map.get("msg");
+            if (StringUtil.isEmpty(msg)){ //审核通过
+                //调用生成随机数工具类生成随机数
+                String num = RandomUtil.getBorrowNumByTime();
+                model.addAttribute("num",num);
+                model.addAttribute("userName",username);
+                model.addAttribute("userid",map.get("USERID"));
+                model.addAttribute("realName",map.get("REALNAME"));
+                model.addAttribute("creditedu",map.get("CREDITEDU"));
+                return "qiantai/borrow";
+            }
+            if("1".equals(msg)){
+                return "qiantai/index";
+            }else{
+                return "qiantai/renzheng";
+            }
+        } catch (Exception e) {
 
         }
-        return "qiantai/renzheng";
+        return null;
     }
     /**
      * 跳转到安全保障页面
@@ -225,7 +271,9 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/about")
-    public String about(){
+    public String about(Model model){
+        List<Map> companyList=webService.getCompanyList();
+        model.addAttribute("companyList",companyList);
         return "qiantai/about";
     }
     /**
@@ -249,7 +297,9 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/company_announce")
-    public String company_announce(){
+    public String company_announce(Model model,Integer noticeid){
+        List<Map> lists = webService.getList(noticeid);
+        model.addAttribute("lists",lists);
         return "qiantai/company_announce";
     }
     /**
@@ -275,13 +325,21 @@ public class JumpController {
     @RequestMapping("/infor")
     public String infor(HttpSession session,Model model,String BORROWNUM){
         String userName=(String) session.getAttribute("userName");
-        List<Map> list = userInfoService.getUserList(userName);
-        List<Map> listByUsername = borrowService.getListByUsername(BORROWNUM);
-        List<Map> pageList = tenderService.getPage(BORROWNUM);
-        model.addAttribute("uList",listByUsername);
-        model.addAttribute("pList",pageList);
-        //根据用户名去获取用户信息
-        return "qiantai/infor";
+        if (userName==null){
+            return "qiantai/login";
+        }else {
+            List<Map> list = userInfoService.getUserList(userName);
+            List<Map> listByUsername = borrowService.getListByBorrowNum(BORROWNUM);
+            System.out.println(listByUsername);
+            List<Map> pageList = tenderService.getPage(BORROWNUM);
+            List<Map> borrowList = projectService.getBorrowList(BORROWNUM);
+            model.addAttribute("uList",listByUsername);
+            model.addAttribute("pList",pageList);
+            model.addAttribute("borrowList", borrowList);
+            //根据用户名去获取用户信息
+            return "qiantai/infor";
+        }
+
     }
     /**
      *
@@ -313,7 +371,9 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/manage_team")
-    public String manage_team(){
+    public String manage_team(Model model){
+        List<Map> teamList=webService.getTeamList();
+        model.addAttribute("teamList",teamList);
         return "qiantai/manage_team";
     }
     /**
@@ -321,7 +381,9 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/media_report")
-    public String media_report(){
+    public String media_report(Model model){
+       List<Map> mediaList=webService.getMediaList();
+        model.addAttribute("mediaList",mediaList);
         return "qiantai/media_report";
     }
     /**
@@ -362,17 +424,24 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/partner")
-    public String partner(){
+    public String partner(Model model){
+        List<Map> partnerList=webService.getPartnerList();
+        model.addAttribute("partnerList",partnerList);
         return "qiantai/partner";
     }
     /**
      * 跳转到网站公告页面
      * @return
      */
+    @Autowired
+    private WebService webService;
     @RequestMapping("/site_notice")
-    public String site_notice(){
+    public String site_notice(Model model){
+        List<Map> webList=webService.getWebList();
+        model.addAttribute("webList",webList);
         return "qiantai/site_notice";
     }
+
     /**
      * 跳转到系统消息页面
      * @return
@@ -386,7 +455,9 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/team_style")
-    public String team_style(){
+    public String team_style(Model model){
+        List<Map> teamSList=webService.getTeamSList();
+        model.addAttribute("teamSList",teamSList);
         return "qiantai/team_style";
     }
     /**
@@ -440,11 +511,12 @@ public class JumpController {
         String username=(String) session.getAttribute("userName");
         //根据用户名去获取用户信息
         List<Map> list = userInfoService.getUserList(username);
-        List<Map> listByUsername = borrowService.getListByUsername(BORROWNUM);
+        List<Map> listByUsername = borrowService.getListByBorrowNum(BORROWNUM);
         model.addAttribute("realName",list.get(0).get("REALNAME"));
         model.addAttribute("uid",list.get(0).get("USERID"));
         model.addAttribute("bankNum",list.get(0).get("BANKNUM"));
         model.addAttribute("amount",list.get(0).get("AMOUNT"));
+        model.addAttribute("freezamount",list.get(0).get("FREEZAMOUNT"));
         model.addAttribute("BORROWNUM",BORROWNUM);
         model.addAttribute("bList",listByUsername);
         return "qiantai/toubiao";

@@ -25,7 +25,7 @@ public interface PowerDao {
      */
     @Select("select * from tb_power where id in" +
             "(select powerid from tb_role_power where roleid=" +
-            "(select roleid from emp where adminid=" +
+            "(select roleid from emp where emp.state=1 and adminid=" +
             "(select id from admin where id=#{userid})))")
     List<TreeNode> getPowerList(Integer userid);
 

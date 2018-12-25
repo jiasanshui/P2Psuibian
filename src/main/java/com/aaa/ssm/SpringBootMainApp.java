@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * createTime:2018-11-29 18:41
  */
 @ServletComponentScan
-@EnableTransactionManagement//事务
+@EnableTransactionManagement
 @SpringBootApplication
 @MapperScan({"com.aaa.ssm.dao","com.aaa.ssm.mapper"})
  public class SpringBootMainApp {
