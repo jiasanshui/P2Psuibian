@@ -71,7 +71,6 @@ public class RenzhengController {
         try {
             Integer.valueOf(user.get("STATEID")+"");
         } catch (NumberFormatException e) {
-            e.printStackTrace();
             return 0;
         }
         if (Integer.valueOf(user.get("STATEID")+"")==2){
