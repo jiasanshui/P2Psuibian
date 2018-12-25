@@ -1,6 +1,7 @@
 package com.aaa.ssm.controller;
 
 import com.aaa.ssm.service.*;
+import com.aaa.ssm.util.PageUtil;
 import com.aaa.ssm.util.RandomUtil;
 import com.aaa.ssm.util.StringUtil;
 
@@ -11,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.swing.*;
 import java.util.HashMap;
@@ -128,9 +131,84 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/list")
-    public String list(Model model){
-        List<Map> houseProAll = projectService.getHouseProAll();
+    public String list(Integer pageNo, Model model, HttpServletRequest request, @RequestParam Map map){
+        System.out.println("传的参数："+map);
+        //分页总数量
+        int pageSize=5;
+        int tPageNo = pageNo==null?1:pageNo;
+        map.put("pageNo",tPageNo);
+        map.put("pageSize",pageSize);
+
+        //查询分页，模糊查询
+        //项目类型
+        if("car".equals(map.get("pt"))){
+            map.put("danbao","车辆抵押贷款");
+        }if ("house".equals(map.get("pt"))){
+            map.put("danbao","房屋抵押贷款");
+        }if ("xinyong".equals(map.get("pt"))){
+            map.put("danbao","信用贷款");
+        }
+        //年利率
+        if("1".equals(map.get("bi"))){
+            double startapr = 0;
+            double endapr = 0.12;
+            map.put("startapr",startapr);
+            map.put("endapr",endapr);
+        }if("2".equals(map.get("bi"))){
+            double startapr = 0.12;
+            double endapr = 0.14;
+            map.put("startapr",startapr);
+            map.put("endapr",endapr);
+        }if("3".equals(map.get("bi"))){
+            double startapr = 0.14;
+            double endapr = 0.16;
+            map.put("startapr",startapr);
+            map.put("endapr",endapr);
+        }if("4".equals(map.get("bi"))){
+            double startapr = 0.16;
+            double endapr = 1;
+            map.put("startapr",startapr);
+            map.put("endapr",endapr);
+        }
+        //期数
+        if("1".equals(map.get("sm"))){
+            int startlimit = 0;
+            int endlimit = 1;
+            map.put("startlimit",startlimit);
+            map.put("endlimit",endlimit);
+        }if("2".equals(map.get("sm"))){
+            int startlimit = 1;
+            int endlimit = 3;
+            map.put("startlimit",startlimit);
+            map.put("endlimit",endlimit);
+        }if("3".equals(map.get("sm"))){
+            int startlimit = 3;
+            int endlimit = 6;
+            map.put("startlimit",startlimit);
+            map.put("endlimit",endlimit);
+        }if("4".equals(map.get("sm"))){
+            int startlimit = 6;
+            int endlimit = 12;
+            map.put("startlimit",startlimit);
+            map.put("endlimit",endlimit);
+        }
+        //还款方式
+        if("end".equals(map.get("rs"))){
+            map.put("repayment","到期付本付息");
+        }if("endmonth".equals(map.get("rs"))){
+            map.put("repayment","按月付息，到期还本");
+        }if("month".equals(map.get("rs"))){
+            map.put("repayment","等额本息");
+        }
+        String pageString = new PageUtil(tPageNo, pageSize, projectService.getPageCount(map), request).getPageString();
+        List<Map> houseProAll = projectService.getHouseProAll(map);
+        //pageUtil分页
+        model.addAttribute("pageString",pageString);
         model.addAttribute("proList",houseProAll);
+        model.addAttribute("pt",map.get("pt"));
+        model.addAttribute("bi",map.get("bi"));
+        model.addAttribute("sm",map.get("sm"));
+        model.addAttribute("rs",map.get("rs"));
 
 
         return "qiantai/list";

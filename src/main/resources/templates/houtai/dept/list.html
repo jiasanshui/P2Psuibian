@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>部门列表</title>
+    <!-- 引入样式 -->
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <script type="text/javascript" src="../js/axios.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div id="app">
+    <h2>{{ message }}</h2>
+</div>
+
+<div id="tableView">
+    <!--列表顶部搜索和工具条-->
+    <el-row>
+
+        <el-form :inline="true" :model="searchForm" class="demo-form-inline">
+
+            <el-form-item label="部门编号">
+                <el-input v-model="searchForm.id" placeholder="ID"></el-input>
+            </el-form-item>
+
+            <el-form-item label="部门名称">
+                <el-input v-model="searchForm.name" placeholder="名称"></el-input>
+            </el-form-item>
+            <el-form-item label="状态">
+                <template>
+                    <el-select v-model="searchForm.Dstatus" placeholder="请选择">
+                        <el-option
+                                v-for="item in options"
+                                :key="item.ID"
+                                :label="item.STATE"
+                                :value="item.ID">
+                        </el-option>
+                    </el-select>
+                </template>
+            </el-form-item>
+            <el-form-item>
+            <el-button type="primary" icon="search" @click="searchClick">查询</el-button>
+            <el-button type="success" icon="plus" @click="addClick">新增</el-button>
+            <el-button type="success" icon="plus" @click="toFlush">刷新</el-button>
+        </el-form-item>
+        </el-form>
+    </el-row>
+    <!--列表-->
+    <el-row>
+        <el-table
+                :data="tableData"
+                v-loading.body="loading"
+                border
+                @selection-change="selectionChange"
+                style="width: 100%">
+            <!--<el-table-column-->
+                    <!--type="selection"-->
+                    <!--width="55">-->
+            <!--</el-table-column>-->
+            <el-table-column
+                    prop="DEPTID"
+                    label="部门编号"
+                    width="150">
+            </el-table-column>
+            <el-table-column
+                    prop="DNAME"
+                    label="部门名称"
+                    width="150">
+            </el-table-column>
+            <el-table-column
+                    prop="DESCRIBES"
+                    label="部门描述"
+                    width="120">
+            </el-table-column>
+            <el-table-column
+                    prop="DTIME"
+                    label="建立时间"
+                    width="120">
+            </el-table-column>
+            <el-table-column
+                    prop="STATE"
+                    label="部门状态"
+                    width="120"
+                   >
+
+            </el-table-column>
+            <el-table-column
+                    label="操作">
+                <template scope="scope">
+                    <el-button :plain="true" type="success" size="small" icon="edit" @click="editClick(scope.row)">编辑</el-button>
+                    <el-button :plain="true" type="danger" size="small" icon="delete" @click="deleteClick(scope.row)">删除</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+    </el-row>
+
+    <!--列表底部工具条和分页符-->
+    <el-row style="margin-top: 20px" type="flex" justify="end">
+        <!--<el-col :span="6" >-->
+            <!--<el-button :plain="true" type="danger" size="small" icon="delete" @click="removeSelection">删除所选</el-button>-->
+        <!--</el-col>-->
+        <el-col :span="18" >
+            <el-pagination
+                    style="float: right"
+                    @size-change="pageSizeChange"
+                    @current-change="currentPageChange"
+                    :current-page="currentPage"
+                    :page-sizes="[5, 10, 20, 30, 50]"
+                    :page-size="pageSize"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="total">
+            </el-pagination>
+        </el-col>
+    </el-row>
+
+    <!--编辑界面-->
+    <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
+        <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
+
+            <el-form-item label="部门名称" prop="DNAME">
+                <el-input v-model="editForm.DNAME" auto-complete="off"></el-input>
+            </el-form-item>
+
+            <el-form-item label="部门描述">
+                <el-input v-model="editForm.DESCRIBES"></el-input>
+            </el-form-item>
+
+            <el-form-item label="建立时间">
+                <el-date-picker type="date" value-format="yyyy-MM-dd"
+                                placeholder="选择日期" v-model="editForm.DTIME"></el-date-picker>
+            </el-form-item>
+            <el-form-item label="状态">
+                <template>
+                    <el-select v-model="editForm.DSTATUS" placeholder="请选择">
+                        <el-option
+                                v-for="item in options"
+                                :key="item.ID"
+                                :label="item.STATE"
+                                :value="item.ID">
+                        </el-option>
+                    </el-select>
+                </template>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click.native="editFormVisible = false">取消</el-button>
+            <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
+        </div>
+    </el-dialog>
+
+</div>
+
+
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: '部门列表'
+        }
+    });
+
+    var tableView = new Vue({
+        el: '#tableView',
+        data: {
+            Dstatus:'',
+            options:[],
+            //列表数据
+            tableData: [],
+            //显示加载中样式
+            loading:false,
+            //搜索表单
+            searchForm: {
+                id: '',
+                name: '',
+                Dstatus:''
+            },
+            //多选值
+            multipleSelection: [],
+            //当前页
+            currentPage:1,
+            //分页大小
+            pageSize:10,
+            //总记录数
+            total:800,
+            //删除的弹出框
+            deleteVisible:false,
+            //编辑界面是否显示
+            editFormVisible: false,
+            editLoading: false,
+            goUrl:'',
+            editFormRules: {
+               DNAME: [
+                    { required: true, message: '请输入部门名称', trigger: 'blur' },
+                ],
+            },
+            //编辑界面数据
+            editForm: {
+               DNAME: '',
+               DESCRIBES: '',
+                DTIME: '',
+                //DSTATUS:''
+                STATE:''
+            },
+        },
+        created:function(){
+            //在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
+            var self = this;
+            axios.post('/dept/page',{'pageNo':this.currentPage,'pageSize':this.pageSize}).then(function(response){
+                self.total=response.data.total;
+                self.tableData = response.data.pageData;
+            });
+            //查询下拉框
+            axios.post('/dept/deptState').then(function (response) {
+                self.options=response.data;
+            })
+
+        },
+        methods: {
+            //刷新
+            toFlush: function () {
+                this.searchForm = {
+                    deptid: '',
+                    dname: '',
+                    dstatus:''
+                }
+                this.loadingData();
+            },
+            //表格重新加载数据
+            loadingData: function () {
+                var _self = this;
+                _self.loading = true;
+                var self = this;
+                var searchForm = {
+                    'pageNo': this.currentPage, 'pageSize': this.pageSize, 'deptid':this.searchForm.id,'dname': this.searchForm.name,'dstatus':this.searchForm.Dstatus};
+                axios.post('/dept/page', searchForm).then(function (response) {
+                    _self.total = response.data.total;
+                    _self.tableData = response.data.pageData;
+                });
+                console.log(_self.currentPage);
+                setTimeout(function () {
+                    console.info("加载数据成功");
+                    _self.loading = false;
+                }, 300);
+            },
+            //表格编辑事件
+            editClick: function (row) {
+                this.goUrl = "/dept/update";
+                this.editFormVisible = true;
+                this.editForm = Object.assign({}, row);
+            },
+            //表格删除事件
+            deleteClick: function (row) {
+                var _self = this;
+                this.$confirm('确认删除' + row.DEPTID + '吗?', '提示', {
+                    type: 'warning'
+                }).then(function () {
+                    var url = "/dept/delete?deptid=" + row.DEPTID;
+                    axios.get(url).then(function (response) {
+                        if (response.data > 0) {
+                            _self.$message({
+                                message: row.DEPTID + '删除成功',
+                                type: 'success'
+                            });
+                            _self.loadingData();//重新加载数据
+                        } else {
+                            _self.$message({
+                                message: row.DEPTID + '删除失败,该部门下有员工',
+                                type: 'error'
+                            });
+
+                        }
+                    });
+                }).catch(function (e) {
+                    if (e != "cancel")
+                        console.log("出现错误：" + e);
+                });
+            },
+            //新建事件
+            addClick: function () {
+                this.goUrl = "/dept/add";
+                var _self = this;
+                this.editForm = {
+                    DNAME: '',
+                    DESCRIBES: '',
+                    DTIME: '',
+                    DSTATUS:''
+                },
+                    this.editFormVisible = true;
+                _self.loadingData();//重新加载数据
+            },
+            //表格查询事件
+            searchClick: function () {
+                var self = this;
+                self.loadingData();//重新加载数据
+            },
+            //表格勾选事件
+            selectionChange: function (val) {
+                for (var i = 0; i < val.length; i++) {
+                    var row = val[i];
+                }
+                this.multipleSelection = val;
+                console.info(val);
+            },
+            //分页大小修改事件
+            pageSizeChange: function (val) {
+                console.log('每页 ' + val + ' 条');
+                this.pageSize = val;
+                var _self = this;
+                _self.loadingData();//重新加载数据
+            },
+            //当前页修改事件
+            currentPageChange: function (val) {
+                this.currentPage = val;
+                console.log('当前页: ' + val);
+                var _self = this;
+                _self.loadingData();//重新加载数据
+            },
+            //保存点击事件
+            editSubmit: function () {
+                var _self = this;
+                _self.loading = true;
+                var formData = this.editForm;
+                //alert(formData);
+                var goUrl = this.goUrl;
+                //alert(goUrl);
+                //alert(JSON.stringify(formData));
+                axios.post(goUrl, formData).then(function (response) {
+                    if (response.data > 0) {
+                        _self.editFormVisible = false;
+                    }else if(response.data.msg!=null&&response.data.msg!=''){
+                        _self.$message({
+                            message: response.data.msg,
+                            type: 'error'
+                        });
+                    }
+                    else {
+                        _self.$message({
+                            message: '操作失败',
+                            type: 'error'
+                        });
+                    }
+                    _self.editFormVisible = false;
+                    _self.loadingData();//重新加载数据
+                })
+                console.info(this.editForm);
+            },
+
+        }
+    })
+</script>
+
+</body>
+</html>

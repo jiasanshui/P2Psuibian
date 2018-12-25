@@ -26,12 +26,21 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
-    public List<Map> getHouseProAll() {
-        return projectDao.getHouseProAll();
+    public List<Map> getHouseProAll(Map map) {
+        int pageNo = map.get("pageNo")==null?1:Integer.valueOf(map.get("pageNo")+"");
+        int pageSize = map.get("pageSize")==null?5:Integer.valueOf(map.get("pageSize")+"");
+        map.put("start",(pageNo-1)*pageSize);
+        map.put("end",pageNo*pageSize+1);
+        return projectDao.getHouseProAll(map);
     }
     @Override
     public List<Map> getJinduByNum(String borrowNum) {
         return projectDao.getJinduByNum(borrowNum);
+    }
+
+    @Override
+    public int getPageCount(Map map) {
+        return projectDao.getPageCount(map);
     }
 
     @Override
