@@ -29,18 +29,51 @@ public class BorrowController {
     private BorrowService borrowService;
 
     /**
-     * 借款人提交数据到后台
+     * 借款人提交数据到后台(信用贷款)
      * @param map
      * @return
      */
     @RequestMapping("/addBorrow")
     public Object addBorrow(@RequestParam Map map){
         System.out.println(map);
-        int add = borrowService.add(map);
+        /*int add = borrowService.add(map);
         if(add==0){
             return "redirect:/jump/borrow";
         }
-        return "redirect:/jump/list";
+        return "redirect:/jump/list";*/
+        return null;
+    }
+
+    /**
+     * 借款人提交数据到后台(房屋抵押贷款)
+     * @param map
+     * @return
+     */
+    @RequestMapping("/addBorrowOne")
+    public Object addBorrowOne(@RequestParam Map map){
+        System.out.println(map);
+       /* int add = borrowService.addOne(map);
+        if(add==0){
+            return "redirect:/jump/borrow";
+        }
+        return "redirect:/jump/list";*/
+        return null;
+    }
+
+    /**
+     * 借款人提交数据到后台(房屋抵押贷款)
+     * @param map
+     * @return
+     */
+    @RequestMapping("/addBorrowTwo")
+    public Object addBorrowTwo(@RequestParam Map map){
+        System.out.println(map);
+        /*int add = borrowService.addTwo(map);
+        if(add==0){
+            return "redirect:/jump/borrow";
+        }
+        return "redirect:/jump/list";*/
+        return null;
     }
 
 }

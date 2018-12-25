@@ -64,7 +64,6 @@ public class RepayServiceImpl implements RepayService {
     @Transactional
     @Override
     public int repayPlan(Map map) {
-        System.out.println(map);
         Boolean flag = true;
        //1、更改标的状态（判断）
         Integer aduitresult = Integer.valueOf(map.get("ADUITRESULT")+"");
@@ -79,7 +78,6 @@ public class RepayServiceImpl implements RepayService {
             if (isSuc==false){
                 flag=false;
             }
-            System.out.println("22222222222222222");
             //更改用户账户表,插入账户流水表
             Boolean isUpd = updateAccount(map);
             if (isUpd==false){
@@ -92,7 +90,6 @@ public class RepayServiceImpl implements RepayService {
                 flag=false;
             }
         }
-        System.out.println("1111111111111111111");
         //2、往标的审核表中插入数据
         int s = aduitBidDao.add(map);
         if (s==0){
@@ -179,6 +176,10 @@ public class RepayServiceImpl implements RepayService {
                 calendar.add(Calendar.MONTH,limit-1);
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 String format = df.format(calendar.getTime());
+                //每月应还利息
+                double interstPermonth = Double.parseDouble(perMonthInterest.get(limit-1)+"");
+                map.put("interstPermonth",interstPermonth);
+                map.put("nextMon",benjin+interstPermonth);
                 map.put("TIMELIMIT",limit-1);
                 map.put("REPAYLIMIT",format);
                 System.out.println(map);
@@ -190,6 +191,9 @@ public class RepayServiceImpl implements RepayService {
                 calendar.add(Calendar.MONTH,limit);
                 SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
                 String dformat = d.format(calendar.getTime());
+                //每月应还利息
+                double interstPermon = Double.parseDouble(perMonthInterest.get(limit-1)+"");
+                map.put("nextMonth",benjin+interstPermon);
                 map.put("TIMELIMIT",limit);
                 map.put("REPAYLIMIT",dformat);
                 int ss = repayDao.addTwos(map);
@@ -203,6 +207,7 @@ public class RepayServiceImpl implements RepayService {
                 String dformat = d.format(calendar.getTime());
                 map.put("TIMELIMIT",limit);
                 map.put("REPAYLIMIT",dformat);
+                map.put("repayMoney",benjin+lixi);
                 int bx = repayDao.addLast(map);
                 if (bx==0){
                     flag=false;
