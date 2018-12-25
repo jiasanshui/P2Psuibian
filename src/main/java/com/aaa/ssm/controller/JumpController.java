@@ -102,6 +102,7 @@ public class JumpController {
      */
     @RequestMapping("renzheng")
     public Object renzheng(){
+
         return "qiantai/renzheng";
     }
     /**
@@ -257,6 +258,7 @@ public class JumpController {
             //根据用户名去获取用户信息
             return "qiantai/infor";
         }
+
     }
     /**
      *
@@ -428,7 +430,7 @@ public class JumpController {
         String username=(String) session.getAttribute("userName");
         //根据用户名去获取用户信息
         List<Map> list = userInfoService.getUserList(username);
-        List<Map> listByUsername = borrowService.getListByUsername(BORROWNUM);
+        List<Map> listByUsername = borrowService.getListByBorrowNum(BORROWNUM);
         model.addAttribute("realName",list.get(0).get("REALNAME"));
         model.addAttribute("uid",list.get(0).get("USERID"));
         model.addAttribute("bankNum",list.get(0).get("BANKNUM"));

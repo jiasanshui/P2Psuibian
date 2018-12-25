@@ -26,6 +26,16 @@ public class BorrowServiceImpl implements BorrowService {
     }
 
     @Override
+    public List<Map> getListByusername(String username) {
+        return borrowDao.getListByusername(username);
+    }
+
+    @Override
+    public List<Map> getListByBorrowNum(String BORROWNUM) {
+        return borrowDao.getListByBorrowNum(BORROWNUM);
+    }
+
+    @Override
     public int update(Map map) {
         return borrowDao.update(map);
     }
