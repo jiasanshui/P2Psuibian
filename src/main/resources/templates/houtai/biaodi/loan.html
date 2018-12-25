@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>借款审核</title>
+    <!-- 引入样式 -->
+    <script type="text/javascript" src="/js/vue.js"></script>
+    <script type="text/javascript" src="/js/axios.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="../css/elementui.css">
+    <!-- 引入组件库 -->
+    <script src="../js/elementui.js"></script>
+</head>
+<body>
+<div id="app">
+    <h2>{{ message }}</h2>
+</div>
+<div id="tableView">
+    <!--列表顶部搜索和工具条-->
+    <el-row>
+        <el-form :inline="true" :model="searchForm" class="demo-form-inline">
+            <el-form-item label="借款人">
+                <el-input v-model="searchForm.APPLICANT" placeholder="借款人"></el-input>
+            </el-form-item>
+            <el-form-item label="借款标号">
+                <el-input v-model="searchForm.BORROWNUM" placeholder="借款标号"></el-input>
+            </el-form-item>
+           <el-form-item>
+                <el-button type="primary" icon="search" @click="searchClick">查询</el-button>
+           </el-form-item>
+        </el-form>
+    </el-row>
+    <!--列表-->
+    <el-row>
+        <el-table
+                :data="tableData"
+                v-loading.body="loading"
+                border
+                style="width: 100%">
+            <el-table-column
+                    prop="USERID"
+                    label="用户Id"
+                    align="center"
+                    v-if="false"
+                    width="120">
+            </el-table-column>
+            <el-table-column
+                    prop="BORROWNUM"
+                    label="借款标号"
+                    align="center"
+                    width="140">
+            </el-table-column>
+            <el-table-column
+                    prop="APPLICANT"
+                    label="借款人"
+                    align="center"
+                    width="70">
+            </el-table-column>
+            <el-table-column
+                    prop="BORROWMONEY"
+                    label="借款金额(元)"
+                    align="center"
+                    width="110">
+            </el-table-column>
+            <el-table-column
+                    prop="TIMELIMIT"
+                    align="center"
+                    label="借款期限(月)"
+                    width="110">
+            </el-table-column>
+            <el-table-column
+                    prop="APR"
+                    label="年利率"
+                    align="center"
+                    width="70">
+            </el-table-column>
+            <el-table-column
+                    prop="PAYMENT"
+                    label="还款方式"
+                    align="center"
+                    width="180">
+            </el-table-column>
+            <el-table-column
+                    prop="DES"
+                    label="借款描述"
+                    align="center"
+                    width="270">
+            </el-table-column>
+            <el-table-column
+                    prop="WINBIDMONEY"
+                    align="center"
+                    label="已投标金额"
+                    width="120">
+            </el-table-column>
+            <el-table-column
+                    label="操作"
+                    align="center">
+                <template scope="scope">
+                    <!--<el-button :plain="true" type="success" size="small" icon="edit" @click="lookClick(scope.row)">投标详情</el-button>-->
+                    <el-button type="primary" icon="el-icon-edit" size="small" @click="editClick(scope.row)"></el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+    </el-row>
+    <!--列表底部工具条和分页符-->
+    <el-row style="margin-top: 20px" type="flex" justify="end">
+        <el-col :span="24" >
+            <el-pagination
+                    style="float: right"
+                    @size-change="pageSizeChange"
+                    @current-change="currentPageChange"
+                    :current-page="currentPage"
+                    :page-sizes="[10, 20, 30, 50]"
+                    :page-size="pageSize"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="total">
+            </el-pagination>
+        </el-col>
+    </el-row>
+    <!--审核界面-->
+    <el-dialog title="满标二审" :visible.sync="editFormVisible" :close-on-click-modal="true" width="800px">
+        <fieldset>
+            <legend><h3>**投资列表</h3></legend>
+            <el-table
+                    :data="submitData"
+                    v-loading.body="loading"
+                    border
+                    style="width: 100%">
+                <el-table-column
+                        prop="USERID"
+                        label="用户Id"
+                        align="center"
+                        width="100">
+                </el-table-column>
+                <el-table-column
+                        prop="REALNAME"
+                        label="投资人"
+                        align="center"
+                        width="100">
+                </el-table-column>
+                <el-table-column
+                        prop="TENDERNUM"
+                        label="投资编号"
+                        align="center"
+                        width="150">
+                </el-table-column>
+                <el-table-column
+                        prop="TAMOUNT"
+                        label="投标金额(元)"
+                        align="center"
+                        width="110">
+                </el-table-column>
+                <el-table-column
+                        prop="TTIME"
+                        align="center"
+                        label="投资日期"
+                        width="150">
+                </el-table-column>
+            </el-table>
+        </fieldset>
+
+        <hr/>
+
+        <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
+            <el-form-item label="借款标号" prop="BORROWNUM">
+                <el-input type="text" v-model="editForm.BORROWNUM" auto-complete="off" readonly="true"></el-input>
+            </el-form-item>
+            <el-form-item label="审核结果" prop="ADUITRESULT">
+                <el-radio-group v-model="editForm.ADUITRESULT">
+                    <el-radio class="radio" label="1">通过</el-radio>
+                    <el-radio class="radio" label="2">驳回</el-radio>
+                </el-radio-group>
+            </el-form-item>
+            <el-form-item label="审核人" >
+                <el-select v-model="editForm.OPERATORID" placeholder="请选择">
+                    <el-option
+                            v-for="item in options"
+                            :key="item.ID"
+                            :label="item.ENAME"
+                            :value="item.ID">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="审核备注" prop="ADUITREMARK">
+                <el-input type="textarea" v-model="editForm.ADUITREMARK" auto-complete="off"></el-input>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click.native="editFormVisible = false">取消</el-button>
+            <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
+        </div>
+    </el-dialog>
+</div>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: '满标二审列表'
+        }
+    });
+    var tableView = new Vue({
+        el: '#tableView',
+        data: {
+            //投资人投资编号
+            submitArr:[],
+            //列表数据
+            options:[],
+            tableData: [],
+            //显示加载中样式
+            loading:false,
+            //搜索表单
+            searchForm: {
+                APPLICANT: '',
+                BORROWNUM:''
+            },
+            //多选值
+            multipleSelection: [],
+            //当前页
+            currentPage:1,
+            //分页大小
+            pageSize:10,
+            //总记录数
+            total:800,
+            BORROWNUM:'',
+            //编辑界面是否显示
+            //lookFormVisible: false,
+            //lookLoading: false,
+            goUrl:'',
+            /*lookFormRules: {
+                name: [
+                    { required: true, message: '请输入姓名', trigger: 'blur' }
+                ]
+            },*/
+            //审核页面是否显示
+            editFormVisible: false,
+            editLoading: false,
+            editFormRules: {
+                name: [
+                    { required: true, message: '请输入姓名', trigger: 'blur' }
+                ]
+            },
+            //审核界面数据
+            editForm: {
+                BORROWNUM:'',
+                ADUITRESULT:'',
+                OPERATORID:'',
+                ADUITREMARK:''
+            },
+            //投标详情界面数据
+            submitData:[],
+        },
+        created:function(){
+            //在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
+            var self = this;
+            axios.post('/loan/page',{'pageNo':this.currentPage,'pageSize':this.pageSize}).then(function(response){
+                self.total=response.data.total;
+                self.tableData = response.data.pageData;
+            })
+            axios.post('/biaode/admin').then(function(response){
+                self.options=response.data;
+            })
+        },
+        methods:{
+            //表格重新加载数据
+            loadingData:function() {
+                var _self = this;
+                _self.loading = true;
+                var searchForm={'pageNo':this.currentPage,'pageSize':this.pageSize,'applicant':this.searchForm.APPLICANT,'borrownum':this.searchForm.BORROWNUM};
+                axios.post('/loan/page',searchForm).then(function(response){
+                    _self.total=response.data.total;
+                    _self.tableData = response.data.pageData;
+                })
+                console.log(_self.currentPage);
+                setTimeout(function(){
+                    console.info("加载数据成功");
+                    _self.loading = false;
+                },300);
+            },
+            //审核事件
+            editClick:function(row) {
+                var _self=this;
+                axios.post('/biaode/tender?borrownum='+row.BORROWNUM).then(function(response){
+                   alert(JSON.stringify(response.data));
+                    _self.submitData = response.data;
+                    //遍历出投标人的id
+                    let arr = [];
+                    for (var i = 0;i<response.data.length;i++){
+                        arr.push(response.data[i].TENDERNUM);
+                    }
+                    _self.submitArr=arr;
+                })
+                this.goUrl="/loan/check";
+                this.editFormVisible = true;
+                //alert(JSON.stringify(row));
+                this.editForm = Object.assign({}, row);
+            },
+            //保存点击事件
+            editSubmit:function(){
+                var _self = this;
+                _self.loading = true;
+                //var formData =this.editForm;
+                var formData ={'PAYMENT':this.editForm.PAYMENT,'DAYS':this.editForm.DAYS,'APR':this.editForm.APR,'BORROWMONEY':this.editForm.BORROWMONEY,
+                    'APPLICANT':this.editForm.APPLICANT,'TIMELIMIT':this.editForm.TIMELIMIT,'USERID':this.editForm.USERID,'DANBAOSTYLE':this.editForm.DANBAOSTYLE,
+                'WINBIDMONEY':this.editForm.WINBIDMONEY,'BORROWNUM':this.editForm.BORROWNUM,'BORROWID':this.editForm.BORROWID,'ADUITRESULT':this.editForm.ADUITRESULT,
+                'OPERATORID':this.editForm.OPERATORID,'ADUITREMARK':this.editForm.ADUITREMARK,'USERNAME':this.editForm.USERNAME,'submitArr':_self.submitArr};
+                var goUrl=this.goUrl;
+                axios.post(goUrl,formData).then(function(response){
+                    if(response.data>0){
+                        _self.editFormVisible = false;
+                        _self.$message({
+                            message:'审核成功，请通知个人查看账户以及还款账单',
+                            type: 'success'
+                        });
+                    }else{
+                        _self.$message({
+                            message:'驳回失败',
+                            type: 'error'
+                        });
+                    }
+                    _self.loadingData();//重新加载数据
+                })
+                console.info(this.editForm);
+            },
+            //表格查询事件
+            searchClick:function() {
+                var self = this;
+                self.loadingData();//重新加载数据
+            },
+            //分页大小修改事件
+            pageSizeChange:function(val) {
+                console.log('每页 ' + val +' 条');
+                this.pageSize = val;
+                var _self = this;
+                _self.loadingData();//重新加载数据
+            },
+            //当前页修改事件
+            currentPageChange:function(val) {
+                this.currentPage = val;
+                console.log('当前页: ' + val);
+                var _self = this;
+                _self.loadingData();//重新加载数据
+            }
+        }
+    })
+</script>
+</body>
+</html>

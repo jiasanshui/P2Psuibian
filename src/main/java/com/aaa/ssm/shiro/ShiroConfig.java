@@ -47,18 +47,19 @@ public class ShiroConfig {
         filterMap.put("/update","authc");*/
         /*filterMap.put("/test","anon");
         filterMap.put("/login","anon");*/
-        filterMap.put("/**","anon");
+        //filterMap.put("/**","anon");
         //授权过滤器
         //当授权拦截后，自动跳转到授权逻辑
-        filterMap.put("/add","perms[user:add]");
-        filterMap.put("/update","perms[user:update]");
+        //filterMap.put("/add","perms[user:add]");
+        //filterMap.put("/update","perms[user:update]");
 
-        //filterMap.put("/*","authc");
+        //拦截
+        filterMap.put("/backjump/*","authc");
 
         //修改调整的登录页面
-        shiroFilterFactoryBean.setLoginUrl("/toLogin");
+        shiroFilterFactoryBean.setLoginUrl("/backjump/backlogin");
         //设置未授权提示页面
-        shiroFilterFactoryBean.setUnauthorizedUrl("/unAuth");
+        //shiroFilterFactoryBean.setUnauthorizedUrl("/unAuth");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
         return shiroFilterFactoryBean;
     }

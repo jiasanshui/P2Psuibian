@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -12,6 +11,28 @@
 <script type="text/javascript" src="../script/jquery.min.js"></script>
 <script type="text/javascript" src="../script/common.js"></script>
 <script src="../script/user.js" type="text/javascript"></script>
+
+  <!--查询是否已经认证过-->
+  <script>
+      $(function(){
+          var username=$("#userName").val();
+          $.ajax({
+              type:"post",
+              dataType:"json",
+              url:"/renzheng/isRen",
+              data:{userName:username},
+              success:function (data) {
+                  if(data==1){
+                      $("#diva").attr("class","grzxbg p-right");
+                      $("#liRen").hide();
+                      $("#liRenA").show();
+                  }else {
+                      $("#diva").attr("class","grzxbg p-danger");
+                  }
+              }
+          })
+      })
+  </script>
 </head>
 <body>
 <header>
@@ -75,6 +96,7 @@
       <ul>
         <li ><span><a href="/jump/personal"><i class="dot dot1"></i>账户总览</a></span></li>
         <li><span><a href="/jump/huankuan"><i class="dot dot09"></i>我的还款</a></span></li>
+        <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/yihuankuan">已还款记录</a></span></li>
         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/money_record">资金记录</a></span></li>
         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/deposits_history">投资记录</a></span></li>
         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/money_plan">回款计划</a></span></li>
@@ -90,7 +112,7 @@
     <script type="text/javascript">
 			//<![CDATA[
 				function showSpan(op){
-					$("#updateMonbileForm\\:updateMonbileFormauthCode").val(""); 
+					$("#updateMonbileForm\\:updateMonbileFormauthCode").val("");
 					if(op=='alert-updateEmail'){
 						var bool = $("#authenticationMobile").val();
 						if(bool=='true'){
@@ -323,14 +345,32 @@
     <div class="personal-main">
       <div class="personal-zhsz">
         <h3><i>账户设置</i></h3>
-        <div class="personal-level"> <span class="wzd">您的账户完整度</span><i class="grzxbg level3" style="border: none; margin: 37px 0px 0px 20px; height: 17px; background-position: 0px -550px;"></i><span class="state">[中]</span> <i id="zhwzd" class="markicon fl mt35"></i><span class="arrow-personal">请尽快完成账户安全设置，以确保您的账户安全</span><span class="grzxbg icon-personal"></span> </div>
+          <div class="personal-level">
+            <span class="wzd">您的账户完整度</span>
+              <i class="grzxbg level3" style="border: none; margin: 37px 0px 0px 20px; height: 17px; background-position: 0px -550px;"></i>
+            <span class="state">[中]</span>
+              <i id="zhwzd" class="markicon fl mt35"></i>
+            <span class="arrow-personal">请尽快完成账户安全设置，以确保您的账户安全</span>
+            <span class="grzxbg icon-personal"></span>
+          </div>
         <ul>
-          <li><i class="grzxbg p-right"></i><span class="zhsz-span1">手机号</span><span class="zhsz-span2">150****0139</span><span class="zhsz-span3"><a href="javascript:void(0)" onclick="showSpan('alert-checkOldMobile')">更改</a></span></li>
+          <input type="hidden" th:value="${session.userName}" id="userName">
+          <li><i class="grzxbg p-right"></i><span class="zhsz-span1">手机号</span>
+            <span class="zhsz-span2" th:text="${session.phone}"></span>
+            <span class="zhsz-span3"><a href="javascript:void(0)" onclick="showSpan('alert-checkOldMobile')">更改</a></span></li>
           <input type="hidden" value="false" id="authenticationMobile">
-          <li><i class="grzxbg p-danger"></i><span class="zhsz-span1">身份认证</span><span class="zhsz-span2">未认证</span><span class="zhsz-span3"><a href="#">认证</a></span></li>
-          <li><i class="grzxbg p-danger"></i><span class="zhsz-span1">第三方支付</span><span class="zhsz-span2">未开通</span><span class="zhsz-span3"><a href="#">开通</a></span></li>
-          <li> <i class="grzxbg p-right"></i> <span class="zhsz-span1">电子邮箱</span> <span class="zhsz-span2">348****@qq.com</span> <span class="zhsz-span3"> <a href="#" onclick="showSpan('alert-updateEmail')">更改</a> </span> </li>
-          <li><i class="grzxbg p-right"></i><span class="zhsz-span1">登录密码</span><span class="zhsz-span2"></span><span class="zhsz-span3"><a href="javascript:void(0)" onclick="showSpan('alert-updatePass')">更改</a></span></li>
+          <li>
+            <i id="diva" class="grzxbg p-danger"></i><span class="zhsz-span1">身份认证</span>
+            <div id="liRen">
+            <span class="zhsz-span2">未认证</span><span class="zhsz-span3"><a href="#">认证</a></span>
+            </div>
+            <div id="liRenA">
+              <span class="zhsz-span2">已认证</span><span class="zhsz-span3">
+            </div>
+          </li>
+          <!--<li><i class="grzxbg p-danger"></i><span class="zhsz-span1">第三方支付</span><span class="zhsz-span2">未开通</span><span class="zhsz-span3"><a href="#">开通</a></span></li>-->
+          <li> <i class="grzxbg p-right"></i> <span class="zhsz-span1">电子邮箱</span> <span class="zhsz-span2" th:text="${session.email}"></span> <span class="zhsz-span3"> <a href="#" onclick="showSpan('alert-updateEmail')">更改</a> </span> </li>
+          <li><i class="grzxbg p-right"></i><span class="zhsz-span1">登录密码</span><span class="zhsz-span2">*********</span><span class="zhsz-span3"><a href="javascript:void(0)" onclick="showSpan('alert-updatePass')">更改</a></span></li>
         </ul>
       </div>
     </div>

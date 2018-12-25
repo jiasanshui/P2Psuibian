@@ -1,5 +1,6 @@
 package com.aaa.ssm.controller;
 
+import com.aaa.ssm.service.BiaodeService;
 import com.aaa.ssm.service.FscheckService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -21,10 +22,14 @@ import java.util.Map;
  * createTime:2018-12-14 17:25
  */
 @Controller
-@RequestMapping("/fscheck")
+@RequestMapping("/floodmark")
 public class FscheckController {
+
     @Autowired
     private FscheckService fscheckService;
+
+    @Autowired
+    private BiaodeService biaodeService;
 
     /**
      * 用户分页列表数据
@@ -35,7 +40,6 @@ public class FscheckController {
     @ResponseBody //返回json
     @RequestMapping("/page")
     public Object page(@RequestBody Map map) {
-
         //设置当前第几页和每页显示数量
         PageHelper.startPage(Integer.valueOf(map.get("pageNo") + ""), Integer.valueOf(map.get("pageSize") + ""));
         //用pageInfo对结果进行封装
@@ -47,26 +51,6 @@ public class FscheckController {
         //获取分页总数量
         resultMap.put("total", pageInfo.getTotal());
         return resultMap;
-    }
-
-    /**
-     * 添加满标
-     *
-     * @param map
-     * @param model
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("/add")
-    public Object add(@RequestBody Map map, Model model) {
-        int result = fscheckService.add(map);
-        if (result == 1) {
-            model.addAttribute("showInfo", "投标成功");
-            return fscheckService.add(map);
-        } else {
-            model.addAttribute("showInfo", "投标失败");
-            return 0;
-        }
     }
 
     /**
@@ -83,5 +67,18 @@ public class FscheckController {
             return 1;
         }
         return 0;
+    }
+
+    /**
+     * 满标一审(操作)
+     * 1.更新标的状态
+     * 2.往标的审核表中插入数据
+     * @param map
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/check")
+    public Object fkCheck(@RequestBody Map map){
+        return biaodeService.fkCheck(map);
     }
 }

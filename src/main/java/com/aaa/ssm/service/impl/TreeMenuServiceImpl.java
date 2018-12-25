@@ -1,10 +1,4 @@
 package com.aaa.ssm.service.impl;
-/**
- * className:TreeMenuServiceImpl
- * discription:
- * author:jiasanshui
- * createTime:2018-12-04 19:24
- */
 
 import com.aaa.ssm.dao.TreeMenuDao;
 import com.aaa.ssm.entity.TreeNode;
@@ -44,7 +38,6 @@ public class TreeMenuServiceImpl implements TreeMenuService {
         }
         return tempList;
     }
-
 
     /**
      * 递归查询子节点

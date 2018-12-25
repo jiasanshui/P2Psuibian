@@ -1,6 +1,7 @@
 package com.aaa.ssm.service;
 
 
+
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +34,21 @@ public interface UserInfoService {
     int edit(Map map);
 
     /**
+     * 投标成功后改变账户余额
+     * @param map
+     * @return
+     */
+    int updateAmount(Map map);
+
+
+    /**
+     * 投标成功后改变冻结金额
+     * @param map
+     * @return
+     */
+    int updateFreezAmount(Map map);
+
+    /**
      *审核驳回,向驳回表中插入数据
      * @param map
      * @return
@@ -63,4 +79,12 @@ public interface UserInfoService {
      * @return
      */
     Map getUser(String username);
+
+    /**
+     * 查询用户实名信息、账户、借款标的等信息
+     * @param userid
+     * @return
+     */
+    List<Map> getAllUserByuserid(Integer userid);
+
 }

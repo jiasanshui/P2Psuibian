@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.text.ParseException;
@@ -38,6 +39,7 @@ public class RenzhengController {
      */
     @RequestMapping("update")
     public Object update(@RequestParam Map map, @RequestParam MultipartFile idcarda, @RequestParam MultipartFile idcardb) throws ParseException {
+        System.out.println(map);
         //上传图片
             String newFileNameA = FileUtil.uploadFile(uploadPath, idcarda);
             String newFileNameB = FileUtil.uploadFile(uploadPath, idcardb);
@@ -55,5 +57,29 @@ public class RenzhengController {
             System.out.println("认证成功");
         }
         return "redirect:/jump/index";
+    }
+
+    /**
+     * 判断账户是否已经实名认证
+     * @param userName
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("isRen")
+    public Object isRenZheng(String userName){
+        Map user = renzhengService.isRenZheng(userName);
+        try {
+            Integer.valueOf(user.get("STATEID")+"");
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+        if (Integer.valueOf(user.get("STATEID")+"")==2){
+                return 1;
+        }if (Integer.valueOf(user.get("STATEID")+"")==1) {
+                return 2;
+        }if (Integer.valueOf(user.get("STATEID")+"")==3){
+                return 3;
+        }
+        return 0;
     }
 }

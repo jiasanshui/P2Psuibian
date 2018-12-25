@@ -42,10 +42,18 @@ public interface TenderService {
 
     /**
      * 根据借款人查询投标信息
+     * @param BORROWNUM
+     * @return
+     */
+    List<Map> getPage(String BORROWNUM);
+
+
+    /**
+     * 根据借款人查询投标信息
      * @param map
      * @return
      */
-    List<Map> getPage(Map map);
+    List<Map> getTenderPage(Map map);
 
 
     /**

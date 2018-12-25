@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>p2p网贷平台</title>
@@ -88,80 +88,21 @@
 				<p class="mt20 cn_line">
 				你我贷以金融创新基因吸引了来自国内五百强知名企业的业界精英，目前团队成员年轻朝气、充满活力，热爱新事物，勇于接受新挑战，团队成员有信心和决心，要用人人共享的理念在金融改革的浪潮中乘风破浪，要为普通大众创造财富增值的机会，为诚信经营者提供高效便捷的金融服务。
 				</p>
-				<div style="padding:20px 0;border-bottom:1px dashed #dbdbdb" class="clearfix">
+				<div style="padding:20px 0;border-bottom:1px dashed #dbdbdb" class="clearfix" th:each="team : ${teamList}">
 					<div class="img fl" style="width:130px;">
-						<img src="../images/lxw.jpg" alt="">
+                        <img  height="100" width="120" th:src="'/notice/show?fileName='+${team.PICTURE}" >
+                     <!--   <a :href="'/notice/downloadPic?fileName='+editForm.PICTURE"><img slot="reference" :src="path+editForm.PICTURE" height="100" min-width="70"></a>
+					-->	<!--<img src="../images/lxw.jpg" alt="">-->
 					</div>
-					<div class="fl" style="width:790px;margin-left:20px;">
+					<div class="fl" style="width:740px;margin-left:20px;">
 						<p>
-							<span style="font-size:18px;color:#0aaae1;">王二虎</span>
+							<span style="font-size:18px;color:#0aaae1;" th:text="${team.TITLE}"></span>
 							<span style="color:#0aaae1;"> 联合创始人</span>
 						</p>
+						<p style="font-size:16px;line-height:32px;color:#595757" th:text="${team.CONTENT}">
+                        </p>
 						<p style="font-size:16px;line-height:32px;color:#595757">
-							曾先后在中国农业银行、招商银行、兴业银行担任高管职务，拥有16年的国内大型银行工作经历，对客户信用风险评估、产品定价机制和市场风险管理策略具有深入的研究，风险管理经验十分丰富。  
-						</p>
-						<p style="font-size:16px;line-height:32px;color:#595757">
-							2015年与合伙人共同创建互联网金融服务平台——你我贷
-						</p>
-						<p style="font-size:16px;line-height:32px;color:#595757">
-							感言：风控的宗旨在于对风险的预知和防范
-						</p>
-					</div>
-				</div>
-				<div style="padding:20px 0;border-bottom:1px dashed #dbdbdb" class="clearfix">
-					<div class="img fl" style="width:130px;">
-						<img src="../images/lxw.jpg" alt="">
-					</div>
-					<div class="fl" style="width:790px;margin-left:20px;">
-						<p>
-							<span style="font-size:18px;color:#0aaae1;">王二虎</span>
-							<span style="color:#0aaae1;"> 联合创始人</span>
-						</p>
-						<p style="font-size:16px;line-height:32px;color:#595757">
-							曾先后在中国农业银行、招商银行、兴业银行担任高管职务，拥有16年的国内大型银行工作经历，对客户信用风险评估、产品定价机制和市场风险管理策略具有深入的研究，风险管理经验十分丰富。  
-						</p>
-						<p style="font-size:16px;line-height:32px;color:#595757">
-							2015年与合伙人共同创建互联网金融服务平台——你我贷
-						</p>
-						<p style="font-size:16px;line-height:32px;color:#595757">
-							感言：风控的宗旨在于对风险的预知和防范
-						</p>
-					</div>
-				</div>
-				<div style="padding:20px 0;border-bottom:1px dashed #dbdbdb" class="clearfix">
-					<div class="img fl" style="width:130px;">
-						<img src="../images/lxw.jpg" alt="">
-					</div>
-					<div class="fl" style="width:790px;margin-left:20px;">
-						<p>
-							<span style="font-size:18px;color:#0aaae1;">王二虎</span>
-							<span style="color:#0aaae1;"> 联合创始人</span>
-						</p>
-						<p style="font-size:16px;line-height:32px;color:#595757">
-							曾先后在中国农业银行、招商银行、兴业银行担任高管职务，拥有16年的国内大型银行工作经历，对客户信用风险评估、产品定价机制和市场风险管理策略具有深入的研究，风险管理经验十分丰富。  
-						</p>
-						<p style="font-size:16px;line-height:32px;color:#595757">
-							2015年与合伙人共同创建互联网金融服务平台——你我贷
-						</p>
-						<p style="font-size:16px;line-height:32px;color:#595757">
-							感言：风控的宗旨在于对风险的预知和防范
-						</p>
-					</div>
-				</div>
-				<div style="padding:20px 0;border-bottom:1px dashed #dbdbdb" class="clearfix">
-					<div class="img fl" style="width:130px;">
-						<img src="../images/lxw.jpg" alt="">
-					</div>
-					<div class="fl" style="width:790px;margin-left:20px;">
-						<p>
-							<span style="font-size:18px;color:#0aaae1;">王二虎</span>
-							<span style="color:#0aaae1;"> 联合创始人</span>
-						</p>
-						<p style="font-size:16px;line-height:32px;color:#595757">
-							曾先后在中国农业银行、招商银行、兴业银行担任高管职务，拥有16年的国内大型银行工作经历，对客户信用风险评估、产品定价机制和市场风险管理策略具有深入的研究，风险管理经验十分丰富。  
-						</p>
-						<p style="font-size:16px;line-height:32px;color:#595757">
-							2015年与合伙人共同创建互联网金融服务平台——你我贷
+							2015年与合伙人共同创建互联网金融服务平台——你我贷11
 						</p>
 						<p style="font-size:16px;line-height:32px;color:#595757">
 							感言：风控的宗旨在于对风险的预知和防范

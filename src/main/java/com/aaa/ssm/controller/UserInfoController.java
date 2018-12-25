@@ -47,7 +47,6 @@ public class UserInfoController {
         PageHelper.startPage(Integer.valueOf(map.get("pageNo")+""),Integer.valueOf(map.get("pageSize")+""));
         //用pageInfo对结果进行封装
         PageInfo<Map> pageInfo=new PageInfo<Map>(userInfoService.getList(map));
-        //System.out.println(map);
         Map resultMap=new HashMap();
         //获取当前页数据
         resultMap.put("pageData",pageInfo.getList());
@@ -100,6 +99,11 @@ public class UserInfoController {
         return 0;
     }
 
+    /**
+     * 根据用户ID查询用户信息
+     * @param userId
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/list")
     public Object getAllList(Integer userId){

@@ -20,14 +20,20 @@ import java.util.List;
  *createTime:2018-12-04 20:19
  */
 @RestController
-@RequestMapping("tree")
+@RequestMapping("/tree")
 public class TreeMenuController {
 
     @Autowired
     private TreeMenuService treeMenuService;
-    @RequestMapping("list")
+
+    /**
+     * 树列表
+     * @return
+     */
+    @RequestMapping("/list")
     public Object getTreeList(){
         List<TreeNode> treeList = treeMenuService.getList();
         return treeList;
     }
+
 }
