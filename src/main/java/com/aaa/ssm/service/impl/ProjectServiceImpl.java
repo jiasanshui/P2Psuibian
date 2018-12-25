@@ -33,4 +33,14 @@ public class ProjectServiceImpl implements ProjectService{
     public List<Map> getJinduByNum(String borrowNum) {
         return projectDao.getJinduByNum(borrowNum);
     }
+
+    @Override
+    public List<Map> getList(Map map) {
+        return projectDao.getList(map);
+    }
+    @Override
+    public List<Map> getBorrowList(String borrownum) {
+        return projectDao.getBorrowList(borrownum);
+    }
+
 }

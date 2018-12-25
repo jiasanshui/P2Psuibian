@@ -96,7 +96,7 @@
                     label="操作"
                     align="center">
                 <template scope="scope">
-                    <el-button :plain="true" type="success" size="small" icon="edit" @click="lookClick(scope.row)">投标详情</el-button>
+                    <!--<el-button :plain="true" type="success" size="small" icon="edit" @click="lookClick(scope.row)">投标详情</el-button>-->
                     <el-button type="primary" icon="el-icon-edit" size="small" @click="editClick(scope.row)"></el-button>
                 </template>
             </el-table-column>
@@ -117,56 +117,6 @@
             </el-pagination>
         </el-col>
     </el-row>
-    <!--借款详情界面-->
-    <!--<el-dialog title="投标详情" :visible.sync="lookFormVisible" :close-on-click-modal="false">
-
-        <el-form-item label="借款标号" prop="BORROWNUM" v-if="false">
-            <el-input v-model="BORROWNUM" auto-complete="off" :readonly="true"></el-input>
-        </el-form-item>
-        <fieldset>
-            <legend><h3>**投资列表</h3></legend>
-        <el-table
-                :data="submitData"
-                v-loading.body="loading"
-                border
-                style="width: 100%">
-            <el-table-column
-                    prop="USERID"
-                    label="用户Id"
-                    align="center"
-                    width="130">
-            </el-table-column>
-            <el-table-column
-                    prop="REALNAME"
-                    label="投资人"
-                    align="center"
-                    width="100">
-            </el-table-column>
-            <el-table-column
-                    prop="BORROWNUM"
-                    label="投资标号"
-                    align="center"
-                    width="130">
-            </el-table-column>
-            <el-table-column
-                    prop="TAMOUNT"
-                    label="投标金额(元)"
-                    align="center"
-                    width="110">
-            </el-table-column>
-            <el-table-column
-                    prop="TTIME"
-                    align="center"
-                    label="投资日期"
-                    width="150">
-            </el-table-column>
-        </el-table>
-        </fieldset>
-        <div slot="footer" class="dialog-footer">
-            <el-button @click.native="lookFormVisible = false">取消</el-button>
-            &lt;!&ndash;<el-button type="primary" @click.native="auditSubmit" :loading="lookLoading">放款通过</el-button>&ndash;&gt;
-        </div>
-    </el-dialog>-->
     <!--审核界面-->
     <el-dialog title="满标二审" :visible.sync="editFormVisible" :close-on-click-modal="true" width="800px">
         <fieldset>
@@ -317,8 +267,8 @@
                 _self.loading = true;
                 var searchForm={'pageNo':this.currentPage,'pageSize':this.pageSize,'applicant':this.searchForm.APPLICANT,'borrownum':this.searchForm.BORROWNUM};
                 axios.post('/loan/page',searchForm).then(function(response){
-                    self.total=response.data.total;
-                    self.tableData = response.data.pageData;
+                    _self.total=response.data.total;
+                    _self.tableData = response.data.pageData;
                 })
                 console.log(_self.currentPage);
                 setTimeout(function(){
@@ -371,35 +321,6 @@
                 })
                 console.info(this.editForm);
             },
-            /*//投标详情
-            lookClick:function(row) {
-                var _self = this;
-                this.BORROWNUM=row.BORROWNUM;
-                axios.post('/biaode/tender?borrownum='+row.BORROWNUM).then(function(response){
-                    _self.submitData = response.data;
-                })
-                _self.lookFormVisible=true;
-            },
-            //审核
-            auditSubmit:function(){
-                var _self = this;
-                _self.loading = true;
-                axios.post("/loan/check").then(function(response){
-                    if(response.data>0){
-                        _self.lookFormVisible = false;
-                        _self.$message({
-                            message:'放款成功，请通知个人查看账户以及还款账单',
-                            type: 'success'
-                        });
-                    }else{
-                        _self.$message({
-                            message:'操作有误',
-                            type: 'error'
-                        });
-                    }
-                    _self.loadingData();//重新加载数据
-                })
-            },*/
             //表格查询事件
             searchClick:function() {
                 var self = this;
@@ -422,6 +343,5 @@
         }
     })
 </script>
-
 </body>
 </html>

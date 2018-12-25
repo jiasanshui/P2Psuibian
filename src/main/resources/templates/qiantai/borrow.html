@@ -76,19 +76,19 @@
 <div class="bor_con_wper">
 	  <div class="bor_con px1000">
 	  	    <div class="bor_detail">
-	  	    	   <h2 class="bor_detail_tit">
+	  	    	   <h2 class="bor_detail_tit" align="center" >
 					   	<span class="bor_decurspan">信用贷款</span>
-	  	    	   	  	<span >房产抵押</span>
-	  	    	   	  	<span>车辆抵押</span>
+					   <span>抵押贷款</span>
 	  	    	   </h2>
 	  	    	   <div class="bor_detail_box">
+					  <!-- /**********************************************信用贷款**************************************/-->
 	  	    	   	    <div class="bor_det_one clearfix pt30 pb30">
 	  	    	   	    	  <div class="bor_det_onel fl">
-	  	    	   	    	  	       <p class="bor_p1">你我贷平台的借款功能旨在帮助借款用户以
+	  	    	   	    	  	       <p class="bor_p1">随便贷平台的借款功能旨在帮助借款用户以
 										低成本获得借款。用户在需要资金时，可以将
 										自有房产和车产作为抵押物，小油菜线下审核
 										通过后，根据抵押物的价值融资。</p>
-										<p class="bor_p2">你我贷平台的借款功能旨在帮助借款用户以
+										<p class="bor_p2">随便贷平台的借款功能旨在帮助借款用户以
 										低成本获得借款。用户在需要资金时，可以将
 										自有房产和车产作为抵押物，小油菜线下审核
 										通过后，根据抵押物的价值融资。</p>
@@ -114,7 +114,6 @@
 											 </li>
 										</ul>
 	  	    	   	    	  </div>
-							<!-- end l -->
 							<div class="bor_det_oner fl">
 								<form id="form1" method="post" action="/borrow/addBorrow">
 									<fieldset>
@@ -131,12 +130,7 @@
 										</div>
 										<div class="mt15 guarmethod clearfix">
 											<label class="guarmethod_l fl">*担保方式</label>
-											<input type="" readonly="true" value="信用贷款" name="applicant">
-										</div>
-
-										<div>
-										</div>
-										<div>
+											<input type="" readonly="true" value="信用贷款" name="danbaostyle">
 										</div>
 										<div class="mt15" >
 											<label>*投标天数</label>
@@ -192,14 +186,16 @@
 								</form>
 							</div>
 						</div>
-	  	    	   	    <!-- end 房产抵押 -->
+					   <!-- /**********************************************信用贷款**************************************/-->
+					   <!-- /*****************************************抵押贷款*************************************/-->
 	  	    	   	    <div class="bor_det_one" style="display:none;">
+							<div class="bor_det_one clearfix pt30 pb30">
 							<div class="bor_det_onel fl">
-								<p class="bor_p1">你我贷平台的借款功能旨在帮助借款用户以
+								<p class="bor_p1">随便贷平台的借款功能旨在帮助借款用户以
 									低成本获得借款。用户在需要资金时，可以将
 									自有房产和车产作为抵押物，小油菜线下审核
 									通过后，根据抵押物的价值融资。</p>
-								<p class="bor_p2">你我贷平台的借款功能旨在帮助借款用户以
+								<p class="bor_p2">随便贷平台的借款功能旨在帮助借款用户以
 									低成本获得借款。用户在需要资金时，可以将
 									自有房产和车产作为抵押物，小油菜线下审核
 									通过后，根据抵押物的价值融资。</p>
@@ -227,7 +223,7 @@
 							</div>
 							<!-- end l -->
 							<div class="bor_det_oner fl">
-								<form id="form2" method="post" action="/borrow/addBorrow">
+								<form id="form2" method="post" action="/borrow/addBorrowOne">
 									<fieldset>
 										<input type="hidden" th:value="${userName}" name="username">
 										<input type="hidden" th:value="${num}" name="borrownum">
@@ -242,28 +238,32 @@
 										</div>
 										<div class="mt15 guarmethod clearfix">
 											<label class="guarmethod_l fl">*担保方式</label>
-											<input type="" readonly="true" value="车辆之押贷款" name="applicant">
+											<select id="danbao" name="danbaostyle">
+												<option selected="selected" disabled="disabled">选择担保方式</option>
+												<option>车辆抵押贷款</option>
+												<option>房屋抵押贷款</option>
+											</select>
 										</div>
-										<div class="mt15" id="house">
+										<div class="mt15" >
 											<label>*数量</label>
 											<input type="" name="quantity">
 											<span value="辆/栋">辆/栋</span>
 										</div>
-										<div class="mt15" id="price">
+										<div class="mt15" >
 											<label>*总价值</label>
-											<input type="number"name="cost" id="cost" onblur="checkCost()"><span id="co"></span>
+											<input type="text" name="cost"  onblur="checkCost()"><span ></span>
 										</div>
 										<div class="mt15" >
 											<label>*投标天数</label>
-											<input type="text" name="days" id="tdays" onblur="checkdays()"><span id="dayy"></span>
+											<input type="text" name="days"  onblur="checkdays()"><span ></span>
 										</div>
 										<div class="mt15">
 											<label>*借款金额</label>
-											<input type="number" class="bor_inputbg01" name="borrowmoney" id="borr" onblur="checkbor()"><span id="bo"></span>
+											<input type="number" class="bor_inputbg01" name="borrowmoney"  onblur="checkbor()"><span ></span>
 										</div>
 										<div class="mt15">
 											<label>*借款期限</label>
-											<select id="tlimit" name="timelimit">
+											<select  name="timelimit">
 												<option>选择借款期限</option>
 												<option>1</option>
 												<option>3</option>
@@ -273,7 +273,7 @@
 										</div>
 										<div class="mt15" >
 											<label>借款年利率</label>
-											<input type="text" name="apr" id="yApr" readonly="true">
+											<input type="text" name="apr"  readonly="true">
 										</div>
 										<div class="mt15">
 											<label>*借款用途</label>
@@ -291,7 +291,7 @@
 										</div>
 										<div class="mt15" >
 											<label>*还款方式</label>
-											<select id="repay" name="payment">
+											<select  name="payment">
 												<option selected="selected" disabled="disabled">请选择</option>
 												<option >到期付本付息</option>
 												<option >按月付息，到期还本</option>
@@ -305,16 +305,9 @@
 									</fieldset>
 								</form>
 							</div>
+							</div>
 	  	    	   	    </div>
-	  	    	   	    <!-- end  -->
-	  	    	   	    <div class="bor_det_one" style="display:none;">
-	  	    	   	    	 3
-	  	    	   	    </div>
-	  	    	   	    <!-- end  -->
-	  	    	   	    <div class="bor_det_one" style="display:none;">
-	  	    	   	    	 4
-	  	    	   	    </div>
-	  	    	   	    <!-- end  -->
+					   <!-- /*****************************************抵押贷款*************************************/-->
 	  	    	   </div>
 	  	    </div>
 	  </div>
@@ -322,7 +315,6 @@
 </div>
 </body>
 <script>
-    new Vue().$mount('#app');
     $(function(){
         $("#timelimit").change(function(){
             var timelimit=$("#timelimit").val();
@@ -363,12 +355,12 @@
         var edu=$("#edu").val();
         //输入的金额
 	    var bor=$("#bor").val();
-	    if(bor==null &&bor==''){
-            $("#bor").html("金额不能为空").css("color","red");
-		}else if(bor>edu){
-            $("#bor").html("金额不符").css("color","red");
+	    if(bor==null ||bor==''){
+            $("#bo").html("金额不能为空").css("color","red");
+		}else if(parseFloat(bor)<parseFloat(edu) && reg.test(bor)){
+            $("#bo").html("");
 		}else{
-            $("#bor").html("");
+            $("#bo").html("金额不符").css("color","red");
 		}
 
     }
@@ -390,5 +382,5 @@
         }
     }
 </script>
-
+</html>
 </html>

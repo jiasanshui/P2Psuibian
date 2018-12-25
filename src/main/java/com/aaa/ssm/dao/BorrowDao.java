@@ -18,14 +18,25 @@ import java.util.Map;
 public interface BorrowDao {
 
     /**
-     * 借款人提交数据到后台
+     * 借款人提交数据到后台（信用贷款）
      * @param map
      * @return
      */
-    @Insert("insert into borrow(borrowid,applicant,tel,timelimit,purpose,des,quantity,cost,apr,borrowmoney,danbaostyle,payment,username,stateid,days,borrownum,userid,bidapplydate) " +
-            "values(seq_tbborrowid.nextval,#{applicant},#{tel},#{timelimit},#{purpose},#{des},#{quantity},#{cost}," +
+    @Insert("insert into borrow(borrowid,applicant,tel,timelimit,purpose,des,apr,borrowmoney,danbaostyle,payment,username,stateid,days,borrownum,userid,bidapplydate) " +
+            "values(seq_tbborrowid.nextval,#{applicant},#{tel},#{timelimit},#{purpose},#{des}," +
             "#{apr},#{borrowmoney},#{danbaostyle},#{payment},#{username},1,#{days},#{borrownum},#{userid},sysdate)")
     int add(Map map);
+
+    /**
+     * 借款人提交数据到后台（房屋抵押贷款）
+     * @param map
+     * @return
+     */
+    @Insert("insert into borrow(borrowid,applicant,tel,timelimit,purpose,des,apr,borrowmoney,danbaostyle,payment,username,stateid,days,borrownum,userid,bidapplydate) " +
+            "values(seq_tbborrowid.nextval,#{applicant},#{tel},#{timelimit},#{purpose},#{des}," +
+            "#{apr},#{borrowmoney},#{danbaostyle},#{payment},#{username},1,#{days},#{borrownum},#{userid},sysdate)")
+    int addOne(Map map);
+
 
     /**
      * 根据借款标的编号查询投标中的标的
@@ -40,11 +51,11 @@ public interface BorrowDao {
 
     /**
      * 通过用户名查询该用户是否有正在借款记录（未还清的借款）
-     * @param username
+     * @param userName
      * @return
      */
-    @Select("select * from borrow where username=#{username}")
-    List<Map> getListByusername(String username);
+    @Select("select * from borrow where username=#{userName}")
+    List<Map> getListByusername(String userName);
 
     /**
      * 根据借款标的编号查询投标

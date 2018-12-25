@@ -14,11 +14,19 @@ import java.util.Map;
 public interface BorrowService {
 
     /**
-     * 借款人提交数据到后台
+     * 借款人提交数据到后台(信用贷款)
      * @param map
      * @return
      */
     int add(Map map);
+
+    /**
+     * 借款人提交数据到后台（房屋抵押贷款）
+     * @param map
+     * @return
+     */
+    int addOne(Map map);
+
 
     /**
      * 根据用户名查询投标中的标的

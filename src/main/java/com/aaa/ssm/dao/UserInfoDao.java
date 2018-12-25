@@ -132,7 +132,7 @@ public interface UserInfoDao {
      * 借款人账户余额：+借款金额；待还金额：本息和; 剩余信用额度=原剩余信用额度-招标金额
      * @return
      */
-    @Update("update userinfo set amount=amount + #{BORROWMONEY},replaceamount= #{total},set screditedu=reditedu - #{BORROWMONEY} where userid=#{USERID}")
+    @Update("update userinfo set amount=amount + #{BORROWMONEY},replaceamount= #{total},screditedu= creditedu - #{BORROWMONEY} where userid=#{USERID}")
     int updateAccountOne(Map map);
 
     /**

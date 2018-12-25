@@ -29,4 +29,15 @@ public interface ProjectService {
      * @return
      */
     List<Map> getJinduByNum(String borrowNum);
+    /**
+     * 查询车辆抵押项目
+     * @return
+     */
+    List<Map> getList(Map map);
+    /**
+     * 根据借款编号查询信息（进infor页面）
+     * @param borrownum
+     * @return
+     */
+    List<Map> getBorrowList(String borrownum);
 }
