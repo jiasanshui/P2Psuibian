@@ -91,10 +91,5 @@ public class PageUtil {
         stringBuffer.append("</select>页&nbsp,共"+totalSize+"条&nbsp;"+pageCount+"页");
         return stringBuffer.toString();
     }
-	/*public static void main(String[] args) {
-		String url  = "/strutsdemo-page/userMsg/user!list?aaa=111&bbb=222&";
-		System.out.println(url.charAt(url.length()-1));
-		System.out.println(url.charAt(url.length()-1)=='?');
-	}*/
 }
 

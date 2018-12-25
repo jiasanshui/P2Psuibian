@@ -21,7 +21,7 @@ public interface ProjectService {
      * 查询全部房屋抵押项目分页数据
      * @return
      */
-    List<Map> getHouseProAll();
+    List<Map> getHouseProAll(Map map);
 
     /**
      * 根据编号查询招标进度
@@ -29,6 +29,13 @@ public interface ProjectService {
      * @return
      */
     List<Map> getJinduByNum(String borrowNum);
+
+    /**
+     * 获取分页总数量
+     * @param map
+     * @return
+     */
+    int getPageCount(Map map);
     /**
      * 查询车辆抵押项目
      * @return
