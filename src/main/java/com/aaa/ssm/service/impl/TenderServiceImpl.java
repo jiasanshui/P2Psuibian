@@ -18,9 +18,10 @@ import java.util.Map;
 public class TenderServiceImpl implements TenderService {
     @Autowired
     private TenderDao tenderDao;
+
     @Override
     public List<Map> getList(Map map) {
-        return tenderDao.getList(map);
+        return null;
     }
 
     @Override
@@ -43,8 +44,8 @@ public class TenderServiceImpl implements TenderService {
     }
 
     @Override
-    public List<Map> getPage(Integer userid) {
-        return tenderDao.getPage(userid);
+    public List<Map> getPage(String BORROWNUM) {
+        return tenderDao.getPage(BORROWNUM);
     }
 
     @Override

@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>首页</title>
-
     <script type="text/javascript" src="../js/vue.js"></script>
     <script type="text/javascript" src="../js/axios.min.js"></script>
     <!-- 引入样式 -->
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../css/elementui.css">
     <!-- 引入组件库 -->
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="../js/elementui.js"></script>
 </head>
 <body>
 <div class="diva">
     <el-container>
         <!--头部-->
-        <el-header><h1 style="color:cornflowerblue;line-height:20px">随便贷后台管理系统</h1></el-header>
+        <el-header style="background-color:#B3C0D1;color: #333;line-height: 60px;">
+            <span style="color:#1a1719;line-height:20px;margin-left: 560px;font-size: 30px;">p2p随便贷后台管理系统</span>
+            <span th:text="${username}" style="margin-left:550px;font-size: 20px;"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/backjump/backlogin">退出</a>
+        </el-header>
         <!--身体-->
         <el-container>
             <!--左边树-->
-            <el-aside width="150px">
+            <el-aside width="200px">
                 <el-tree
                         :data="treeData"
                         accordion
@@ -54,6 +58,7 @@
         el:".diva",
         data:{
             treeData:[],
+            icon:'el-icon-menu',
             editableTabsValue2: '2',
             editableTabs2: [{
                 title: '默认页',
@@ -106,7 +111,7 @@
 
 </script>
 <style>
-    .el-header, .el-footer {
+   .el-footer {
         background-color: #B3C0D1;
         color: #333;
         text-align: center;
@@ -117,7 +122,7 @@
         background-color: #D3DCE6;
         color: #333;
         text-align: center;
-        line-height: 200px;
+        line-height: 300px;
     }
 
     .el-main {

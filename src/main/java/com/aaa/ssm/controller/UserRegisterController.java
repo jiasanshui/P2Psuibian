@@ -99,7 +99,6 @@ public class UserRegisterController {
     @ResponseBody
     @RequestMapping("/userRegister")
     public Object userRegister(@RequestParam Map paramMap){
-        System.out.println(paramMap);
         Map map=new HashMap();
         int i = userRegisterService.addUser(paramMap);
         if (i==0){

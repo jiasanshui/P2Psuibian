@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -73,13 +72,18 @@
 		<div class="registerTitle">投标信息</div>
 		<div class="registerCont">
             <input type="hidden" th:value="${uid}" name="userid" id="uid">
-			<ul>
+            <input type="hidden" th:value="${BORROWNUM}" name="borrowNum"/>
+            <input type="hidden" th:value="${bankNum}" name="bankNum" id="bankNum">
+            <input type="hidden" th:value="${amount}" name="amount" id="amount">
+            <input type="hidden" th:value="${freezamount}" name="freezamount" id="freezamount">
+            <ul th:each="list:${bList}">
 				<li>
 					<span class="dis">投标人：</span><input class="input" type="text"  readonly="true" name="realName"  maxlength="24" id="user" tabindex="1" autocomplete="off" th:value="${realName}">
 				</li>
-	                
+	                <input type="hidden" id="borr" th:value="${list.BORROWMONEY}">
+                <input type="hidden" id="win" th:value="${list.WINBIDMONEY}">
 				<li>
-				   <span class="dis">投资金额：</span><input class="input" type="text" name="tamount"  id="bor" maxlength="24" tabindex="1" autocomplete="off" onblur="checkmoney()">
+				   <span class="dis">投资金额：</span><input th:placeholder="'请输入金额：'+(${list.BORROWMONEY}-${list.WINBIDMONEY})*0.10 +'~'+(${list.BORROWMONEY}-${list.WINBIDMONEY})*1.00+'￥'" class="input" type="text"  name="tamount"  id="bor" maxlength="24" tabindex="1" autocomplete="off" onblur="checkmoney()">
                     <span id="bo"></span>
 				</li>
                 <li>
@@ -89,7 +93,7 @@
                 <li>
                     <span class="dis">投标方式：</span>
                     <select  name="tway">
-                        <option>选择借款期限</option>
+                        <option>选择投标方式</option>
                         <option>自动</option>
                         <option>手动</option>
                     </select>
@@ -152,14 +156,29 @@
    var ss = 0;
    function checkmoney(){
        //var bor=$("#bor").val();
+       var borr = document.getElementById("borr").value;
+       var win = document.getElementById("win").value;
+       var a = (borr-win);
+       a=a*0.1;
+       var b = borr - win;
+       var amount = document.getElementById("amount").value;
        var bor = document.getElementById("bor");
+       var borr = bor.value;
        var bo = document.getElementById("bo");
+       var c = amount - borr;
        var reg=/^[1-9]\d*$/;
-       if(bor.value.length>=0&&bor.value.length<=7&&reg.test(bor.value)){
-           bo.style.color="green";
-           bo.innerHTML="金额符合提交";
-           bor.style.borderWidth="1px gray solid";
-           ss=1;
+       if(bor.value.length>=0&&bor.value.length<=7&&reg.test(bor.value)&&bor.value>=a&&bor.value<=b){
+           if(c<0){
+               bo.style.color="red";
+               bor.focus();
+               bo.innerHTML="账户余额不足"+c+"，请先充值！";
+               bo.style.borderWidth="1px red solid";
+           }else {
+           bo.style.color = "green";
+           bo.innerHTML = "金额符合提交";
+           bor.style.borderWidth = "1px gray solid";
+           ss = 1;
+        }
        }
        else{
            bo.style.color="red";
@@ -189,10 +208,8 @@
     //表单提交
    function checkAll(){
        if(ss!=1){
-           alert(ss);
            return false;
        }else if(sb!=1){
-           alert(sb);
            return false;
        }else {
            var form = document.getElementById("form1");
@@ -202,5 +219,4 @@
 </script>
 
 </body>
-</html>
 </html>
