@@ -18,8 +18,8 @@ public interface EmpDao {
     /**
      * 获取员工列表
      */
-    @Select("<script>select e.id,e.empno,e.ename,e.idcard,e.phone,e.address,to_char(e.ruzhitime,'yyyy-mm-dd')as ruzhitime," +
-            "e.state,e.deptid,e.roleid,e.adminid,e.comm,e.sal,d.dname,d.describes,to_char(d.dtime,'yyyy-mm-dd')as dtime,d.dstatus,s.eid,s.states," +
+    @Select("<script>select e.id,e.empno,e.ename,e.idcard,e.phone,e.address,to_char(e.ruzhitime,'yyyy-mm-dd') as ruzhitime," +
+            "e.state,e.deptid,e.roleid,e.adminid,e.comm,e.sal,d.dname,d.describes,to_char(d.dtime,'yyyy-mm-dd') as dtime,d.dstatus,s.eid,s.states" +
             " from emp e left join dept d on e.deptid=d.deptid left join empstate s on e.state=s.eid" +
             "<where><if test=\"empNo!=null and empNo!=''\"> and e.empno=#{empNo}</if> " +
             "<if test=\"ename!=null and ename!=''\"> and e.ename like '%'||#{ename}||'%'</if> " +
@@ -31,7 +31,7 @@ public interface EmpDao {
      *获取员工状态信息(员工状态下拉)
      */
    @Select("select eid,states from empstate")
-    List<Map>getEmpList();
+    List<Map> getEmpList();
     /**
      * 员工添加
      * @param map

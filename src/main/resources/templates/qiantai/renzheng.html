@@ -15,6 +15,31 @@
   <link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
   <script type="text/javascript" src="../easyui/jquery.min.js"></script>
   <script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+  <script>
+     $(function(){
+        $("#idcarda").change(function(){
+            var file=this.files[0] // 获取input上传的图片数据;
+            var reader = new FileReader();
+            reader.onload = function(evt){
+                $("#previewA").attr("src",evt.target.result).attr("width","100px;").attr("height","100px;");
+               // $("#previewA").html('<img width="100px;" height="100px;" src="' + evt.target.result + '" />');
+            }
+            reader.readAsDataURL(file);
+            $("#liA").attr("style","height:150px;");
+        });
+         $("#idcardb").change(function(){
+             var file=this.files[0] // 获取input上传的图片数据;
+             var reader = new FileReader();
+             reader.onload = function(evt){
+                $("#previewB").attr("src",evt.target.result).attr("width","100px;").attr("height","100px;");
+              //   $("#previewB").html('<img width="100px;" height="100px;" src="' + evt.target.result + '" />');
+             }
+             reader.readAsDataURL(file);
+             $("#liB").attr("style","height:150px;");
+         });
+     });
+
+  </script>
 </head>
 <body>
 <header>
@@ -185,6 +210,7 @@
                 url:"/renzheng/isRen",
                 data:{userName:username},
                 success:function (data) {
+                  //  alert(data);
                     if(data==1){
                         $("#liRen").show();
                         $("#liRen3").hide();
@@ -273,15 +299,18 @@
               </li>
               <li>
                 <label for="idcard">身份证号</label>
-                <input name="idcard" type="text" class="pay-txt" maxlength="18">
+                <input name="idcard"   type="text" class="pay-txt" maxlength="18">
               </li>
-              <li>
+              <li id="liA">
                 <label for="idcardA">身份证正面</label>
-                <input name="idcarda" type="file" class="pay-txt" maxlength="16">
+                <input name="idcarda"  id="idcarda" type="file" style="border: 0px;"   maxlength="16">
+                <br> <!--<div style="float: left" id="previewA"></div>-->
+                <img src="" id="previewA">
               </li>
-              <li>
+              <li id="liB">
                 <label for="idcardB">身份证反面</label>
-                <input name="idcardb" type="file" class="pay-txt" maxlength="16">
+                <input name="idcardb" id="idcardb" type="file"  style="border: 0px;"   maxlength="16">
+               <br><img src="" id="previewB">
               </li>
               <li>
                 <label for="address">地址</label>

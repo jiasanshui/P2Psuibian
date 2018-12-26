@@ -2,6 +2,7 @@ package com.aaa.ssm.controller;
 
 import com.aaa.ssm.service.RenzhengService;
 import com.aaa.ssm.util.FileUtil;
+import com.aaa.ssm.util.FtpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,9 @@ public class RenzhengController {
     @Value(value = "${upload.path}")
     private String uploadPath;
 
+    @Autowired
+    private FtpUtil ftpUtil;
+
     /**
      * 个人认证信息修改
      * @param map
@@ -41,8 +45,15 @@ public class RenzhengController {
     public Object update(@RequestParam Map map, @RequestParam MultipartFile idcarda, @RequestParam MultipartFile idcardb) throws ParseException {
         System.out.println(map);
         //上传图片
-            String newFileNameA = FileUtil.uploadFile(uploadPath, idcarda);
-            String newFileNameB = FileUtil.uploadFile(uploadPath, idcardb);
+            //String newFileNameA = FileUtil.uploadFile(uploadPath, idcarda);
+        String newFileNameA = ftpUtil.upLoad(idcarda);
+           // String newFileNameB = FileUtil.uploadFile(uploadPath, idcardb);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        String newFileNameB = ftpUtil.upLoad(idcardb);
             map.put("picA",newFileNameA);
             map.put("picB",newFileNameB);
         //转换日期格式

@@ -133,7 +133,6 @@ public class NoticeController {
     @ResponseBody
     @RequestMapping("/add")
     public Object add(@RequestBody Map map){
-        System.out.println(map);
         return noticeService.add(map);
     }
     /**
@@ -144,7 +143,6 @@ public class NoticeController {
     @ResponseBody
     @RequestMapping("/update")
     public Object update(@RequestBody Map map){
-        System.out.println(map);
         try {
             return  noticeService.update(map);
         } catch (Exception e) {
