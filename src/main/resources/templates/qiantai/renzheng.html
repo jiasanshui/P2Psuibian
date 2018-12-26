@@ -92,88 +92,30 @@
       </ul>
     </div>
     <style>
+      .btn{ /* 按钮美化 */
+        display: block; /* 块状化 */
+        width: 270px; /* 宽度 */
+        height: 60px; /* 高度 */
+        border-width: 0px; /* 边框宽度 */
+        border-radius: 3px; /* 边框半径 */
+        background: #1E90FF; /* 背景颜色 */
+        cursor: pointer; /* 鼠标移入按钮范围时出现手势 */
+        outline: none; /* 不显示轮廓线 */
+        font-family: Microsoft YaHei; /* 设置字体 */
+        color: white; /* 字体颜色 */
+        font-size: 17px; /* 字体大小 */
+        text-align:center;/* 字体剧中 */
+        line-height:60px;/* 字体剧中 */
+      }
+      .btn:hover { /* 鼠标移入按钮范围时改变颜色 */
+        background: #5599FF;
+      }
 		        /*获取验证码*/
 				a.hqyzm{ float:left; background:#ea524a; width:125px; height:35px; line-height:35px; font-size:14px; margin-left:6px; text-align:center; color:#fff; border-radius:2px;}
 				a.hqyzm:hover{color:#fff;background:#ff8882;}
 				/*获取验证码后在倒计时中的样式*/
 				a.hqyzmAfter{float:left; background:#c0c0c0; width:125px; height:35px; line-height:35px; font-size:14px; margin-left:6px; text-align:center; color:#fff; border-radius:2px;}
 	   </style>
-    <script type="text/javascript">
-			//<![CDATA[
-			    var flag = false;
-				function sCode(xhr, status, args, args2) {
-					if (!args.validationFailed) {
-						$("#sendCode").hide();
-						$("#sendCodeGrey").show();
-						/* if(flag && $("#sendCode").is(":hidden")){
-							return;
-						} */
-						flag = true;
-						var mobileNumber = $("#form\\:mobileNumber").val().replace(/(^\s*)|(\s*$)/g,"");
-						if("dx" == args2){
-							$("#mobileMsg").html(mobileNumber.substring(0,3) + "****" + mobileNumber.substring(7,11));
-							$("#authCodeMsg").css({"display": ""});
-							$("#authCodeMsg2").css({"display": "none"});
-						}else if("yy" == args2){
-							$("#mobileMsg2").html(mobileNumber.substring(0,3) + "****" + mobileNumber.substring(7,11));
-							$("#authCodeMsg").css({"display": "none"});
-							$("#authCodeMsg2").css({"display": ""});
-						}
-						timer("sendAuthCodeBtn1", {
-							"count" : 60,
-							"animate" : true,
-							initTextBefore : "后可重新操作",
-							initTextAfter : "秒",
-							callback:function(){
-								$("#sendCode").show();
-								$("#sendCodeGrey").hide();
-								flag = false;
-								$("#authCodeMsg").css({"display": "none"});
-								$("#authCodeMsg2").css({"display": "none"});
-							}
-						}).begin();
-					}
-				}
-				 //验证验证码是否为空
-		       function phoneValidate()
-		       {
-	        	   var authCode=$("#form\\:authCode").val();
-	        	   var nullFlag=(authCode=="");
-	        	   if(nullFlag)
-		   			{
-		   				$("#form\\:authCode_message").remove();
-		   				var $span = $("<span id=form\:authCode_message class=error>请输入验证码</span>");
-		   				$("#authCodeErrorDiv").append($span);
-		   				return false;
-		   			}
-
-	        	   return true;
-		       }
-		       $(document).ready(function(){
-		  			var investorValiCodeError = $("#investorValiCodeError").val();
-		  			if(investorValiCodeError.length > 0){
-		  				$("#form\\:formauthCode_message").remove();
-		  	   			var $span = $("<span id=form\:formauthCode_message class=error>"+investorValiCodeError+"</span>");
-		  	   			$("#authCodeErrorDiv").append($span);
-		  			}
-		  	   });
-
-
-
-	         function showSpan(op)
-	         {
-					$("body").append("<div id='mask'></div>");
-					$("#mask").addClass("mask").css("display","block");
-
-					$("#"+op).css("display","block");
-			 }
-
-			function displaySpan(op){
-					$("#mask").css("display","none");
-					$("#"+op).css("display","none");
-			}
-			//]]>
-		</script>
     <input id="investorValiCodeError" type="hidden" name="investorValiCodeError">
     <!--判断是否已经认证过个人信息-->
     <script type="text/javascript">
@@ -209,138 +151,150 @@
                 }
             })
         })
-    </script>
-
-    <div class="personal-main">
-      <div class="personal-pay">
-        <h3><i>认证个人信息</i></h3>
-        <form method="post" action="/renzheng/update" enctype="multipart/form-data">
-          <input type="hidden" id="userName" th:value="${session.userName}">
-          <div>
-            <ul>
-              <li id="liRen"  style="display: none;">
-                <p><h3>您已经实名认证了</h3></p>
-              </li>
-              <li id="liRen1"  style="display: none;">
-                <p><h3>您的申请已提交请耐心等待，两个工作日之内给您处理！</h3></p>
-              </li>
-              <li id="liRen2"  style="display: none;">
-                <p><h3>您的申请已经被驳回，请重新进行身份验证  ！</h3></p>
-              </li>
-              <li id="liRen3"  style="display: none;">
-                <p><h3>请您按以下步骤进行个人身份信息认证！</h3></p>
-                <div class="pay-form">
-            <h6>请输入您的身份证信息</h6>
-            <ul>
-              <li>
-                <label for="username">用户姓名</label>
-                <input type="text"  name="username" class="pay-txt" th:value="${session.userName}" maxlength="16" readonly="readonly">
-                <div id="usernameErrorDiv"></div>
-              </li>
-              <li>
-                <label for="realname">真实姓名</label>
-                <input type="text" name="realname" class="pay-txt" maxlength="16"  placeholder="您的真实姓名">
-                <div id="realnameErrorDiv"></div>
-              </li>
-              <li>
-                <label for="birthday">出生日期</label>
-                <input id="birthday" name="birth" class="easyui-datetimebox" maxlength="18" style="width:240px">
-              </li>
-              <li>
-                <label for="age">年龄</label>
-                <input id="age" name="age" type="text" class="pay-txt" maxlength="16"  placeholder="年龄" readonly="readonly">
-                <!--级联年龄-->
-                <script type="text/javascript">
-                    $(function(){
-                        $("#age").click(function(){
-                            var birth = $("#birthday").val();
-                            var byear = birth.substr(6,4);
-                            var now = new Date();
-                            var nyear = now.getFullYear();
-                            var age = nyear - byear;
-                            $("#age").val(age);
-                        })
-                    })
-                </script>
-              </li>
-              <li>
-                <label for="paypwd">支付密码</label>
-                <input type="password" name="paypwd" class="pay-txt" maxlength="16"  placeholder="请设置支付密码">
-              </li>
-              <li>
-                <label for="paypwd">确认密码</label>
-                <input type="password" class="pay-txt" maxlength="16"  placeholder="请再次输入支付密码">
-              </li>
-              <li>
-                <label for="idcard">身份证号</label>
-                <input name="idcard" type="text" class="pay-txt" maxlength="18">
-              </li>
-              <li>
-                <label for="idcardA">身份证正面</label>
-                <input name="idcarda" type="file" class="pay-txt" maxlength="16">
-              </li>
-              <li>
-                <label for="idcardB">身份证反面</label>
-                <input name="idcardb" type="file" class="pay-txt" maxlength="16">
-              </li>
-              <li>
-                <label for="address">地址</label>
-                <select id="province" name="pro" class="pay-txt" style="width: 100px;height:40px">
-                  <option selected>请选择省份</option>
-                </select>
-                <select id="city" name="city" class="pay-txt" style="width: 100px;height:40px">
-                  <option selected>请选择城市</option>
-                </select>
-                <select id="area" name="area" class="pay-txt" style="width: 120px;height:40px">
-                  <option selected>请选择县(区)</option>
-                </select>
-                <input type="text" name="house" class="pay-txt" placeholder="具体地址"/>
-              </li>
-              <li>
-                <label for="education">学历</label>
-                <select name="education"  class="pay-txt" style="width: 100px;height:40px">
-                  <option selected="selected" disabled="disabled">请选择学历</option>
-                  <option value="初中及以下">初中及以下</option>
-                  <option value="高中">高中</option>
-                  <option value="大学">大学</option>
-                  <option value="研究生及以上" >研究生及以上</option>
-                </select>
-              </li>
-              <li>
-                <label for="working">工作</label>
-                <input type="text" name="work" class="pay-txt" placeholder="工作"/>
-              </li>
-              <li>
-                <label for="income">收入</label>
-                <input type="text" name="income" class="pay-txt" placeholder="收入/月"/>
-              </li>
-            </ul>
-            <h6>邮箱已绑定</h6>
-            <ul>
-              <li th:if="${session.email} ne null">
-                <span>&nbsp;&nbsp;&nbsp;邮箱:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span th:text="${session.email}"></span>
-                <!--<label id="form:email"></label>-->
-              </li>
-            </ul>
-            <h6>手机号已绑定</h6>
-            <ul>
-              <li>
-                <span>&nbsp;&nbsp;&nbsp;手机号:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span th:text="${session.phone}"></span>
-              </li>
-              <li>
-                <input type="submit" value="开户" style="border:none;" class="btn-paykh">
-              </li>
-            </ul>
-          </div>
-              </li>
-            </ul>
-          </div>
-
-        </form>
-
-        <!--省市县级联-->
-        <!--查询省-->
-        <script type="text/javascript">
+        //级联年龄
+        $(function(){
+            $("#age").click(function(){
+                var birth = $("#birthday").val();
+                var byear = birth.substr(6,4);
+                var now = new Date();
+                var nyear = now.getFullYear();
+                var age = nyear - byear;
+                $("#age").val(age);
+            })
+        })
+       // <!--表单验证-->
+        //真实姓名
+        function checkName(){
+            var realname = document.getElementById("realname");
+            var real = document.getElementById("real");
+            if(realname.value!=null&&realname.value!=''){
+                real.style.color="green";
+                real.innerHTML="通过";
+                realname.style.borderWidth="1px gray solid";
+                return true;
+            }
+            else{
+                real.style.color="red";
+                realname.focus();
+                real.innerHTML="姓名能不为空";
+                real.style.borderWidth="1px red solid";
+                return false;
+            }
+        }
+        function checkBirth() {
+            var birthday = document.getElementById("birthday");
+            var birth = document.getElementById("birth");
+            if(birthday.value!=null&&birthday.value!=''){
+                birth.style.color="green";
+                birth.innerHTML="通过";
+                birthday.style.borderWidth="1px gray solid";
+                return true;
+            }
+            else{
+                birth.style.color="red";
+                birthday.focus();
+                birth.innerHTML="出生日期不能为空";
+                birth.style.borderWidth="1px red solid";
+                return false;
+            }
+        }
+        function checkPaypwd() {
+            var paypwd = document.getElementById("paypwd");
+            var pay = document.getElementById("pay");
+            var reg=/^[0-9]{6}$/;
+            if(paypwd.value!=null&&paypwd.value!=''&&reg.test(paypwd.value)){
+                pay.style.color="green";
+                pay.innerHTML="通过";
+                paypwd.style.borderWidth="1px gray solid";
+                return true;
+            }
+            else{
+                pay.style.color="red";
+                paypwd.focus();
+                pay.innerHTML="密码格式错误";
+                pay.style.borderWidth="1px red solid";
+                return false;
+            }
+        }
+        function checkSure() {
+            var sure = document.getElementById("sure");
+            var paypwd = document.getElementById("paypwd");
+            var su = document.getElementById("su");
+            if(sure.value==paypwd.value){
+                su.style.color="green";
+                su.innerHTML="通过";
+                sure.style.borderWidth="1px gray solid";
+                return true;
+            }
+            else{
+                su.style.color="red";
+                sure.focus();
+                su.innerHTML="两次密码不一致";
+                su.style.borderWidth="1px red solid";
+                return false;
+            }
+        }function checkIdcard() {
+            var idcard = document.getElementById("idcard");
+            var idc = document.getElementById("idc");
+            var reg=/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])\d{3}(\d|[xX])$/;
+            if(reg.test(idcard.value)){
+                idc.style.color="green";
+                idc.innerHTML="通过";
+                idcard.style.borderWidth="1px gray solid";
+                return true;
+            }
+            else{
+                idc.style.color="red";
+                idcard.focus();
+                idc.innerHTML="身份证号码有误";
+                idc.style.borderWidth="1px red solid";
+                return false;
+            }
+        }
+        function checkIncome() {
+            var income = document.getElementById("income");
+            var inc = document.getElementById("inc");
+            var reg=/^[1-9]\d*$/;
+            alert(income.value);
+            if(reg.test(income.value)){
+                inc.style.color="green";
+                inc.innerHTML="通过";
+                income.style.borderWidth="1px gray solid";
+                return true;
+            }
+            else{
+                inc.style.color="red";
+                income.focus();
+                inc.innerHTML="收入格式错误";
+                inc.style.borderWidth="1px red solid";
+                return false;
+            }
+        }function checkHoure() {
+            var house = document.getElementById("house");
+            var hou = document.getElementById("hou");
+            if(house.value!=null&&house.value!=''){
+                hou.style.color="green";
+                hou.innerHTML="通过";
+                house.style.borderWidth="1px gray solid";
+                return true;
+            }
+            else{
+                hou.style.color="red";
+                house.focus();
+                hou.innerHTML="具体地址能不为空";
+                hou.style.borderWidth="1px red solid";
+                return false;
+            }
+        } //提交表单数据
+        function submitBtn(){
+            alert(12313);
+              if(checkHoure()&&checkIncome()&&checkIdcard()&&checkSure()&&checkPaypwd()&&checkName()){
+                var form = document.getElementById("form1");
+                form.submit();
+            }
+        }
+        //<!--省市县级联-->
+        //<!--查询省-->
         $(function(){
             $.ajax({
                 type:"post",
@@ -378,7 +332,7 @@
                 })
             });
 
-          <!-- 根据城市查询县 -->
+            <!-- 根据城市查询县 -->
             $("#city").change(function(){
                 $("#area").empty();
                 var cname = $(this).val();
@@ -399,142 +353,137 @@
                 })
             })
         })
-        </script>
-        <script type="text/javascript">
-			//<![CDATA[
-			           //验证邮箱是否为空
-			           function checkactiveEmailFormEmail()
-			           {
-			        	   var email=$("#activeEmail\\:activeEmailemail").val();
-			        	   var nullFlag=(email=="");
-			        	   if(nullFlag)
-				   			{
-				   				$("#activeEmail\\:activeEmailemail_message").remove();
-				   				var $span = $("<span id=activeEmail\:activeEmailemail_message class=error>请输入邮箱</span>");
-				   				$("#activeEmailemailErrorDiv").append($span);
-				   				return false;
-				   			}
-				   			else
-				   			{
-				   				var error=$("#activeEmailemailErrorDiv").text();
-				   				if(error=='请输入邮箱')
-				   				$("#activeEmail\\:activeEmailemail_message").remove();
-				   			}
-			        	   return true;
-			           }
-			           //验证所有
-			           function checkActiveEmailAll()
-			           {
-			        	   checkactiveEmailFormEmail();
-			        	   var emailErrorFlag=$("#activeEmailemailErrorDiv").text()=="";
-			        	   return emailErrorFlag;
-			           }
-			//]]>
-		</script>
-      <script type="text/javascript">
-				//<![CDATA[
-		    	if(window.ActiveXObject)
-			    {
-			        var browser=navigator.appName
-			        var b_version=navigator.appVersion
-			        var version=b_version.split(";");
-			        var trim_Version=version[1].replace(/[ ]/g,"");
-			        if(browser=="Microsoft Internet Explorer" && trim_Version=="MSIE7.0")
-			        {
-			        	$("#form\\:sendAuthCodeBtn2").css("display","block");
-			        	$("#form\\:sendAuthCodeBtn").css("display","none");
-			        }
-		        }
-		        function sCode2(){
-		        	var mobile = $("#form\\:mobileNumber").val();
-		        	var mobileRegex="^1[3|4|5|7|8][0-9]{9}$";
-		        	var mobilePattern = new RegExp(mobileRegex);
-    				var mobileFlag=mobilePattern.test(mobile);
+    </script>
 
-    				if(!mobileFlag){
-    					return;
-    				}
-
-		        	$("#sendCode").hide();
-					$("#sendCodeGrey").show();
-					if(flag && $("#sendCode").is(":hidden")){
-						return;
-					}
-					flag = true;
-					timer("sendAuthCodeBtn1", {
-						"count" : 60,
-						"animate" : true,
-						initTextBefore : "后可重新操作",
-						initTextAfter : "秒",
-						callback:function(){
-							$("#sendCode").show();
-							$("#sendCodeGrey").hide();
-							flag = false;
-						}
-					}).begin();
-		        }
-		        var ua = navigator.userAgent;
-				if(ua.indexOf("Windows NT 5")!=-1) {
-				    if(window.ActiveXObject)
-				    {
-				        var browser=navigator.appName
-				        var b_version=navigator.appVersion
-				        var version=b_version.split(";");
-				        var trim_Version=version[1].replace(/[ ]/g,"");
-				        if(browser=="Microsoft Internet Explorer" && (trim_Version=="MSIE8.0" || trim_Version=="MSIE7.0"))
-				        {
-				        	$("#form\\:sendAuthCodeBtn2").css("display","block");
-			        		$("#form\\:sendAuthCodeBtn").css("display","none");
-				        }
-			        }
-				}
-
-				var second = 0;
-                var internal;
-                /** 校验修改手机验证码 */
-				function validateSMS(){
-					$("#form\\:authCode_message").remove();
-					var mobileNumber = $("#form\\:mobileNumber").val();
-					if(mobileNumber == '请输入手机'){
-		                return;
-					}
-					var returnResult = false;
-					$.ajax({
-						   url: "/valiSms",
-						   async:false,
-						   data:{
-								mobileNumber:mobileNumber
-						   },
-						   success: function(data){
-							   if(data.flag == 'NO'){
-								   $("#form\\:authCode_message").remove();
-						   		   var $span = $("<span id=form\:authCode_message class=alerterror>点击过于频繁,请<b>"+data.second+"</b>秒后重试</span>");
-				   				   $("#authCodeErrorDiv").append($span);
-								   second = data.second;
-								   clearInterval(internal);
-								   internal = setInterval(function(){
-		                              if(second == 0){
-		                            	  $("#form\\:authCode_message").remove();
-		                              }else{
-		                            	  second = second -1;
-		                            	  $("#form\\:authCode_message").find('b').html(second);
-		                              }
-								   },1000);
-								   returnResult = false;
-							   }else if(data.flag == 'NO1'){
-								   $("#form\\:authCode_message").remove();
-						   		   var $span = $("<span id=form\:authCode_message class=alerterror>"+data.smsVali+"</span>");
-				   				   $("#authCodeErrorDiv").append($span);
-								   returnResult = false;
-							   }else{
-								   returnResult = true;
-							   }
-						   }
-					    });
-		               return returnResult;
-				}
-		        //]]>
-		    </script>
+    <div class="personal-main">
+      <div class="personal-pay">
+        <h3><i>认证个人信息</i></h3>
+        <form method="post" action="/renzheng/update" id="form1" enctype="multipart/form-data">
+          <input type="hidden" id="userName" th:value="${session.userName}">
+          <div>
+            <ul>
+              <li id="liRen"  style="display: none;">
+                <p><h3>您已经实名认证了</h3></p>
+              </li>
+              <li id="liRen1"  style="display: none;">
+                <p><h3>您的申请已提交请耐心等待，两个工作日之内给您处理！</h3></p>
+              </li>
+              <li id="liRen2"  style="display: none;">
+                <p><h3>您的申请已经被驳回，请重新进行身份验证！</h3></p>
+              </li>
+              <li id="liRen3"  style="display: none;">
+                <p><h3>请您按以下步骤进行个人身份信息认证！</h3></p>
+                <div class="pay-form">
+            <h6>请输入您的身份证信息</h6>
+            <ul>
+              <li>
+                <label for="username">用户姓名</label>
+                <input type="text"  name="username" class="pay-txt" th:value="${session.userName}" id="username" maxlength="16" readonly="readonly">
+                <span id="username"></span>
+                <div id="usernameErrorDiv"></div>
+              </li>
+              <li>
+                <label for="realname">真实姓名</label>
+                <input type="text" name="realname" class="pay-txt" maxlength="16" onblur="checkName()" id="realname" placeholder="您的真实姓名">
+                <span id="real"></span>
+                <div id="realnameErrorDiv"></div>
+              </li>
+              <li>
+                <label for="birthday">出生日期</label>
+                <input id="birthday" name="birth" class="easyui-datetimebox" onblur="checkBirth()" maxlength="18" style="width:240px">
+                <span id="birth"></span>
+              </li>
+              <li>
+                <label for="age">年龄</label>
+                <input id="age" name="age" type="text"  class="pay-txt" maxlength="3" onblur="checkAge()"  placeholder="年龄" readonly="readonly">
+                <span id="ag"></span>
+                <!--级联年龄-->
+              </li>
+              <li>
+                <label for="paypwd">支付密码</label>
+                <input type="password" name="paypwd" id="paypwd" onblur="checkPaypwd()" class="pay-txt" maxlength="16"  placeholder="请设置6位数字支付密码">
+                <span id="pay"></span>
+              </li>
+              <li>
+                <label for="paypwd">确认密码</label>
+                <input type="password" class="pay-txt"  id="sure" maxlength="16"  onblur="checkSure()" placeholder="请再次输入支付密码">
+                <span id="su"></span>
+              </li>
+              <li>
+                <label for="idcard">身份证号</label>
+                <input name="idcard" id="idcard" type="text" onblur="checkIdcard()" class="pay-txt" maxlength="18">
+                <span id="idc"></span>
+              </li>
+              <li>
+                <label for="idcardA">身份证正面</label>
+                <input name="idcarda" type="file" class="pay-txt" maxlength="16">
+              </li>
+              <li>
+                <label for="idcardB">身份证反面</label>
+                <input name="idcardb" type="file" class="pay-txt" maxlength="16">
+              </li>
+              <li>
+                <label for="address">地址</label>
+                <select id="province" name="pro" class="pay-txt" style="width: 150px;height:40px">
+                  <option selected>请选择省份</option>
+                </select>
+                <select id="city" name="city" class="pay-txt" style="width: 150px;height:40px">
+                  <option selected>请选择城市</option>
+                </select>
+                <select id="area" name="area" class="pay-txt" style="width: 150px;height:40px">
+                  <option selected>请选择县(区)</option>
+                </select>
+                <input type="text" name="house" id="house" class="pay-txt" onblur="checkHoure()" placeholder="具体地址"/>
+                <span id="hou"></span>
+              </li>
+              <li>
+                <label for="education">学历</label>
+                <select name="education"  class="pay-txt" style="width: 200px;height:40px">
+                  <option selected="selected" disabled="disabled">请选择学历</option>
+                  <option value="初中及以下">初中及以下</option>
+                  <option value="高中">高中</option>
+                  <option value="大学">大学</option>
+                  <option value="研究生及以上" >研究生及以上</option>
+                </select>
+              </li>
+              <li>
+                <label for="working">工作</label>
+                <select name="education"  class="pay-txt" style="width: 200px;height:40px">
+                <option selected="selected" disabled="disabled">请选择工作种类</option>
+                <option value="在校学生">在校学生</option>
+                <option value="企业高管">企业高管</option>
+                <option value="普通职工">普通职工</option>
+                <option value="公务员" >公务员</option>
+                <option value="个体户" >个体户</option>
+                </select>
+              </li>
+              <li>
+                <label for="income">收入/月</label>
+                <input type="text" id="income" name="income" onblur="checkIncome()" class="pay-txt" placeholder="收入/月"/>
+                <span id="inc"></span>
+              </li>
+            </ul>
+            <h6>邮箱已绑定</h6>
+            <ul>
+              <li th:if="${session.email} ne null">
+                <span>&nbsp;&nbsp;&nbsp;邮箱:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span th:text="${session.email}"></span>
+                <!--<label id="form:email"></label>-->
+              </li>
+            </ul>
+            <h6>手机号已绑定</h6>
+            <ul>
+              <li>
+                <span>&nbsp;&nbsp;&nbsp;手机号:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span th:text="${session.phone}"></span>
+              </li>
+              <li>
+                <button  type="button" class="btn" onclick="()">提交身份信息</button>
+              </li>
+            </ul>
+          </div>
+              </li>
+            </ul>
+          </div>
+        </form>
     </div>
     <div class="clear"></div>
   </div>
