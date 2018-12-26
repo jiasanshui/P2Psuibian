@@ -6,12 +6,10 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.SocketException;
 import java.util.UUID;
-
 /**
  * @className:FtpUtil
  * @discription:
