@@ -22,19 +22,19 @@ public interface BorrowDao {
      * @param map
      * @return
      */
-    @Insert("insert into borrow(borrowid,applicant,tel,timelimit,purpose,des,apr,borrowmoney,danbaostyle,payment,username,stateid,days,borrownum,userid,bidapplydate) " +
+    @Insert("insert into borrow(borrowid,applicant,tel,timelimit,purpose,des,apr,borrowmoney,danbaostyle,payment,username,stateid,days,borrownum,userid,bidapplydate,winbidmoney) " +
             "values(seq_tbborrowid.nextval,#{applicant},#{tel},#{timelimit},#{purpose},#{des}," +
-            "#{apr},#{borrowmoney},#{danbaostyle},#{payment},#{username},1,#{days},#{borrownum},#{userid},sysdate)")
+            "#{apr},#{borrowmoney},#{danbaostyle},#{payment},#{username},1,#{days},#{borrownum},#{userid},sysdate,0)")
     int add(Map map);
 
     /**
-     * 借款人提交数据到后台（房屋抵押贷款）
+     * 借款人提交数据到后台（房屋车辆抵押贷款）
      * @param map
      * @return
      */
-    @Insert("insert into borrow(borrowid,applicant,tel,timelimit,purpose,des,apr,borrowmoney,danbaostyle,payment,username,stateid,days,borrownum,userid,bidapplydate) " +
+    @Insert("insert into borrow(borrowid,applicant,tel,timelimit,purpose,des,apr,borrowmoney,danbaostyle,payment,username,stateid,days,borrownum,userid,bidapplydate,winbidmoney,cost,documentpic,physicapic) " +
             "values(seq_tbborrowid.nextval,#{applicant},#{tel},#{timelimit},#{purpose},#{des}," +
-            "#{apr},#{borrowmoney},#{danbaostyle},#{payment},#{username},1,#{days},#{borrownum},#{userid},sysdate)")
+            "#{apr},#{borrowmoney},#{danbaostyle},#{payment},#{username},1,#{days},#{borrownum},#{userid},sysdate,0,#{cost},#{documentpic},#{physicapic})")
     int addOne(Map map);
 
 
