@@ -19,9 +19,6 @@
     <!---------------------------------------------------------------------------列表顶部搜索和工具条-->
     <el-row>
         <el-form :inline="true" :model="searchForm" class="demo-form-inline">
-            <el-form-item label="用户Id">
-                <el-input v-model="searchForm.USERID" placeholder="用户Id"></el-input>
-            </el-form-item>
             <el-form-item label="借款人">
                 <el-input v-model="searchForm.APPLICANT" placeholder="借款人"></el-input>
             </el-form-item>
@@ -47,29 +44,51 @@
                     width="55">
             </el-table-column>
             <el-table-column
-                    prop="USERID"
-                    label="用户Id"
-                    align="center"
-                    v-if="false"
-                    width="120">
-            </el-table-column>
-            <el-table-column
                     prop="APPLICANT"
                     label="申请人"
                     align="center"
                     width="90">
             </el-table-column>
             <el-table-column
-                    prop="TEL"
-                    label="电话"
-                    align="center"
-                    width="110">
-            </el-table-column>
-            <el-table-column
                     prop="DANBAOSTYLE"
                     label="担保方式"
                     align="center"
                     width="120">
+            </el-table-column>
+            <!--------------------------------------列表图片-->
+            <el-table-column
+                    prop="DOCUMENTPIC"
+                    label="证件图片"
+                    width="120">
+                <!--<template scope="scope">
+                    <a :href="'/notice/downloadPic?fileName='+scope.row.DOCUMENTPIC">
+                        <img slot="reference" :src="path+scope.row.DOCUMENTPIC" height="100" min-width="70">
+                    </a>
+                </template>-->
+                <template slot-scope="scope">
+                    <el-popover placement="right" title="证件图片" trigger="hover">
+                        <img :src="path+scope.row.DOCUMENTPIC" width="270" height="170"/>
+                        <img slot="reference" :src="path+scope.row.DOCUMENTPIC"  min-width="70" height="70" />
+                    </el-popover>
+                </template>
+            </el-table-column>
+            <el-table-column
+                    prop="PHYSICAPIC"
+                    label="实物图片"
+                    width="120">
+                <template slot-scope="scope">
+                    <el-popover placement="right" title="实物图片" trigger="hover">
+                        <img :src="path+scope.row.PHYSICAPIC" width="270" height="170"/>
+                        <img slot="reference" :src="path+scope.row.PHYSICAPIC"  min-width="70" height="70" />
+                    </el-popover>
+                </template>
+            </el-table-column>
+            <!--------------------------------------列表图片-->
+            <el-table-column
+                    prop="BORROWNUM"
+                    label="借款标号"
+                    align="center"
+                    width="130">
             </el-table-column>
             <el-table-column
                     prop="PAYMENT"
@@ -105,7 +124,7 @@
                     prop="PURPOSE"
                     label="借款用途"
                     align="center"
-                    width="70">
+                    width="100">
             </el-table-column>
             <el-table-column
                     prop="DES"
@@ -114,44 +133,14 @@
                     width="130">
             </el-table-column>
             <el-table-column
-                    prop="BORROWNUM"
-                    label="借款标号"
-                    align="center"
-                    width="120">
-            </el-table-column>
-<!--------------------------------------列表图片-->
-            <el-table-column
-                    prop="PHYSICAPIC"
-                    label="实物图片"
-                    width="120">
-                <template scope="scope">
-                    <a :href="'/notice/downloadPic?fileName='+scope.row.PHYSICAPIC">
-                        <img slot="reference" :src="path+scope.row.PHYSICAPIC" height="100" min-width="70">
-                    </a>
-                </template>
-            </el-table-column>
-
-            <el-table-column
-                    prop="DOCUMENTPIC"
-                    label="证件图片"
-                    width="120">
-                <template scope="scope">
-                    <a :href="'/notice/downloadPic?fileName='+scope.row.DOCUMENTPIC">
-                        <img slot="reference" :src="path+scope.row.DOCUMENTPIC" height="100" min-width="70">
-                    </a>
-                </template>
-            </el-table-column>
-<!--------------------------------------列表图片-->
-            <el-table-column
                     label="操作">
                 <template scope="scope">
                     <el-button :plain="true" type="success" size="small" icon="edit" @click="lookClick(scope.row)">查看详情</el-button>
-                    <el-button type="primary" icon="el-icon-edit" size="small" @click="editClick(scope.row)">编辑</el-button>
+                    <el-button type="primary" icon="el-icon-edit" size="small" @click="editClick(scope.row)"></el-button>
                 </template>
             </el-table-column>
         </el-table>
     </el-row>
-
     <!-----------------------------------------------------------列表底部工具条和分页符-->
     <el-row style="margin-top: 20px" type="flex" justify="end">
         <el-col :span="24" >
@@ -168,7 +157,7 @@
         </el-col>
     </el-row>
     <!----------------------------------------------------------------审核界面-->
-    <el-dialog title="初审" :visible.sync="editFormVisible" :close-on-click-modal="true">
+    <el-dialog title="抵押贷款审核" :visible.sync="editFormVisible" :close-on-click-modal="true">
         <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
             <el-form-item label="借款标号" prop="BORROWNUM">
                 <el-input type="text" v-model="editForm.BORROWNUM" auto-complete="off" readonly="true"></el-input>
@@ -227,8 +216,8 @@
             </el-row>
             <el-row>
                 <el-col :span="10">
-                    <el-form-item label="借款金额" prop="BORROWMONEY" readonly="true">
-                        <el-input v-model="lookForm.BORROWMONEY" auto-complete="off"></el-input>
+                    <el-form-item label="借款金额" prop="BORROWMONEY" >
+                        <el-input v-model="lookForm.BORROWMONEY" auto-complete="off" readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
@@ -239,8 +228,8 @@
             </el-row>
             <el-row>
                 <el-col :span="10">
-                    <el-form-item label="借款期限" prop="TIMELIMIT" readonly="true">
-                        <el-input v-model="lookForm.TIMELIMIT" auto-complete="off"></el-input>
+                    <el-form-item label="借款期限" prop="TIMELIMIT" >
+                        <el-input v-model="lookForm.TIMELIMIT" auto-complete="off" readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
@@ -251,41 +240,60 @@
             </el-row>
             <el-row>
                 <el-col :span="10">
-                    <el-form-item label="借款用途" prop="PURPOSE" readonly="true">
-                        <el-input v-model="lookForm.PURPOSE" auto-complete="off"></el-input>
+                    <el-form-item label="借款用途" prop="PURPOSE" >
+                        <el-input v-model="lookForm.PURPOSE" auto-complete="off" readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
-                    <el-form-item label="标的编号" prop="BORROWNUM" readonly="true">
-                        <el-input v-model="lookForm.BORROWNUM" auto-complete="off"></el-input>
+                    <el-form-item label="标的编号" prop="BORROWNUM" >
+                        <el-input v-model="lookForm.BORROWNUM" auto-complete="off" readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row :span="20">
-                <el-form-item label="借款用途" prop="PURPOSE" readonly="true">
-                    <el-input type="textarea" v-model="lookForm.DES" auto-complete="off"></el-input>
+                <el-form-item label="借款用途" prop="PURPOSE" >
+                    <el-input type="textarea" v-model="lookForm.DES" auto-complete="off" readonly="true"></el-input>
                 </el-form-item>
             </el-row>
 
             <!--------------------------------------------------------------------正反面图片-->
             <el-row>
                 <el-col :span="10">
-                    <el-form-item v-if="isAdd" label="实物图片" prop="PHYSICAPIC">
-                        <a :href="'/notice/downloadPic?fileName='+lookForm.PHYSICAPIC">
-                            <img slot="reference" :src="path+lookForm.PHYSICAPIC" height="100" min-width="70">
-                        </a>
+                    <el-form-item v-if="isAdd" label="证件图片" prop="DOCUMENTPIC">
+                        <!--<a :href="'/notice/downloadPic?fileName='+lookForm.DOCUMENTPIC">
+                            <img slot="reference" :src="path+lookForm.DOCUMENTPIC" height="100" min-width="70">
+                        </a>-->
+                        <template>
+                            <el-popover
+                                    placement="top-start"
+                                    title="证件图片"
+                                    width="200"
+                                    trigger="hover">
+                                <img :src="path+lookForm.DOCUMENTPIC" width="270" height="170"/>
+                                <el-button slot="reference" style="background-color: #00bbee">显示图片</el-button>
+                            </el-popover>
+                        </template>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
-                    <el-form-item v-if="isAdd" label="证件图片" prop="DOCUMENTPIC">
-                        <a :href="'/notice/downloadPic?fileName='+lookForm.DOCUMENTPIC">
-                            <img slot="reference" :src="path+lookForm.DOCUMENTPIC" height="100" min-width="70">
-                        </a>
+                    <el-form-item v-if="isAdd" label="实物图片" prop="PHYSICAPIC">
+                        <!--<a :href="'/notice/downloadPic?fileName='+lookForm.PHYSICAPIC">
+                            <img slot="reference" :src="path+lookForm.PHYSICAPIC" height="70" min-width="70">
+                        </a>-->
+                        <template>
+                            <el-popover
+                                    placement="top-start"
+                                    title="实物图片"
+                                    width="200"
+                                    trigger="hover">
+                                <img :src="path+lookForm.PHYSICAPIC" width="270" height="170"/>
+                                <el-button slot="reference" style="background-color: #00bbee">显示图片</el-button>
+                            </el-popover>
+                        </template>
                     </el-form-item>
                 </el-col>
             </el-row>
             <!--------------------------------------------------------------------正反面图片-->
-
         </el-form>
     </el-dialog>
 </div>
@@ -293,7 +301,7 @@
     var app = new Vue({
         el: '#app',
         data: {
-            message: '借款审核列表'
+            message: '抵押贷款审核列表'
         }
     });
     var tableView = new Vue({
@@ -309,7 +317,6 @@
             loading:false,
             //搜索表单
             searchForm: {
-                USERID: '',
                 APPLICANT: '',
                 BORROWNUM:''
             },
@@ -368,7 +375,7 @@
         created:function(){
             //在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
             var self = this;
-            axios.post('/biaode/page',{'pageNo':this.currentPage,'pageSize':this.pageSize}).then(function(response){
+            axios.post('/biaode/pageOne',{'pageNo':this.currentPage,'pageSize':this.pageSize}).then(function(response){
                 self.total=response.data.total;
                 self.tableData = response.data.pageData;
             })
@@ -382,7 +389,7 @@
                 var _self = this;
                 _self.loading = true;
                 var self = this;
-                var searchForm={'pageNo':this.currentPage,'pageSize':this.pageSize,'userid':this.searchForm.USERID,'applicant':this.searchForm.APPLICANT,'borrownum':this.searchForm.BORROWNUM};
+                var searchForm={'pageNo':this.currentPage,'pageSize':this.pageSize,'applicant':this.searchForm.APPLICANT,'borrownum':this.searchForm.BORROWNUM};
                 axios.post('/biaode/page',searchForm).then(function(response){
                     _self.total=response.data.total;
                     _self.tableData = response.data.pageData;
@@ -491,11 +498,13 @@
             //上传成功后的方法
             uploadSuc:function(response, file, fileList){
                 // alert(response);
-                this.editForm.PICTURE=response;
+                this.lookForm.PHYSICAPIC=response;
+                this.lookForm.DOCUMENTPIC=response;
                 /* this.$refs.upload.clearFiles();*/
             },
             downLoad:function(row){
-                location.href="/notice/downloadPic?fileName="+row.PICTURE
+                location.href="/notice/downloadPic?fileName="+row.PHYSICAPIC
+                location.href="/notice/downloadPic?fileName="+row.DOCUMENTPIC
             }
         }
     })

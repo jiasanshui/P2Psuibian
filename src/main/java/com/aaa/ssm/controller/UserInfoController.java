@@ -111,4 +111,15 @@ public class UserInfoController {
         return allList.get(0);
 
     }
+
+    /**
+     * 根据用户ID查询历史
+     * @param map
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/history")
+    private Object getHistory(@RequestBody Map map){
+        return userInfoService.getHistory(map);
+    }
 }

@@ -19,9 +19,6 @@
     <!--列表顶部搜索和工具条-->
     <el-row>
         <el-form :inline="true" :model="searchForm" class="demo-form-inline">
-            <el-form-item label="用户Id">
-                <el-input v-model="searchForm.USERID" placeholder="用户Id"></el-input>
-            </el-form-item>
             <el-form-item label="借款人">
                 <el-input v-model="searchForm.APPLICANT" placeholder="借款人"></el-input>
             </el-form-item>
@@ -45,13 +42,6 @@
             <el-table-column
                     type="selection"
                     width="55">
-            </el-table-column>
-            <el-table-column
-                    prop="USERID"
-                    label="用户Id"
-                    align="center"
-                    v-if="false"
-                    width="120">
             </el-table-column>
             <el-table-column
                     prop="APPLICANT"
@@ -145,7 +135,7 @@
         </el-col>
     </el-row>
     <!--审核界面-->
-    <el-dialog title="初审" :visible.sync="editFormVisible" :close-on-click-modal="true">
+    <el-dialog title="信用贷款审核" :visible.sync="editFormVisible" :close-on-click-modal="true">
         <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
             <el-form-item label="借款标号" prop="BORROWNUM">
                 <el-input type="text" v-model="editForm.BORROWNUM" auto-complete="off" readonly="true"></el-input>
@@ -178,6 +168,9 @@
     <!--查看详情界面-->
     <el-dialog title="用户信息" :visible.sync="lookFormVisible" :close-on-click-modal="false">
         <el-form :model="lookForm" label-width="100px" :rules="lookFormRules" ref="lookForm">
+            <el-form-item label="用户ID" prop="USERID" v-if="false">
+                <el-input v-model="lookForm.USERID" auto-complete="off" :readonly="true"></el-input>
+            </el-form-item>
             <el-row>
                 <el-col :span="10">
                     <el-form-item label="用户名" prop="USERNAME">
@@ -204,8 +197,20 @@
             </el-row>
             <el-row>
                 <el-col :span="10">
-                    <el-form-item label="借款金额" prop="BORROWMONEY" readonly="true">
-                        <el-input v-model="lookForm.BORROWMONEY" auto-complete="off"></el-input>
+                    <el-form-item label="信用额度" prop="CREDITEDU">
+                        <el-input v-model="lookForm.CREDITEDU" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="10">
+                    <el-form-item label="剩余额度" prop="SCREDITEDU">
+                        <el-input v-model="lookForm.SCREDITEDU" auto-complete="off" readonly="true"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="10">
+                    <el-form-item label="借款金额" prop="BORROWMONEY" >
+                        <el-input v-model="lookForm.BORROWMONEY" auto-complete="off" readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
@@ -216,8 +221,8 @@
             </el-row>
             <el-row>
                 <el-col :span="10">
-                    <el-form-item label="借款期限" prop="TIMELIMIT" readonly="true">
-                        <el-input v-model="lookForm.TIMELIMIT" auto-complete="off"></el-input>
+                    <el-form-item label="借款期限" prop="TIMELIMIT" >
+                        <el-input v-model="lookForm.TIMELIMIT" auto-complete="off" readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
@@ -239,23 +244,43 @@
                 </el-col>
             </el-row>
             <el-row :span="20">
-                <el-form-item label="借款用途" prop="PURPOSE" readonly="true">
+                <el-form-item label="借款描述" prop="DES" readonly="true">
                     <el-input type="textarea" v-model="lookForm.DES" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button @click="lookFormVisible = false">取 消</el-button>
+                    <el-button type="primary"  @click="selectClick('lookForm')">查看历史</el-button>
                 </el-form-item>
             </el-row>
         </el-form>
+        <!--<div slot="footer" class="dialog-footer">
+            <el-button @click="lookFormVisible = false">取 消</el-button>
+            <el-button type="primary"  @click="selectClick()">查看历史</el-button>
+        </div>-->
+        <el-dialog
+                width="30%"
+                title="历史详情"
+                :visible.sync="innerVisible"
+                append-to-body>
+            <el-form>
+                <el-form-item label="备注" prop="REMARK">
+                    <el-input type="textarea" v-model="historyForm.REMARK" auto-complete="off" readonly="true"></el-input>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
     </el-dialog>
 </div>
 <script type="text/javascript">
     var app = new Vue({
         el: '#app',
         data: {
-            message: '借款审核列表'
+            message: '信用贷款审核列表'
         }
     });
     var tableView = new Vue({
         el: '#tableView',
         data: {
+            USERID:'',
             options:[],
             //列表数据
             tableData: [],
@@ -263,7 +288,6 @@
             loading:false,
             //搜索表单
             searchForm: {
-                USERID: '',
                 APPLICANT: '',
                 BORROWNUM:''
             },
@@ -281,6 +305,7 @@
             editFormVisible:false,
             //查看详情页面是否显示
             lookFormVisible:false,
+            innerVisible:false,
             editLoading: false,
             goUrl:'',
             editFormRules: {
@@ -302,6 +327,7 @@
             },
             //查看详情界面数据
             lookForm: {
+                USERID:'',
                 USERNAME: '',
                 APPLICANT: '',
                 TEL:'',
@@ -314,8 +340,14 @@
                 APR:'',
                 PURPOSE:'',
                 BORROWNUM:'',
-                DES:''
+                DES:'',
+                SCREDITEDU:'',
+                CREDITEDU:''
             },
+            //查看历史
+            historyForm:{
+                REMARK:''
+            }
         },
         created:function(){
             //在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
@@ -334,7 +366,7 @@
                 var _self = this;
                 _self.loading = true;
                 var self = this;
-                var searchForm={'pageNo':this.currentPage,'pageSize':this.pageSize,'userid':this.searchForm.USERID,'applicant':this.searchForm.APPLICANT,'borrownum':this.searchForm.BORROWNUM};
+                var searchForm={'pageNo':this.currentPage,'pageSize':this.pageSize,'applicant':this.searchForm.APPLICANT,'borrownum':this.searchForm.BORROWNUM};
                 axios.post('/biaode/page',searchForm).then(function(response){
                     _self.total=response.data.total;
                     _self.tableData = response.data.pageData;
@@ -356,6 +388,15 @@
             lookClick:function(row){
                 this.lookFormVisible = true;
                 this.lookForm = Object.assign({}, row);
+            },
+            //内层查询历史
+            selectClick:function (lookForm) {
+                var _self=this;
+                //alert(JSON.stringify(_self.lookForm.USERID));
+                this.innerVisible = true;
+                axios.post('/userInfo/history',{USERID:lookForm.USERID}).then(function(response){
+                   _self.historyForm=response.data;
+                })
             },
             //通过事件
             deleteClick:function(row) {

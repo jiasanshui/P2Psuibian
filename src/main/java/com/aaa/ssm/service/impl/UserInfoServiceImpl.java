@@ -127,4 +127,20 @@ public class UserInfoServiceImpl implements UserInfoService {
     public List<Map> getAllUserByuserid(Integer userid) {
         return userInfoDao.getAllUserByuserid(userid);
     }
+
+    /**
+     * 根据用户ID查询历史
+     * @param map
+     * @return
+     */
+    @Override
+    public Map getHistory(Map map) {
+        List<Map> history = userInfoDao.getHistory(map);
+        Map map1=new HashMap();
+        if(history!=null && history.size()>0){
+            return history.get(0);
+        }
+        map1.put("REMARK","该用户信用良好，无不良记录！");
+        return map1;
+    }
 }

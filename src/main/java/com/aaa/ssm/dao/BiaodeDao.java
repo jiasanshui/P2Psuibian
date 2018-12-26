@@ -17,16 +17,28 @@ import java.util.Map;
 @Component
 public interface BiaodeDao {
     /**
-     * 用户借款标的列表查询（待审核）
+     * 用户借款标的列表查询（信用贷款 待审核）
+     * @param map
+     */
+    @Select("<script>select b.borrowid,b.username,b.userid,b.applicant,b.tel,b.danbaostyle,b.days,b.borrowmoney,b.timelimit,b.apr," +
+            "b.purpose,b.des,b.payment,b.borrownum,b.winbidmoney,u.creditedu,u.screditedu from borrow b left join " +
+            "userinfo u on b.userid=u.userid where b.stateid=1 and b.danbaostyle='信用贷款'\n "+
+            "<if test=\"applicant!=null and applicant!=''\">  and b.applicant like '%'||#{applicant}||'%'</if>" +
+            "<if test=\"borrownum!=null and borrownum!=''\">  and b.borrownum =#{borrownum}</if>" +
+            "</script>")
+    List<Map> getList(Map map);
+
+    /**
+     * 用户借款标的列表查询（抵押贷款 待审核）
      * @param map
      */
     @Select("<script>select borrowid,username,userid,applicant,tel,danbaostyle,quantity,cost,days,borrowmoney,timelimit,apr," +
-            "purpose,des,payment,borrownum,winbidmoney from borrow where stateid=1 \n "+
+            "purpose,des,payment,borrownum,winbidmoney,documentpic,physicapic from borrow where stateid=1 and danbaostyle in('车辆抵押贷款','房屋抵押贷款') \n "+
             "<if test=\"userid!=null and userid!=''\">  and userid=#{userid}</if>" +
             "<if test=\"applicant!=null and applicant!=''\">  and applicant like '%'||#{applicant}||'%'</if>" +
             "<if test=\"borrownum!=null and borrownum!=''\">  and borrownum =#{borrownum}</if>" +
             "</script>")
-    List<Map> getList(Map map);
+    List<Map> getListOne(Map map);
 
     /**
      * 招标中的标的分页列表
@@ -51,7 +63,7 @@ public interface BiaodeDao {
     List<Map> getPageByLoan(Map map);
 
     /**
-     * 审核通过，更新用户信息表审核状态,招标开始时间
+     * 审核通过，更新用户信息表审核状态,招标开始时间,结束时间
      * @param map
      * @return
      */

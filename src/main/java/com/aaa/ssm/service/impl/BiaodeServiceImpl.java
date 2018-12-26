@@ -24,65 +24,42 @@ public class BiaodeServiceImpl implements BiaodeService{
     private BiaodeDao biaodeDao;
 
     @Autowired
-    private RepayDao repayDao;
-
-    @Autowired
     private AduitBidDao aduitBidDao;
 
     @Autowired
     private TenderDao tenderDao;
 
+    /**
+     * 用户借款标的列表查询 (信用贷款 待审核)
+     * @param map
+     * @return
+     */
     @Override
     public List<Map> getList(Map map) {
         return biaodeDao.getList(map);
     }
 
     /**
+     * 用户借款标的列表查询 (抵押贷款 待审核)
+     * @param map
+     * @return
+     */
+    @Override
+    public List<Map> getListOne(Map map) {
+        return biaodeDao.getListOne(map);
+    }
+
+    /**
      * 审核通过
-     * 1、更新用户借款表审核状态，招标开始时间
-     * 2、向还款表中插入数据(计算利息)
-     * {"PAYMENT":"分期","APR":0.15,"BORROWMONEY":300000,"QUANTITY":"1",
-     * "APPLICANT":"大志","ROW_ID":1,"COST":400000,"DES":"结婚买房",
-     * "TIMELIMIT":"1","USERNAME":"test123","PURPOSE":"买车","TEL":"1666666666","
-     * DANBAOSTYLE":"房屋","BORROWNUM":"BD0000002","BORROWID":3}
+     * 更新用户借款表审核状态，招标开始时间
      * @param map
      * @return
      */
     @Override
     public int update(Map map) {
         //1.更新用户借款表审核状态，招标开始时间
-        int n = biaodeDao.update(map);
-        //本金
-        double benjin = Double.parseDouble(map.get("BORROWMONEY").toString());
-        //年利率
-        double apr = Double.parseDouble(map.get("APR").toString());
-        //还款总月数
-        int totalMonth=Integer.valueOf(map.get("TIMELIMIT")+"");
-        //调用等额本息工具类，算出总利息
-        double lixi = DEBXUtil.getInterestCount(benjin, apr, totalMonth);
-        map.put("LIXI",lixi);
-        boolean isAdd=true;
-        Integer limit = Integer.valueOf(map.get("TIMELIMIT").toString());
-        for (int i = 1; i <= limit; i++) {
-            //获取当前系统时间
-            Calendar calendar = Calendar.getInstance();
-            //当前月份加i
-            calendar.add(Calendar.MONTH,i);
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            String format = df.format(calendar.getTime());
-            map.put("TIMELIMIT",i);
-            map.put("REPAYLIMIT",format);
-            //2.向还款表中插入数据
-            System.out.println("当前期数："+i);
-            int m = repayDao.add(map);
-            if (m<1){
-                isAdd=false;
-            }
-        }
-        if (isAdd==true && n!=0)
-            return 1;
-        else
-            return 0;
+        return biaodeDao.update(map);
+
     }
 
     /**

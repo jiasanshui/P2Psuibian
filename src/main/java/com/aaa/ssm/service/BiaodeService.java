@@ -11,10 +11,16 @@ import java.util.Map;
  */
 public interface BiaodeService {
     /**
-     * 用户借款标的列表查询
+     * 用户借款标的列表查询 (信用贷款 待审核)
      * @return
      */
     List<Map> getList(Map map);
+
+    /**
+     * 用户借款标的列表查询 (抵押贷款 待审核)
+     * @return
+     */
+    List<Map> getListOne(Map map);
 
     /**
      * 审核通过，更新用户信息表审核状态,招标开始时间

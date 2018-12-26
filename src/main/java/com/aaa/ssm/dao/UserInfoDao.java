@@ -164,4 +164,12 @@ public interface UserInfoDao {
     @Insert("insert into account_flow(id,userid,amount,flowdate,flowtypeid,changeamount) " +
             "values(seq_account_flow_id.nextval,#{USERID},#{taccount},sysdate,2,#{tamount})")
     int addTaccountFlow(Map map);
+
+    /**
+     * 根据用户ID查询历史
+     * @param map
+     * @return
+     */
+    @Select("select * from blacklist where userid=#{USERID}")
+    List<Map> getHistory(Map map);
 }

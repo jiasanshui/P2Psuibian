@@ -87,4 +87,10 @@ public interface UserInfoService {
      */
     List<Map> getAllUserByuserid(Integer userid);
 
+    /**
+     * 根据用户ID查询历史
+     * @param map
+     * @return
+     */
+    Map getHistory(Map map);
 }
