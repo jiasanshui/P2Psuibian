@@ -693,7 +693,10 @@ transition: transform 1s linear;}
 .pmain-user .user-info1 a.pmain-log:hover{ text-decoration: none; }
 .pmain-user .user-info li{ line-height:30px;}
 .pmain-user .user-info li span{ color:#4a4a4a; margin-left:15px;}
-.pmain-user .user-info li .safe-level{ display:inline-block; width:90px; height:8px; background-color:#f1483c; border-radius:2px;}
+.pmain-user .user-info li .safe-level1{ display:inline-block; width:22px; height:8px; background-color:#f1483c; border-radius:2px;}
+.pmain-user .user-info li .safe-level2{ display:inline-block; width:44px; height:8px; background-color:#f1483c; border-radius:2px;}
+.pmain-user .user-info li .safe-level3{ display:inline-block; width:66px; height:8px; background-color:#f1483c; border-radius:2px;}
+.pmain-user .user-info li .safe-level4{ display:inline-block; width:90px; height:8px; background-color:#f1483c; border-radius:2px;}
 .pmain-user .user-info li .safe-level .onlevel{ float:left; background-color:#f1483c; height:8px;border-radius:2px;}
 .pmain-user .user-info li .safe-level .onlevel1{width:22px;}/*危险*/
 .pmain-user .user-info li .safe-level .onlevel2{width:44px;}/*低*/

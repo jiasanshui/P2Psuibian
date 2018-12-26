@@ -4,11 +4,7 @@ import com.aaa.ssm.service.*;
 import com.aaa.ssm.util.PageUtil;
 import com.aaa.ssm.util.RandomUtil;
 import com.aaa.ssm.util.StringUtil;
-
-import com.github.pagehelper.PageInfo;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.swing.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -523,6 +518,7 @@ public class JumpController {
     public String toubiao(HttpSession session,Model model,String BORROWNUM){
         String username=(String) session.getAttribute("userName");
         //根据用户名去获取用户信息
+        String num = RandomUtil.getBorrowNumByTime();
         List<Map> list = userInfoService.getUserList(username);
         List<Map> listByUsername = borrowService.getListByBorrowNum(BORROWNUM);
         model.addAttribute("realName",list.get(0).get("REALNAME"));
@@ -532,6 +528,7 @@ public class JumpController {
         model.addAttribute("freezamount",list.get(0).get("FREEZAMOUNT"));
         model.addAttribute("BORROWNUM",BORROWNUM);
         model.addAttribute("bList",listByUsername);
+        model.addAttribute("num",num);
         return "qiantai/toubiao";
     }
 
