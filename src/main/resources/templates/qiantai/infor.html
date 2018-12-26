@@ -17,9 +17,9 @@
   <script type="text/javascript" src="../js/vue.js"></script>
   <script type="text/javascript" src="../js/axios.min.js"></script>
   <!-- 引入样式 -->
-  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <link rel="stylesheet" href="../css/elementui.css">
   <!-- 引入组件库 -->
-  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="../js/elementui.js"></script>
   <style>
       .btn{ /* 按钮美化 */
           display: block; /* 块状化 */
@@ -121,6 +121,7 @@
   <div class="breadcrumbs"> <a href="/jump/index">首页</a>&gt; <a href="#">散标投资列表</a>&gt; <span class="cur">项目详情</span> </div>
   <div class="item-detail-head clearfix" data-target="sideMenu">
     <ul th:each="list : ${uList}">
+      <ul th:each="foList : ${infoList}">
     <div class="hd"> <i class="icon icon-che
 " title="车易贷" ></i>
       <h2 th:text="${list.DES}"></h2>
@@ -147,8 +148,10 @@
             <span class="c-green" th:text="${list.JINDU}"></span> </li>
           <li> <span class="c-888">投资范围：</span> <span id="account_range" th:text="(${list.BORROWMONEY}-${list.WINBIDMONEY})*0.10 +'~'+(${list.BORROWMONEY}-${list.WINBIDMONEY})*1.00+'￥'">
           </span> </li>
-            <li th:if="${list.BAIFEN} lt 1" ><a th:href="@{/jump/toubiao(BORROWNUM=${list.BORROWNUM})}" class="btn">投标</a></li>
+            <li th:if="${list.BAIFEN} lt 1 and ${list.USERID} ne ${foList.USERID}" ><a th:href="@{/jump/toubiao(BORROWNUM=${list.BORROWNUM})}" class="btn">投标</a></li>
             <li th:if="${list.BAIFEN} ge 1"><a href="#" onclick="return false" class="btn">已满标</a></li>
+            <li th:if="${list.USERID} eq ${foList.USERID}"><a href="#" onclick="return false" class="btn">暂不支持投同账户的标</a></li>
+          </ul>
           </ul>
           </ul>
       </div>

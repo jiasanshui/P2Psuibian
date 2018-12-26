@@ -1,7 +1,6 @@
 package com.aaa.ssm.dao;
 
 import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Component;
@@ -64,8 +63,8 @@ public interface TenderDao {
      * @param map,BORROWNUM
      * @return
      */
-    @Insert("insert into tender(id,realname,tamount,ttime,tway,userid,borrownum，tendernum) " +
-            "values(seq_tender_id.nextval,#{realName},#{tamount},sysdate,#{tway},#{userid},#{borrowNum},)")
+    @Insert("insert into tender(id,realname,tamount,ttime,tway,userid,borrownum,tendernum) " +
+            "values(seq_tender_id.nextval,#{realName},#{tamount},sysdate,#{tway},#{userid},#{borrowNum}5)")
     int add(Map map);
 
     /**

@@ -35,12 +35,11 @@ public class BorrowController {
     @RequestMapping("/addBorrow")
     public Object addBorrow(@RequestParam Map map){
         System.out.println(map);
-        /*int add = borrowService.add(map);
+        int add = borrowService.add(map);
         if(add==0){
             return "redirect:/jump/borrow";
         }
-        return "redirect:/jump/list";*/
-        return null;
+        return "redirect:/jump/list";
     }
 
     /**

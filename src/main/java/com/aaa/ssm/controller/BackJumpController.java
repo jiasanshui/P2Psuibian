@@ -111,5 +111,21 @@ public class BackJumpController {
     public String powerList(){
         return "houtai/power/powerList";
     }
+    /**
+     * 跳转后台部门列表页面
+     * @return
+     */
+    @RequestMapping("/dept")
+    public String dept(){
+        return "houtai/dept/list";
+    }
+    /**
+     * 跳转后台员工列表页面
+     * @return
+     */
+    @RequestMapping("/emp")
+    public String emp(){
+        return "houtai/emp/list";
+    }
 
 }
