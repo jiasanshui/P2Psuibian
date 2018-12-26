@@ -9,9 +9,9 @@
     <script type="text/javascript" src="../js/axios.min.js"></script>
     <script type="text/javascript" src="../js/elementui.js"></script>
     <!-- 引入样式 -->
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../css/elementui.css">
     <!-- 引入组件库 -->
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="../js/elementui.js"></script>
 
 </head>
 <body>
@@ -52,11 +52,12 @@
                         </el-option>
                     </el-select>
                 </template>
-            </el-form-item><el-form-item>
-            <el-button type="primary" icon="search" @click="searchClick">查询</el-button>
-            <el-button type="success" icon="plus" @click="addClick">新增</el-button>
-            <el-button type="success" icon="plus" @click="toFlush">刷新</el-button>
-        </el-form-item>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" icon="search" @click="searchClick">查询</el-button>
+                <el-button type="success" icon="plus" @click="addClick">新增</el-button>
+                <el-button type="success" icon="plus" @click="toFlush">刷新</el-button>
+            </el-form-item>
         </el-form>
     </el-row>
     <!--列表-->
@@ -227,7 +228,7 @@
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button @click.native="editFormVisible = false">取消</el-button>
+            <el-button @click.native="editFormVisible=false">取消</el-button>
             <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
         </div>
     </el-dialog>
@@ -246,8 +247,7 @@
         el: '#tableView',
         data:{
             mapJson: '../json/map.json',
-            province:'',
-          //  province:[],
+            province:[],
             sheng: '',
             shi: '',
             shi1: [],
@@ -331,6 +331,7 @@
             },
             created: function () {
                 //在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
+              this.getCityData();
                 var self = this;
                axios.post('/emp/page', {
                     'pageNo': this.currentPage,
@@ -406,27 +407,31 @@
                 choseProvince: function (e) {
 
                     for (var index2 in this.province) {
-
-                                this.editForm.sheng1 = "";
-                                this.editForm.sheng1 = this.province[index2].value;
-
+                        if (e===this.province[index2].id){
                             this.shi1 = this.province[index2].children
                             this.shi = this.province[index2].children[0].value
                             this.qu1 = this.province[index2].children[0].children
                             this.qu = this.province[index2].children[0].children[0].value
                             this.E = this.qu1[0].id
+
+                        }
+
+//                                this.editForm.sheng = "";
+//                                this.editForm.sheng1 = this.province[index2].value;
+
+
                         }
                     },
                 //选市
                 choseCity: function (e) {
                     for (var index3 in this.city) {
-
-                                this.editForm.shi1 = ""
-                                this.editForm.shi1 = this.city[index3].value;
-
+                        if (e===this.city[index3].id){
                             this.qu1 = this.city[index3].children
                             this.qu = this.city[index3].children[0].value
                             this.E = this.qu1[0].id
+                        }
+//                                this.editForm.shi1 = ""
+//                                this.editForm.shi1 = this.city[index3].value;
                             // console.log(this.E)
                         }
                     },
@@ -435,18 +440,16 @@
                     this.E = e;
                     // this.dataForm.addrA+=this.block[e].value;
                     // console.log(this.E)
-                    for (var index4 in this.block) {
-                                this.editForm.qu1 = ""
-                                this.editForm.qu1 = this.block[index4].value;
-                                this.address = this.editForm.sheng1 + this.editForm.shi1 + this.editForm.qu1
+//                    for (var index4 in this.block) {
+//                                this.editForm.qu1 = ""
+//                                this.editForm.qu1 = this.block[index4].value;
+//                                this.address = this.editForm.sheng1 + this.editForm.shi1 + this.editForm.qu1
 
-                        }
-                    },
+                        },
                 //表格重新加载数据
                 loadingData: function () {
                     var _self = this;
                     _self.loading = true;
-                    var self = this;
                     var searchForm = {
                         'pageNo': this.currentPage,
                         'pageSize': this.pageSize,
@@ -501,8 +504,7 @@
                     });
                 },
                 //新建事件
-                addClick: function () {
-                    this.getCityData();
+                addClick:function () {
                     this.goUrl = "/emp/add";
                     var _self = this;
                     //清空原有数据
@@ -517,11 +519,14 @@
                         DEPTID: '',
                         COMM: 0,
                         SAL: 0
-                    },
+                    }
                         //显示隐藏form表单
-                        this.editFormVisible = true;
-                    _self.loadingData();//重新加载数据
+                    this.editFormVisible = true;
+
+                    //_self.loadingData();//重新加载数据
                 },
+
+
                 //表格查询事件
                 searchClick: function () {
                     var self = this;
@@ -615,8 +620,8 @@
                         _self.loadingData();//重新加载数据
                     })
                     console.info(this.editForm);
-                }}
-
+                }
+            }
         })
 </script>
 </body>
