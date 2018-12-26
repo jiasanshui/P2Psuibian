@@ -104,7 +104,6 @@
 						<el-row>
 							<el-table
 									:data="tableData"
-									v-loading.body="loading"
 									border
 									@selection-change="selectionChange"
 									style="width: 100%;height: 600px;">
@@ -181,7 +180,6 @@
 							<el-row>
 								<el-table
 										:data="returnData"
-										v-loading.body="loading"
 										border
 										@selection-change="selectionChangeA"
 										style="width: 650px;height: 350px;">
