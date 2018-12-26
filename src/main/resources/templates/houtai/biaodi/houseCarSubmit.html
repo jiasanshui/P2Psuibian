@@ -16,7 +16,7 @@
     <h2>{{ message }}</h2>
 </div>
 <div id="tableView">
-    <!--列表顶部搜索和工具条-->
+    <!---------------------------------------------------------------------------列表顶部搜索和工具条-->
     <el-row>
         <el-form :inline="true" :model="searchForm" class="demo-form-inline">
             <el-form-item label="用户Id">
@@ -119,17 +119,40 @@
                     align="center"
                     width="120">
             </el-table-column>
+<!--------------------------------------列表图片-->
+            <el-table-column
+                    prop="PHYSICAPIC"
+                    label="实物图片"
+                    width="120">
+                <template scope="scope">
+                    <a :href="'/notice/downloadPic?fileName='+scope.row.PHYSICAPIC">
+                        <img slot="reference" :src="path+scope.row.PHYSICAPIC" height="100" min-width="70">
+                    </a>
+                </template>
+            </el-table-column>
+
+            <el-table-column
+                    prop="DOCUMENTPIC"
+                    label="证件图片"
+                    width="120">
+                <template scope="scope">
+                    <a :href="'/notice/downloadPic?fileName='+scope.row.DOCUMENTPIC">
+                        <img slot="reference" :src="path+scope.row.DOCUMENTPIC" height="100" min-width="70">
+                    </a>
+                </template>
+            </el-table-column>
+<!--------------------------------------列表图片-->
             <el-table-column
                     label="操作">
                 <template scope="scope">
                     <el-button :plain="true" type="success" size="small" icon="edit" @click="lookClick(scope.row)">查看详情</el-button>
-                    <el-button type="primary" icon="el-icon-edit" size="small" @click="editClick(scope.row)"></el-button>
+                    <el-button type="primary" icon="el-icon-edit" size="small" @click="editClick(scope.row)">编辑</el-button>
                 </template>
             </el-table-column>
         </el-table>
     </el-row>
 
-    <!--列表底部工具条和分页符-->
+    <!-----------------------------------------------------------列表底部工具条和分页符-->
     <el-row style="margin-top: 20px" type="flex" justify="end">
         <el-col :span="24" >
             <el-pagination
@@ -144,7 +167,7 @@
             </el-pagination>
         </el-col>
     </el-row>
-    <!--审核界面-->
+    <!----------------------------------------------------------------审核界面-->
     <el-dialog title="初审" :visible.sync="editFormVisible" :close-on-click-modal="true">
         <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
             <el-form-item label="借款标号" prop="BORROWNUM">
@@ -175,7 +198,7 @@
             <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
         </div>
     </el-dialog>
-    <!--查看详情界面-->
+    <!------------------------------------------------------------------------------查看详情界面-->
     <el-dialog title="用户信息" :visible.sync="lookFormVisible" :close-on-click-modal="false">
         <el-form :model="lookForm" label-width="100px" :rules="lookFormRules" ref="lookForm">
             <el-row>
@@ -243,6 +266,26 @@
                     <el-input type="textarea" v-model="lookForm.DES" auto-complete="off"></el-input>
                 </el-form-item>
             </el-row>
+
+            <!--------------------------------------------------------------------正反面图片-->
+            <el-row>
+                <el-col :span="10">
+                    <el-form-item v-if="isAdd" label="实物图片" prop="PHYSICAPIC">
+                        <a :href="'/notice/downloadPic?fileName='+lookForm.PHYSICAPIC">
+                            <img slot="reference" :src="path+lookForm.PHYSICAPIC" height="100" min-width="70">
+                        </a>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="10">
+                    <el-form-item v-if="isAdd" label="证件图片" prop="DOCUMENTPIC">
+                        <a :href="'/notice/downloadPic?fileName='+lookForm.DOCUMENTPIC">
+                            <img slot="reference" :src="path+lookForm.DOCUMENTPIC" height="100" min-width="70">
+                        </a>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <!--------------------------------------------------------------------正反面图片-->
+
         </el-form>
     </el-dialog>
 </div>
@@ -256,6 +299,9 @@
     var tableView = new Vue({
         el: '#tableView',
         data: {
+            imgList:[],
+            isAdd:false,
+            path:'/notice/show?fileName=',
             options:[],
             //列表数据
             tableData: [],
@@ -314,7 +360,9 @@
                 APR:'',
                 PURPOSE:'',
                 BORROWNUM:'',
-                DES:''
+                DES:'',
+                PHYSICAPIC:'',
+                DOCUMENTPIC:''
             },
         },
         created:function(){
@@ -355,6 +403,7 @@
             //查看详情事件
             lookClick:function(row){
                 this.lookFormVisible = true;
+                this.isAdd=true;
                 this.lookForm = Object.assign({}, row);
             },
             //通过事件
@@ -438,6 +487,15 @@
                     _self.loadingData();//重新加载数据
                 })
                 console.info(this.editForm);
+            },
+            //上传成功后的方法
+            uploadSuc:function(response, file, fileList){
+                // alert(response);
+                this.editForm.PICTURE=response;
+                /* this.$refs.upload.clearFiles();*/
+            },
+            downLoad:function(row){
+                location.href="/notice/downloadPic?fileName="+row.PICTURE
             }
         }
     })

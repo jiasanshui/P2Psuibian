@@ -132,7 +132,7 @@
                     <img slot="reference" :src="path+editForm.PICTURE" height="100" min-width="70">
                 </a>
             </el-form-item>
-            <el-form-item label="图片" prop="">
+            <el-form-item label="图片" prop="PICTURE">
             <el-upload
                     action="/notice/upLoadPic"
                     list-type="picture-card"
@@ -183,7 +183,7 @@
             imgList:[],
             isAdd:false,
             path:'/notice/show?fileName=',
-                typeId:'',
+            typeId:'',
             //类型select
             options:[],
             //列表数据
