@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>用户借款审核列表</title>
+    <title>信用贷款审核列表</title>
     <!-- 引入样式 -->
     <script type="text/javascript" src="../js/vue.js"></script>
     <script type="text/javascript" src="../js/axios.min.js"></script>
@@ -123,8 +123,6 @@
                     label="操作">
                 <template scope="scope">
                     <el-button :plain="true" type="success" size="small" icon="edit" @click="lookClick(scope.row)">查看详情</el-button>
-                    <!--<el-button :plain="true" type="success" size="small" icon="delete" @click="deleteClick(scope.row)">通过</el-button>
-                    <el-button :plain="true" type="danger" size="small" icon="edit" @click="editClick(scope.row)">驳回</el-button>-->
                     <el-button type="primary" icon="el-icon-edit" size="small" @click="editClick(scope.row)"></el-button>
                 </template>
             </el-table-column>
@@ -188,72 +186,60 @@
                 </el-col>
                 <el-col :span="10">
                     <el-form-item label="申请人" prop="APPLICANT">
-                        <el-input v-model="lookForm.APPLICANT" auto-complete="off"></el-input>
+                        <el-input v-model="lookForm.APPLICANT" auto-complete="off" readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="10">
                     <el-form-item label="联系电话" prop="TEL">
-                        <el-input v-model="lookForm.TEL" auto-complete="off"></el-input>
+                        <el-input v-model="lookForm.TEL" auto-complete="off" readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
                     <el-form-item label="担保方式" prop="DANBAOSTYLE">
-                        <el-input v-model="lookForm.DANBAOSTYLE" auto-complete="off"></el-input>
+                        <el-input v-model="lookForm.DANBAOSTYLE" auto-complete="off" readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="10">
-                    <el-form-item label="数量" prop="QUANTITY">
-                         <el-input v-model="lookForm.QUANTITY" auto-complete="off" ></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="10">
-                    <el-form-item label="价值" prop="COST">
-                            <el-input v-model="lookForm.COST" auto-complete="off"  ></el-input>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :span="10">
-                    <el-form-item label="借款金额" prop="BORROWMONEY">
+                    <el-form-item label="借款金额" prop="BORROWMONEY" readonly="true">
                         <el-input v-model="lookForm.BORROWMONEY" auto-complete="off"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
                     <el-form-item label="还款方式" prop="PAYMENT">
-                        <el-input v-model="lookForm.PAYMENT" auto-complete="off"></el-input>
+                        <el-input v-model="lookForm.PAYMENT" auto-complete="off" readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="10">
-                    <el-form-item label="借款期限" prop="TIMELIMIT">
+                    <el-form-item label="借款期限" prop="TIMELIMIT" readonly="true">
                         <el-input v-model="lookForm.TIMELIMIT" auto-complete="off"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
                     <el-form-item label="年利率" prop="APR">
-                        <el-input v-model="lookForm.APR" auto-complete="off"></el-input>
+                        <el-input v-model="lookForm.APR" auto-complete="off" readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="10">
-                    <el-form-item label="借款用途" prop="PURPOSE">
+                    <el-form-item label="借款用途" prop="PURPOSE" readonly="true">
                         <el-input v-model="lookForm.PURPOSE" auto-complete="off"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
-                    <el-form-item label="标的编号" prop="BORROWNUM">
+                    <el-form-item label="标的编号" prop="BORROWNUM" readonly="true">
                         <el-input v-model="lookForm.BORROWNUM" auto-complete="off"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row :span="20">
-                <el-form-item label="借款用途" prop="PURPOSE">
+                <el-form-item label="借款用途" prop="PURPOSE" readonly="true">
                     <el-input type="textarea" v-model="lookForm.DES" auto-complete="off"></el-input>
                 </el-form-item>
             </el-row>

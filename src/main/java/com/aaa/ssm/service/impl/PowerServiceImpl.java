@@ -6,6 +6,7 @@ import com.aaa.ssm.entity.Permission;
 import com.aaa.ssm.entity.TbRole;
 import com.aaa.ssm.entity.TreeNode;
 import com.aaa.ssm.service.PowerService;
+import com.aaa.ssm.util.StringUtil;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -97,8 +98,16 @@ public class PowerServiceImpl implements PowerService{
         return powerDao.update(map);
     }
 
+    /**
+     * 权限菜单添加
+     * @param map
+     * @return
+     */
     @Override
     public int add(Map map) {
+        if(StringUtil.isEmpty(map.get("parentid"))){
+            map.put("parentid",0);
+        }
         return powerDao.add(map);
     }
 

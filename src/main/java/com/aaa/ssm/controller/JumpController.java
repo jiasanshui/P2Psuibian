@@ -131,8 +131,12 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/list")
-    public String list(Integer pageNo, Model model, HttpServletRequest request, @RequestParam Map map){
-        System.out.println("传的参数："+map);
+    public String list(Integer pageNo, Model model, HttpServletRequest request,HttpSession session,@RequestParam Map map){
+        String username=(String) session.getAttribute("userName");
+        Map map1= userInfoService.getUser(username);
+        Object msg = null;
+        try {
+            msg = map1.get("msg");
         //分页总数量
         int pageSize=5;
         int tPageNo = pageNo==null?1:pageNo;
@@ -200,6 +204,7 @@ public class JumpController {
         }if("month".equals(map.get("rs"))){
             map.put("repayment","等额本息");
         }
+        if (StringUtil.isEmpty(msg)){
         String pageString = new PageUtil(tPageNo, pageSize, projectService.getPageCount(map), request).getPageString();
         List<Map> houseProAll = projectService.getHouseProAll(map);
         //pageUtil分页
@@ -209,10 +214,16 @@ public class JumpController {
         model.addAttribute("bi",map.get("bi"));
         model.addAttribute("sm",map.get("sm"));
         model.addAttribute("rs",map.get("rs"));
-
-
         return "qiantai/list";
-
+        } if("1".equals(msg)){
+        return "qiantai/index";
+        }else {
+            return "qiantai/renzheng";
+        }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
     /**
      * 前台跳转到我要借款页面
@@ -328,7 +339,8 @@ public class JumpController {
         if (userName==null){
             return "qiantai/login";
         }else {
-            List<Map> list = userInfoService.getUserList(userName);
+            List<Map> infoList = userInfoService.getUserList(userName);
+            System.out.println(infoList);
             List<Map> listByUsername = borrowService.getListByBorrowNum(BORROWNUM);
             System.out.println(listByUsername);
             List<Map> pageList = tenderService.getPage(BORROWNUM);
@@ -336,6 +348,7 @@ public class JumpController {
             model.addAttribute("uList",listByUsername);
             model.addAttribute("pList",pageList);
             model.addAttribute("borrowList", borrowList);
+            model.addAttribute("infoList",infoList);
             //根据用户名去获取用户信息
             return "qiantai/infor";
         }
