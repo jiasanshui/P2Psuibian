@@ -19,7 +19,7 @@ public interface ProjectDao {
      * 查询房屋抵押项目
      * @return
      */
-    @Select("select borrowid,applicant,tel,timelimit,purpose,des,quantity,cost,CONCAT(TO_CHAR(apr*100,'990.99'),'%') apr,borrowmoney,danbaostyle,payment,username,stateid,borrownum,winbidmoney,concat((trunc(winbidmoney/borrowmoney,4)*100),'%') jindu,round(winbidmoney/borrowmoney*10) jindua  from borrow where rownum<3  and timelimit<=1 and stateid=2")
+    @Select("select borrowid,applicant,tel,timelimit,purpose,des,quantity,cost,CONCAT(TO_CHAR(apr*100,'990.99'),'%') apr,borrowmoney,danbaostyle,payment,username,stateid,borrownum,winbidmoney,concat((trunc(winbidmoney/borrowmoney,4)*100),'%') jindu,round(winbidmoney/borrowmoney*10) jindua from borrow where rownum<3 and timelimit<=1 and stateid=2")
     List<Map> getHousePro();
 
     /**
@@ -35,7 +35,7 @@ public interface ProjectDao {
      */
     @Select("<script>select * from (select rownum rn,borrowid,applicant,tel,timelimit,purpose,des,quantity,cost," +
             "CONCAT(TO_CHAR(apr*100,'990.99'),'%') apr,borrowmoney,danbaostyle,payment,username," +
-            "stateid,borrownum,winbidmoney,concat((round(winbidmoney/borrowmoney,4)*100),'%') jindu," +
+            "stateid,borrownum,winbidmoney,concat((trunc(winbidmoney/borrowmoney,4)*100),'%') jindu," +
             "round(winbidmoney/borrowmoney*10) jindua,(winbidmoney/borrowmoney) as baifen from borrow where stateid=2 and rownum &lt; #{end} " +
             "<if test=\"pt!=null and pt!=''\"> and danbaostyle=#{danbao}</if>" +
             "<if test=\"bi!=null and bi!=''\"> and apr &gt;= #{startapr} and apr &lt;= #{endapr}</if>" +
@@ -72,7 +72,7 @@ public interface ProjectDao {
      * 查询抵押项目(房屋、车辆、信用)
      * @return
      */
-    @Select("select borrowid,applicant,tel,timelimit,purpose,des,quantity,cost,CONCAT(TO_CHAR(apr*100,'990.99'),'%') apr,borrowmoney,danbaostyle,payment,username,stateid,borrownum,winbidmoney,concat(TO_CHAR((winbidmoney/borrowmoney*100),'990.99'),'%') jindu,round(winbidmoney/borrowmoney*10) jindua  from borrow where rownum<3 and DANBAOSTYLE like '%'||#{parama}||'%'")
+    @Select("select borrowid,applicant,tel,timelimit,purpose,des,quantity,cost,CONCAT(TO_CHAR(apr*100,'990.99'),'%') apr,borrowmoney,danbaostyle,payment,username,stateid,borrownum,winbidmoney,concat(TO_CHAR((winbidmoney/borrowmoney*100),'990.99'),'%') jindu,round(winbidmoney/borrowmoney*10) jindua  from borrow where rownum<3 and stateid=2 and DANBAOSTYLE like '%'||#{parama}||'%'")
     List<Map> getList(Map map);
 
     /**

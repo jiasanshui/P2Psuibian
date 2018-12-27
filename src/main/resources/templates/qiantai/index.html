@@ -229,6 +229,7 @@ $(function(){
           <div class="des"><span class="fn-left">期限1-29天，期限短，收益见效快</span><a href="/jump/list" class="fn-right">查看更多</a></div>
           <div class="borrow-list">
             <ul th:each="house : ${houseProList}">
+              <ul th:each="user : ${userList}">
               <input id="borrownum" type="hidden" th:value="${house.BORROWNUM}">
               <li>
                 <div class="title">
@@ -249,11 +250,22 @@ $(function(){
                               </div>
                           </div>
                         </div></td>
-                      <td align="right"><a class="ui-btn btn-gray" th:href="@{/jump/infor(BORROWNUM=${house.BORROWNUM})}"我要放款</a> </td>
+                      <td align="right">
+                       <!-- <a class="ui-btn btn-gray" th:href="@{/jump/infor(BORROWNUM=${house.BORROWNUM})}">
+                          我要放款</a>-->
+                <li  th:if="${user.STATEID} eq 2">
+                  <a class="ui-btn btn-gray"  th:href="@{/jump/infor(BORROWNUM=${house.BORROWNUM})}">我要放款</a>
+                </li>
+                <li th:if=" ${user.STATEID} ne 2">
+                  <a class="ui-btn btn-gray" href="/jump/renzheng">请先信息认证</a>
+                </li>
+                </td>
+                </li>
                     </tr>
                   </tbody>
                 </table>
               </li>
+              </ul>
             </ul>
           </div>
         </div>
@@ -267,6 +279,7 @@ $(function(){
           <div class="des"><span class="fn-left">期限1-12月，收益更高</span><a href="/jump/list" class="fn-right">查看更多&gt;&gt;</a></div>
           <div class="borrow-list">
             <ul th:each="car : ${listCar}">
+              <ul th:each="user : ${userList}">
               <input id="borrownum1" type="hidden" th:value="${car.BORROWNUM}">
               <li>
                 <div class="title">
@@ -293,11 +306,19 @@ $(function(){
                           </div>
                         </div>
                       </div></td>
-                      <td align="right"><a class="ui-btn btn-gray" href="#">还款中</a> </td>
+                      <td align="right">
+                <li  th:if="${user.STATEID} eq 2">
+                  <a class="ui-btn btn-gray"  th:href="@{/jump/infor(BORROWNUM=${car.BORROWNUM})}">我要放款</a>
+                </li>
+                <li th:if=" ${user.STATEID} ne 2">
+                  <a class="ui-btn btn-gray" href="/jump/renzheng">请先信息认证</a>
+                </li>
+                </td>
                     </tr>
                   </tbody>
                 </table>
               </li>
+              </ul>
             </ul>
           </div>
         </div>
@@ -311,6 +332,7 @@ $(function(){
           <div class="des"><span class="fn-left">期限1-12月，收益更高</span><a href="/jump/list" class="fn-right">查看更多&gt;&gt;</a></div>
           <div class="borrow-list">
             <ul th:each="house : ${listHouse}">
+              <ul th:each="user : ${userList}">
               <input id="borrownum2" type="hidden" th:value="${house.BORROWNUM}">
               <li>
                 <div class="title">
@@ -336,11 +358,19 @@ $(function(){
                         </div>
                       </div>
                     </div></td>
-                    <td align="right"><a class="ui-btn btn-gray" href="#">还款中</a> </td>
+                    <td align="right">
+                <li  th:if="${user.STATEID} eq 2">
+                  <a class="ui-btn btn-gray"  th:href="@{/jump/infor(BORROWNUM=${house.BORROWNUM})}">我要放款</a>
+                </li>
+                <li th:if=" ${user.STATEID} ne 2">
+                  <a class="ui-btn btn-gray" href="/jump/renzheng">请先信息认证</a>
+                </li>
+                </td>
                   </tr>
                   </tbody>
                 </table>
               </li>
+              </ul>
             </ul>
           </div>
         </div>
@@ -355,6 +385,7 @@ $(function(){
           <div class="des"><span class="fn-left">期限1-12月，收益更高</span><a href="/jump/list" class="fn-right">查看更多&gt;&gt;</a></div>
           <div class="borrow-list">
             <ul th:each="credit : ${listCredit}">
+              <ul th:each="user : ${userList}">
               <input id="borrownum3" type="hidden" th:value="${credit.BORROWNUM}">
               <li>
                 <div class="title">
@@ -380,11 +411,19 @@ $(function(){
                         </div>
                       </div>
                     </div></td>
-                    <td align="right"><a class="ui-btn btn-gray" href="#">还款中</a> </td>
+                    <td align="right">
+                <li  th:if="${user.STATEID} eq 2">
+                  <a class="ui-btn btn-gray"  th:href="@{/jump/infor(BORROWNUM=${credit.BORROWNUM})}">我要放款</a>
+                </li>
+                <li th:if=" ${user.STATEID} ne 2">
+                  <a class="ui-btn btn-gray" href="/jump/renzheng">请先信息认证</a>
+                </li>
+                </td>
                   </tr>
                   </tbody>
                 </table>
               </li>
+              </ul>
             </ul>
           </div>
         </div>

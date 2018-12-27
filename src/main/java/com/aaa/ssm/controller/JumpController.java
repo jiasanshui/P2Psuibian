@@ -49,16 +49,11 @@ public class JumpController {
      */
     @RequestMapping("/index")
     public String jumpIndex(Model model,HttpSession session) {
+        String userName=(String) session.getAttribute("userName");
+        List<Map> userList = userInfoService.getUserList(userName);
         //显示房屋抵押招标
-        String username = (String) session.getAttribute("userName");
-        Map Pmap = userInfoService.getUser(username);
-        Object msg = null;
-        try {
-            msg = Pmap.get("msg");
-            if (StringUtil.isEmpty(msg)){
             List<Map> housePro = projectService.getHousePro();
             model.addAttribute("houseProList", housePro);
-
             Map map1 = new HashMap();
             map1.put("parama", "车辆");
             List<Map> listCar = projectService.getList(map1);
@@ -77,17 +72,10 @@ public class JumpController {
             model.addAttribute("listCar", listCar);
             model.addAttribute("listHouse", listHouse);
             model.addAttribute("listCredit", listCredit);
-            return "qiantai/index";}
-            if ("1".equals(msg)) {
-                return "qiantai/index";
-            } else {
-                return "qiantai/renzheng";
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+            model.addAttribute("userList",userList);
+            return "qiantai/index";
     }
+
     /**
      * 跳转到登录页面
      * @return
@@ -141,11 +129,8 @@ public class JumpController {
      */
     @RequestMapping("/list")
     public String list(Integer pageNo, Model model, HttpServletRequest request,HttpSession session,@RequestParam Map map){
-        String username=(String) session.getAttribute("userName");
-        Map map1= userInfoService.getUser(username);
-        Object msg = null;
-        try {
-            msg = map1.get("msg");
+        String userName=(String) session.getAttribute("userName");
+        List<Map> userList = userInfoService.getUserList(userName);
         //分页总数量
         int pageSize=5;
         int tPageNo = pageNo==null?1:pageNo;
@@ -213,26 +198,17 @@ public class JumpController {
         }if("month".equals(map.get("rs"))){
             map.put("repayment","等额本息");
         }
-        if (StringUtil.isEmpty(msg)){
         String pageString = new PageUtil(tPageNo, pageSize, projectService.getPageCount(map), request).getPageString();
         List<Map> houseProAll = projectService.getHouseProAll(map);
         //pageUtil分页
         model.addAttribute("pageString",pageString);
         model.addAttribute("proList",houseProAll);
+        model.addAttribute("map",userList);
         model.addAttribute("pt",map.get("pt"));
         model.addAttribute("bi",map.get("bi"));
         model.addAttribute("sm",map.get("sm"));
         model.addAttribute("rs",map.get("rs"));
         return "qiantai/list";
-        } if("1".equals(msg)){
-        return "qiantai/list";
-        }else {
-            return "qiantai/renzheng";
-        }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
     /**
      * 前台跳转到我要借款页面
