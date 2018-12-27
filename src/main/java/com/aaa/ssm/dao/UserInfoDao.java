@@ -164,4 +164,7 @@ public interface UserInfoDao {
     @Insert("insert into account_flow(id,userid,amount,flowdate,flowtypeid,changeamount) " +
             "values(seq_account_flow_id.nextval,#{USERID},#{taccount},sysdate,2,#{tamount})")
     int addTaccountFlow(Map map);
+
+    @Select("select amount from userinfo where uname=#{userName}")
+    int getAccountMoney(String userName);
 }

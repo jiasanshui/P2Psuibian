@@ -269,7 +269,10 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/personal")
-    public String personal(){
+    public String personal(HttpSession session, Model model){
+        String userName = (String)session.getAttribute("userName");
+        int accountMoney = userInfoService.getAccountMoney(userName);
+        model.addAttribute("amount",accountMoney);
         return "qiantai/personal";
     }
     /**
@@ -536,6 +539,7 @@ public class JumpController {
      */
     @RequestMapping("/fukuan")
     public String fukuan(String borrownum,String limits,Model model){
+        System.out.println(borrownum+","+limits);
         double moneyAll = huankuanService.getMoneyAll(borrownum,limits);
         model.addAttribute("allMoney",moneyAll);
         model.addAttribute("limits",limits);

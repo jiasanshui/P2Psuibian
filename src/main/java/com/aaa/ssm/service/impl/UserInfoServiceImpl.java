@@ -127,4 +127,9 @@ public class UserInfoServiceImpl implements UserInfoService {
     public List<Map> getAllUserByuserid(Integer userid) {
         return userInfoDao.getAllUserByuserid(userid);
     }
+
+    @Override
+    public int getAccountMoney(String userName) {
+        return userInfoDao.getAccountMoney(userName);
+    }
 }

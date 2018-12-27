@@ -87,4 +87,6 @@ public interface UserInfoService {
      */
     List<Map> getAllUserByuserid(Integer userid);
 
+    int getAccountMoney(String userName);
+
 }
