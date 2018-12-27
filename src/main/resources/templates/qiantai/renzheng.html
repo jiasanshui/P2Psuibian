@@ -15,7 +15,7 @@
   <link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
   <script type="text/javascript" src="../easyui/jquery.min.js"></script>
   <script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
-  <script>
+  <script type="text/javascript">
      $(function(){
         $("#idcarda").change(function(){
             var file=this.files[0] // 获取input上传的图片数据;
@@ -25,7 +25,7 @@
                // $("#previewA").html('<img width="100px;" height="100px;" src="' + evt.target.result + '" />');
             }
             reader.readAsDataURL(file);
-            $("#liA").attr("style","height:150px;");
+            $("#liA").attr("style","height:120px;");
         });
          $("#idcardb").change(function(){
              var file=this.files[0] // 获取input上传的图片数据;
@@ -35,10 +35,28 @@
               //   $("#previewB").html('<img width="100px;" height="100px;" src="' + evt.target.result + '" />');
              }
              reader.readAsDataURL(file);
-             $("#liB").attr("style","height:150px;");
+             $("#liB").attr("style","height:120px;");
+         });
+         $("#wageflow").change(function(){
+             var file=this.files[0] // 获取input上传的图片数据;
+             var reader = new FileReader();
+             reader.onload = function(evt){
+                 $("#previewF").attr("src",evt.target.result).attr("width","100px;").attr("height","100px;");
+                 // $("#previewA").html('<img width="100px;" height="100px;" src="' + evt.target.result + '" />');
+             }
+             reader.readAsDataURL(file);
+             $("#flow").attr("style","height:120px;");
+         });
+         $("#creditreport").change(function(){
+             var file=this.files[0] // 获取input上传的图片数据;
+             var reader = new FileReader();
+             reader.onload = function(evt){
+                 $("#previewC").attr("src",evt.target.result).attr("width","100px;").attr("height","100px;");
+             }
+             reader.readAsDataURL(file);
+             $("#report").attr("style","height:120px;");
          });
      });
-
   </script>
 </head>
 <body>
@@ -175,7 +193,7 @@
                     }
                 }
             })
-        })
+        });
         //级联年龄
         $(function(){
             $("#age").click(function(){
@@ -258,7 +276,8 @@
                 su.style.borderWidth="1px red solid";
                 return false;
             }
-        }function checkIdcard() {
+        }
+        function checkIdcard() {
             var idcard = document.getElementById("idcard");
             var idc = document.getElementById("idc");
             var reg=/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])\d{3}(\d|[xX])$/;
@@ -280,7 +299,6 @@
             var income = document.getElementById("income");
             var inc = document.getElementById("inc");
             var reg=/^[1-9]\d*$/;
-            alert(income.value);
             if(reg.test(income.value)){
                 inc.style.color="green";
                 inc.innerHTML="通过";
@@ -294,7 +312,8 @@
                 inc.style.borderWidth="1px red solid";
                 return false;
             }
-        }function checkHoure() {
+        }
+        function checkHoure() {
             var house = document.getElementById("house");
             var hou = document.getElementById("hou");
             if(house.value!=null&&house.value!=''){
@@ -420,7 +439,7 @@
               </li>
               <li>
                 <label for="age">年龄</label>
-                <input id="age" name="age" type="text"  class="pay-txt" maxlength="3" onblur="checkAge()"  placeholder="年龄" readonly="readonly">
+                <input id="age" name="age" type="text"  class="pay-txt" maxlength="3"  placeholder="年龄" readonly="readonly">
                 <span id="ag"></span>
                 <!--级联年龄-->
               </li>
@@ -438,7 +457,6 @@
                 <label for="idcard">身份证号</label>
                 <input name="idcard" id="idcard" type="text" onblur="checkIdcard()" class="pay-txt" maxlength="18">
                 <span id="idc"></span>
-                <input name="idcard"   type="text" class="pay-txt" maxlength="18">
               </li>
               <li id="liA">
                 <label for="idcardA">身份证正面</label>
@@ -491,6 +509,17 @@
                 <input type="text" id="income" name="income" onblur="checkIncome()" class="pay-txt" placeholder="收入/月"/>
                 <span id="inc"></span>
               </li>
+              <li id="flow">
+                <label for="wageflow">近来工资流水</label>
+                <input name="wageflow"  id="wageflow" type="file" style="border: 0px;"   maxlength="16">
+                <br> <!--<div style="float: left" id="previewA"></div>-->
+                <img src="" id="previewF">
+              </li>
+              <li id="report">
+                <label for="creditreport">个人信用报告</label>
+                <input name="creditreport" id="creditreport" type="file"  style="border: 0px;"   maxlength="16">
+                <br><img src="" id="previewC">
+              </li>
             </ul>
             <h6>邮箱已绑定</h6>
             <ul>
@@ -505,7 +534,7 @@
                 <span>&nbsp;&nbsp;&nbsp;手机号:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span th:text="${session.phone}"></span>
               </li>
               <li>
-                <button  type="button" class="btn" onclick="()">提交身份信息</button>
+                <button  type="button" class="btn" onclick="submitBtn()">提交信息</button>
               </li>
             </ul>
           </div>

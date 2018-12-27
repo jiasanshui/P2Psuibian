@@ -18,28 +18,29 @@ import java.util.Map;
 @Component
 public interface UserInfoDao {
     /**
-     * 用户列表查询
+     * 个人信息认证审核列表
      * @param map
      * @return
      * 如果使用注解的方式，动态sql必须在标签<script></script>
      * 如果使用<script></script>标签，mybatis 大于小于，必须使用&gt; &lt;
      */
-    @Select("<script>select userid,uname,realname,age,to_char(birthday,'yyyy-mm-dd') birthday,phone,email,address,idcard,icpica,icpicb,remark from userinfo where stateid=1 \n "+
+    @Select("<script>select userid,uname,realname,age,to_char(birthday,'yyyy-mm-dd') birthday,phone,email,address," +
+            "idcard,icpica,icpicb,education,working,income,wageflow,creditreport from userinfo where stateid=1 \n "+
             "<if test=\"uname!=null and uname!=''\">  and uname like '%'||#{uname}||'%'</if>" +
             "<if test=\"phone!=null and phone!=''\">  and phone =#{phone}</if>" +
             "</script>")
     List<Map> getList(Map map);
 
     /**
-     * 审核通过，更新用户信息表审核状态
-     * @param userId
+     * 个人信息认证审核通过,更新用户信息表审核状态
+     * @param map
      * @return
      */
-    @Update("update userinfo set stateid=2 where userid=#{userId}")
-    int update(Integer userId);
+    @Update("update userinfo set stateid=2 where userid=#{USERID}")
+    int update(Map map);
 
     /**
-     * 审核驳回，更新用户信息表审核状态
+     * 个人信息认证审核通过,更新用户信息表审核状态
      * @param map
      * @return
      */

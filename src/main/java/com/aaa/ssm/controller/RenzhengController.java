@@ -42,7 +42,8 @@ public class RenzhengController {
      * @return
      */
     @RequestMapping("update")
-    public Object update(@RequestParam Map map, @RequestParam MultipartFile idcarda, @RequestParam MultipartFile idcardb) throws ParseException {
+    public Object update(@RequestParam Map map, @RequestParam MultipartFile idcarda, @RequestParam MultipartFile idcardb,
+                         @RequestParam MultipartFile wageflow, @RequestParam MultipartFile creditreport) throws ParseException {
         System.out.println(map);
         //上传图片
             //String newFileNameA = FileUtil.uploadFile(uploadPath, idcarda);
@@ -56,6 +57,15 @@ public class RenzhengController {
         String newFileNameB = ftpUtil.upLoad(idcardb);
             map.put("picA",newFileNameA);
             map.put("picB",newFileNameB);
+        String newFileNameC = ftpUtil.upLoad(wageflow);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        String newFileNameD = ftpUtil.upLoad(creditreport);
+        map.put("wageflow",newFileNameC);
+        map.put("creditreport",newFileNameD);
         //转换日期格式
         Date date = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").parse(map.get("birth").toString());
         String birth =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
