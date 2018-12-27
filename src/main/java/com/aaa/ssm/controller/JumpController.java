@@ -43,6 +43,9 @@ public class JumpController {
     @Autowired
     private TenderService tenderService;
 
+    //依赖注入
+    @Autowired
+    private WebService webService;
     /**
      * 跳转到前台首页
      * @return
@@ -166,7 +169,7 @@ public class JumpController {
             double endapr = 1;
             map.put("startapr",startapr);
             map.put("endapr",endapr);
-
+        }
         //期数
         if("1".equals(map.get("sm"))){
             int startlimit = 0;
@@ -197,6 +200,7 @@ public class JumpController {
         }if("month".equals(map.get("rs"))){
             map.put("repayment","等额本息");
         }
+        //if (StringUtil.isEmpty(msg)){
         String pageString = new PageUtil(tPageNo, pageSize, projectService.getPageCount(map), request).getPageString();
         List<Map> houseProAll = projectService.getHouseProAll(map);
         //pageUtil分页
@@ -438,8 +442,6 @@ public class JumpController {
      * 跳转到网站公告页面
      * @return
      */
-    @Autowired
-    private WebService webService;
 
     @RequestMapping("/site_notice")
     public String site_notice(Model model) {
@@ -556,6 +558,4 @@ public class JumpController {
     public String fkcg() {
         return "qiantai/fukuan/fkcg";
     }
-
-
 }
