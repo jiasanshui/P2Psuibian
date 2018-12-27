@@ -92,28 +92,25 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/register")
-    public String register() {
+    public String register(){
         return "qiantai/register";
     }
 
     /**
      * 跳转到认证页面
-     *
      * @return
      */
     @RequestMapping("renzheng")
-    public Object renzheng() {
+    public Object renzheng(){
 
         return "qiantai/renzheng";
     }
-
     /**
      * 跳转到资料认证页面
-     *
      * @return
      */
     @RequestMapping("zlrenzheng")
-    public Object zlrenzheng() {
+    public Object zlrenzheng(){
         return "qiantai/zlrenzheng";
     }
 
@@ -123,10 +120,9 @@ public class JumpController {
      */
 
     @RequestMapping("/register1")
-    public String register1() {
+    public String register1(){
         return "qiantai/register1";
     }
-
     /**
      * 跳转到我要投资页面
      * @return
@@ -214,13 +210,12 @@ public class JumpController {
         model.addAttribute("rs",map.get("rs"));
         return "qiantai/list";
     }
-
     /**
      * 前台跳转到我要借款页面
      * 首先判断个人信息是否完善
      * 是否进行实名认证
      * 是否通过实名认证
-     *
+     * 跳转借款页面
      * @return
      */
     @RequestMapping("/borrow")
@@ -247,25 +242,22 @@ public class JumpController {
         }
         return null;
     }
-
     /**
      * 跳转到安全保障页面
      * @return
      */
     @RequestMapping("/help")
-    public String help() {
+    public String help(){
         return "qiantai/help";
     }
-
     /**
      * 跳转到我的账户页面
      * @return
      */
     @RequestMapping("/personal")
-    public String personal() {
+    public String personal(){
         return "qiantai/personal";
     }
-
     /**
      * 跳转到关于我们页面
      * @return
@@ -276,7 +268,6 @@ public class JumpController {
         model.addAttribute("companyList", companyList);
         return "qiantai/about";
     }
-
     /**
      * 跳转到账户设置页面
      * @return
@@ -294,10 +285,8 @@ public class JumpController {
     public String change_history() {
         return "qiantai/change_history";
     }
-
     /**
      * 跳转到公司公告详细页面
-     *
      * @return
      */
     @RequestMapping("/company_announce")
@@ -315,7 +304,6 @@ public class JumpController {
     public String contact_us() {
         return "qiantai/contact_us";
     }
-
     /**
      * 跳转到公司投资记录页面
      * @return
@@ -324,10 +312,8 @@ public class JumpController {
     public String deposits_record() {
         return "qiantai/deposits_record";
     }
-
     /**
      * 跳转到投资页面
-     *
      * @return
      */
     @RequestMapping("/infor")
@@ -369,7 +355,6 @@ public class JumpController {
     public String legal_notice() {
         return "qiantai/legal_notice";
     }
-
     /**
      * 跳转到法律政策页面
      * @return
@@ -395,9 +380,9 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/media_report")
-    public String media_report(Model model) {
-        List<Map> mediaList = webService.getMediaList();
-        model.addAttribute("mediaList", mediaList);
+    public String media_report(Model model){
+       List<Map> mediaList=webService.getMediaList();
+        model.addAttribute("mediaList",mediaList);
         return "qiantai/media_report";
     }
 
@@ -409,7 +394,6 @@ public class JumpController {
     public String money_plan() {
         return "qiantai/money_plan";
     }
-
     /**
      * 跳转到资金记录页面
      * @return
@@ -439,7 +423,6 @@ public class JumpController {
 
     /**
      * 跳转到合作伙伴页面
-     *
      * @return
      */
     @RequestMapping("/partner")
@@ -451,7 +434,6 @@ public class JumpController {
 
     /**
      * 跳转到网站公告页面
-     *
      * @return
      */
     @Autowired
@@ -466,7 +448,6 @@ public class JumpController {
 
     /**
      * 跳转到系统消息页面
-     *
      * @return
      */
     @RequestMapping("/system_message")
@@ -487,14 +468,12 @@ public class JumpController {
 
     /**
      * 跳转到充值页面
-     *
      * @return
      */
     @RequestMapping("/withdraw")
     public String withdraw(){
         return "qiantai/withdraw";
     }
-
     /**
      * 跳转到充值页面
      * @return
@@ -506,7 +485,6 @@ public class JumpController {
 
     /**
      * 跳转到还款页面
-     *
      * @return
      */
     @RequestMapping("/huankuan")
@@ -525,7 +503,6 @@ public class JumpController {
 
     /**
      * 跳转到提现页面
-     *
      * @return
      */
     @RequestMapping("/pay1")
@@ -535,7 +512,6 @@ public class JumpController {
 
     /**
      * 跳转到投标页面
-     *
      * @return
      */
     @RequestMapping("/toubiao")
@@ -572,7 +548,6 @@ public class JumpController {
 
     /**
      * 跳转到付款成功页面
-     *
      * @return
      */
     @RequestMapping("/fkcg")
