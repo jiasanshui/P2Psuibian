@@ -198,6 +198,7 @@ public class JumpController {
         }if("month".equals(map.get("rs"))){
             map.put("repayment","等额本息");
         }
+        if (StringUtil.isEmpty(msg)){
         String pageString = new PageUtil(tPageNo, pageSize, projectService.getPageCount(map), request).getPageString();
         List<Map> houseProAll = projectService.getHouseProAll(map);
         //pageUtil分页
@@ -255,7 +256,10 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/personal")
-    public String personal(){
+    public String personal(HttpSession session, Model model){
+        String userName = (String)session.getAttribute("userName");
+        int accountMoney = userInfoService.getAccountMoney(userName);
+        model.addAttribute("amount",accountMoney);
         return "qiantai/personal";
     }
     /**
@@ -538,11 +542,11 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/fukuan")
-    public String fukuan(String borrownum, String limits, Model model) {
-        double moneyAll = huankuanService.getMoneyAll(borrownum, limits);
-        model.addAttribute("allMoney", moneyAll);
-        model.addAttribute("limits", limits);
-        model.addAttribute("borrownum", borrownum);
+    public String fukuan(String borrownum,String limits,Model model){
+        double moneyAll = huankuanService.getMoneyAll(borrownum,limits);
+        model.addAttribute("allMoney",moneyAll);
+        model.addAttribute("limits",limits);
+        model.addAttribute("borrownum",borrownum);
         return "qiantai/fukuan/fukuan";
     }
 

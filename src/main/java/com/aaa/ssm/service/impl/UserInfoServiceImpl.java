@@ -137,6 +137,11 @@ public class UserInfoServiceImpl implements UserInfoService {
         return userInfoDao.getAllUserByuserid(userid);
     }
 
+    @Override
+    public int getAccountMoney(String userName) {
+        return userInfoDao.getAccountMoney(userName);
+    }
+
     /**
      * 根据用户ID查询历史
      * @param map
