@@ -5,6 +5,7 @@ import com.aaa.ssm.service.BorrowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,5 +60,32 @@ public class BorrowServiceImpl implements BorrowService {
     @Override
     public List<Map> getListByUsername(String BORROWNUM) {
         return borrowDao.getListByUsername(BORROWNUM);
+    }
+
+    /**
+     * 借款页面提示
+     * @param userid
+     * @return
+     */
+    @Override
+    public Map isBorrow(Integer userid) {
+        Map map=new HashMap();
+        List<Map> borrowList=borrowDao.isBorrow(userid);
+        if(borrowList!=null && borrowList.size()>0){
+            return borrowList.get(0);
+        }
+        //没有提交过借款申请
+        map.put("STATEID","0");
+        return map;
+    }
+
+    /**
+     * 重新申请，提交借款材料
+     * @param userid
+     * @return
+     */
+    @Override
+    public int updatebidstate(Integer userid) {
+        return borrowDao.updatebidstate(userid);
     }
 }

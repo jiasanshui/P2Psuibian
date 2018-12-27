@@ -73,4 +73,19 @@ public interface BorrowDao {
     @Update("update borrow set winbidmoney = winbidmoney+#{tamount} where borrownum = #{borrowNum}")
     int update(Map map);
 
+    /**
+     * 借款页面提示
+     * @param userid
+     * @return
+     */
+    @Select("select stateid from borrow where userid=#{userid}")
+    List<Map> isBorrow(Integer userid);
+
+    /**
+     * 重新申请，提交借款材料
+     * @param userid
+     * @return
+     */
+    @Update("update borrow set stateid=0 where userid=#{userid}")
+    int updatebidstate(Integer userid);
 }

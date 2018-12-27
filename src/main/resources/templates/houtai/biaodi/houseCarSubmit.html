@@ -484,6 +484,10 @@
                 axios.post(goUrl,formData).then(function(response){
                     if(response.data>0){
                         _self.editFormVisible = false;
+                        _self.$message({
+                            message: row.APPLICANT + '已通过审核',
+                            type: 'success'
+                        });
                     }else{
                         _self.$message({
                             message:'驳回失败',

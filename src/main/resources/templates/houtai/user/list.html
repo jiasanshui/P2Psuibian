@@ -196,48 +196,48 @@
             <el-row>
                 <el-col :span="10">
                     <el-form-item label="用户ID" prop="USERID">
-                        <el-input v-model="lookForm.USERID" auto-complete="off"></el-input>
+                        <el-input v-model="lookForm.USERID" auto-complete="off" readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
                     <el-form-item label="用户名" prop="UNAME">
-                        <el-input v-model="lookForm.UNAME" auto-complete="off"></el-input>
+                        <el-input v-model="lookForm.UNAME" auto-complete="off" readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="10">
                     <el-form-item label="真实姓名" prop="REALNAME">
-                        <el-input v-model="lookForm.REALNAME" auto-complete="off"></el-input>
+                        <el-input v-model="lookForm.REALNAME" auto-complete="off" readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
-                    <el-form-item label="年龄" prop="AGE">
-                        <el-input v-model="lookForm.AGE" auto-complete="off"></el-input>
+                    <el-form-item label="出生日期" prop="BIRTHDAY">
+                        <el-input v-model="lookForm.BIRTHDAY" auto-complete="off" readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="10">
                     <el-form-item label="联系电话" prop="PHONE">
-                        <el-input v-model="lookForm.PHONE" auto-complete="off"></el-input>
+                        <el-input v-model="lookForm.PHONE" auto-complete="off" readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
                     <el-form-item label="地址" prop="ADDRESS">
-                        <el-input v-model="lookForm.ADDRESS" auto-complete="off"></el-input>
+                        <el-input v-model="lookForm.ADDRESS" auto-complete="off" readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="10">
                     <el-form-item label="身份证号" prop="IDCARD">
-                        <el-input v-model="lookForm.IDCARD" auto-complete="off"></el-input>
+                        <el-input v-model="lookForm.IDCARD" auto-complete="off" readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
                     <el-form-item label="邮箱" prop="EMAIL">
-                        <el-input v-model="lookForm.EMAIL" auto-complete="off"></el-input>
+                        <el-input v-model="lookForm.EMAIL" auto-complete="off" readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -274,24 +274,24 @@
             <el-row>
                 <el-col :span="10">
                     <el-form-item label="学历" prop="EDUCATION">
-                        <el-input v-model="lookForm.EDUCATION" auto-complete="off"></el-input>
+                        <el-input v-model="lookForm.EDUCATION" auto-complete="off" readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
                     <el-form-item label="年龄" prop="AGE">
-                        <el-input v-model="lookForm.AGE" auto-complete="off"></el-input>
+                        <el-input v-model="lookForm.AGE" auto-complete="off" readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="10">
                     <el-form-item label="工作" prop="WORKING">
-                        <el-input v-model="lookForm.WORKING" auto-complete="off"></el-input>
+                        <el-input v-model="lookForm.WORKING" auto-complete="off" readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
                     <el-form-item label="月收入" prop="INCOME">
-                        <el-input v-model="lookForm.INCOME" auto-complete="off"></el-input>
+                        <el-input v-model="lookForm.INCOME" auto-complete="off" readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -389,6 +389,7 @@
                 USERID: 0,
                 UNAME: '',
                 REALNAME: '',
+                BIRTHDAY:'',
                 AGE: 0,
                 PHONE:'',
                 ADDRESS: '',
