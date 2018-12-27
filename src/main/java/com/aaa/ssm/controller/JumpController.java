@@ -63,7 +63,6 @@ public class JumpController {
             Map map3 = new HashMap();
             map3.put("parama", "信用");
             List<Map> listCredit = projectService.getList(map3);
-
             List<Map> webList = webService.getWebList();
             List<Map> mediaList = webService.getMediaList();
             model.addAttribute("webList", webList);
@@ -167,7 +166,7 @@ public class JumpController {
             double endapr = 1;
             map.put("startapr",startapr);
             map.put("endapr",endapr);
-        }
+
         //期数
         if("1".equals(map.get("sm"))){
             int startlimit = 0;
@@ -198,7 +197,6 @@ public class JumpController {
         }if("month".equals(map.get("rs"))){
             map.put("repayment","等额本息");
         }
-        if (StringUtil.isEmpty(msg)){
         String pageString = new PageUtil(tPageNo, pageSize, projectService.getPageCount(map), request).getPageString();
         List<Map> houseProAll = projectService.getHouseProAll(map);
         //pageUtil分页
