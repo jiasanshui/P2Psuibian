@@ -1,5 +1,6 @@
 package com.aaa.ssm.service.impl;
 
+import com.aaa.ssm.dao.AduitUserinfoDao;
 import com.aaa.ssm.dao.BorrowDao;
 import com.aaa.ssm.dao.UserInfoDao;
 import com.aaa.ssm.service.UserInfoService;
@@ -26,20 +27,39 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Autowired
     private BorrowDao borrowDao;
 
+    @Autowired
+    private AduitUserinfoDao aduitUserinfoDao;
+
     @Override
     public List<Map> getList(Map map) {
 
         return userInfoDao.getList(map);
     }
 
-    @Override
-    public int update(Integer userId) {
-        return userInfoDao.update(userId);
-    }
-
+    /**
+     * 个人信息认证审核
+     * 1、更新userinfo审核状态
+     * 2、往userinfoaduit中插入数据
+     * @param map
+     * @return
+     */
     @Override
     public int edit(Map map) {
-        return userInfoDao.edit(map);
+        //1、更新userinfo审核状态
+        Integer aduitresult = Integer.valueOf(map.get("ADUITRESULT")+"");
+        int m=0;
+        int n=0;
+        if(aduitresult==1){//个人信息认证审核通过
+            m=userInfoDao.update(map);
+        }else {//个人信息认证审核失败
+            n=userInfoDao.edit(map);
+        }
+        //2、往userinfoaduit中插入数据
+        int s = aduitUserinfoDao.add(map);
+        if (s!=0 &&( n!=0 || m!=0)){
+            return 1;
+        }
+        return 0;
     }
 
     @Override
