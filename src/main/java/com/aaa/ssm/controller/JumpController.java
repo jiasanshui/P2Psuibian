@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.sound.midi.Soundbank;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,39 +45,39 @@ public class JumpController {
 
     /**
      * 跳转到前台首页
-     *
      * @return
      */
     @RequestMapping("/index")
-    public String jumpIndex(Model model) {
+    public String jumpIndex(Model model,HttpSession session) {
+        String userName=(String) session.getAttribute("userName");
+        List<Map> userList = userInfoService.getUserList(userName);
         //显示房屋抵押招标
-        List<Map> housePro = projectService.getHousePro();
-        model.addAttribute("houseProList", housePro);
+            List<Map> housePro = projectService.getHousePro();
+            model.addAttribute("houseProList", housePro);
+            Map map1 = new HashMap();
+            map1.put("parama", "车辆");
+            List<Map> listCar = projectService.getList(map1);
+            Map map2 = new HashMap();
+            map2.put("parama", "房屋");
+            List<Map> listHouse = projectService.getList(map2);
+            Map map3 = new HashMap();
+            map3.put("parama", "信用");
+            List<Map> listCredit = projectService.getList(map3);
 
-        Map map1 = new HashMap();
-        map1.put("parama", "车辆");
-        List<Map> listCar = projectService.getList(map1);
-        Map map2 = new HashMap();
-        map2.put("parama", "房屋");
-        List<Map> listHouse = projectService.getList(map2);
-        Map map3 = new HashMap();
-        map3.put("parama", "信用");
-        List<Map> listCredit = projectService.getList(map3);
+            List<Map> webList = webService.getWebList();
+            List<Map> mediaList = webService.getMediaList();
+            model.addAttribute("webList", webList);
+            model.addAttribute("mediaList", mediaList);
 
-        List<Map> webList = webService.getWebList();
-        List<Map> mediaList = webService.getMediaList();
-        model.addAttribute("webList", webList);
-        model.addAttribute("mediaList", mediaList);
-
-        model.addAttribute("listCar", listCar);
-        model.addAttribute("listHouse", listHouse);
-        model.addAttribute("listCredit", listCredit);
-        return "qiantai/index";
+            model.addAttribute("listCar", listCar);
+            model.addAttribute("listHouse", listHouse);
+            model.addAttribute("listCredit", listCredit);
+            model.addAttribute("userList",userList);
+            return "qiantai/index";
     }
 
     /**
      * 跳转到登录页面
-     *
      * @return
      */
     @RequestMapping("/login")
@@ -90,7 +89,6 @@ public class JumpController {
 
     /**
      * 跳转到注册页面
-     *
      * @return
      */
     @RequestMapping("/register")
@@ -121,7 +119,6 @@ public class JumpController {
 
     /**
      * 跳转到注册成功页面
-     *
      * @return
      */
 
@@ -132,114 +129,90 @@ public class JumpController {
 
     /**
      * 跳转到我要投资页面
-     *
      * @return
      */
     @RequestMapping("/list")
-    public String list(Integer pageNo, Model model, HttpServletRequest request, HttpSession session, @RequestParam Map map) {
-        String username = (String) session.getAttribute("userName");
-        Map map1 = userInfoService.getUser(username);
-        Object msg = null;
-        try {
-            msg = map1.get("msg");
-            //分页总数量
-            int pageSize = 5;
-            int tPageNo = pageNo == null ? 1 : pageNo;
-            map.put("pageNo", tPageNo);
-            map.put("pageSize", pageSize);
+    public String list(Integer pageNo, Model model, HttpServletRequest request,HttpSession session,@RequestParam Map map){
+        String userName=(String) session.getAttribute("userName");
+        List<Map> userList = userInfoService.getUserList(userName);
+        //分页总数量
+        int pageSize=5;
+        int tPageNo = pageNo==null?1:pageNo;
+        map.put("pageNo",tPageNo);
+        map.put("pageSize",pageSize);
 
-            //查询分页，模糊查询
-            //项目类型
-            if ("car".equals(map.get("pt"))) {
-                map.put("danbao", "车辆抵押贷款");
-            }
-            if ("house".equals(map.get("pt"))) {
-                map.put("danbao", "房屋抵押贷款");
-            }
-            if ("xinyong".equals(map.get("pt"))) {
-                map.put("danbao", "信用贷款");
-            }
-            //年利率
-            if ("1".equals(map.get("bi"))) {
-                double startapr = 0;
-                double endapr = 0.12;
-                map.put("startapr", startapr);
-                map.put("endapr", endapr);
-            }
-            if ("2".equals(map.get("bi"))) {
-                double startapr = 0.12;
-                double endapr = 0.14;
-                map.put("startapr", startapr);
-                map.put("endapr", endapr);
-            }
-            if ("3".equals(map.get("bi"))) {
-                double startapr = 0.14;
-                double endapr = 0.16;
-                map.put("startapr", startapr);
-                map.put("endapr", endapr);
-            }
-            if ("4".equals(map.get("bi"))) {
-                double startapr = 0.16;
-                double endapr = 1;
-                map.put("startapr", startapr);
-                map.put("endapr", endapr);
-            }
-            //期数
-            if ("1".equals(map.get("sm"))) {
-                int startlimit = 0;
-                int endlimit = 1;
-                map.put("startlimit", startlimit);
-                map.put("endlimit", endlimit);
-            }
-            if ("2".equals(map.get("sm"))) {
-                int startlimit = 1;
-                int endlimit = 3;
-                map.put("startlimit", startlimit);
-                map.put("endlimit", endlimit);
-            }
-            if ("3".equals(map.get("sm"))) {
-                int startlimit = 3;
-                int endlimit = 6;
-                map.put("startlimit", startlimit);
-                map.put("endlimit", endlimit);
-            }
-            if ("4".equals(map.get("sm"))) {
-                int startlimit = 6;
-                int endlimit = 12;
-                map.put("startlimit", startlimit);
-                map.put("endlimit", endlimit);
-            }
-            //还款方式
-            if ("end".equals(map.get("rs"))) {
-                map.put("repayment", "到期付本付息");
-            }
-            if ("endmonth".equals(map.get("rs"))) {
-                map.put("repayment", "按月付息，到期还本");
-            }
-            if ("month".equals(map.get("rs"))) {
-                map.put("repayment", "等额本息");
-            }
-            if (StringUtil.isEmpty(msg)) {
-                String pageString = new PageUtil(tPageNo, pageSize, projectService.getPageCount(map), request).getPageString();
-                List<Map> houseProAll = projectService.getHouseProAll(map);
-                //pageUtil分页
-                model.addAttribute("pageString", pageString);
-                model.addAttribute("proList", houseProAll);
-                model.addAttribute("pt", map.get("pt"));
-                model.addAttribute("bi", map.get("bi"));
-                model.addAttribute("sm", map.get("sm"));
-                model.addAttribute("rs", map.get("rs"));
-                return "qiantai/list";
-            }
-            if ("1".equals(msg)) {
-                return "qiantai/index";
-            } else {
-                return "qiantai/renzheng";
-            }
-        } catch (Exception e) {
-
+        //查询分页，模糊查询
+        //项目类型
+        if("car".equals(map.get("pt"))){
+            map.put("danbao","车辆抵押贷款");
+        }if ("house".equals(map.get("pt"))){
+            map.put("danbao","房屋抵押贷款");
+        }if ("xinyong".equals(map.get("pt"))){
+            map.put("danbao","信用贷款");
         }
-        return null;
+        //年利率
+        if("1".equals(map.get("bi"))){
+            double startapr = 0;
+            double endapr = 0.12;
+            map.put("startapr",startapr);
+            map.put("endapr",endapr);
+        }if("2".equals(map.get("bi"))){
+            double startapr = 0.12;
+            double endapr = 0.14;
+            map.put("startapr",startapr);
+            map.put("endapr",endapr);
+        }if("3".equals(map.get("bi"))){
+            double startapr = 0.14;
+            double endapr = 0.16;
+            map.put("startapr",startapr);
+            map.put("endapr",endapr);
+        }if("4".equals(map.get("bi"))){
+            double startapr = 0.16;
+            double endapr = 1;
+            map.put("startapr",startapr);
+            map.put("endapr",endapr);
+        }
+        //期数
+        if("1".equals(map.get("sm"))){
+            int startlimit = 0;
+            int endlimit = 1;
+            map.put("startlimit",startlimit);
+            map.put("endlimit",endlimit);
+        }if("2".equals(map.get("sm"))){
+            int startlimit = 1;
+            int endlimit = 3;
+            map.put("startlimit",startlimit);
+            map.put("endlimit",endlimit);
+        }if("3".equals(map.get("sm"))){
+            int startlimit = 3;
+            int endlimit = 6;
+            map.put("startlimit",startlimit);
+            map.put("endlimit",endlimit);
+        }if("4".equals(map.get("sm"))){
+            int startlimit = 6;
+            int endlimit = 12;
+            map.put("startlimit",startlimit);
+            map.put("endlimit",endlimit);
+        }
+        //还款方式
+        if("end".equals(map.get("rs"))){
+            map.put("repayment","到期付本付息");
+        }if("endmonth".equals(map.get("rs"))){
+            map.put("repayment","按月付息，到期还本");
+        }if("month".equals(map.get("rs"))){
+            map.put("repayment","等额本息");
+        }
+        String pageString = new PageUtil(tPageNo, pageSize, projectService.getPageCount(map), request).getPageString();
+        List<Map> houseProAll = projectService.getHouseProAll(map);
+        //pageUtil分页
+        model.addAttribute("pageString",pageString);
+        model.addAttribute("proList",houseProAll);
+        model.addAttribute("map",userList);
+        model.addAttribute("pt",map.get("pt"));
+        model.addAttribute("bi",map.get("bi"));
+        model.addAttribute("sm",map.get("sm"));
+        model.addAttribute("rs",map.get("rs"));
+        return "qiantai/list";
     }
 
     /**
@@ -277,7 +250,6 @@ public class JumpController {
 
     /**
      * 跳转到安全保障页面
-     *
      * @return
      */
     @RequestMapping("/help")
@@ -287,7 +259,6 @@ public class JumpController {
 
     /**
      * 跳转到我的账户页面
-     *
      * @return
      */
     @RequestMapping("/personal")
@@ -297,7 +268,6 @@ public class JumpController {
 
     /**
      * 跳转到关于我们页面
-     *
      * @return
      */
     @RequestMapping("/about")
@@ -309,7 +279,6 @@ public class JumpController {
 
     /**
      * 跳转到账户设置页面
-     *
      * @return
      */
     @RequestMapping("/account_setting")
@@ -319,7 +288,6 @@ public class JumpController {
 
     /**
      * 跳转到兑换历史页面
-     *
      * @return
      */
     @RequestMapping("/change_history")
@@ -341,7 +309,6 @@ public class JumpController {
 
     /**
      * 跳转到公司联系我们页面
-     *
      * @return
      */
     @RequestMapping("/contact_us")
@@ -351,7 +318,6 @@ public class JumpController {
 
     /**
      * 跳转到公司投资记录页面
-     *
      * @return
      */
     @RequestMapping("/deposits_record")
@@ -388,7 +354,6 @@ public class JumpController {
 
     /**
      * 跳转到招贤纳士页面
-     *
      * @return
      */
     @RequestMapping("/join_us")
@@ -398,7 +363,6 @@ public class JumpController {
 
     /**
      * 跳转到法律声明页面
-     *
      * @return
      */
     @RequestMapping("/legal_notice")
@@ -408,7 +372,6 @@ public class JumpController {
 
     /**
      * 跳转到法律政策页面
-     *
      * @return
      */
     @RequestMapping("/low_policy")
@@ -418,7 +381,6 @@ public class JumpController {
 
     /**
      * 跳转到管理团队页面
-     *
      * @return
      */
     @RequestMapping("/manage_team")
@@ -430,7 +392,6 @@ public class JumpController {
 
     /**
      * 跳转到媒体报道页面
-     *
      * @return
      */
     @RequestMapping("/media_report")
@@ -442,7 +403,6 @@ public class JumpController {
 
     /**
      * 跳转到回款计划页面
-     *
      * @return
      */
     @RequestMapping("/money_plan")
@@ -452,17 +412,15 @@ public class JumpController {
 
     /**
      * 跳转到资金记录页面
-     *
      * @return
      */
     @RequestMapping("/money_record")
-    public String money_record() {
+    public String money_record(){
         return "qiantai/money_record";
     }
 
     /**
      * 跳转到资费说明页面
-     *
      * @return
      */
     @RequestMapping("/money_speak")
@@ -472,7 +430,6 @@ public class JumpController {
 
     /**
      * 跳转到我的红包页面
-     *
      * @return
      */
     @RequestMapping("/myred_packets")
@@ -519,7 +476,6 @@ public class JumpController {
 
     /**
      * 跳转到团队风采页面
-     *
      * @return
      */
     @RequestMapping("/team_style")
@@ -535,13 +491,12 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/withdraw")
-    public String withdraw() {
+    public String withdraw(){
         return "qiantai/withdraw";
     }
 
     /**
      * 跳转到充值页面
-     *
      * @return
      */
     @RequestMapping("/withdraw1")
@@ -561,7 +516,6 @@ public class JumpController {
 
     /**
      * 跳转到我的还款页面
-     *
      * @return
      */
     @RequestMapping("/yihuankuan")
