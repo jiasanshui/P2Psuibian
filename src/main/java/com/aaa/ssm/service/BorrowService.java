@@ -56,4 +56,17 @@ public interface BorrowService {
      */
     int update(Map map);
 
+    /**
+     * 借款页面提示
+     * @param userid
+     * @return
+     */
+    Map isBorrow(Integer userid);
+
+    /**
+     * 重新申请，提交借款材料
+     * @param userid
+     * @return
+     */
+    int updatebidstate(Integer userid);
 }

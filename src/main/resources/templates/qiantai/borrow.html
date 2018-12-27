@@ -200,6 +200,7 @@
 	</div>
 </div>
 <body class="bor_con_wper">
+<input type="hidden" th:value="${userid}" name="userid" id="userid">
 	  <div class="bor_con px1000">
 	  	    <div class="bor_detail">
 	  	    	   <h2 class="bor_detail_tit" align="center" >
@@ -240,7 +241,7 @@
 											 </li>
 										</ul>
 	  	    	   	    	  </div>
-							<div class="bor_det_oner fl">
+							<div class="bor_det_oner fl" style="display: none" id="first">
 								<form id="form1" method="post" action="/borrow/addBorrow">
 									<fieldset>
 										<input type="hidden" th:value="${userName}" name="username">
@@ -311,6 +312,45 @@
 									</fieldset>
 								</form>
 							</div>
+
+							<div id="second" style="display:none;  margin:35px auto;float: left;
+							width:560px; height:600px;background:#48ade5;padding-top:50px;" >
+
+								<span style="font-size:30px;margin-top:50px;margin-left:50px;">您的申请正在审核中，请耐心等待！</span>
+
+							</div>
+							<div id="third" style="display:none; margin:35px auto;float: left;
+							width:560px; height:600px;background:#48ade5;padding-top:20px;" >
+
+								<span style="font-size:35px;">您的申请已通过审核！</span><br />
+								<span style="font-size:18px;margin-left:450px;">
+									<a href="/jump/list">去看项目</a>
+								</span>
+
+							</div>
+							<div id="fourth"  style="display:none;margin:35px auto;float: left;
+							width:560px; height:600px;background:#ff3366;padding-top:20px;text-align: center;" >
+
+								<span style="font-size:35px;">您的贷款业务申请失败！</span><br />
+								<span style="font-size:18px;">
+									<!--<a  href="/jump/borrow">重新申请</a>-->
+									<button class="bor_btn" onclick="reapply()">重新申请</button>
+								</span>
+
+							</div>
+							<div id="fifth" style="display:none;margin:35px auto;float: left;
+							width:560px; height:600px;background:#ff3366;padding-top:50px;" >
+
+								<span style="font-size:35px;margin-left:20px;">您有贷款未还清，不能再次申请！</span>
+
+							</div>
+							<div id="six" style="display:none;  margin:35px auto;float: left;
+							width:560px; height:600px;background:#48ade5;padding-top:50px;" >
+
+								<span style="font-size:30px;margin-top:50px;margin-left:50px;">您的借款正在放款中，请耐心等待！</span>
+
+							</div>
+
 						</div>
 					   <!-- /**********************************************信用贷款**************************************/-->
 					   <!-- /*****************************************抵押贷款*************************************/-->
@@ -348,7 +388,7 @@
 								</ul>
 							</div>
 							<!-- end l -->
-							<div class="bor_det_oner fl">
+							<div class="bor_det_oner fl" id="first1" style="display: none">
 								<form id="form2" method="post" action="/borrow/addBorrowOne" enctype="multipart/form-data">
 									<fieldset>
 										<input type="hidden" th:value="${userName}" name="username">
@@ -444,6 +484,31 @@
 </div>
 <script type="text/javascript">
     $(function(){
+        <!--判断是否具备借款条件(实名认证通过后，跳转到此页面)-->
+        var userid=$("#userid").val();
+        $.ajax({
+            type:"post",
+            dataType:"json",
+            url:"/borrow/isBorrow",
+            data:{userid:userid},
+            success:function (data) {
+                alert(data);
+                if(data==0){//可以借款（新人） || 上次还款结束
+                    $("#first").show();
+                    $("#first1").show();
+                } else if(data==1){//待放款（放款中）
+                    $("#six").show();
+                }else if(data==2){//借款申请已提交，请耐心等候
+                    $("#second").show();
+                }else if(data==3) {//申请通过，去看项目
+                    $("#third").show();
+                }else if(data==4){//申请失败
+                    $("#fourth").show();
+				}else {//有贷款未还清，不能申请
+                    $("#fifth").show();
+				}
+            }
+        });
         $("#timelimit").change(function(){
             var timelimit=$("#timelimit").val();
             if(timelimit=='1'){
@@ -456,7 +521,7 @@
                 $("#apr").val("0.08");
 			}
         });
-    })
+    });
     //校验电话
     function checkTel(){
         var tel = document.getElementById("tel");
@@ -509,6 +574,22 @@
             form.submit();
         }
     }
+    //重新申请事件
+    function reapply(){
+        var userid=$("#userid").val();
+        $.ajax({
+            type:"post",
+            dataType:"json",
+            url:"/borrow/reapply",
+            data:{userid:userid},
+            success:function (data) {
+                alert(data);
+                if(data>0){
+                    location.href="/jump/borrow"
+				}
+            }
+        });
+	}
 </script>
 </body>
 </html>

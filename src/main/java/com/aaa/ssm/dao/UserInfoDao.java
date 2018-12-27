@@ -166,6 +166,9 @@ public interface UserInfoDao {
             "values(seq_account_flow_id.nextval,#{USERID},#{taccount},sysdate,2,#{tamount})")
     int addTaccountFlow(Map map);
 
+    @Select("select amount from userinfo where uname=#{userName}")
+    int getAccountMoney(String userName);
+
     /**
      * 根据用户ID查询历史
      * @param map

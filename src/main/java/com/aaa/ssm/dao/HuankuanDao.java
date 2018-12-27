@@ -85,7 +85,7 @@ public interface HuankuanDao {
      * @return
      */
    @Select("select (currentmoney+overtimelixi) currentmoney from repayinfo where borrownum=#{borrownum} and timelimit=#{limit}")
-    int getMoneyAll(@Param("borrownum") String borrownum,@Param("limit") Integer limit);
+    double getMoneyAll(@Param("borrownum") String borrownum,@Param("limit") Integer limit);
 
     /**
      * 判断密码是否正确
