@@ -122,13 +122,12 @@
   <div class="item-detail-head clearfix" data-target="sideMenu">
     <ul th:each="list : ${uList}">
       <ul th:each="foList : ${infoList}">
-    <div class="hd"> <i class="icon icon-che
-" title="车易贷" ></i>
+    <div class="hd">
+      <i class="icon icon-che" title="车易贷" ></i>
       <h2 th:text="${list.DES}"></h2>
     </div>
     <ul class="bd clearfix">
       <div class="data">
-        <ul>
           <ul>
             <input id="borrownum" type="hidden" th:value="${list.BAIFEN}">
           <li><span class="f16">借款金额</span><br>
@@ -146,26 +145,25 @@
           <li class="colspan"> <span class="c-888 fl">投标进度：</span>
             <div class="progress-bar fl"> <span style="width:100%"></span> </div>
             <span class="c-green" th:text="${list.JINDU}"></span> </li>
-          <li> <span class="c-888">投资范围：</span> <span id="account_range" th:text="(${list.BORROWMONEY}-${list.WINBIDMONEY})*0.10 +'~'+(${list.BORROWMONEY}-${list.WINBIDMONEY})*1.00+'￥'">
-          </span> </li>
+          <li><span class="c-888">投资范围：</span><span id="account_range" th:text="(${list.BORROWMONEY}-${list.WINBIDMONEY})*0.10 +'~'+(${list.BORROWMONEY}-${list.WINBIDMONEY})*1.00+'￥'">
+          </span></li>
+            </ul>
             <li th:if="${list.BAIFEN} lt 1 and ${list.USERID} ne ${foList.USERID}" ><a th:href="@{/jump/toubiao(BORROWNUM=${list.BORROWNUM})}" class="btn">投标</a></li>
             <li th:if="${list.BAIFEN} ge 1"><a href="#" onclick="return false" class="btn">已满标</a></li>
             <li th:if="${list.USERID} eq ${foList.USERID}"><a href="#" onclick="return false" class="btn">暂不支持投同账户的标</a></li>
-          </ul>
-          </ul>
-          </ul>
+        <div class="mod-right mod-status">
+          <div class="inner">
+            <div class="text"> 待还本息：<span class="f24 c-333">40,400.00</span>元<br>
+              剩余期限：<span class="f24 c-333">29天</span> <br>
+              下期还款日： <span class="f20 c-333">2015-10-13</span> </div>
+            <i class="icon icon-status icon-status1"></i> </div>
+        </div>
       </div>
-      <div class="mod-right mod-status">
-        <div class="inner">
-          <div class="text"> 待还本息：<span class="f24 c-333">40,400.00</span>元<br>
-            剩余期限：<span class="f24 c-333">29天</span> <br>
-            下期还款日： <span class="f20 c-333">2015-10-13</span> </div>
-          <i class="icon icon-status icon-status1"></i> </div>
-      </div>
-    </ul>
-    </ul>
-    </div>
+          </ul>
+          </ul>
+      </ul>
   </div>
+</div>
   <div class="item-detail-body clearfix mrt30 ui-tab">
     <div class="ui-tab-nav hd"> <i class="icon-cur" style="left: 39px;"></i>
       <ul>
@@ -183,14 +181,16 @@
             </dt>
             <dd>
               <div class="text">
+                <ul th:each="list : ${infoList}">
+                  <ul th:each="list1 : ${uList}">
                 <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 借款人信息介绍：</p>
-                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 借款人赵女士，<span>1988</span>年出生，大专学历，未婚，户籍地址为四川省古蔺县，现居住于成都市成华区。</p>
+                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 借款人：<span th:text="${list.REALNAME}"></span>，<span th:text="${list.AGE}"></span>岁，<span th:text="${list.EDUCATION}"></span>学历,现居住于<span th:text="${list.ADDRESS}"></span>。</p>
                 <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 借款人工作情况：</p>
-                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 赵女士为成都某服装店老板，月收入<span>2</span>万元，收入居住稳定。</p>
-                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 借款人资产介绍：</p>
-                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 赵女士有<span>1</span>辆全款长安福特福克斯汽车。</p>
+                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> <span th:text="${list.REALNAME}"></span>为<span th:text="${list.WORKING}"></span>，月收入<span th:text="${list.INCOME}"></span>万元，收入居住稳定。</p>
                 <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 详细资金用途：</p>
-                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 借款人申请汽车质押贷款，贷款用于资金周转。</p>
+                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> <span th:text="${list1.PURPOSE}"></span></p>
+                  </ul>
+              </ul>
               </div>
             </dd>
           </dl>

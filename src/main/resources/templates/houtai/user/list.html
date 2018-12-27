@@ -28,8 +28,12 @@
                 <el-input v-model="searchForm.phone" placeholder="名称"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" icon="search" @click="searchClick">查询</el-button>
-                <el-button type="success" icon="plus" @click="flushClick">刷新</el-button>
+                <el-tooltip content="客官,点我帮你查询" placement="top">
+                    <el-button type="primary" icon="search" @click="searchClick">查询</el-button>
+                </el-tooltip>
+                <el-tooltip content="客官,刷新试试呗！" placement="bottom" effect="light">
+                    <el-button type="success" icon="plus" @click="flushClick">刷新</el-button>
+                </el-tooltip>
             </el-form-item>
         </el-form>
     </el-row>
@@ -131,8 +135,12 @@
             <el-table-column
                     label="操作">
                 <template scope="scope">
-                    <el-button :plain="true" type="success" size="small" icon="edit" @click="lookClick(scope.row)">查看详情</el-button>
-                    <el-button type="primary" icon="el-icon-edit" size="small" @click="editClick(scope.row)"></el-button>
+                    <el-tooltip content="亲,点我查询详情哦！" placement="top">
+                        <el-button :plain="true" type="success" size="small" icon="edit" @click="lookClick(scope.row)">查看详情</el-button>
+                    </el-tooltip>
+                    <el-tooltip content="亲,这是审核按钮哦！"placement="bottom" effect="light">
+                        <el-button type="primary" icon="el-icon-edit" size="small" @click="editClick(scope.row)"></el-button>
+                    </el-tooltip>
                 </template>
             </el-table-column>
         </el-table>
