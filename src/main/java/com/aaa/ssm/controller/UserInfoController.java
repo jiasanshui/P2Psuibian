@@ -63,7 +63,6 @@ public class UserInfoController {
     @RequestMapping("show")
     public ResponseEntity show(String fileName){
         try {
-            //System.out.println("1111");
             // 由于是读取本机的文件，file是一定要加上的， path是在application配置文件中的路径
             //uploadPath = D:/files/   fileName=332854a6-e3a1-4b90-973a-4fca79068017.jpg
             return ResponseEntity.ok(resourceLoader.getResource("file:" + uploadPath + fileName));
@@ -74,29 +73,14 @@ public class UserInfoController {
     }
 
     /**
-     * 审核通过，更新用户信息表审核状态
-     * @param userId
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("/update/{userId}")
-    public Object update(@PathVariable("userId") Integer userId){
-        return userInfoService.update(userId);
-    }
-
-    /**
-     * 审核驳回，更新用户信息表审核状态并让驳回表中插入数据
+     * 个人信息认证审核
      * @return
      */
     @ResponseBody
     @RequestMapping("/edit")
     public Object edit(@RequestBody Map map){
-        int edit = userInfoService.edit(map);
-        int bohui = userInfoService.addBohui(map);
-        if(edit!=0 && bohui!=0){
-            return 1;
-        }
-        return 0;
+
+        return userInfoService.edit(map);
     }
 
     /**
@@ -110,5 +94,16 @@ public class UserInfoController {
         List<Map> allList = userInfoService.getAllList(userId);
         return allList.get(0);
 
+    }
+
+    /**
+     * 根据用户ID查询历史
+     * @param map
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/history")
+    private Object getHistory(@RequestBody Map map){
+        return userInfoService.getHistory(map);
     }
 }

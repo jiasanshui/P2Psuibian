@@ -35,12 +35,21 @@ public class BackJumpController {
     }
 
     /**
-     * 跳转后台借款标的审核页面
+     * 跳转后台借款标的审核页面(信用贷款)
      * @return
      */
     @RequestMapping("/borrow")
     public String biaode(){
         return "houtai/biaodi/borrowSubmit";
+    }
+
+    /**
+     * 跳转后台借款标的审核页面(抵押贷款)
+     * @return
+     */
+    @RequestMapping("/houseCarborrow")
+    public String toBorrow(){
+        return "/houtai/biaodi/houseCarSubmit";
     }
     /**
      * 跳转后台招标详情页面
