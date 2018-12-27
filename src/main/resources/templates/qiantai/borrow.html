@@ -10,6 +10,108 @@
 	<script type="text/javascript" src="../script/jquery-1.7.2.min.js"></script>
 	<script type="text/javascript" src="../script/all.js"></script>
 	<script type="text/javascript">
+        //表单验证
+        function checkdays1(){
+            var da = document.getElementById("da");
+            var d = document.getElementById("d");
+            var reg=/^([12][0-9]|30|[1-9])$/;
+            if(reg.test(da.value)){
+                d.style.color="green";
+                d.innerHTML="";
+                da.style.borderWidth="1px gray solid";
+                return true;
+            }
+            else{
+                d.style.color="red";
+                da.focus();
+                d.innerHTML="输入天数有误";
+                d.style.borderWidth="1px red solid";
+                return false;
+            }
+        }function checkTel1() {
+            var tele = document.getElementById("tele");
+            var tee = document.getElementById("tee");
+            var reg=/^1[3|5|7|8][0-9]{9}$/;
+            if(reg.test(tele.value)){
+                tee.style.color="green";
+                tee.innerHTML="";
+                tele.style.borderWidth="1px gray solid";
+                return true;
+            }
+            else{
+                tee.style.color="red";
+                tele.focus();
+                tee.innerHTML="手机号格式错误";
+                tee.style.borderWidth="1px red solid";
+                return false;
+            }
+        }
+        function checkCost1(){
+            var cost = document.getElementById("cost");
+            var cos = document.getElementById("cos");
+            var reg=/^[1-9]\d*$/;
+            if(reg.test(cost.value)){
+                cos.style.color="green";
+                cos.innerHTML="";
+                cost.style.borderWidth="1px gray solid";
+                return true;
+            }
+            else{
+                cos.style.color="red";
+                cost.focus();
+                cos.innerHTML="格式错误";
+                cos.style.borderWidth="1px red solid";
+                return false;
+            }
+        }function checkbor1() {
+            var borrowmo = document.getElementById("borrowmo");
+            var borrowm = document.getElementById("borrowm");
+            var cost = document.getElementById("cost");
+            var reg=/[1-9][0-9]*$/;
+            if(reg.test(borrowmo.value)){
+                if(parseFloat(borrowmo.value)<=parseFloat(cost.value)){
+                    borrowm.style.color="green";
+                    borrowm.innerHTML="";
+                    borrowmo.style.borderWidth="1px gray solid";
+                    return true;
+                }else{
+                    borrowm.style.color="red";
+                    borrowmo.focus();
+                    borrowm.innerHTML="所借金额不能超过总价值";
+                    borrowm.style.borderWidth="1px red solid";
+                    return false;
+                }
+
+            }
+            else{
+                borrowm.style.color="red";
+                borrowmo.focus();
+                borrowm.innerHTML="";
+                borrowm.style.borderWidth="1px red solid";
+                return false;
+            }
+        }function checkDes() {
+            var des = document.getElementById("des");
+            var de = document.getElementById("de");
+            if(des.value!=null&&des.value!=""){
+                de.style.color="green";
+                de.innerHTML="";
+                des.style.borderWidth="1px gray solid";
+                return true;
+            }
+            else{
+                de.style.color="red";
+                des.focus();
+                de.innerHTML="描述不能为空";
+                de.style.borderWidth="1px red solid";
+                return false;
+            }
+        }function checkAll() {
+            if(checkDes()&&checkbor1()&&checkCost1()&&checkTel1()&&checkdays1()){
+                var form = document.getElementById("form2");
+                form.submit();
+            }
+        }
         $(function(){
             $("#dpic").change(function(){
                 var file=this.files[0] // 获取input上传的图片数据;
@@ -40,6 +142,7 @@
                 }
             });
         });
+
 	</script>
 </head>
 <body>
@@ -203,7 +306,7 @@
 										</div>
 										<div class="mt30">
 											<label></label>
-											<button class="bor_btn" onclick="submitBtn()">提交材料</button>
+											<button type="button" class="bor_btn" onclick="submitBtn()">提交材料</button>
 										</div>
 									</fieldset>
 								</form>
@@ -257,7 +360,7 @@
 										</div>
 										<div class="mt15">
 											<label>*手机号码</label>
-											<input type="" name="tel" id="tele" onblur="checkTel()"><span id="tee"></span>
+											<input  id="tele" name="tel" onblur="checkTel1()"><span id="tee"></span>
 										</div>
 										<div class="mt15 guarmethod clearfix">
 											<label class="guarmethod_l fl">*担保方式</label>
@@ -279,15 +382,15 @@
 										</div>
 										<div class="mt15" >
 											<label>*总价值</label>
-											<input type="text" name="cost"  onblur="checkCost()"><span ></span>
+											<input type="text" name="cost" id="cost" onblur="checkCost1()"><span id="cos"></span>
 										</div>
 										<div class="mt15" >
 											<label>*投标天数</label>
-											<input type="text" name="days"  onblur="checkdays()"><span ></span>
+											<input type="text" name="days" id="da" onblur="checkdays1()"><span id="d" ></span>
 										</div>
 										<div class="mt15">
 											<label>*借款金额</label>
-											<input type="number" class="bor_inputbg01" name="borrowmoney"  onblur="checkbor()"><span ></span>
+											<input type="number" class="bor_inputbg01" id="borrowmo" name="borrowmoney"  onblur="checkbor1()"><span id="borrowm"></span>
 										</div>
 										<div class="mt15">
 											<label>*借款期限</label>
@@ -315,7 +418,7 @@
 										</div>
 										<div class="mt15">
 											<label>*借款描述</label>
-											<textarea name="des" placeholder="200字以内"></textarea>
+											<textarea name="des" placeholder="200字以内" onblur="checkDes()" id="des"></textarea><span id="de"></span>
 										</div>
 										<div class="mt15" >
 											<label>*还款方式</label>
@@ -328,8 +431,7 @@
 										</div>
 										<div class="mt30">
 											<label></label>
-											<!--<button class="bor_btn" onclick="submitBtn()">提交材料</button>-->
-											<input type="submit" value="提交材料" style="background:yellowgreen" class="btn-paykh">
+											<button type="button" onblur="checkAll()" class="bor_btn">提交材料</button>
 										</div>
 									</fieldset>
 								</form>
@@ -362,7 +464,7 @@
         var reg=/^1[3|5|7|8][0-9]{9}$/;
         if(reg.test(tel.value)){
             te.style.color="green";
-            te.innerHTML="手机号格式正确";
+            te.innerHTML="";
             tel.style.borderWidth="1px gray solid";
             return true;
         }
@@ -392,7 +494,7 @@
     }
 	//校验天数
 	function checkdays() {
-        var reg=/^[1-9]\d*$/;
+        var reg=/^([12][0-9]|30|[1-9])$/;
         var days=$("#days").val();
         if(reg.test(days) && days<30){
             $("#day").html("");

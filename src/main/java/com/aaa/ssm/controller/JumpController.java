@@ -48,32 +48,46 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/index")
-    public String jumpIndex(Model model){
+    public String jumpIndex(Model model,HttpSession session) {
         //显示房屋抵押招标
-        List<Map> housePro = projectService.getHousePro();
-        model.addAttribute("houseProList",housePro);
+        String username = (String) session.getAttribute("userName");
+        Map Pmap = userInfoService.getUser(username);
+        Object msg = null;
+        try {
+            msg = Pmap.get("msg");
+            if (StringUtil.isEmpty(msg)){
+            List<Map> housePro = projectService.getHousePro();
+            model.addAttribute("houseProList", housePro);
 
-        Map map1=new HashMap();
-        map1.put("parama","车辆");
-        List<Map> listCar = projectService.getList(map1);
-        Map map2=new HashMap();
-        map2.put("parama","房屋");
-        List<Map> listHouse = projectService.getList(map2);
-        Map map3=new HashMap();
-        map3.put("parama","信用");
-        List<Map> listCredit = projectService.getList(map3);
+            Map map1 = new HashMap();
+            map1.put("parama", "车辆");
+            List<Map> listCar = projectService.getList(map1);
+            Map map2 = new HashMap();
+            map2.put("parama", "房屋");
+            List<Map> listHouse = projectService.getList(map2);
+            Map map3 = new HashMap();
+            map3.put("parama", "信用");
+            List<Map> listCredit = projectService.getList(map3);
 
-        List<Map> webList = webService.getWebList();
-        List<Map> mediaList = webService.getMediaList();
-        model.addAttribute("webList",webList);
-        model.addAttribute("mediaList",mediaList);
+            List<Map> webList = webService.getWebList();
+            List<Map> mediaList = webService.getMediaList();
+            model.addAttribute("webList", webList);
+            model.addAttribute("mediaList", mediaList);
 
-        model.addAttribute("listCar",listCar);
-        model.addAttribute("listHouse",listHouse);
-        model.addAttribute("listCredit",listCredit);
-        return "qiantai/index";
+            model.addAttribute("listCar", listCar);
+            model.addAttribute("listHouse", listHouse);
+            model.addAttribute("listCredit", listCredit);
+            return "qiantai/index";}
+            if ("1".equals(msg)) {
+                return "qiantai/index";
+            } else {
+                return "qiantai/renzheng";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
-
     /**
      * 跳转到登录页面
      * @return
@@ -211,7 +225,7 @@ public class JumpController {
         model.addAttribute("rs",map.get("rs"));
         return "qiantai/list";
         } if("1".equals(msg)){
-        return "qiantai/index";
+        return "qiantai/list";
         }else {
             return "qiantai/renzheng";
         }
