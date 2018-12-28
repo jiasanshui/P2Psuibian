@@ -139,4 +139,9 @@ public class BackJumpController {
         return "houtai/emp/list";
     }
 
+    @RequestMapping("/echartsystemflow")
+    public String echartsystemflow(){
+        return "houtai/moneyflow/systemflow";
+    }
+
 }
