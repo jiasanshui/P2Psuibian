@@ -104,12 +104,17 @@ public class JumpController {
         return "qiantai/renzheng";
     }
     /**
-     * 跳转到资料认证页面
+     * 跳转到我的订单页面
      * @return
      */
-    @RequestMapping("zlrenzheng")
-    public Object zlrenzheng(){
-        return "qiantai/zlrenzheng";
+    @Autowired
+    private  MyOrderService myOrderService;
+    @RequestMapping("myorder")
+    public Object myorder(HttpSession session,Model model){
+        String username=(String) session.getAttribute("userName");
+        List<Map> orderByInfo = myOrderService.getOrderByInfo(username);
+        model.addAttribute("orderByInfo",orderByInfo);
+        return "qiantai/myorder";
     }
 
     /**

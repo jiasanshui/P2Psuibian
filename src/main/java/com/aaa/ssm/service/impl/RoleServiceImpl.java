@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * className:RoleServiceImpl
@@ -56,5 +57,23 @@ public class RoleServiceImpl implements RoleService {
             return -1;
         }
         return roleDao.delete(roleid);
+    }
+
+    @Override
+    public Map getRoleByName(String name) {
+        List<Map> mapList = roleDao.getRoleByName(name);
+        if (mapList!=null&&mapList.size()>0){
+            return mapList.get(0);
+        }
+        return null;
+    }
+
+    /**
+     * 查询所有的角色名称
+     * @return
+     */
+    @Override
+    public List<Map> getNames() {
+        return roleDao.getNames();
     }
 }
