@@ -78,7 +78,7 @@
     <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
         <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
             <el-form-item label="角色名称" prop="name">
-                <el-input v-model="editForm.name" auto-complete="off"></el-input>
+                <el-input v-model="editForm.name" auto-complete="off" v-model.number="editForm.name"></el-input>
             </el-form-item>
             <el-form-item label="角色状态">
                 <el-select v-model="editForm.state" placeholder="请选择">
@@ -99,7 +99,7 @@
     <el-dialog title="授权" :visible.sync="authorization" :close-on-click-modal="false">
         <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
             <el-form-item label="角色名称" prop="name">
-                <el-input v-model="editForm.name" auto-complete="off"></el-input>
+                <el-input v-model="editForm.name" auto-complete="off" :readonly="true"></el-input>
             </el-form-item>
             <el-form-item label="权限选择" >
                 <el-tree style="width: 200px"
@@ -125,7 +125,31 @@
 
     var tableView = new Vue({
         el: '#tableView',
-        data: {
+        data() {
+            var isInArray=(arr,value)=> {
+                for(var i = 0; i < arr.length; i++){
+                    if(value === arr[i]){
+                        return true;
+                    }
+                }
+                return false;
+            };
+            var checkName = (rule,value,callback)=> {
+                alert(value);
+                alert(JSON.stringify(this.names));
+                var arr = this.names;
+                if (value === '') {
+                    callback(new Error('请您输入角色名称'));
+                } else if (isInArray(arr,value)) {
+                    alert(12233);
+                    callback(new Error('角色名称重复!'));
+                } else {
+                    callback();
+                 }
+             };
+            return {
+            //角色名称集合
+            names: [],
             //列表数据
             tableData: [],
             //显示加载中样式
@@ -139,7 +163,11 @@
             goUrl:'',
             editFormRules: {
                 name: [
-                    { required: true, message: '请输入姓名', trigger: 'blur' }
+                    { required: true, message: '请输入角色名称', trigger: 'blur' },
+                    { validator: checkName,  trigger: 'blur' }
+                ],
+                descp: [
+                    { required: true, message: '描述在200字内', trigger: 'blur' }
                 ]
             },
             tree: [],
@@ -162,7 +190,8 @@
             //分页大小
             pageSize:10,
             //总记录数
-            total:800,
+            total:800
+            };
         },
         created:function(){
             //在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
@@ -170,6 +199,10 @@
             var start =this.currentPage;
             var end =this.pageSize;
             axios.post('/role/list',{'start':start,'end':end}).then(function(response){
+                alert(JSON.stringify(response.data.nameData));
+                for (let obj of response.data.nameData) {
+                    self.names.push(obj.NAME);
+                }
                 self.total = response.data.page.total;
                 self.tableData = response.data.page.list;
             });
@@ -185,7 +218,7 @@
         },
         methods:{
             //表格重新加载数据
-            loadingData:function() {
+            loadingData(){
                 var _self = this;
                 var start =this.currentPage;
                 var end =this.pageSize;
@@ -324,13 +357,15 @@
                 var formData =this.editForm;
                 var goUrl=this.goUrl;
                 axios.post(goUrl,formData).then(function(response){
+                    alert(response.data);
+                    alert(JSON.stringify(response.data));
                     if(response.data>0){
                         _self.$message({
-                            message:'操作成功',
+                            message:'添加成功',
                             type: 'success'
                         });
                         _self.editFormVisible = false;
-                    }else if(response.data=-1){
+                    }else if(response.data==-1){
                         _self.$message({
                             message:'该角色下有员工，请删除后重试！',
                             type: 'error'
