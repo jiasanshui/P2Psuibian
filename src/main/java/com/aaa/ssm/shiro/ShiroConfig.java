@@ -54,7 +54,7 @@ public class ShiroConfig {
         //filterMap.put("/update","perms[user:update]");
 
         //拦截
-        //filterMap.put("/backjump/*","authc");
+        filterMap.put("/backjump/*","authc");
 
         //修改调整的登录页面
         shiroFilterFactoryBean.setLoginUrl("/backjump/backlogin");
