@@ -2,6 +2,7 @@ package com.aaa.ssm.controller;
 
 import com.aaa.ssm.entity.TbRole;
 import com.aaa.ssm.service.RoleService;
+import com.fasterxml.jackson.databind.ser.std.IterableSerializer;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,8 @@ public class RoleController {
         List<TbRole> roles = roleService.getRoles();
         PageInfo<TbRole> info = new PageInfo<>(roles);
         mp.put("page",info);
+        List<Map> nameList=roleService.getNames();
+        mp.put("nameData",nameList);
         return mp;
     }
 
@@ -64,7 +67,14 @@ public class RoleController {
     @ResponseBody
     @RequestMapping("/add")
     public Object add(@RequestBody TbRole role){
-        return roleService.add(role);
+        Map map=new HashMap();
+        Map roleByName = roleService.getRoleByName(role.getName());
+        if (roleByName != null && roleByName.size() > 0) {
+            map.put("msg", "该角色名称已存在！！");
+            return -2;
+        }
+        int add = roleService.add(role);
+        return  add;
     }
 
     /**

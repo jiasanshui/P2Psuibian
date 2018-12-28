@@ -78,7 +78,7 @@
         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/deposits_record">投资记录</a></span></li>
         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/money_plan">回款计划</a></span></li>
         <li class=""><span><a href="/jump/renzheng"><i class="dot dot02"></i>个人身份认证</a> </span> </li>
-        <li class=""><span><a href="/jump/zlrenzheng"><i class="dot dot02"></i>资料认证</a> </span> </li>
+        <li class=""><span><a href="/jump/myorder"><i class="dot dot02"></i>我的订单</a> </span> </li>
         <li><span><a href="/jump/withdraw1"><i class="dot dot03"></i>充值</a></span></li>
         <li class=""><span><a href="/jump/pay1"><i class="dot dot04"></i>提现</a></span></li>
         <li style="position:relative;" class=""> <span> <a href="/jump/myred_packets"> <i class="dot dot06"></i> 我的红包 </a> </span> </li>
@@ -142,7 +142,7 @@
                 <span class="icon-show1" style="display:none;"></span>
                 <a href="#"><span style="display:none;">充值</span></a>
               </span>
-              <span class="truemoney"><i class="f26 fb">0.00 </i> 元</span>
+              <span class="truemoney"><i class="f26 fb" th:text="${amount}"></i> 元</span>
             </li>
             <li><span><em>待收本息</em><i id="dsbx" class="markicon"></i><span class="arrow-show2" style="display:none;">未到账的投资项目的本金、利息总额</span><span class="icon-show2" style="display:none;"></span></span> <span class="truemoney"><i class="f26 fb">0.00 </i>元</span> </li>
             <li><span><em>累计收益</em><i id="ljsy" class="markicon"></i><span class="arrow-show3" style="display: none;">已到账的投资收益+未到账的投资收益</span><span class="icon-show3" style="display: none;"></span></span> <span class="truemoney"><i class="f26 fb c-pink">0.00 </i> 元</span> </li>

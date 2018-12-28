@@ -73,7 +73,7 @@ public interface TenderDao {
      * @return
      */
     @Select("select tender.id,tender.realname,tender.tamount,tender.borrownum,tender.userid,tender.tendernum,to_char(tender.ttime,'yyyy-mm-dd') ttime,userinfo.idcard," +
-            "userinfo.phone,userinfo.address from tender left join userinfo on userinfo.userid=tender.userid where borrownum=#{borrownum}")
+            "userinfo.phone,userinfo.address,userinfo.working,userinfo.income from tender left join userinfo on userinfo.userid=tender.userid where borrownum=#{borrownum}")
     List<Map> getTenderinfoByParam(String borrownum);
 
     /**

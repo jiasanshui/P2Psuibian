@@ -66,6 +66,33 @@ public class EmpServiveImpl implements EmpService {
         return empDao.getEmpList();
     }
 
+    /**
+     * 省下拉框
+     * @return
+     */
+    @Override
+    public List<Map> getShengList() {
+        return empDao.getShengList();
+    }
+
+    /**
+     * 市下拉框
+     * @return
+     */
+    @Override
+    public List<Map> getShiList() {
+        return empDao.getShiList();
+    }
+
+    /**
+     * 区下拉框
+     * @return
+     */
+    @Override
+    public List<Map> getQuList() {
+        return empDao.getQuList();
+    }
+
     @Override
     public int add(Map map) {
         return empDao.add(map);

@@ -1,8 +1,10 @@
 package com.aaa.ssm.service;
 
 import com.aaa.ssm.entity.TbRole;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * className:RoleService
@@ -42,4 +44,17 @@ public interface RoleService {
      * @return
      */
     int delete(Integer roleid);
+    /**
+     * 唯一性校验
+     * @param name
+     * @return
+     */
+    //角色名称
+    Map getRoleByName(String name);
+
+    /**
+     * 查询所有的角色名称
+     * @return
+     */
+    List<Map> getNames();
 }

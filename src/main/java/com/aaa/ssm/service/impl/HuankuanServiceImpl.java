@@ -54,12 +54,15 @@ public class HuankuanServiceImpl implements HuankuanService {
     public double getMoneyAll(String borrownum,String limits) {
         System.out.println(borrownum);
         String[] limitArr = limits.split(",");
-        int moneyAll = 0;
+        double moneyAll = 0;
         for (String s : limitArr) {
             Integer limit = Integer.valueOf(s);
-            int money = huankuanDao.getMoneyAll(borrownum, limit);
+            System.out.println("____________"+borrownum+","+limit);
+            double money = huankuanDao.getMoneyAll(borrownum,limit);
+            System.out.println(money);
             moneyAll += money;
         }
+        System.out.println(moneyAll);
         return moneyAll;
     }
 

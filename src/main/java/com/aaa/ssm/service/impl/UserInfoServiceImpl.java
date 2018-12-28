@@ -90,7 +90,6 @@ public class UserInfoServiceImpl implements UserInfoService {
      * 根据用户名获取用户信息，
      * 判断用户是否进行实名认证
      * 判断用户是否通过实名认证
-     * 是否有正在借款记录（未还清的借款）
      * @param username
      * @return
      */
@@ -109,16 +108,6 @@ public class UserInfoServiceImpl implements UserInfoService {
                 //真实姓名不为空（已提交实名认证材料，在判断审核是否通过）
                 Integer stateid = Integer.valueOf(userList.get(0).get("STATEID")+"");
                 if(stateid==2){//审核通过
-                    List<Map> borrowList = borrowDao.getListByusername(username);
-                    if(borrowList!=null&&borrowList.size()>0){
-                        Integer borrowStateid = Integer.valueOf(borrowList.get(0).get("STATEID")+"");
-                        if(borrowStateid==10){//还款结束，可以再借款申请
-                            return borrowList.get(0);
-                        }
-                        //map.put("msg","您上次的申请尚在进行中");
-                        map.put("msg","1");
-                    }
-                    //无借款记录
                     return userList.get(0);
                 }
                 map.put("msg","请检查你的实名认证是否通过！！");
@@ -146,6 +135,11 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public List<Map> getAllUserByuserid(Integer userid) {
         return userInfoDao.getAllUserByuserid(userid);
+    }
+
+    @Override
+    public int getAccountMoney(String userName) {
+        return userInfoDao.getAccountMoney(userName);
     }
 
     /**

@@ -232,6 +232,7 @@
                     style="width: 100%">-->
           <ul id="house"></ul>
           <ul th:each="rows : ${proList}">
+            <ul th:each="map : ${map}">
             <input id="borrownum" type="hidden" th:value="${rows.BORROWNUM}">
             <!--<input id="borrownum" type="hidden" th:value="${rows.BAIFEN}">-->
             <li class="col-330 col-t"><a href="/jump/infor" target="_blank"><i class="icon icon-che" title="车易贷"></i></a><span th:text="${rows.DES}"></span></li>
@@ -248,13 +249,20 @@
                 </div>
               </div>
             </li>
-            <li class="col-120-2" th:if="${rows.BAIFEN} ge 1">
-              <a class="ui-btn btn-gray" th:href="@{/jump/infor(BORROWNUM=${rows.BORROWNUM})}">满标</a>
+            <li class="col-120-2" th:if="${rows.BAIFEN} ge 1 and ${map.STATEID} eq 2" >
+              <a class="ui-btn btn-gray"  th:href="@{/jump/infor(BORROWNUM=${rows.BORROWNUM})}">满标</a>
+             <li th:if="${rows.BAIFEN} ge 1 and ${map.STATEID} ne 2">
+               <a class="ui-btn btn-gray" href="/jump/renzheng">请先完成信息认证</a>
             </li>
-            <li class="col-120-2" th:if="${rows.BAIFEN} lt 1">
+            </li>
+            <li class="col-120-2" th:if="${rows.BAIFEN} lt 1 and ${map.STATEID} eq 2">
               <a class="ui-btn btn-gray" th:href="@{/jump/infor(BORROWNUM=${rows.BORROWNUM})}">投标</a>
+            <li th:if="${rows.BAIFEN} lt 1 and ${map.STATEID} ne 2">
+              <a class="ui-btn btn-gray" href="/jump/renzheng">请先信息认证</a>
             </li>
-          </ul>
+            </li>
+            </ul>
+            </ul>
         </div>
         <!--底部分页工具条-->
         <div class="pagination clearfix mrt30" id="divPage">
