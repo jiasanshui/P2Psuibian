@@ -8,7 +8,6 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -110,7 +109,7 @@ public class    TenderController {
         Double tamount = Double.parseDouble(map.get("tamount")+"");
         amount = amount -tamount;
         map.put("amount",amount);
-        System.out.println(map);
+        //添加到投资记录表
         int result1 = tenderService.add(map);
         int result2 = borrowService.update(map);
         int result3 = accountFlowService.add(map);

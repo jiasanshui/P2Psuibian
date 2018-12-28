@@ -128,10 +128,10 @@ public class RepayServiceImpl implements RepayService {
         try {
             sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
             repayDao = sqlSession.getMapper(RepayDao.class);
-            //获取当前系统时间
-            Calendar calendar = Calendar.getInstance();
             if("等额本息".equals(map.get("PAYMENT"))){
                 for (int i = 1; i <= limit-1; i++) {
+                    //获取当前系统时间
+                    Calendar calendar = Calendar.getInstance();
                     //当前月份加i
                     calendar.add(Calendar.MONTH,i);
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -145,6 +145,7 @@ public class RepayServiceImpl implements RepayService {
                         flag=false;
                     }
                 }
+                Calendar calendar = Calendar.getInstance();
                 //最后一期
                 calendar.add(Calendar.MONTH,limit);
                 SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
@@ -158,6 +159,8 @@ public class RepayServiceImpl implements RepayService {
             }else if ("按月付息，到期还本".equals(map.get("PAYMENT"))){
                 for(int i=1;i<=limit-2;i++){
                     //当前月份加i
+                    //获取当前系统时间
+                    Calendar calendar = Calendar.getInstance();
                     calendar.add(Calendar.MONTH,i);
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                     String format = df.format(calendar.getTime());
@@ -173,6 +176,8 @@ public class RepayServiceImpl implements RepayService {
                     }
                 }
                 //倒数第二期插入期插入数据
+                //获取当前系统时间
+                Calendar calendar = Calendar.getInstance();
                 calendar.add(Calendar.MONTH,limit-1);
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 String format = df.format(calendar.getTime());
@@ -182,7 +187,6 @@ public class RepayServiceImpl implements RepayService {
                 map.put("nextMon",benjin+interstPermonth);
                 map.put("TIMELIMIT",limit-1);
                 map.put("REPAYLIMIT",format);
-                System.out.println(map);
                 int s = repayDao.addTwo(map);
                 if (s==0){
                     flag=false;
@@ -202,6 +206,8 @@ public class RepayServiceImpl implements RepayService {
                 }
             }else {
                 //到期付本付息
+                //获取当前系统时间
+                Calendar calendar = Calendar.getInstance();
                 calendar.add(Calendar.MONTH,limit);
                 SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
                 String dformat = d.format(calendar.getTime());

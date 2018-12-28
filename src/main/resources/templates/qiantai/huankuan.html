@@ -374,7 +374,7 @@
                     returnClick:function(row) {
                         //显示还款时判断当前期是否已还
                         this.returnFormVisible = true;
-							this.returnForm = Object.assign({}, row);
+						this.returnForm = Object.assign({}, row);
                         this.borrowid=row.BORROWNUM;
                         this.goUrl='/huankuan/getReturnCurrent';
                         this.loadingDataA();
