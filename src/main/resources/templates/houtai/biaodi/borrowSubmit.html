@@ -112,8 +112,12 @@
             <el-table-column
                     label="操作">
                 <template scope="scope">
-                    <el-button :plain="true" type="success" size="small" icon="edit" @click="lookClick(scope.row)">查看详情</el-button>
-                    <el-button type="primary" icon="el-icon-edit" size="small" @click="editClick(scope.row)"></el-button>
+                    <el-tooltip content="亲,点我查询详情哦！" placement="top">
+                        <el-button :plain="true" type="success" size="small" icon="edit" @click="lookClick(scope.row)">查看详情</el-button>
+                    </el-tooltip>
+                    <el-tooltip content="亲,这是审核按钮哦！"placement="bottom" effect="light">
+                        <el-button type="primary" icon="el-icon-edit" size="small" @click="editClick(scope.row)"></el-button>
+                    </el-tooltip>
                 </template>
             </el-table-column>
         </el-table>
@@ -138,7 +142,7 @@
     <el-dialog title="信用贷款审核" :visible.sync="editFormVisible" :close-on-click-modal="true">
         <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
             <el-form-item label="借款标号" prop="BORROWNUM">
-                <el-input type="text" v-model="editForm.BORROWNUM" auto-complete="off" readonly="true"></el-input>
+                <el-input type="text" v-model="editForm.BORROWNUM" auto-complete="off" :readonly="true"></el-input>
             </el-form-item>
             <el-form-item label="审核结果" prop="ADUITRESULT">
                 <el-radio-group v-model="editForm.ADUITRESULT">
@@ -174,78 +178,78 @@
             <el-row>
                 <el-col :span="10">
                     <el-form-item label="用户名" prop="USERNAME">
-                        <el-input v-model="lookForm.USERNAME" auto-complete="off" readonly="true"></el-input>
+                        <el-input v-model="lookForm.USERNAME" auto-complete="off" :readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
                     <el-form-item label="申请人" prop="APPLICANT">
-                        <el-input v-model="lookForm.APPLICANT" auto-complete="off" readonly="true"></el-input>
+                        <el-input v-model="lookForm.APPLICANT" auto-complete="off" :readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="10">
                     <el-form-item label="联系电话" prop="TEL">
-                        <el-input v-model="lookForm.TEL" auto-complete="off" readonly="true"></el-input>
+                        <el-input v-model="lookForm.TEL" auto-complete="off" :readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
                     <el-form-item label="担保方式" prop="DANBAOSTYLE">
-                        <el-input v-model="lookForm.DANBAOSTYLE" auto-complete="off" readonly="true"></el-input>
+                        <el-input v-model="lookForm.DANBAOSTYLE" auto-complete="off" :readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="10">
                     <el-form-item label="信用额度" prop="CREDITEDU">
-                        <el-input v-model="lookForm.CREDITEDU" auto-complete="off" readonly="true"></el-input>
+                        <el-input v-model="lookForm.CREDITEDU" auto-complete="off" :readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
                     <el-form-item label="剩余额度" prop="SCREDITEDU">
-                        <el-input v-model="lookForm.SCREDITEDU" auto-complete="off" readonly="true"></el-input>
+                        <el-input v-model="lookForm.SCREDITEDU" auto-complete="off" :readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="10">
                     <el-form-item label="借款金额" prop="BORROWMONEY" >
-                        <el-input v-model="lookForm.BORROWMONEY" auto-complete="off" readonly="true"></el-input>
+                        <el-input v-model="lookForm.BORROWMONEY" auto-complete="off" :readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
                     <el-form-item label="还款方式" prop="PAYMENT">
-                        <el-input v-model="lookForm.PAYMENT" auto-complete="off" readonly="true"></el-input>
+                        <el-input v-model="lookForm.PAYMENT" auto-complete="off" :readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="10">
                     <el-form-item label="借款期限" prop="TIMELIMIT" >
-                        <el-input v-model="lookForm.TIMELIMIT" auto-complete="off" readonly="true"></el-input>
+                        <el-input v-model="lookForm.TIMELIMIT" auto-complete="off" :readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
                     <el-form-item label="年利率" prop="APR">
-                        <el-input v-model="lookForm.APR" auto-complete="off" readonly="true"></el-input>
+                        <el-input v-model="lookForm.APR" auto-complete="off" :readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="10">
-                    <el-form-item label="借款用途" prop="PURPOSE" readonly="true">
-                        <el-input v-model="lookForm.PURPOSE" auto-complete="off"></el-input>
+                    <el-form-item label="借款用途" prop="PURPOSE" >
+                        <el-input v-model="lookForm.PURPOSE" auto-complete="off" ></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
-                    <el-form-item label="标的编号" prop="BORROWNUM" readonly="true">
-                        <el-input v-model="lookForm.BORROWNUM" auto-complete="off"></el-input>
+                    <el-form-item label="标的编号" prop="BORROWNUM">
+                        <el-input v-model="lookForm.BORROWNUM" auto-complete="off" :readonly="true"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row :span="20">
-                <el-form-item label="借款描述" prop="DES" readonly="true">
-                    <el-input type="textarea" v-model="lookForm.DES" auto-complete="off"></el-input>
+                <el-form-item label="借款描述" prop="DES" >
+                    <el-input type="textarea" v-model="lookForm.DES" auto-complete="off" :readonly="true"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button @click="lookFormVisible = false">取 消</el-button>
@@ -253,10 +257,6 @@
                 </el-form-item>
             </el-row>
         </el-form>
-        <!--<div slot="footer" class="dialog-footer">
-            <el-button @click="lookFormVisible = false">取 消</el-button>
-            <el-button type="primary"  @click="selectClick()">查看历史</el-button>
-        </div>-->
         <el-dialog
                 width="30%"
                 title="历史详情"
@@ -264,7 +264,7 @@
                 append-to-body>
             <el-form>
                 <el-form-item label="备注" prop="REMARK">
-                    <el-input type="textarea" v-model="historyForm.REMARK" auto-complete="off" readonly="true"></el-input>
+                    <el-input type="textarea" v-model="historyForm.REMARK" auto-complete="off" :readonly="true"></el-input>
                 </el-form-item>
             </el-form>
         </el-dialog>
@@ -365,7 +365,6 @@
             loadingData:function() {
                 var _self = this;
                 _self.loading = true;
-                var self = this;
                 var searchForm={'pageNo':this.currentPage,'pageSize':this.pageSize,'applicant':this.searchForm.APPLICANT,'borrownum':this.searchForm.BORROWNUM};
                 axios.post('/biaode/page',searchForm).then(function(response){
                     _self.total=response.data.total;
@@ -409,12 +408,12 @@
                         alert(111);
                         if(response.data>0){
                             _self.$message({
-                                message: row.APPLICANT + '已通过审核',
+                                message: '审核通过成功',
                                 type: 'success'
                             });
                         }else{
                             _self.$message({
-                                message: row.APPLICANT + '审核失败',
+                                message: '驳回失败',
                                 type: 'error'
                             });
                         }
@@ -437,7 +436,7 @@
                     applicant: '',
                     tel: ''
                 }
-                this.loadingData();//重新加载数据
+                self.loadingData();//重新加载数据
             },
             //表格勾选事件
             selectionChange:function(val) {
@@ -470,14 +469,20 @@
                 axios.post(goUrl,formData).then(function(response){
                     if(response.data>0){
                         _self.editFormVisible = false;
-                        _self.$message({
-                            message: row.APPLICANT + '已通过审核',
-                            type: 'success'
+                        _self.$notify({
+                            title: '成功',
+                            type: 'success',
+                            message: "<b>审核成功！</b>",
+                            position: 'bottom-right',
+                            dangerouslyUseHTMLString: true
                         });
                     }else{
-                        _self.$message({
-                            message:'驳回失败',
-                            type: 'error'
+                        _self.editFormVisible = false;
+                        _self.$notify.error({
+                            title: '失败',
+                            message: "<b>驳回失败</b>",
+                            position: 'bottom-right',
+                            dangerouslyUseHTMLString: true
                         });
                     }
                     _self.loadingData();//重新加载数据

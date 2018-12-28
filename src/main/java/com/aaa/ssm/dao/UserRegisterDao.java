@@ -43,6 +43,7 @@ public interface UserRegisterDao {
      * @param map
      * @return
      */
-    @Insert("insert into userinfo(userid,uname,upwd,phone,email,stateid) values(seq_userinfo_userid.nextval,#{userName},#{password},#{phone},#{email},0)")
+    @Insert("insert into userinfo(userid,uname,upwd,phone,email,amount,collectinterest,collectprincipal,replaceamount,freezamount) " +
+            "values(seq_userinfo_userid.nextval,#{userName},#{password},#{phone},#{email},0,0,0,0,0)")
     int addUser(Map map);
 }
