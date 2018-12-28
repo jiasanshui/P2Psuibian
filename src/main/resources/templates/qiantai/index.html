@@ -439,7 +439,7 @@ $(function(){
         <div class="bd">
           <div class="article-list clearfix" th:each="web : ${webList}">
             <ul>
-              <li> <a href="/jump/company_announce"><span th:text="${web.TITLE}"></span></a><span class="date" th:text="${web.ADDTIME}">06-19</span></li>
+              <li> <a th:href="'/jump/company_announce?noticeid='+${web.NOTICEID}" target="_blank"><span th:text="${web.TITLE}"></span></a><span class="date" th:text="${web.ADDTIME}">06-19</span></li>
             </ul>
           </div>
         </div>
@@ -491,7 +491,7 @@ $(function(){
             <div class="ui-tab-item active">
               <div class="article-list">
                 <ul th:each="media : ${mediaList}">
-                  <li><a href="/jump/company_announce" target="_blank"><span  th:text="${media.TITLE}"></span></span></a>
+                  <li><a th:href="'/jump/company_announce?noticeid='+${media.NOTICEID}" target="_blank"><span  th:text="${media.TITLE}"></span></span></a>
                   </li>
                 </ul>
               </div>

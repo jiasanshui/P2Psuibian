@@ -56,7 +56,7 @@ public interface BiaodeDao {
      * @param map
      */
     @Select("<script>select borrowid,username,userid,applicant,tel,danbaostyle,quantity,cost,days,borrowmoney,timelimit,apr," +
-            "purpose,des,payment,borrownum,winbidmoney from borrow where stateid=6 \n "+
+            "purpose,des,payment,borrownum,winbidmoney from borrow where stateid=7 \n "+
             "<if test=\"applicant!=null and applicant!=''\">  and applicant like '%'||#{applicant}||'%'</if>" +
             "<if test=\"borrownum!=null and borrownum!=''\">  and borrownum =#{borrownum}</if>" +
             "</script>")

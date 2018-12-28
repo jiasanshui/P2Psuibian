@@ -66,7 +66,6 @@ public class JumpController {
             Map map3 = new HashMap();
             map3.put("parama", "信用");
             List<Map> listCredit = projectService.getList(map3);
-
             List<Map> webList = webService.getWebList();
             List<Map> mediaList = webService.getMediaList();
             model.addAttribute("webList", webList);
@@ -109,12 +108,17 @@ public class JumpController {
         return "qiantai/renzheng";
     }
     /**
-     * 跳转到资料认证页面
+     * 跳转到我的订单页面
      * @return
      */
-    @RequestMapping("zlrenzheng")
-    public Object zlrenzheng(){
-        return "qiantai/zlrenzheng";
+    @Autowired
+    private  MyOrderService myOrderService;
+    @RequestMapping("myorder")
+    public Object myorder(HttpSession session,Model model){
+        String username=(String) session.getAttribute("userName");
+        List<Map> orderByInfo = myOrderService.getOrderByInfo(username);
+        model.addAttribute("orderByInfo",orderByInfo);
+        return "qiantai/myorder";
     }
 
     /**

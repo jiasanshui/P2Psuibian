@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * className:RoleDao
@@ -61,4 +62,20 @@ public interface RoleDao {
      */
     @Update("update tb_role set state='不可用' where id=#{roleid}")
     int delete(Integer roleid);
+
+    /**
+     * 唯一性校验
+     * @param name
+     * @return
+     */
+    //角色名称
+    @Select("select * from tb_role where name=#{name}")
+    List<Map>getRoleByName(String name);
+
+    /**
+     * 查询所有的角色名称
+     * @return
+     */
+    @Select("select name from tb_role")
+    List<Map> getNames();
 }

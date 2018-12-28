@@ -550,10 +550,13 @@
 	    var bor=$("#bor").val();
 	    if(bor==null ||bor==''){
             $("#bo").html("金额不能为空").css("color","red");
+            return false;
 		}else if(parseFloat(bor)<parseFloat(edu) && reg.test(bor)){
             $("#bo").html("");
+            return true;
 		}else{
             $("#bo").html("金额不符").css("color","red");
+            return false;
 		}
 
     }
@@ -563,13 +566,15 @@
         var days=$("#days").val();
         if(reg.test(days) && days<30){
             $("#day").html("");
+            return true;
 		}else{
             $("#day").html("天数不符").css("color","red");
+            return false;
 		}
     }
     //提交表单数据
 	function submitBtn(){
-	    if(checkbor()&&checkTel()&&checkCost()) {
+	    if(checkbor()&&checkTel()&&checkdays()) {
             var form = document.getElementById("form1");
             form.submit();
         }
