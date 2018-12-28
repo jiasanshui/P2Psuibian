@@ -281,7 +281,6 @@
             editClick:function(row) {
                 var _self=this;
                 axios.post('/biaode/tender?borrownum='+row.BORROWNUM).then(function(response){
-                   alert(JSON.stringify(response.data));
                     _self.submitData = response.data;
                     //遍历出投标人的id
                     let arr = [];
@@ -292,7 +291,6 @@
                 })
                 this.goUrl="/loan/check";
                 this.editFormVisible = true;
-                //alert(JSON.stringify(row));
                 this.editForm = Object.assign({}, row);
             },
             //保存点击事件
