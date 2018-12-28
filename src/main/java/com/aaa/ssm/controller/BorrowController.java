@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
@@ -68,4 +69,40 @@ public class BorrowController {
         return "redirect:/jump/index";
     }
 
+    /**
+     * 借款页面提示
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/isBorrow")
+    public Object isBorrow(Integer userid){
+        Map borrowMap=borrowService.isBorrow(userid);
+        Integer stateid=Integer.valueOf(borrowMap.get("STATEID")+"");
+        if(stateid==0 || stateid==10){//可以借款（新人） || 上次还款结束
+            return 0;
+        }else if(stateid==1 || stateid==6){//借款申请已提交，请耐心等候
+            return 2;
+        }else if(stateid==2){//申请通过，开始招标
+            return 3;
+        }else if(stateid==3 || stateid==4 || stateid==5 || stateid==11){//申请失败
+            return 4;
+        }else if(stateid==7){//待放款（放款中）
+            return 1;
+        }else {//有贷款未还清，不能申请
+            return 5;
+        }
+    }
+
+    /**
+     * 重新申请，提交借款材料
+     * @param userid
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/reapply")
+    public Object reapply(Integer userid){
+        //更新stateid
+        int update=borrowService.updatebidstate(userid);
+        return update;
+    }
 }

@@ -76,6 +76,7 @@
             <input type="hidden" th:value="${bankNum}" name="bankNum" id="bankNum">
             <input type="hidden" th:value="${amount}" name="amount" id="amount">
             <input type="hidden" th:value="${freezamount}" name="freezamount" id="freezamount">
+            <input type="hidden" th:value="${num}" name="tenderNum" id="tenderNum">
             <ul th:each="list:${bList}">
 				<li>
 					<span class="dis">投标人：</span><input class="input" type="text"  readonly="true" name="realName"  maxlength="24" id="user" tabindex="1" autocomplete="off" th:value="${realName}">

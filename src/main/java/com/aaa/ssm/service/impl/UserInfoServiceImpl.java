@@ -1,5 +1,6 @@
 package com.aaa.ssm.service.impl;
 
+import com.aaa.ssm.dao.AduitUserinfoDao;
 import com.aaa.ssm.dao.BorrowDao;
 import com.aaa.ssm.dao.UserInfoDao;
 import com.aaa.ssm.service.UserInfoService;
@@ -26,20 +27,39 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Autowired
     private BorrowDao borrowDao;
 
+    @Autowired
+    private AduitUserinfoDao aduitUserinfoDao;
+
     @Override
     public List<Map> getList(Map map) {
 
         return userInfoDao.getList(map);
     }
 
-    @Override
-    public int update(Integer userId) {
-        return userInfoDao.update(userId);
-    }
-
+    /**
+     * 个人信息认证审核
+     * 1、更新userinfo审核状态
+     * 2、往userinfoaduit中插入数据
+     * @param map
+     * @return
+     */
     @Override
     public int edit(Map map) {
-        return userInfoDao.edit(map);
+        //1、更新userinfo审核状态
+        Integer aduitresult = Integer.valueOf(map.get("ADUITRESULT")+"");
+        int m=0;
+        int n=0;
+        if(aduitresult==1){//个人信息认证审核通过
+            m=userInfoDao.update(map);
+        }else {//个人信息认证审核失败
+            n=userInfoDao.edit(map);
+        }
+        //2、往userinfoaduit中插入数据
+        int s = aduitUserinfoDao.add(map);
+        if (s!=0 &&( n!=0 || m!=0)){
+            return 1;
+        }
+        return 0;
     }
 
     @Override
@@ -70,7 +90,6 @@ public class UserInfoServiceImpl implements UserInfoService {
      * 根据用户名获取用户信息，
      * 判断用户是否进行实名认证
      * 判断用户是否通过实名认证
-     * 是否有正在借款记录（未还清的借款）
      * @param username
      * @return
      */
@@ -89,16 +108,6 @@ public class UserInfoServiceImpl implements UserInfoService {
                 //真实姓名不为空（已提交实名认证材料，在判断审核是否通过）
                 Integer stateid = Integer.valueOf(userList.get(0).get("STATEID")+"");
                 if(stateid==2){//审核通过
-                    List<Map> borrowList = borrowDao.getListByusername(username);
-                    if(borrowList!=null&&borrowList.size()>0){
-                        Integer borrowStateid = Integer.valueOf(borrowList.get(0).get("STATEID")+"");
-                        if(borrowStateid==10){//还款结束，可以再借款申请
-                            return borrowList.get(0);
-                        }
-                        //map.put("msg","您上次的申请尚在进行中");
-                        map.put("msg","1");
-                    }
-                    //无借款记录
                     return userList.get(0);
                 }
                 map.put("msg","请检查你的实名认证是否通过！！");
@@ -126,5 +135,26 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public List<Map> getAllUserByuserid(Integer userid) {
         return userInfoDao.getAllUserByuserid(userid);
+    }
+
+    @Override
+    public int getAccountMoney(String userName) {
+        return userInfoDao.getAccountMoney(userName);
+    }
+
+    /**
+     * 根据用户ID查询历史
+     * @param map
+     * @return
+     */
+    @Override
+    public Map getHistory(Map map) {
+        List<Map> history = userInfoDao.getHistory(map);
+        Map map1=new HashMap();
+        if(history!=null && history.size()>0){
+            return history.get(0);
+        }
+        map1.put("REMARK","该用户信用良好，无不良记录！");
+        return map1;
     }
 }

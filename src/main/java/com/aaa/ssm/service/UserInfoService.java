@@ -19,15 +19,9 @@ public interface UserInfoService {
      */
     List<Map> getList(Map map);
 
-    /**
-     * 审核通过，更新用户信息表审核状态
-     * @param userId
-     * @return
-     */
-    int update(Integer userId);
 
     /**
-     * 审核驳回，更新用户信息表审核状态
+     * 审核通过，更新用户信息表审核状态
      * @param map
      * @return
      */
@@ -87,4 +81,12 @@ public interface UserInfoService {
      */
     List<Map> getAllUserByuserid(Integer userid);
 
+    int getAccountMoney(String userName);
+
+    /**
+     * 根据用户ID查询历史
+     * @param map
+     * @return
+     */
+    Map getHistory(Map map);
 }
