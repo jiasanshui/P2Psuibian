@@ -121,4 +121,11 @@ public interface PowerDao {
             "iconclass=#{iconClass} where id=#{id}")
     int updateMenu(Map map);
 
+    /**
+     * 表单唯一性验证
+     * @param label
+     * @return
+     */
+    @Select("select * from tb_power where label=#{label}")
+    List<Map> getLabel(String label);
 }

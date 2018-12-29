@@ -79,6 +79,7 @@
         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/deposits_record">投资记录</a></span></li>
         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/jump/money_plan">回款计划</a></span></li>
         <li class=""><span><a href="/jump/renzheng"><i class="dot dot02"></i>个人身份认证</a> </span> </li>
+        <li class=""><span><a href="/jump/myorder"><i class="dot dot02"></i>我的订单</a> </span> </li>
         <li><span><a href="/jump/withdraw"><i class="dot dot03"></i>提现</a></span></li>
         <li class=""><span><a href="/jump/pay1"><i class="dot dot04"></i>充值</a></span></li>
         <li style="position:relative;" class=""> <span> <a href="/jump/myred_packets"> <i class="dot dot06"></i> 我的红包 </a> </span> </li>
@@ -392,7 +393,32 @@
 					  } 
 			 });
 			//]]>
+
 		</script>
+        <script type="text/javascript">
+          //根据银行卡前6位判断是哪个银行的
+          function changeValue(){
+              var bankCardId=$("#form\\:bankCardNo").val();
+              if(bankCardId.length>=6){
+                  var bcidSix = bankCardId.substr(0,6);
+                  var Str = "";
+                  $.ajax({
+                      url:"/chongzhi/getBankByCard",
+                      type:"post",
+                      dataType:"json",
+                      data:{BCIDSix:bcidSix},
+                      success:function (data) {
+                          if(data!=null&&data!=''){
+                              Str = "<img src='../images/"+data.CASHNAME+".png'>";
+                              $("#bankname").html(Str);
+                          }
+                      }
+                  })
+              }else{
+                  $("#bankname").empty();
+              }
+          }
+        </script>
     <div class="personal-main">
       <div class="personal-pay">
         <h3><i>充值</i></h3>
@@ -402,14 +428,15 @@
             <div class="quick-main">
               <div class="fl quick-info">
                 <div class="info-1"> <span class="info-tit">充值金额</span> <span class="info1-input">
-                  <input id="form:actualMoney1" type="text" name="" class="pay-money-txt" maxlength="10" >
-                  <em>元</em> </span> <span class="quick-error"> </span> </div>
+                  <input id="form:actualMoney1" onblur="return checkRecharge1()" type="text" name="" class="pay-money-txt" maxlength="10" >
+                  <em>元</em> </span> <span class="quick-error" id="quickerror"> </span> </div>
                 <div class="info-tips">你我贷提醒您：充值金额超过50000元时，请切换到网银充值</div>
                 <div class="info-2"> <span class="info-tit">银行卡号</span> <span class="info2-input">
-                  <input id="form:bankCardNo" type="text" name="form:bankCardNo" class="tx-txt">
+                  <input id="form:bankCardNo" onblur="return checkBankCardNo()" name="form:bankCardNo" oninput="changeValue()">
                   <em class="info2-bank" style="display: none;">
-                  <label id="form:defaultBankName" style="font-size:16px;"> </label>
-                  </em> </span> <span class="quick-error3" id="bankCardError"></span> </div>
+                  <label id="defaultBankName" style="font-size:16px;"> </label>
+                  </em> </span> <span class="quick-error3" id="bankCardError"></span></div>
+                <div class="info-3" id="bankname"></div>
                 <div class="bank-check" id="bank-check2"> <b class="selected" id="bankProtocol1"></b><span class="bank-agree">我同意并接受<a href="#" target="_blank">《你我贷投资咨询与管理服务电子协议》</a></span> <span class="error" id="bankProtocol_message" style="display:none;margin-top:-3px;">请同意协议内容！</span> </div>
                 <input type="submit" name="" value="充值" class="btn-paycz" onclick="return getShowPayVal1()">
               </div>
@@ -433,9 +460,9 @@
                 <h6>请选择充值银行</h6>
                 <span id="showpay" style="display:none;">icbc</span>
                 <ul id="paysSpan" style="height:150px;">
-                  <li><img src="../images/中国农业银行.png" property1="icbc" class="on"><em></em><i></i></li>
-                  <li><img src="../images/中国银行.png" property1="abc"><em></em></li>
-                  <li><img src="../images/中国建设银行.png" property1="boc"><em></em></li>
+                  <li><em><i></i></em><img src="../images/中国农业银行.png" property1="icbc" class="on"></li>
+                  <li><em></em><img src="../images/中国银行.png" property1="abc"></li>
+                  <li><em></em><img src="../images/中国建设银行.png" property1="boc"></li>
                   <li><img src="../images/中国工商银行.png" property1="ccb"><em></em></li>
                   <li><img src="../images/中国邮政.png" property1="hxb"><em></em></li>
                   <li><img src="../images/中国光大银行.png" property1="comm"><em></em></li>
@@ -449,6 +476,12 @@
                   <li><img src="../images/浦发银行.png" property1="rcb"><em></em></li>
                   <li><img src="../images/上海银行.png" property1="cib"><em></em></li>
                 </ul>
+                <script type="text/javascript">
+                  $("#paysSpan li").click(function () {
+                      $("#paysSpan li em").empty();
+                      $(this).eq(0).text("<i></i>");
+                  })
+                </script>
                 <span class="pay-other"><span class="paytxt">选择其他银行卡</span><i class="paydown"></i></span> </div>
               <div class="pay-bankstate"> <span class="bankstate-head"><i class="fl">请关注您的充值金额是否超限：</i><i class="fr" id="show-pay-hotLine">工商银行客服热线：95588</i></span>
                 <table>

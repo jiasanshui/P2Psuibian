@@ -22,7 +22,7 @@ public interface HuankuanDao {
      * @param map
      * @return
      */
-    @Select("<script>select borrownum,purpose,applicant,borrowmoney,danbaostyle,payment,timelimit,yettime from borrow where username=#{userName} \n "+
+    @Select("<script>select borrownum,purpose,applicant,borrowmoney,danbaostyle,payment,timelimit,yettime from borrow where username=#{userName} and stateid=8 \n "+
             "<if test=\"borrowNum!=null and borrowNum!=''\">  and borrownum=#{borrowNum}</if>" +
             "<if test=\"danbaoStyle!=null and danbaoStyle!=''\">  and danbaostyle =#{danbaoStyle}</if>" +
             "</script>")

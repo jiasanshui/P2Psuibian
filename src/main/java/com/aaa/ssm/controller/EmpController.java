@@ -33,44 +33,44 @@ public class EmpController {
         return "houtai/emp/list";
     }
 
-    /**
-     * 员工状态下拉框
-     * @param
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("/list")
-    public  Object getEmpList(){
-        return empService.getEmpList();
-    }
-
-    /**
-     * 省下拉框
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("/sheng")
-    public  Object getShengList(){
-        return  empService.getShengList();
-    }
-    /**
-     * 市下拉框
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("/shi")
-    public  Object getShiList(){
-        return  empService.getShiList();
-    }
-    /**
-     * 市下拉框
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("/qu")
-    public  Object getQuList(){
-        return  empService.getQuList();
-    }
+//    /**
+//     * 员工状态下拉框
+//     * @param
+//     * @return
+//     */
+//    @ResponseBody
+//    @RequestMapping("/list")
+//    public  Object getEmpList(){
+//        return empService.getEmpList();
+//    }
+//
+//    /**
+//     * 省下拉框
+//     * @return
+//     */
+//    @ResponseBody
+//    @RequestMapping("/sheng")
+//    public  Object getShengList(){
+//        return  empService.getShengList();
+//    }
+//    /**
+//     * 市下拉框
+//     * @return
+//     */
+//    @ResponseBody
+//    @RequestMapping("/shi")
+//    public  Object getShiList(){
+//        return  empService.getShiList();
+//    }
+//    /**
+//     * 市下拉框
+//     * @return
+//     */
+//    @ResponseBody
+//    @RequestMapping("/qu")
+//    public  Object getQuList(){
+//        return  empService.getQuList();
+//    }
 
     @ResponseBody //返回json
     @RequestMapping("/page")
@@ -98,8 +98,10 @@ public class EmpController {
     @RequestMapping("/add")
     public Object add(@RequestBody Map map) {
             Map map1=new HashMap();
-        String address = map.get("SHENGID").toString().concat(map.get("SHIID").toString().concat(map.get("QUID").toString().concat(map.get("ADDRESS")+"")));
+
+        String address = map.get("SHENGNAME").toString().concat(map.get("SHINAME").toString().concat(map.get("QUNAME").toString().concat(map.get("ADDRESS")+"")));
         map.put("address",address);
+
             String empno = (String) map.get("EMPNO");
             String phones= (String) map.get("PHONE");
             String idcard = (String) map.get("IDCARD");
