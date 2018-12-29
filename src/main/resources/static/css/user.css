@@ -1412,7 +1412,8 @@ transition: transform 1s linear;}
 .info-tips { float:left; font-size: 12px; height: 32px; line-height: 32px; font-weight: bold; text-indent: 80px; }
 
 .quick-info .info-2 {float:left;  height: 92px; *height:100px;  line-height: 82px; }
-.quick-info .info2-input { display: inline-block; position: relative; float: left; } 
+.quick-info .info-3 {float:left;  height: 40px; *height:100px;  line-height: 40px; margin-top: 0px; }
+.quick-info .info2-input { display: inline-block; position: relative; float: left; }
 .quick-info .info2-bank,.quick-info .info2-input input { display: inline-block; width: 200px; padding:0 10px; border: 1px solid #D0D0D0; height: 38px; line-height: 38px; margin-top: 22px; }
 .quick-info .info2-input input { font-size: 14px; color: #ccc; }
 .quick-info .info2-bank { display: block; position: absolute; top: 39px; *top:49px; left: 0;  background: #f9f9f9; font-weight: bold; }
