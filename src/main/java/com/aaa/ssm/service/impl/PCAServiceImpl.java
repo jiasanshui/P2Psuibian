@@ -39,4 +39,31 @@ public class PCAServiceImpl implements PCAService{
     public List<Map> getArea(String cname) {
         return pcaDao.getArea(cname);
     }
+
+    /**
+     * 通过pid找对应的市
+     * @param pId
+     * @return
+     */
+    @Override
+    public List<Map> getCityByProvinceId(String pId) {
+        List<Map> cityList=pcaDao.getCityByProvinceId(pId);
+        if(cityList!=null&&cityList.size()>0){
+            return cityList;
+        }
+        return null;
+    }
+    /**
+     * 通过cid找对应的区
+     * @param cId
+     * @return
+     */
+    @Override
+    public List<Map> getAreaByCityId(String cId) {
+        List<Map> areaList= pcaDao.getAreaByCityId(cId);
+        if(areaList!=null&&areaList.size()>0){
+            return  areaList;
+        }
+        return null;
+    }
 }

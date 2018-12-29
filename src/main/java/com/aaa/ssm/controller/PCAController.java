@@ -7,8 +7,13 @@ package com.aaa.ssm.controller;/**
 
 import com.aaa.ssm.service.PCAService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  *className:PCAController
@@ -51,4 +56,28 @@ public class PCAController {
     public Object getArea(String cname){
         return pcaService.getArea(cname);
     }
+    /**
+     * 通过pid找对应的市
+     * @param map
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getcity")
+    private Object getCityByProvinceId(@RequestBody Map map){
+        String pname=(String) map.get("pname");
+        return pcaService.getCity(pname);
+    }
+    /**
+     * 通过cid找对应的区
+     * @param map
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getarea")
+    private Object getAreaByCityId(@RequestBody Map map){
+
+        String cname=(String) map.get("cname");
+        return pcaService.getArea(cname);
+    }
+
 }

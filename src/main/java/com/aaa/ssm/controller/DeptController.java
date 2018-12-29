@@ -43,14 +43,14 @@ public class DeptController {
     public String toState(){
         return "houtai/dept/list";
     }
-    /**
-     * 部门状态下拉框
-     */
-    @ResponseBody
-    @RequestMapping("/deptState")
-    public Object getState(){
-        return  deptService.getState();
-    }
+//    /**
+//     * 部门状态下拉框
+//     */
+//    @ResponseBody
+//    @RequestMapping("/deptState")
+//    public Object getState(){
+//        return  deptService.getState();
+//    }
 
     /**
      * 部门分页列表

@@ -19,55 +19,53 @@ public interface EmpDao {
      * 获取员工列表
      */
     @Select("<script>select e.id,e.empno,e.ename,e.idcard,e.phone,e.address,to_char(e.ruzhitime,'yyyy-mm-dd') as ruzhitime," +
-            "e.state,e.deptid,e.roleid,e.adminid,e.comm,e.sal,d.dname,d.describes,to_char(d.dtime,'yyyy-mm-dd') as dtime,d.dstatus,s.eid,s.states," +
-            "p.sid,p.province,c.cid,c.city,a.rid,a.area" +
-            " from emp e left join dept d on e.deptid=d.deptid left join empstate s on e.state=s.eid left join province p on" +
-            " e.shengid=p.sid left join city c on e.shiid=c.cid left join area a on e.quid =a.rid  where e.state=1 " +
+            "e.state,e.deptid,e.roleid,e.adminid,e.comm,e.sal,e.shengname,e.shiname,e.quname,d.dname,d.describes,to_char(d.dtime,'yyyy-mm-dd') as dtime,d.dstatus,s.eid,s.states " +
+            " from emp e left join dept d on e.deptid=d.deptid left join empstate s on e.state=s.eid  where e.state=1 " +
             "<if test=\"empNo!=null and empNo!=''\"> and e.empno=#{empNo}</if> " +
             "<if test=\"ename!=null and ename!=''\"> and e.ename like '%'||#{ename}||'%'</if> " +
             "<if test=\"deptid!=null and deptid!=''\"> and e.deptid =#{deptid}</if> " +
             "<if test=\"state!=null and state!=''\"> and e.state =#{state}</if> " +
             "</script>")
         List<Map> getList(Map map);
-    /**
-     *获取员工状态信息(员工状态下拉)
-     */
-   @Select("select eid,states from empstate")
-    List<Map> getEmpList();
+//    /**
+//     *获取员工状态信息(员工状态下拉)
+//     */
+//   @Select("select eid,states from empstate")
+//    List<Map> getEmpList();
 
- /**
-  * 省下拉框
-  * @return
-  */
- @Select("select sid,provinceid,province from province")
-   List<Map>getShengList();
+// /**
+//  * 省下拉框
+//  * @return
+//  */
+// @Select("select sid,provinceid,province from province")
+//   List<Map>getShengList();
 
- /**
-  * 市下拉框
-  * @return
-  */
- @Select("select cid,cityid,city,father from city")
- List<Map>getShiList();
+// /**
+//  * 市下拉框
+//  * @return
+//  */
+// @Select("select cid,cityid,city,father from city")
+// List<Map>getShiList();
 
- /**
-  * 区下拉框
-  * @return
-  */
- @Select("select rid,areaid,area,father from area")
- List<Map>getQuList();
+// /**
+//  * 区下拉框
+//  * @return
+//  */
+// @Select("select rid,areaid,area,father from area")
+// List<Map>getQuList();
     /**
      * 员工添加
      * @param map
      * @return
      */
-    @Insert("insert into emp values(seq_empid.nextval,#{EMPNO},#{ENAME},#{IDCARD},#{PHONE},#{address},to_date(#{RUZHITIME},'yyyy-mm-dd'),#{STATE},#{DEPTID},#{ROLEID},#{ADMINID},#{COMM},#{SAL})")
+    @Insert("insert into emp values(seq_empid.nextval,#{EMPNO},#{ENAME},#{IDCARD},#{PHONE},#{ADDRESS},sysdate,1,#{DEPTID},#{ROLEID},#{ADMINID},#{COMM},#{SAL},#{SHENGNAME},#{SHINAME},#{QUNAME})")
     int add(Map map);
     /**
      * 员工更新
      * @param map
      * @return
      */
-    @Update("update emp set empno=#{EMPNO},ename=#{ENAME},idcard=#{IDCARD},phone=#{PHONE},address=#{address},ruzhitime=to_date(#{RUZHITIME},'yyyy-mm-dd'),state=#{STATE},deptid=#{DEPTID},roleid=#{ROLEID},adminid=#{ADMINID},COMM=#{COMM},SAL=#{SAL} where id=#{ID}")
+    @Update("update emp set empno=#{EMPNO},ename=#{ENAME},idcard=#{IDCARD},phone=#{PHONE},address=#{ADDRESS},ruzhitime=to_date(#{RUZHITIME},'yyyy-mm-dd'),state=#{STATE},deptid=#{DEPTID},roleid=#{ROLEID},adminid=#{ADMINID},COMM=#{COMM},SAL=#{SAL},shengname=#{SHENGNAME},shiname=#{SHINAME},quname=#{QUNAME} where id=#{ID}")
     int update(Map map);
     /**
      * 员工删除

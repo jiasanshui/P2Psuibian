@@ -16,8 +16,8 @@
                 <tr align="center" class="warning">
                     <td >名称</td>
                     <td>
-                        <input type="hidden" name="id">
-                        <input type="text" name="label">
+                        <input type="hidden" name="id" validType='powername' >
+                        <input type="text" name="label" required="true" id="label"><span id="tishi"></span>
                     </td>
                 </tr>
                 <tr align="center" class="success">
@@ -26,7 +26,7 @@
                 </tr>
                 <tr align="center"  class="active">
                     <td>图标</td>
-                    <td><input type="text" name="iconclass"></td>
+                    <td><input type="text" name="iconclass" required="true"></td>
                 </tr>
                 <tr align="center"  class="active">
                     <td>链接</td>
@@ -37,31 +37,45 @@
                 </tr>
             </table>
         </form>
-        <script>
-            $(function () {
-                $('#ff').form({
-                    onSubmit: function(){//对form表单校验
-                        return $(this).form('validate');
-                    },
-                    success:function(data){
-                        if (data>0) {
-                            $.messager.show({
-                                title: '成功信息',
-                                msg: '添加成功'
-                            });
-                        }
-                        else{
-                            $.messager.show({
-                                title: '错误信息',
-                                msg: '添加失败'
-                            });
-                        }
-                        setTimeout(function(){ window.parent.location.href=window.parent.location.href;},1000);
-                    }
-                });
-            })
-
-        </script>
     </div>
+    <script>
+        $(function () {
+            $('#ff').form({
+                onSubmit: function(){//对form表单校验
+                    return $(this).form('validate');
+                },
+                success:function(data){
+                    if (data>0) {
+                        $.messager.show({
+                            title: '成功信息',
+                            msg: '添加成功'
+                        });
+                    }
+                    else{
+                        $.messager.show({
+                            title: '错误信息',
+                            msg: '添加失败'
+                        });
+                    }
+                    setTimeout(function(){ window.parent.location.href=window.parent.location.href;},1000);
+                }
+            });
+            $("#label").blur(function () {
+                var label = $("#label").val(); //获取文本框的值
+                $.post(
+                    "/power/label",
+                    {label:label},
+                    function(data){
+                        if(data>0){
+                            $("#tishi").html("该菜单已存在").css("color","red");
+                        }else{
+                            $("#tishi").html("");
+                        }
+                    },
+                    "json"
+                );
+            })
+        });
+    </script>
 </body>
 </html>

@@ -252,4 +252,14 @@ public class PowerServiceImpl implements PowerService{
     public int addMenu(Map map) {
         return powerDao.addMenu(map);
     }
+
+    /**
+     * 表单唯一性验证
+     * @param label
+     * @return
+     */
+    @Override
+    public List<Map> getLabel(String label) {
+        return powerDao.getLabel(label);
+    }
 }
