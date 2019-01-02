@@ -3,6 +3,7 @@ package com.aaa.ssm.service;
 import com.aaa.ssm.entity.Permission;
 import com.aaa.ssm.entity.TbRole;
 import com.aaa.ssm.entity.TreeNode;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -96,4 +97,12 @@ public interface PowerService {
      * @return
      */
     int addMenu(Map map);
+
+
+    /**
+     * 表单唯一性验证
+     * @param label
+     * @return
+     */
+    List<Map> getLabel(String label);
 }

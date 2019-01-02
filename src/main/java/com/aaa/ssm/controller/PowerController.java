@@ -187,4 +187,18 @@ public class PowerController {
             return 0;
     }
 
+    /**
+     * 表单唯一性验证
+     * @param label
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/label")
+    public Object getLabel(String label){
+        List<Map> powerList=powerService.getLabel(label);
+        if (powerList!=null&&powerList.size()>0){
+            return 1;
+        }
+        return 0;
+    }
 }

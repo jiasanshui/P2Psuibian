@@ -8,11 +8,72 @@
     <script type="text/javascript" src="../js/vue.js"></script>
     <script type="text/javascript" src="../js/axios.min.js"></script>
     <script type="text/javascript" src="../js/elementui.js"></script>
+    <script type="text/javascript" src="../js/jquery.js"></script>
     <!-- 引入样式 -->
     <link rel="stylesheet" href="../css/elementui.css">
     <!-- 引入组件库 -->
     <script src="../js/elementui.js"></script>
-
+    <script>
+        //表格重新加载数据
+        $(function() {
+            $.ajax({
+                type: "post",
+                dataType: "json",
+                url: "/pca/province",
+                success: function (data) {
+                    if (data != '') {
+                        var Str = "";
+                        for (var i = 0; i < data.length; i++) {
+                            Str += "<el-option value='" + data[i].PROVINCE + "'>" + data[i].PROVINCE + "</el-option>";
+                        }
+                        $("#province").append(Str);
+                    }
+                }
+            })
+        });
+        <!-- 查询市 -->
+        $("#province").change(function(){
+            alert(222);
+            $("#city").empty();
+            var pname = $(this).val();
+            $.ajax({
+                type:"post",
+                dataType:"json",
+                data:{pname:pname},
+                url:"/pca/city",
+                success:function(data){
+                    if(data!=''){
+                        var Str = "";
+                        for (var i = 0; i < data.length; i++) {
+                            Str += "<el-option value='"+data[i].CITY+"'>"+data[i].CITY+"</el-option>";
+                        }
+                        $("#city").append(Str);
+                    }
+                }
+            })
+        });
+        <!-- 根据城市查询县 -->
+        $("#city").change(function(){
+            alert(3333);
+            $("#area").empty();
+            var cname = $(this).val();
+            $.ajax({
+                type:"post",
+                dataType:"json",
+                data:{cname:cname},
+                url:"/pca/area",
+                success:function(data){
+                    if(data!=''){
+                        var Str = "";
+                        for (var i = 0; i < data.length; i++) {
+                            Str += "<el-option value='"+data[i].AREA+"'>"+data[i].AREA+"</el-option>";
+                        }
+                        $("#area").append(Str);
+                    }
+                }
+            })
+        })
+    </script>
 </head>
 <body>
 <div id="app">
@@ -41,18 +102,18 @@
                     </el-select>
                 </template>
             </el-form-item>
-            <el-form-item label="状态">
-                <template>
-                    <el-select v-model="searchForm.State" placeholder="请选择">
-                        <el-option
-                                v-for="item in options"
-                                :key="item.EID"
-                                :label="item.STATES"
-                                :value="item.EID">
-                        </el-option>
-                    </el-select>
-                </template>
-            </el-form-item>
+            <!--<el-form-item label="状态">-->
+                <!--<template>-->
+                    <!--<el-select v-model="searchForm.State" placeholder="请选择">-->
+                        <!--<el-option-->
+                                <!--v-for="item in options"-->
+                                <!--:key="item.EID"-->
+                                <!--:label="item.STATES"-->
+                                <!--:value="item.EID">-->
+                        <!--</el-option>-->
+                    <!--</el-select>-->
+                <!--</template>-->
+            <!--</el-form-item>-->
             <el-form-item>
                 <el-button type="primary" icon="search" @click="searchClick">查询</el-button>
                 <el-button type="success" icon="plus" @click="addClick">新增</el-button>
@@ -166,33 +227,34 @@
             <el-form-item label="电话号码" prop="PHONE">
                 <el-input v-model="editForm.PHONE" auto-complete="off"></el-input>
             </el-form-item>
-            <el-form-item label="地址" prop="ADDRESS">
-                    <el-select v-model="editForm.SHENGID" placeholder="请选择省份" id="province">
+            <el-form-item label="地址" prop="addr">
+                    <el-select v-model="editForm.SHENGNAME" placeholder="请选择省份" @change="getCity()">
                             <el-option
                                     v-for="item in province"
                                     :key="item.SID"
                                     :label="item.PROVINCE"
-                                    :value="item.SID">
+                                    :value="item.PROVINCE">
                             </el-option>
                     </el-select>
-                    <el-select v-model="editForm.SHIID" placeholder="请选择市" id="city">
+                    <el-select v-model="editForm.SHINAME" placeholder="请选择市" @change="getArea()">
                         <el-option
                                 v-for="item in shi"
                                 :key="item.CID"
                                 :label="item.CITY"
-                                :value="item.CID">
+                                :value="item.CITY">
                         </el-option>
                     </el-select>
-                    <el-select v-model="editForm.QUID"  placeholder="请选择县区" id="area">
+                    <el-select v-model="editForm.QUNAME"  placeholder="请选择县区">
                         <el-option
                                 v-for="item in qu"
                                 :key="item.RID"
                                 :label="item.AREA"
-                                :value="item.RID">
+                                :value="item.AREA">
                         </el-option>
                     </el-select>
                 <el-input v-model="editForm.ADDRESS"   placeholder="具体地址" ></el-input>
             </el-form-item>
+
             <el-form-item label="入职日期" v-if="isShow">
                 <el-date-picker type="date" value-format="yyyy-MM-dd"
                                 placeholder="选择日期" v-model="editForm.RUZHITIME" ></el-date-picker>
@@ -209,7 +271,7 @@
                     </el-select>
                 </template>
             </el-form-item>
-            <el-form-item label="状态">
+            <el-form-item label="状态" v-if="isShow">
                 <template>
                     <el-select v-model="editForm.STATE" placeholder="请选择">
                         <el-option
@@ -246,18 +308,12 @@
         el: '#tableView',
         data: {
             isShow:false,
-           // mapJson: '../json/map.json',
             //类型select
             option: [],
             options: [],
             province: [],
             shi: [],
             qu: [],
-            sheng: '',
-           // shi: '',
-           // qu: '',
-           // city: '',
-           // block: '',
             deptId: '',
             State: '',
             //列表数据
@@ -271,18 +327,16 @@
                 ENAME: '',
                 IDCARD: '',
                 PHONE: '',
-                ADDRESS:[],
-                SHENGID:'',
-                SHIID:'',
-                QUID:'',
-               // shi: '',
-                //qu: '',
+               ADDRESS:'',
+                SHENGNAME:'',
+                SHINAME:'',
+                QUNAME:'',
                 RUZHITIME: '',
                 STATE: 0,
                 DEPTID: 0,
                 COMM: 0,
                 SAL: 0,
-               address:""
+              address:"",
 
             },
             //搜索表单
@@ -290,7 +344,7 @@
                 id: '',
                 name: '',
                 deptId: '',
-                State: ''
+//                State: ''
             },
             //多选值
             multipleSelection: [],
@@ -337,26 +391,18 @@
                 'pageNo': this.currentPage,
                 'pageSize': this.pageSize
             }).then(function (response) {
-
                 self.total = response.data.total;
                 self.tableData = response.data.pageData;
             });
-
-            axios.post('/emp/list').then(function (response) {
-                self.options = response.data;
-            });
+//            axios.post('/emp/list').then(function (response) {
+//                self.options = response.data;
+//            });
             axios.post('/dept/list').then(function (response) {
                 self.option = response.data;
             });
-            axios.post('/emp/sheng').then(function (response) {
-                self.option = response.data;
+            axios.post('/pca/province').then(function (response) {
+                self.province = response.data;
             });
-            axios.post('/emp/shi').then(function (response) {
-                self.option = response.data;
-            });
-            axios.post('/emp/qu').then(function (response) {
-                self.option = response.data;
-            })
         },
         methods: {
             //刷新
@@ -365,149 +411,24 @@
                     id: '',
                     name: '',
                     deptId: '',
-                    State: ''
+//                    State: ''
                 }
                 this.loadingData();
             },
-//            getCityData: function () {
-//                var that = this;
-//                axios.get(this.mapJson).then(function (response) {
-//                    if (response.status == 200) {
-//                        var data = response.data
-//                        that.province = []
-//                        that.city = []
-//                        that.block = []
-//                        //省市区数据分类
-//                        for (var item in data) {
-//                            if (item.match(/0000$/)) {//省级
-//                                that.province.push({id: item, value: data[item], children: []})
-//                            } else if (item.match(/00$/)) {//市级
-//                                that.city.push({id: item, value: data[item], children: []})
-//                            } else {//县级
-//                                that.block.push({id: item, value: data[item]})
-//                            }
-//                        }
-//                        //市级分类
-//                        for (var index in that.province) {
-//                            for (var index1 in that.city) {
-//                                if (that.province[index].id.slice(0, 2) === that.city[index1].id.slice(0, 2)) {
-//                                    that.province[index].children.push(that.city[index1])
-//                                }
-//                            }
-//                        }
-//                        //区级分类
-//                        for (var item1 in that.city) {
-//                            for (var item2 in that.block) {
-//                                if (that.block[item2].id.slice(0, 4) === that.city[item1].id.slice(0, 4)) {
-//                                    that.city[item1].children.push(that.block[item2])
-//                                }
-//                            }
-//                        }
-//                    }
-//                    else {
-//                        console.log(response.status)
-//                    }
-//                }).catch(function (error) {console.log(typeof +error) })
-//            },
-//            //选省
-//            choseProvince: function (e) {
-//
-//                for (var index2 in this.province) {
-//                    if (e === this.province[index2].id) {
-//                        this.editForm.sheng = "";
-//                      this.editForm.sheng = this.province[index2].value;
-//                        this.shi1 = this.province[index2].children
-//                        this.shi = this.province[index2].children[0].value
-//                        this.qu1 = this.province[index2].children[0].children
-//                        this.qu = this.province[index2].children[0].children[0].value
-//                        this.E = this.qu1[0].id
-//                    }
-//
-//
-//                }
-//            },
-//            //选市
-//            choseCity: function (e) {
-//                for (var index3 in this.city) {
-//                    if (e === this.city[index3].id) {
-//                        this.editForm.shi = "";
-//                        this.editForm.shi= this.city[index3].value;
-//                        this.qu1 = this.city[index3].children
-//                        this.qu = this.city[index3].children[0].value
-//                        this.E = this.qu1[0].id
-//                    }
-//
-//                }
-//            },
-//            //选县
-//            choseBlock: function (e) {
-//                this.E = e;
-//                    for (var index4 in this.block) {
-//                  if (e === this.block[index4].id) {
-//                  this.editForm.qu = ""
-//                  this.editForm.qu = this.block[index4].value;
-//                   this.editForm.address = this.editForm.sheng + this.editForm.shi + this.editForm.qu
-//            }}
-//            },
-            //表格重新加载数据
-            getCityData:function () {
-                $(function() {
-                    $.ajax({
-                        type: "post",
-                        dataType: "json",
-                        url: "/pca/province",
-                        success: function (data) {
-                            if (data != '') {
-                                var Str = "";
-                                for (var i = 0; i < data.length; i++) {
-                                    Str += "<el-option value='" + data[i].PROVINCE + "'>" + data[i].PROVINCE + "</el-option>";
-                                }
-                                $("#province").append(Str);
-                            }
-                        }
-                    })
+            getCity:function(){
+                alert(this.editForm.SHENGNAME);
+                var _self=this;
+                axios.post("/pca/getcity",{pname:this.editForm.SHENGNAME}).then(function (response) {
+                    _self.shi = response.data;
                 })
-            <!-- 查询市 -->
-            $("#province").change(function(){
-      $("#city").empty();
-      var pname = $(this).val();
-      $.ajax({
-          type:"post",
-          dataType:"json",
-          data:{pname:pname},
-          url:"/pca/city",
-          success:function(data){
-              if(data!=''){
-                  var Str = "";
-                  for (var i = 0; i < data.length; i++) {
-                      Str += "<el-option value='"+data[i].CITY+"'>"+data[i].CITY+"</el-option>";
-                  }
-                  $("#city").append(Str);
-              }
-          }
-      })
-  });
-                <!-- 根据城市查询县 -->
-                $("#city").change(function(){
-                    $("#area").empty();
-                    var cname = $(this).val();
-                    $.ajax({
-                        type:"post",
-                        dataType:"json",
-                        data:{cname:cname},
-                        url:"/pca/area",
-                        success:function(data){
-                            if(data!=''){
-                                var Str = "";
-                                for (var i = 0; i < data.length; i++) {
-                                    Str += "<el-option value='"+data[i].AREA+"'>"+data[i].AREA+"</el-option>";
-                                }
-                                $("#area").append(Str);
-                            }
-                        }
-                    })
+            },
+            getArea:function () {
+                alert(this.editForm.SHINAME);
+                var _self=this;
+                axios.post("/pca/getarea",{cname:this.editForm.SHINAME}).then(function (response) {
+                    _self.qu = response.data;
                 })
-    },
+            },
             loadingData: function () {
                 var _self = this;
                 _self.loading = true;
@@ -516,8 +437,8 @@
                     'pageSize': this.pageSize,
                     'empNo': this.searchForm.id,
                     'ename': this.searchForm.name,
-                    'deptid': this.searchForm.deptId,
-                    'state': this.searchForm.State
+                    'deptid': this.searchForm.deptId
+//                    'state': this.searchForm.State
                 };
                 axios.post('/emp/page', searchForm).then(function (response) {
                     _self.total = response.data.total;
@@ -532,8 +453,6 @@
             },
             //表格编辑事件
             editClick: function (row) {
-                alert(JSON.stringify(row));
-                alert(JSON.stringify(this.editForm));
                 this.goUrl = "/emp/update";
                 this.editFormVisible = true;
                 this.isShow=true;
@@ -570,7 +489,6 @@
             //新建事件
             addClick: function () {
                 this.isShow=false;
-                this.getCityData();
                 this.goUrl = "/emp/add";
                 var _self = this;
                 //清空原有数据
@@ -579,10 +497,10 @@
                     ENAME: '',
                     IDCARD: '',
                     PHONE: '',
-                    ADDRESS:[],
-                    SHENGID:'',
-                    SHIID:'',
-                    QUID:'',
+                  //  ADDRESS:[],
+                    SHENGNAME:'',
+                    SHINAME:'',
+                    QUNAME:'',
                     RUZHITIME: '',
                     STATE: '',
                     DEPTID: '',

@@ -71,7 +71,7 @@ public class BiaodeServiceImpl implements BiaodeService{
      */
     @Override
     public int edit(Map map) {
-        //1.更新用户借款表审核状态（判断）
+        //1.更新用户借款标审核状态（判断）
         Integer aduitresult = Integer.valueOf(map.get("ADUITRESULT")+"");
         int m=0;
         int n=0;

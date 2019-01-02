@@ -1,5 +1,7 @@
 package com.aaa.ssm.service;
 
+import org.apache.ibatis.annotations.Select;
+
 import java.util.List;
 import java.util.Map;
 
@@ -28,4 +30,17 @@ public interface PCAService {
      * @return
      */
     List<Map> getArea(String cname);
+
+    /**
+     * 通过pid找对应的市
+     * @param pId
+     * @return
+     */
+    List<Map> getCityByProvinceId(String pId);
+    /**
+     * 通过cid找对应的区
+     * @param cId
+     * @return
+     */
+    List<Map>getAreaByCityId(String cId);
 }

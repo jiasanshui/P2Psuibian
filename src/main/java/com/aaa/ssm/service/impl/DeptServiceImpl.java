@@ -40,14 +40,14 @@ public class DeptServiceImpl implements DeptService {
         return deptDao.getDeptList(map);
     }
 
-    /**
-     * 部门状态下拉
-     * @return
-     */
-    @Override
-    public List<Map> getState() {
-        return deptDao.getState();
-    }
+//    /**
+//     * 部门状态下拉
+//     * @return
+//     */
+//    @Override
+//    public List<Map> getState() {
+//        return deptDao.getState();
+//    }
 
 
     @Override

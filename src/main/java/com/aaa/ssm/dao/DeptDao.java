@@ -26,17 +26,17 @@ public interface DeptDao {
      * @param map
      * @return
      */
-    @Select("<script>select d.deptid,d.dname,d.describes,to_char(d.dtime,'yyyy-mm-dd')as dtime,d.dstatus,s.id,s.state from dept d left join deptstate s on d.dstatus=s.id"+
-            "<where><if test=\"deptid!=null and deptid!=''\"> and deptid=#{deptid}</if>"+
+    @Select("<script>select d.deptid,d.dname,d.describes,to_char(d.dtime,'yyyy-mm-dd')as dtime,d.dstatus,s.id,s.state from dept d left join deptstate s on d.dstatus=s.id where d.dstatus=1"+
+            "<if test=\"deptid!=null and deptid!=''\"> and deptid=#{deptid}</if>"+
             "<if test=\"dname!=null and dname!=''\"> and dname like '%'||#{dname}||'%'</if>"+
             "<if test=\"dstatus!=null and dstatus!=''\"> and dstatus=#{dstatus}</if>"+
-            "</where></script>")
+            "</script>")
     List<Map> getDeptList(Map map);
-    /**
-     * 获取部门状态的信息
-     */
-    @Select("select id,state from deptstate")
-    List<Map> getState();
+//    /**
+//     * 获取部门状态的信息
+//     */
+//    @Select("select id,state from deptstate")
+//    List<Map> getState();
 
     /**
      * 部门添加

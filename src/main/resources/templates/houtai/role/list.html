@@ -135,13 +135,11 @@
                 return false;
             };
             var checkName = (rule,value,callback)=> {
-                alert(value);
-                alert(JSON.stringify(this.names));
+                //alert(JSON.stringify(this.names));
                 var arr = this.names;
                 if (value === '') {
                     callback(new Error('请您输入角色名称'));
                 } else if (isInArray(arr,value)) {
-                    alert(12233);
                     callback(new Error('角色名称重复!'));
                 } else {
                     callback();
@@ -264,15 +262,21 @@
                 var formData = _self.editForm;
                 axios.post("/power/saverolepower",formData).then(function(response){
                     if(response.data>0){
-                        _self.$message({
-                            message:'操作成功',
-                            type: 'success'
-                        });
                         _self.authorization = false;
+                        _self.$notify({
+                            title: '成功',
+                            type: 'success',
+                            message: "<b>操作成功！</b>",
+                            position: 'bottom-right',
+                            dangerouslyUseHTMLString: true
+                        });
                     }else{
-                        _self.$message({
-                            message:'操作有误',
-                            type: 'error'
+                        _self.editFormVisible = false;
+                        _self.$notify.error({
+                            title: '失败',
+                            message: "<b>操作失败</b>",
+                            position: 'bottom-right',
+                            dangerouslyUseHTMLString: true
                         });
                     }
                     _self.loadingData();//重新加载数据
@@ -357,8 +361,6 @@
                 var formData =this.editForm;
                 var goUrl=this.goUrl;
                 axios.post(goUrl,formData).then(function(response){
-                    alert(response.data);
-                    alert(JSON.stringify(response.data));
                     if(response.data>0){
                         _self.$message({
                             message:'添加成功',
