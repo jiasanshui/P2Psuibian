@@ -229,26 +229,29 @@ public class JumpController {
     @RequestMapping("/borrow")
     public String borrow(HttpSession session, Model model) {
         String username = (String) session.getAttribute("userName");
-        //根据用户名去获取用户信息
-        Map map = userInfoService.getUser(username);
-        try {
-            Object msg = map.get("msg");
-            if (StringUtil.isEmpty(msg)) { //审核通过
-                //调用生成随机数工具类生成随机数
-                String num = RandomUtil.getBorrowNumByTime();
-                model.addAttribute("num", num);
-                model.addAttribute("userName", username);
-                model.addAttribute("userid", map.get("USERID"));
-                model.addAttribute("realName", map.get("REALNAME"));
-                model.addAttribute("creditedu", map.get("CREDITEDU"));
-                return "qiantai/borrow";
-            }else {
-                return "qiantai/renzheng";
-            }
-        } catch (Exception e) {
+        if(StringUtil.isEmpty(username)){
+            return "redirect:/jump/login";
+        }else {
+            Map map = userInfoService.getUser(username);
+            try {
+                Object msg = map.get("msg");
+                if (StringUtil.isEmpty(msg)) { //审核通过
+                    //调用生成随机数工具类生成随机数
+                    String num = RandomUtil.getBorrowNumByTime();
+                    model.addAttribute("num", num);
+                    model.addAttribute("userName", username);
+                    model.addAttribute("userid", map.get("USERID"));
+                    model.addAttribute("realName", map.get("REALNAME"));
+                    model.addAttribute("creditedu", map.get("CREDITEDU"));
+                    return "qiantai/borrow";
+                } else {
+                    return "qiantai/renzheng";
+                }
+            } catch (Exception e) {
 
+            }
         }
-        return null;
+        return "";
     }
     /**
      * 跳转到安全保障页面
