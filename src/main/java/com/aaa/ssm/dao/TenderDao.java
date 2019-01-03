@@ -84,6 +84,15 @@ public interface TenderDao {
     @Select("select id,realname,tamount,ttime,tway,userid,tendernum from tender " +
             "where tendernum=#{rendernum}")
     List<Map> getListByTenderNum(String tendernum);
+
+
+    /**
+     * 投标满标成功后改变标的状态
+     * @param BORROWNUM
+     * @return
+     */
+    @Update("update borrow set stateid = 6 where borrownum=#{BORROWNUM}")
+    int updateState(String BORROWNUM);
 }
 
 

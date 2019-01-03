@@ -1,6 +1,4 @@
 package com.aaa.ssm.service;
-import org.apache.ibatis.annotations.Select;
-
 import java.util.List;
 import java.util.Map;
 
@@ -70,4 +68,12 @@ public interface TenderService {
      * @return
      */
     int add(Map map);
+
+
+    /**
+     * 投标满标成功后改变标的状态
+     * @param BORROWNUM
+     * @return
+     */
+    int updateState(String BORROWNUM);
 }

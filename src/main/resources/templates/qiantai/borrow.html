@@ -132,13 +132,13 @@
             $("#loanlimit").change(function(){
                 var loanlimit=$("#loanlimit").val();
                 if(loanlimit=='1'){
-                    $("#yapr").val("0.05");
+                    $("#yapr").val("0.10");
                 }else if(loanlimit=='3'){
-                    $("#yapr").val("0.06");
+                    $("#yapr").val("0.12");
                 }else if(loanlimit=='6'){
-                    $("#yapr").val("0.07");
+                    $("#yapr").val("0.15");
                 }else{
-                    $("#yapr").val("0.08");
+                    $("#yapr").val("0.18");
                 }
             });
         });
@@ -512,13 +512,13 @@
         $("#timelimit").change(function(){
             var timelimit=$("#timelimit").val();
             if(timelimit=='1'){
-                $("#apr").val("0.05");
+                $("#apr").val("0.10");
             }else if(timelimit=='3'){
-                $("#apr").val("0.06");
+                $("#apr").val("0.12");
 			}else if(timelimit=='6'){
-                $("#apr").val("0.07");
+                $("#apr").val("0.15");
 			}else{
-                $("#apr").val("0.08");
+                $("#apr").val("0.18");
 			}
         });
     });
