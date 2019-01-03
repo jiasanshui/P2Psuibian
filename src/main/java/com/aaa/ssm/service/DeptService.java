@@ -26,10 +26,10 @@ public interface DeptService {
      * @return
      */
     List<Map> getDeptList(Map map);
-    /**
-     * 获取部门状态信息下拉
-     */
-    List<Map>getState();
+//    /**
+//     * 获取部门状态信息下拉
+//     */
+//    List<Map>getState();
     /**
      * 部门添加
      */

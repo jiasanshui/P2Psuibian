@@ -328,7 +328,6 @@
     //判断手机验证码是否正确
     var flagCODE=0;
     $("#phoneVerify").blur(function(){
-        alert(123);
         $.post(
             "/register/vfPhoneCode",
             {"code":$("#phoneVerify").val()},

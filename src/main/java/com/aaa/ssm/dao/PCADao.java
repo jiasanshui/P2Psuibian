@@ -32,4 +32,19 @@ public interface PCADao {
      */
     @Select("select a.*,c.city as city from area a join city c on c.cityid=a.father where c.city=#{cname}")
     List<Map> getArea(String cname);
+
+    /**
+     * 通过pid找对应的市
+     * @return
+     */
+    @Select("select * from city where father=#{pId}")
+    List<Map> getCityByProvinceId(String pId);
+
+    /**
+     * 通过cid找对应的区
+     * @param cId
+     * @return
+     */
+    @Select("select * from area where father=#{cId}")
+    List<Map>getAreaByCityId(String cId);
 }

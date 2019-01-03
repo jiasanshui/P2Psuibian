@@ -26,10 +26,10 @@ public interface RepayDao {
      * @param map
      * @return
      */
-    @Insert("insert into repayinfo(rid,borrownum,username,realname,benjin,lixi,timelimit,starttime,stateid,repaylimit,currentmoney,nextmoney) " +
+    @Insert("insert into repayinfo(rid,borrownum,username,realname,benjin,lixi,timelimit,starttime,stateid,repaylimit,currentmoney,nextmoney,overtimelixi) " +
             "values(seq_repayinfo_rid.nextval,#{BORROWNUM},#{USERNAME},#{APPLICANT},#{BORROWMONEY}," +
-            "#{LIXI},#{TIMELIMIT},to_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd'),2,to_date(#{REPAYLIMIT},'yyyy-mm-dd')," +
-            "#{moneyPer},#{moneyPer})")
+            "#{LIXI},#{TIMELIMIT},to_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd'),1,to_date(#{REPAYLIMIT},'yyyy-mm-dd')," +
+            "#{moneyPer},#{moneyPer},0)")
     int add(Map map);
 
     /**
@@ -37,10 +37,10 @@ public interface RepayDao {
      * @param map
      * @return
      */
-    @Insert("insert into repayinfo(rid,borrownum,username,realname,benjin,lixi,timelimit,starttime,stateid,repaylimit,currentmoney,nextmoney) " +
+    @Insert("insert into repayinfo(rid,borrownum,username,realname,benjin,lixi,timelimit,starttime,stateid,repaylimit,currentmoney,nextmoney,overtimelixi) " +
             "values(seq_repayinfo_rid.nextval,#{BORROWNUM},#{USERNAME},#{APPLICANT},#{BORROWMONEY}," +
-            "#{LIXI},#{TIMELIMIT},to_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd'),2,to_date(#{REPAYLIMIT},'yyyy-mm-dd')," +
-            "#{moneyPer},0)")
+            "#{LIXI},#{TIMELIMIT},to_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd'),1,to_date(#{REPAYLIMIT},'yyyy-mm-dd')," +
+            "#{moneyPer},0,0)")
     int adds(Map map);
 
     /**
@@ -48,10 +48,10 @@ public interface RepayDao {
      * @param map
      * @return
      */
-    @Insert("insert into repayinfo(rid,borrownum,username,realname,benjin,lixi,timelimit,starttime,stateid,repaylimit,currentmoney,nextmoney) " +
+    @Insert("insert into repayinfo(rid,borrownum,username,realname,benjin,lixi,timelimit,starttime,stateid,repaylimit,currentmoney,nextmoney,overtimelixi) " +
             "values(seq_repayinfo_rid.nextval,#{BORROWNUM},#{USERNAME},#{APPLICANT},#{BORROWMONEY}," +
-            "#{LIXI},#{TIMELIMIT},to_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd'),2,to_date(#{REPAYLIMIT},'yyyy-mm-dd')," +
-            "#{interstPer},#{interstPer})")
+            "#{LIXI},#{TIMELIMIT},to_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd'),1,to_date(#{REPAYLIMIT},'yyyy-mm-dd')," +
+            "#{interstPer},#{interstPer},0)")
     int addOne(Map map);
 
     /**
@@ -59,10 +59,10 @@ public interface RepayDao {
      * @param map
      * @return
      */
-    @Insert("insert into repayinfo(rid,borrownum,username,realname,benjin,lixi,timelimit,starttime,stateid,repaylimit,currentmoney,nextmoney) " +
+    @Insert("insert into repayinfo(rid,borrownum,username,realname,benjin,lixi,timelimit,starttime,stateid,repaylimit,currentmoney,nextmoney,overtimelixi) " +
             "values(seq_repayinfo_rid.nextval,#{BORROWNUM},#{USERNAME},#{APPLICANT},#{BORROWMONEY}," +
-            "#{LIXI},#{TIMELIMIT},to_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd'),2,to_date(#{REPAYLIMIT},'yyyy-mm-dd')," +
-            "#{interstPermonth},#{nextMon})")
+            "#{LIXI},#{TIMELIMIT},to_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd'),1,to_date(#{REPAYLIMIT},'yyyy-mm-dd')," +
+            "#{interstPermonth},#{nextMon},0)")
     int addTwo(Map map);
 
     /**
@@ -70,10 +70,10 @@ public interface RepayDao {
      * @param map
      * @return
      */
-    @Insert("insert into repayinfo(rid,borrownum,username,realname,benjin,lixi,timelimit,starttime,stateid,repaylimit,currentmoney,nextmoney) " +
+    @Insert("insert into repayinfo(rid,borrownum,username,realname,benjin,lixi,timelimit,starttime,stateid,repaylimit,currentmoney,nextmoney,overtimelixi) " +
             "values(seq_repayinfo_rid.nextval,#{BORROWNUM},#{USERNAME},#{APPLICANT},#{BORROWMONEY}," +
-            "#{LIXI},#{TIMELIMIT},to_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd'),2,to_date(#{REPAYLIMIT},'yyyy-mm-dd')," +
-            "#{nextMonth},0)")
+            "#{LIXI},#{TIMELIMIT},to_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd'),1,to_date(#{REPAYLIMIT},'yyyy-mm-dd')," +
+            "#{nextMonth},0,0)")
     int addTwos(Map map);
 
     /**
@@ -81,10 +81,10 @@ public interface RepayDao {
      * @param map
      * @return
      */
-    @Insert("insert into repayinfo(rid,borrownum,username,realname,benjin,lixi,timelimit,starttime,stateid,repaylimit,currentmoney,nextmoney) " +
+    @Insert("insert into repayinfo(rid,borrownum,username,realname,benjin,lixi,timelimit,starttime,stateid,repaylimit,currentmoney,nextmoney,overtimelixi) " +
             "values(seq_repayinfo_rid.nextval,#{BORROWNUM},#{USERNAME},#{APPLICANT},#{BORROWMONEY}," +
-            "#{LIXI},#{TIMELIMIT},to_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd'),2,to_date(#{REPAYLIMIT},'yyyy-mm-dd')," +
-            "#{repayMoney},0)")
+            "#{LIXI},#{TIMELIMIT},to_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd'),1,to_date(#{REPAYLIMIT},'yyyy-mm-dd')," +
+            "#{repayMoney},0,0)")
     int addLast(Map map);
 
 }

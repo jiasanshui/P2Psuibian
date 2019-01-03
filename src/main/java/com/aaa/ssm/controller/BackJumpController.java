@@ -20,9 +20,6 @@ public class BackJumpController {
     @RequestMapping("index")
     public String toIndex(HttpSession session, Model model){
         String username=(String) session.getAttribute("username");
-/*
-        Admin admin=(Admin) session.getAttribute("user");
-*/
         model.addAttribute("username",username);
         return "houtai/index";
     }
@@ -137,6 +134,11 @@ public class BackJumpController {
     @RequestMapping("/emp")
     public String emp(){
         return "houtai/emp/list";
+    }
+
+    @RequestMapping("/echartsystemflow")
+    public String echartsystemflow(){
+        return "houtai/moneyflow/systemflow";
     }
 
 }

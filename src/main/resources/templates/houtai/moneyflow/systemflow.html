@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>季度流水</title>
+    <script src="/js/jquery-1.8.2.min.js"></script>
+    <script src="/js/echarts.min.js"></script>
+</head>
+<body>
+年度：<select id="year"><option>2018</option><option>2017</option><<option>2016</option></select>年0
+<div id="main" style="width: 800px;height:600px;"></div>
+
+<script type="text/javascript">
+
+    $(function(){
+        getData(); //初始化年份2018
+    })
+    function getData(){  //查询每年的数据
+        var data1 = [];
+        var data2 = [];
+        $.ajax({
+            url:"/echart/systemflow",
+            type:"post",
+            datatype:"json",
+            async:false,//同步
+            success:function(data){
+                if(data!=''){
+                    for(var i=0;i<data.length;i++){
+                        data1.push(data[i].INCOME);
+                        data2.push(data[i].OUTLAY);
+                    }
+                    showData(data1,data2);
+                }
+            }
+        });
+    }
+
+
+    function showData(data1,data2){
+        var myChart = echarts.init(document.getElementById('main'));
+
+        var option = {
+            title : {
+                text: '你我贷季度盈利亏损图',
+                subtext: '单位：元'
+            },
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['收入','支出']
+            },
+            toolbox: {
+                show : true,
+                feature : {
+                    dataView : {show: true, readOnly: false},
+                    magicType : {show: true, type: ['line', 'bar']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                }
+            },
+            calculable : true,
+            xAxis : [
+                {
+                    type : 'category',
+                    data : ['第一季度','第二季度','第三季度','第四季度']
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'收入',
+                    type:'bar',
+                    data:data1,
+                    markPoint : {
+                        data : [
+                            {type : 'max', name: '最大值'},
+                            {type : 'min', name: '最小值'}
+                        ]
+                    },
+                    markLine : {
+                        data : [
+                            {type : 'average', name: '平均值'}
+                        ]
+                    }
+                },
+                {
+                    name:'支出',
+                    type:'bar',
+                    data:data2,
+                    markPoint : {
+                        data : [
+                            {name : '年最高', value : 182.2, xAxis: 7, yAxis: 183},
+                            {name : '年最低', value : 2.3, xAxis: 11, yAxis: 3}
+                        ]
+                    },
+                    markLine : {
+                        data : [
+                            {type : 'average', name : '平均值'}
+                        ]
+                    }
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+</script>
+</body>
+</html>
+
+
+

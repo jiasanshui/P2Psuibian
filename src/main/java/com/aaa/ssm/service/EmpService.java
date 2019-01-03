@@ -17,28 +17,28 @@ public interface EmpService {
      * 获取员工列表
      */
     List<Map> getList(Map map);
-    /**
-     *获取员工状态信息(员工状态下拉)
-     */
-    List<Map>getEmpList();
+//    /**
+//     *获取员工状态信息(员工状态下拉)
+//     */
+//    List<Map>getEmpList();
 
-    /**
-     * 省下拉框
-     * @return
-     */
-    List<Map>getShengList();
+//    /**
+//     * 省下拉框
+//     * @return
+//     */
+//    List<Map>getShengList();
 
-    /**
-     * 市下拉框
-     * @return
-     */
-    List<Map>getShiList();
+//    /**
+//     * 市下拉框
+//     * @return
+//     */
+//    List<Map>getShiList();
 
-    /**
-     * 区下拉框
-     * @return
-     */
-    List<Map>getQuList();
+//    /**
+//     * 区下拉框
+//     * @return
+//     */
+//    List<Map>getQuList();
 
     /**
      * 员工添加

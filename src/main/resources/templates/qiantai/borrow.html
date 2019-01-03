@@ -492,7 +492,6 @@
             url:"/borrow/isBorrow",
             data:{userid:userid},
             success:function (data) {
-                alert(data);
                 if(data==0){//可以借款（新人） || 上次还款结束
                     $("#first").show();
                     $("#first1").show();
@@ -588,7 +587,6 @@
             url:"/borrow/reapply",
             data:{userid:userid},
             success:function (data) {
-                alert(data);
                 if(data>0){
                     location.href="/jump/borrow"
 				}
