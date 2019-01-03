@@ -1,6 +1,7 @@
 package com.aaa.ssm.controller;
 
 import com.aaa.ssm.entity.UserRegister;
+import com.aaa.ssm.filter.SmcsSession;
 import com.aaa.ssm.service.UserLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,9 @@ public class UserLoginController {
     @Autowired
     private UserLoginService userLoginService;
 
+    @Autowired
+    private HttpSession session;
+
     /***
      * 用户登录(前台)
      * @param userName
@@ -32,7 +36,7 @@ public class UserLoginController {
      * @return
      */
     @RequestMapping("/login")
-    public Object userLogin(String userName, String password, Model model, HttpSession session){
+    public Object userLogin(String userName, String password, Model model){
         String emailPattern="^([a-zA-Z0-9]+[_|\\_|\\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\\_|\\.]?)*[a-zA-Z0-9]+\\.[a-zA-Z]{2,3}$";
         String phonePattern="^1[3|5|7|8][0-9]{9}$";
         Map map = new HashMap();
