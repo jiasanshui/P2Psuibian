@@ -133,14 +133,14 @@
           <li><span class="f16">借款金额</span><br>
             <span class="f30 c-333" id="account" th:text="${list.BORROWMONEY}"></span>元 </li>
           <li class="relative"><span class="f16">年利率</span><br>
-            <span class="f30 c-orange" th:text="${list.APR}"> </span> </li>
+            <span class="f30 c-orange" th:text="${list.TAPR}"> </span> </li>
           <li><span class="f16">借款期限</span><br>
             <span class="f30 c-333" th:text="${list.TIMELIMIT}"></span>个月 </li>
           <li><span class="c-888">借款编号：</span><span th:text="${list.BORROWNUM}"></span></li>
           <li><span class="c-888">发标日期：</span><span th:text="${list.STARTTIME}"></span></span></li>
           <li><span class="c-888">保障方式：</span>100%本息垫付</li>
           <li><span class="c-888">还款方式：</span><span th:text="${list.PAYMENT}"></span></li>
-          <li><span class="c-888">需还本息：</span> 40,400.00元 </li>
+            <li><span class="c-888">需还本息：</span> <span th:text="${foList.REPLACEAMOUNT}"></span>元 </li>
           <li><span class="c-888">借款用途：</span><span th:text="${list.PURPOSE}"></span></li>
           <li class="colspan"> <span class="c-888 fl">投标进度：</span>
             <div class="progress-bar fl"> <span style="width:100%"></span> </div>
@@ -149,13 +149,13 @@
           </span></li>
             </ul>
             <li th:if="${list.BAIFEN} lt 1 and ${list.USERID} ne ${foList.USERID}" ><a th:href="@{/jump/toubiao(BORROWNUM=${list.BORROWNUM})}" class="btn">投标</a></li>
-            <li th:if="${list.BAIFEN} ge 1"><a href="#" onclick="return false" class="btn">已满标</a></li>
+            <li th:if="${list.BAIFEN} ge 1 and ${list.USERID} ne ${foList.USERID}"><a href="#" onclick="return false" class="btn">已满标</a></li>
             <li th:if="${list.USERID} eq ${foList.USERID}"><a href="#" onclick="return false" class="btn">暂不支持投同账户的标</a></li>
         <div class="mod-right mod-status">
           <div class="inner">
-            <div class="text"> 待还本息：<span class="f24 c-333">40,400.00</span>元<br>
-              剩余期限：<span class="f24 c-333">29天</span> <br>
-              下期还款日： <span class="f20 c-333">2015-10-13</span> </div>
+            <div class="text"> 待还本息：<span class="f24 c-333" th:text="${foList.REPLACEAMOUNT}"></span>元<br>
+              剩余投标时间：<span class="f24 c-333">29天</span> <br>
+              </div>
             <i class="icon icon-status icon-status1"></i> </div>
         </div>
       </div>
@@ -188,7 +188,7 @@
                 <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 借款人工作情况：</p>
                 <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> <span th:text="${list.REALNAME}"></span>为<span th:text="${list.WORKING}"></span>，月收入<span th:text="${list.INCOME}"></span>万元，收入居住稳定。</p>
                 <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 详细资金用途：</p>
-                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> <span th:text="${list1.PURPOSE}"></span></p>
+                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> <span th:text="${list1.DES}"></span></p>
                   </ul>
               </ul>
               </div>

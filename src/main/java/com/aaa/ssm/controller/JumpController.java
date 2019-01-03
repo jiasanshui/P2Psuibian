@@ -337,9 +337,7 @@ public class JumpController {
             return "qiantai/login";
         } else {
             List<Map> infoList = userInfoService.getUserList(userName);
-            System.out.println(infoList);
             List<Map> listByUsername = borrowService.getListByBorrowNum(BORROWNUM);
-            System.out.println(listByUsername);
             List<Map> pageList = tenderService.getPage(BORROWNUM);
             List<Map> borrowList = projectService.getBorrowList(BORROWNUM);
             model.addAttribute("uList", listByUsername);

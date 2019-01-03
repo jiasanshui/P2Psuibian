@@ -115,8 +115,18 @@ public class    TenderController {
         int result3 = accountFlowService.add(map);
         int result4 = userInfoService.updateAmount(map);
         int result5 = userInfoService.updateFreezAmount(map);
-        if (result1==1&&result2==1&&result3==1&&result4==1){
+        if (result1==1&&result2==1&&result3==1&&result4==1&&result5==1){
+            String BORROWNUM = String.valueOf(map.get("borrowNum"));
+            List<Map> listByBorrowNum = borrowService.getListByBorrowNum(BORROWNUM);
+            Integer a = Integer.valueOf(listByBorrowNum.get(0).get("WINBIDMONEY")+"");
+            Integer b = Integer.valueOf(listByBorrowNum.get(0).get("BORROWMONEY")+"");
+            if(a.equals(b)) {
+                tenderService.updateState(BORROWNUM);
+                return "redirect:/jump/list";
+            }
+            else {
             return "redirect:/jump/list";
+            }
         }else {
             return "redirect:/jump/toubiao";
         }

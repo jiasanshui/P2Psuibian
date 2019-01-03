@@ -57,4 +57,9 @@ public class TenderServiceImpl implements TenderService {
     public int add(Map map) {
         return tenderDao.add(map);
     }
+
+    @Override
+    public int updateState(String BORROWNUM) {
+        return tenderDao.updateState(BORROWNUM);
+    }
 }

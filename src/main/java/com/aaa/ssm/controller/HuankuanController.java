@@ -52,11 +52,13 @@ public class HuankuanController {
     public Object getReturnCurrent(@RequestBody Map map){
         PageHelper.startPage(Integer.valueOf(map.get("pageNo")+""),Integer.valueOf(map.get("pageSize")+""));
         List<Map> returnInfo = huankuanService.getReturnCurrent(map);
+        System.out.println(returnInfo);
         PageInfo<Map> pageInfo =new PageInfo<>(returnInfo);
         Map resultMap = new HashMap();
         resultMap.put("huanData",pageInfo.getList());
         resultMap.put("total",pageInfo.getTotal());
         resultMap.put("sumlimit",returnInfo.get(0).get("TIMELIMIT"));
+        System.out.println(returnInfo.get(0).get("TIMELIMIT"));
         return resultMap;
     }
 
