@@ -268,9 +268,13 @@ public class JumpController {
     @RequestMapping("/personal")
     public String personal(HttpSession session, Model model){
         String userName = (String)session.getAttribute("userName");
-        int accountMoney = userInfoService.getAccountMoney(userName);
-        model.addAttribute("amount",accountMoney);
-        return "qiantai/personal";
+        if(StringUtil.isEmpty(userName)){
+            return "redirect:/jump/login";
+        }else{
+            int accountMoney = userInfoService.getAccountMoney(userName);
+            model.addAttribute("amount",accountMoney);
+            return "qiantai/personal";
+        }
     }
     /**
      * 跳转到关于我们页面

@@ -25,7 +25,7 @@ public class LoginFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) arg1;
         Object username = request.getSession().getAttribute("userName");
         String requestURI = ((HttpServletRequest) arg0).getRequestURI();
-        if (requestURI.contains("/jump/infor") || requestURI.contains("/jump/list") || requestURI.contains("/jump/personal")) {
+        if (requestURI.contains("/jump/infor") || requestURI.contains("/jump/list")) {
             if (username == null) {
                 //跳转到登录页面
                 request.getRequestDispatcher("/jump/login").forward(arg0, arg1);
