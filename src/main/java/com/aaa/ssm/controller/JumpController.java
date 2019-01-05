@@ -269,9 +269,9 @@ public class JumpController {
     @RequestMapping("/personal")
     public String personal(HttpSession session, Model model,Integer pageNo,@RequestParam Map map,HttpServletRequest request){
         String userName = (String)session.getAttribute("userName");
-        if(userName==null){
-            return "qiantai/login";
-        }else {
+        if(StringUtil.isEmpty(userName)){
+            return "redirect:/jump/login";
+        }else{
             //分页总数量
             int pageSize=5;
             int tPageNo = pageNo==null?1:pageNo;
