@@ -1,5 +1,6 @@
 package com.aaa.ssm.controller;
 
+import com.aaa.ssm.entity.UserRegister;
 import com.aaa.ssm.service.*;
 import com.aaa.ssm.util.PageUtil;
 import com.aaa.ssm.util.RandomUtil;
@@ -266,13 +267,25 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/personal")
-    public String personal(HttpSession session, Model model){
+    public String personal(HttpSession session, Model model,Integer pageNo,@RequestParam Map map,HttpServletRequest request){
         String userName = (String)session.getAttribute("userName");
         if(StringUtil.isEmpty(userName)){
             return "redirect:/jump/login";
         }else{
+            //分页总数量
+            int pageSize=5;
+            int tPageNo = pageNo==null?1:pageNo;
+            map.put("pageNo",tPageNo);
+            map.put("pageSize",pageSize);
+            UserRegister user=(UserRegister) session.getAttribute("user");
+            Integer userId = user.getUserId();
+            List<Map> recordByDeposits = depositsRecordService.getRecordByDeposits(userId);
+            model.addAttribute("recordByDeposits", recordByDeposits);
             double accountMoney = userInfoService.getAccountMoney(userName);
             model.addAttribute("amount",accountMoney);
+            String pageString = new PageUtil(tPageNo, pageSize, depositsRecordService.getPageCount(map), request).getPageString();
+            //pageUtil分页
+            model.addAttribute("pageString",pageString);
             return "qiantai/personal";
         }
     }
