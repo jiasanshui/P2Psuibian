@@ -271,7 +271,7 @@ public class JumpController {
         if(StringUtil.isEmpty(userName)){
             return "redirect:/jump/login";
         }else{
-            int accountMoney = userInfoService.getAccountMoney(userName);
+            double accountMoney = userInfoService.getAccountMoney(userName);
             model.addAttribute("amount",accountMoney);
             return "qiantai/personal";
         }
