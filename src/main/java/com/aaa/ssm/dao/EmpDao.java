@@ -27,32 +27,6 @@ public interface EmpDao {
             "<if test=\"state!=null and state!=''\"> and e.state =#{state}</if> " +
             "</script>")
         List<Map> getList(Map map);
-//    /**
-//     *获取员工状态信息(员工状态下拉)
-//     */
-//   @Select("select eid,states from empstate")
-//    List<Map> getEmpList();
-
-// /**
-//  * 省下拉框
-//  * @return
-//  */
-// @Select("select sid,provinceid,province from province")
-//   List<Map>getShengList();
-
-// /**
-//  * 市下拉框
-//  * @return
-//  */
-// @Select("select cid,cityid,city,father from city")
-// List<Map>getShiList();
-
-// /**
-//  * 区下拉框
-//  * @return
-//  */
-// @Select("select rid,areaid,area,father from area")
-// List<Map>getQuList();
     /**
      * 员工添加
      * @param map

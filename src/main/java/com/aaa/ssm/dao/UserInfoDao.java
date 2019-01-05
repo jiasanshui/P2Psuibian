@@ -167,7 +167,7 @@ public interface UserInfoDao {
     int addTaccountFlow(Map map);
 
     @Select("select amount from userinfo where uname=#{userName}")
-    int getAccountMoney(String userName);
+    double getAccountMoney(String userName);
 
     /**
      * 根据用户ID查询历史

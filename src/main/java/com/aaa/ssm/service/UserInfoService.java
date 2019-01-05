@@ -81,7 +81,7 @@ public interface UserInfoService {
      */
     List<Map> getAllUserByuserid(Integer userid);
 
-    int getAccountMoney(String userName);
+    double getAccountMoney(String userName);
 
     /**
      * 根据用户ID查询历史

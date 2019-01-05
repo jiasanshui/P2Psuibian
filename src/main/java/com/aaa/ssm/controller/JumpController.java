@@ -1,5 +1,6 @@
 package com.aaa.ssm.controller;
 
+import com.aaa.ssm.entity.UserRegister;
 import com.aaa.ssm.service.*;
 import com.aaa.ssm.util.PageUtil;
 import com.aaa.ssm.util.RandomUtil;
@@ -266,11 +267,27 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/personal")
-    public String personal(HttpSession session, Model model){
+    public String personal(HttpSession session, Model model,Integer pageNo,@RequestParam Map map,HttpServletRequest request){
         String userName = (String)session.getAttribute("userName");
-        int accountMoney = userInfoService.getAccountMoney(userName);
-        model.addAttribute("amount",accountMoney);
-        return "qiantai/personal";
+        if(userName==null){
+            return "qiantai/login";
+        }else {
+            //分页总数量
+            int pageSize=5;
+            int tPageNo = pageNo==null?1:pageNo;
+            map.put("pageNo",tPageNo);
+            map.put("pageSize",pageSize);
+            UserRegister user=(UserRegister) session.getAttribute("user");
+            Integer userId = user.getUserId();
+            List<Map> recordByDeposits = depositsRecordService.getRecordByDeposits(userId);
+            model.addAttribute("recordByDeposits", recordByDeposits);
+            double accountMoney = userInfoService.getAccountMoney(userName);
+            model.addAttribute("amount",accountMoney);
+            String pageString = new PageUtil(tPageNo, pageSize, depositsRecordService.getPageCount(map), request).getPageString();
+            //pageUtil分页
+            model.addAttribute("pageString",pageString);
+            return "qiantai/personal";
+        }
     }
     /**
      * 跳转到关于我们页面
@@ -322,9 +339,37 @@ public class JumpController {
      * 跳转到公司投资记录页面
      * @return
      */
+    @Autowired
+    private  DepositsRecordService depositsRecordService;
+
+
     @RequestMapping("/deposits_record")
-    public String deposits_record() {
-        return "qiantai/deposits_record";
+    public Object deposits_record( Model model,HttpSession session,@RequestParam Map map,HttpServletRequest request) {
+        UserRegister user=(UserRegister) session.getAttribute("user");
+        if (user==null){
+            return "qiantai/login";
+        }else{
+            Integer userId = user.getUserId();
+            map.put("userId",userId);
+            //获取分页总数量
+            int pageCount = depositsRecordService.getPageCount(map);
+            int pageSize=8;
+            int pageNo=0;
+            Object tempPageNo=map.get("pageNo");
+            if (StringUtil.isEmpty(tempPageNo)){
+                pageNo=1;
+            }else {
+                pageNo=Integer.valueOf(tempPageNo+"");
+            }
+            map.put("pageSize",pageSize);
+            map.put("pageNo",pageNo);
+            //分页工具使用
+            String pageString = new PageUtil(pageNo, pageSize, pageCount, request).getPageString();
+            //List<Map> recordByDeposits = depositsRecordService.getTender(map);
+            model.addAttribute("recordByDeposits",depositsRecordService.getTender(map));
+            model.addAttribute("pageString", pageString);
+            return "qiantai/deposits_record";
+        }
     }
     /**
      * 跳转到投资页面

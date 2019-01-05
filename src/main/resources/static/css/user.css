@@ -751,7 +751,7 @@ transition: transform 1s linear;}
 
 
 /*个人中心tab切换页*/
-.pmain-connent{ float:left; margin-top:10px;background:#fff; }
+.pmain-connent{ float:left; margin-top:10px;background:#fff;}
 .pmain-connent .pmain-contab{ float:left; overflow:hidden; }
 .pmain-connent .pmain-contab ul{ width:821px; height:56px;margin-left:-1px;}
 .pmain-connent .pmain-contab li{ float:left; font-size:16px; padding:16px 30px;border-top:2px solid #fff;border-bottom:1px solid #DCDCDC; cursor:pointer; }

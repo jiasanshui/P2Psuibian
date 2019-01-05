@@ -138,7 +138,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public int getAccountMoney(String userName) {
+    public double getAccountMoney(String userName) {
         return userInfoDao.getAccountMoney(userName);
     }
 
