@@ -137,11 +137,6 @@ public class UserInfoServiceImpl implements UserInfoService {
         return userInfoDao.getAllUserByuserid(userid);
     }
 
-    @Override
-    public double getAccountMoney(String userName) {
-        return userInfoDao.getAccountMoney(userName);
-    }
-
     /**
      * 根据用户ID查询历史
      * @param map
@@ -156,5 +151,34 @@ public class UserInfoServiceImpl implements UserInfoService {
         }
         map1.put("REMARK","该用户信用良好，无不良记录！");
         return map1;
+    }
+
+    /**
+     * 根据userid查找用户账户信息
+     * @param userId
+     * @return
+     */
+    @Override
+    public Map getUserAccount(Integer userId) {
+        List<Map> accountList=userInfoDao.getUserAccount(userId);
+        if (accountList!=null && accountList.size()>0){
+            return accountList.get(0);
+        }
+        return null;
+    }
+
+    /**
+     * 累计投资金额
+     * @param userId
+     * @return
+     * toudermoney
+     */
+    @Override
+    public double getTouderMoney(Integer userId) {
+        List<Map> touderMoney=userInfoDao.getTouderMoney(userId);
+        if (touderMoney!=null && touderMoney.size()>0){
+            return Double.parseDouble(touderMoney.get(0).get("TOUDERMONEY")+"");
+        }
+        return 0;
     }
 }

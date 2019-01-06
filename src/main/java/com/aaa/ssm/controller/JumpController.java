@@ -272,17 +272,17 @@ public class JumpController {
         if(StringUtil.isEmpty(userName)){
             return "redirect:/jump/login";
         }else{
+            UserRegister user=(UserRegister) session.getAttribute("user");
+            Integer userId = user.getUserId();
+            map.put("userId",userId);
+            Map accountInfo=userInfoService.getUserAccount(userId);
+            model.addAttribute("account",accountInfo);
             //分页总数量
-            int pageSize=5;
+            int pageSize=3;
             int tPageNo = pageNo==null?1:pageNo;
             map.put("pageNo",tPageNo);
             map.put("pageSize",pageSize);
-            UserRegister user=(UserRegister) session.getAttribute("user");
-            Integer userId = user.getUserId();
-            List<Map> recordByDeposits = depositsRecordService.getRecordByDeposits(userId);
-            model.addAttribute("recordByDeposits", recordByDeposits);
-            double accountMoney = userInfoService.getAccountMoney(userName);
-            model.addAttribute("amount",accountMoney);
+            model.addAttribute("recordByDeposits", depositsRecordService.getTender(map));
             String pageString = new PageUtil(tPageNo, pageSize, depositsRecordService.getPageCount(map), request).getPageString();
             //pageUtil分页
             model.addAttribute("pageString",pageString);
@@ -351,6 +351,11 @@ public class JumpController {
         }else{
             Integer userId = user.getUserId();
             map.put("userId",userId);
+            Map accountInfo=userInfoService.getUserAccount(userId);
+            model.addAttribute("account",accountInfo);
+            //累计投资金额
+            double money=userInfoService.getTouderMoney(userId);
+            model.addAttribute("touderMoney",money);
             //获取分页总数量
             int pageCount = depositsRecordService.getPageCount(map);
             int pageSize=8;
