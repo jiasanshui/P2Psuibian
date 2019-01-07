@@ -52,8 +52,6 @@ public class JumpController {
      */
     @RequestMapping("/index")
     public String jumpIndex(Model model,HttpSession session) {
-        String userName=(String) session.getAttribute("userName");
-        List<Map> userList = userInfoService.getUserList(userName);
         //显示房屋抵押招标
             List<Map> housePro = projectService.getHousePro();
             model.addAttribute("houseProList", housePro);
@@ -68,14 +66,34 @@ public class JumpController {
             List<Map> listCredit = projectService.getList(map3);
             List<Map> webList = webService.getWebList();
             List<Map> mediaList = webService.getMediaList();
+            if (StringUtil.isEmpty(session)){
+            String userName=(String) session.getAttribute("userName");
+            List<Map> userList = userInfoService.getUserList(userName);
+                model.addAttribute("userList",userList);
+                model.addAttribute("webList", webList);
+                model.addAttribute("mediaList", mediaList);
+                model.addAttribute("listCar", listCar);
+                model.addAttribute("listHouse", listHouse);
+                model.addAttribute("listCredit", listCredit);
+                System.out.println(webList);
+                System.out.println(mediaList);
+                System.out.println(listCar);
+                System.out.println(listHouse);
+                System.out.println(listCredit);
+                return "qiantai/index";
+            }else {
             model.addAttribute("webList", webList);
             model.addAttribute("mediaList", mediaList);
-
             model.addAttribute("listCar", listCar);
             model.addAttribute("listHouse", listHouse);
             model.addAttribute("listCredit", listCredit);
-            model.addAttribute("userList",userList);
+                System.out.println("1"+webList);
+                System.out.println("2"+mediaList);
+                System.out.println("3"+listCar);
+                System.out.println("4"+listHouse);
+                System.out.println("5"+listCredit);
             return "qiantai/index";
+        }
     }
 
     /**
