@@ -751,7 +751,7 @@ transition: transform 1s linear;}
 
 
 /*个人中心tab切换页*/
-.pmain-connent{ float:left; margin-top:10px;background:#fff; }
+.pmain-connent{ float:left; margin-top:10px;background:#fff;}
 .pmain-connent .pmain-contab{ float:left; overflow:hidden; }
 .pmain-connent .pmain-contab ul{ width:821px; height:56px;margin-left:-1px;}
 .pmain-connent .pmain-contab li{ float:left; font-size:16px; padding:16px 30px;border-top:2px solid #fff;border-bottom:1px solid #DCDCDC; cursor:pointer; }
@@ -762,7 +762,7 @@ transition: transform 1s linear;}
 .pmain-conmain .pmain-conmain1{}
 .pmain-connent .pmain-conmain2{}
 .pmain-connent .pmain-conmain3{}
-.pmain-conmain .pmain-nonecon{ width:760px; height:300px; font-size:14px; font-weight:bold;text-align:center; padding-top:280px;}
+.pmain-conmain .pmain-nonecon{width:760px; height:300px; font-size:14px; font-weight:bold;text-align:center; padding-top:280px;}
 
 
 

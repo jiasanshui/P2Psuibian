@@ -90,12 +90,10 @@
         </div>
         <div class="personal-main">
             <div class="personal-money">
-                <h3><i>我的订单</i></h3>
-
-                    <!--<span id="form:dataTable">-->
+                <h3><i style="color: blue">我的订单</i></h3>
           <div class="personal-moneylist">
             <div class="pmain-contitle">
-                <table border="0" width="900px" >
+                <table  width="900px">
                     <tr>
                         <td>借款编号</td><td>借款人</td><td>借款期限</td><td>借款金额</td>
                         <td>利率</td><td>担保方式</td><td>还款方式</td><td>标的状态</td><td>已招标金额</td>
@@ -112,21 +110,7 @@
                         <td><span th:text="${order.WINBIDMONEY}"></span></td>
                     </tr>
                 </table>
-
-            <!--<ul th:each="order : ${orderByInfo}">-->
-              <!--<li><span class="pmain-title2 pmain-height" th:text="${order.BORROWNUM}"></span>-->
-                  <!--<span class="pmain-title3 pmain-height" th:text="${order.TIMELIMIT}"></span>-->
-                  <!--<span class="pmain-title2 pmain-height" th:text="${order.BORROWMONEY}"></span>-->
-                  <!--<span class="pmain-title2 pmain-height" th:text="${order.APR}"></span>-->
-                  <!--<span class="pmain-title2 pmain-height" th:text="${order.DANBAOSTYLE}"></span>-->
-                  <!--<span class="pmain-title2 pmain-height" th:text="${order.NAME}"></span>-->
-                  <!--<span class="pmain-title2 pmain-height" th:text="${order.WINBIDMONEY}"></span>-->
-
-              <!--</li>-->
-            <!--</ul>-->
-
           </div>
-          <!--</span>-->
             </div>
         </div>
         <div class="clear"></div>

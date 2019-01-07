@@ -1,5 +1,6 @@
 package com.aaa.ssm.controller;
 
+import com.aaa.ssm.entity.UserRegister;
 import com.aaa.ssm.service.*;
 import com.aaa.ssm.util.PageUtil;
 import com.aaa.ssm.util.RandomUtil;
@@ -247,26 +248,29 @@ public class JumpController {
     @RequestMapping("/borrow")
     public String borrow(HttpSession session, Model model) {
         String username = (String) session.getAttribute("userName");
-        //根据用户名去获取用户信息
-        Map map = userInfoService.getUser(username);
-        try {
-            Object msg = map.get("msg");
-            if (StringUtil.isEmpty(msg)) { //审核通过
-                //调用生成随机数工具类生成随机数
-                String num = RandomUtil.getBorrowNumByTime();
-                model.addAttribute("num", num);
-                model.addAttribute("userName", username);
-                model.addAttribute("userid", map.get("USERID"));
-                model.addAttribute("realName", map.get("REALNAME"));
-                model.addAttribute("creditedu", map.get("CREDITEDU"));
-                return "qiantai/borrow";
-            }else {
-                return "qiantai/renzheng";
-            }
-        } catch (Exception e) {
+        if(StringUtil.isEmpty(username)){
+            return "redirect:/jump/login";
+        }else {
+            Map map = userInfoService.getUser(username);
+            try {
+                Object msg = map.get("msg");
+                if (StringUtil.isEmpty(msg)) { //审核通过
+                    //调用生成随机数工具类生成随机数
+                    String num = RandomUtil.getBorrowNumByTime();
+                    model.addAttribute("num", num);
+                    model.addAttribute("userName", username);
+                    model.addAttribute("userid", map.get("USERID"));
+                    model.addAttribute("realName", map.get("REALNAME"));
+                    model.addAttribute("creditedu", map.get("CREDITEDU"));
+                    return "qiantai/borrow";
+                } else {
+                    return "qiantai/renzheng";
+                }
+            } catch (Exception e) {
 
+            }
         }
-        return null;
+        return "";
     }
     /**
      * 跳转到安全保障页面
@@ -281,11 +285,27 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/personal")
-    public String personal(HttpSession session, Model model){
+    public String personal(HttpSession session, Model model,Integer pageNo,@RequestParam Map map,HttpServletRequest request){
         String userName = (String)session.getAttribute("userName");
-        int accountMoney = userInfoService.getAccountMoney(userName);
-        model.addAttribute("amount",accountMoney);
-        return "qiantai/personal";
+        if(StringUtil.isEmpty(userName)){
+            return "redirect:/jump/login";
+        }else{
+            UserRegister user=(UserRegister) session.getAttribute("user");
+            Integer userId = user.getUserId();
+            map.put("userId",userId);
+            Map accountInfo=userInfoService.getUserAccount(userId);
+            model.addAttribute("account",accountInfo);
+            //分页总数量
+            int pageSize=3;
+            int tPageNo = pageNo==null?1:pageNo;
+            map.put("pageNo",tPageNo);
+            map.put("pageSize",pageSize);
+            model.addAttribute("recordByDeposits", depositsRecordService.getTender(map));
+            String pageString = new PageUtil(tPageNo, pageSize, depositsRecordService.getPageCount(map), request).getPageString();
+            //pageUtil分页
+            model.addAttribute("pageString",pageString);
+            return "qiantai/personal";
+        }
     }
     /**
      * 跳转到关于我们页面
@@ -337,9 +357,42 @@ public class JumpController {
      * 跳转到公司投资记录页面
      * @return
      */
+    @Autowired
+    private  DepositsRecordService depositsRecordService;
+
+
     @RequestMapping("/deposits_record")
-    public String deposits_record() {
-        return "qiantai/deposits_record";
+    public Object deposits_record( Model model,HttpSession session,@RequestParam Map map,HttpServletRequest request) {
+        UserRegister user=(UserRegister) session.getAttribute("user");
+        if (user==null){
+            return "qiantai/login";
+        }else{
+            Integer userId = user.getUserId();
+            map.put("userId",userId);
+            Map accountInfo=userInfoService.getUserAccount(userId);
+            model.addAttribute("account",accountInfo);
+            //累计投资金额
+            double money=userInfoService.getTouderMoney(userId);
+            model.addAttribute("touderMoney",money);
+            //获取分页总数量
+            int pageCount = depositsRecordService.getPageCount(map);
+            int pageSize=8;
+            int pageNo=0;
+            Object tempPageNo=map.get("pageNo");
+            if (StringUtil.isEmpty(tempPageNo)){
+                pageNo=1;
+            }else {
+                pageNo=Integer.valueOf(tempPageNo+"");
+            }
+            map.put("pageSize",pageSize);
+            map.put("pageNo",pageNo);
+            //分页工具使用
+            String pageString = new PageUtil(pageNo, pageSize, pageCount, request).getPageString();
+            //List<Map> recordByDeposits = depositsRecordService.getTender(map);
+            model.addAttribute("recordByDeposits",depositsRecordService.getTender(map));
+            model.addAttribute("pageString", pageString);
+            return "qiantai/deposits_record";
+        }
     }
     /**
      * 跳转到投资页面

@@ -166,9 +166,6 @@ public interface UserInfoDao {
             "values(seq_account_flow_id.nextval,#{USERID},#{taccount},sysdate,2,#{tamount})")
     int addTaccountFlow(Map map);
 
-    @Select("select amount from userinfo where uname=#{userName}")
-    int getAccountMoney(String userName);
-
     /**
      * 根据用户ID查询历史
      * @param map
@@ -176,4 +173,20 @@ public interface UserInfoDao {
      */
     @Select("select * from blacklist where userid=#{USERID}")
     List<Map> getHistory(Map map);
+
+    /**
+     * 根据userid查找用户账户信息
+     * @param userId
+     * @return
+     */
+    @Select("select * from userinfo where userid=#{userId}")
+    List<Map> getUserAccount(Integer userId);
+
+    /**
+     * 累计投资金额
+     * @param userId
+     * @return
+     */
+    @Select("select sum(tamount) toudermoney from tender where userid=#{userId}")
+    List<Map> getTouderMoney(Integer userId);
 }
