@@ -89,7 +89,21 @@ public interface UserInfoService {
     Map getHistory(Map map);
 
     /**
-     * 根据userid查找用户账户信息
+     * 修改头像
+     * @param map
+     * @return
+     */
+    int updateHeadPhoto(Map map);
+
+    /**
+     * 判断用户是否上传了头像
+     * @param userName
+     * @return
+     */
+    String getHPByUNname(String userName);
+
+    /**
+     * 根据userid查询用户的帐户
      * @param userId
      * @return
      */
@@ -101,4 +115,11 @@ public interface UserInfoService {
      * @return
      */
     double getTouderMoney(Integer userId);
+
+    /**
+     * 查询账户余额
+     * @param userName
+     * @return
+     */
+    double getAmountByUName(String userName);
 }

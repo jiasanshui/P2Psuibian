@@ -304,6 +304,8 @@ public class JumpController {
             String pageString = new PageUtil(tPageNo, pageSize, depositsRecordService.getPageCount(map), request).getPageString();
             //pageUtil分页
             model.addAttribute("pageString",pageString);
+            //查询账户余额
+            model.addAttribute("amount",userInfoService.getAmountByUName(userName));
             return "qiantai/personal";
         }
     }

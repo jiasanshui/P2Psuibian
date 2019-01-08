@@ -95,7 +95,6 @@ public class NoticeController {
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
-
     }
     /**
      * 跳转分页列表
