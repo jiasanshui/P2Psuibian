@@ -81,8 +81,6 @@ public interface UserInfoService {
      */
     List<Map> getAllUserByuserid(Integer userid);
 
-    int getAccountMoney(String userName);
-
     /**
      * 根据用户ID查询历史
      * @param map
@@ -103,4 +101,18 @@ public interface UserInfoService {
      * @return
      */
     String getHPByUNname(String userName);
+
+    /**
+     * 根据userid查找用户账户信息
+     * @param userId
+     * @return
+     */
+    Map getUserAccount(Integer userId);
+
+    /**
+     * 累计投资金额
+     * @param userId
+     * @return
+     */
+    double getTouderMoney(Integer userId);
 }

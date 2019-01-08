@@ -133,6 +133,12 @@
       </ul>
     </div>
     <script type="text/javascript">
+       /*$(function () {
+           //获取手机号
+           var tel = $('#tel').html();
+           var mtel = tel.substr(0,3) + '****' + tel.substr(7);
+           $('#tel').text(mtel);
+       })*/
 			//<![CDATA[
 				function showSpan(op){
 					$("#updateMonbileForm\\:updateMonbileFormauthCode").val("");
@@ -616,21 +622,27 @@
           <ul>
             <li>
               <label class="txt-name">原手机号</label>
-              <label id="checkOldMobileForm:oldMobileNumber" class="txt240"> 150****0139</label>
+              <label id="checkOldMobileForm:oldMobileNumber" class="txt240">
+                150****1393
+                <!--<span id="tel" th:text="${session.phone}></span>-->
+              </label>
+            </li>
+            <li>
+              <label class="txt-name">现手机号</label>
+              <input  type="text"  class="txt110"  onfocus="clearValue(this)" placeholder="请输入可用手机号">
+              <span id="sendCode7">
+                <a id="checkOldMobileForm:sendAuthCodeBtn" href="#" onclick="validateModifyPhoneSMS('15055100139')" class="btn-code">免费获取校验码</a>
+              </span>
             </li>
             <li>
               <label class="txt-name">验证码</label>
               <input id="checkOldMobileForm:checkOldMobileFormauthCode" type="text" name="checkOldMobileForm:checkOldMobileFormauthCode" class="txt110" maxlength="8" onblur="jsf.util.chain(this,event,'return checkOldMobileFormAuthCode()','mojarra.ab(this,event,\'blur\',0,\'@this\')')" onfocus="clearValue(this)" placeholder="请输入验证码">
-              <span id="sendCode7"><a id="checkOldMobileForm:sendAuthCodeBtn" href="#" onclick="jsf.util.chain(this,event,'return validateModifyPhoneSMS(\'15055100139\');','PrimeFaces.ab({source:this,event:\'action\',process:\'checkOldMobileForm:sendAuthCodeBtn checkOldMobileForm:oldMobileNumber\',oncomplete:function(xhr,status,args){s7Code(xhr, status, args, \'dx\');}}, arguments[1]);');return false" class="btn-code">免费获取校验码</a><a id="checkOldMobileForm:sendAuthCodeBtn7" href="#" style="display:none;" onclick="mojarra.ab(this,event,'action','checkOldMobileForm:oldMobileNumber',0,{'onevent':sCode7()});return false" class="btn-code">免费获取校验码</a> </span> <span id="sendCodeGrey7" style="display:none;"> <a href="#" id="sendAuthCodeBtn7" class="btn-codeAfter" style="cursor:default;">免费获取校验码</a> </span>
-              <div id="checkOldMobileFormauthCodeErrorDiv" class="alert-error120"></div>
-              <div id="authCodeMsg" style="display:none;" class="yzmplace"> 验证码已发送到您手机<span id="mobileMsg"></span>，如果收不到短信，请 <a id="checkOldMobileForm:sendAuthCodeBtn3" href="#" style="color:blue;" onclick="PrimeFaces.ab({source:this,event:'action',process:'checkOldMobileForm:sendAuthCodeBtn3 checkOldMobileForm:oldMobileNumber',oncomplete:function(xhr,status,args){s7Code(xhr, status, args, 'yy');}}, arguments[1]);;return false">语音获取</a> </div>
-              <div id="authCodeMsg2" style="display:none;" class="yzmplace"> 您的手机<span id="mobileMsg2"></span>将在60秒内收到语音电话，请接听！ </div>
             </li>
-            <li><span class="txt-right" style="display:none;"><i class="error-icon"></i><i class="error-tip">验证码错误请重新输入</i></span><br>
+            <li>
               <input type="submit" name="checkOldMobileForm:j_idt129" value="确 认" class="btn-ok txt-right" onclick="return checkCheckOldMobileAll()">
             </li>
           </ul>
-          <input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="6247899183375709698:8256389782682127070" autocomplete="off">
+          <!--<input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="6247899183375709698:8256389782682127070" autocomplete="off">-->
         </form>
       </div>
     </div>
@@ -1232,13 +1244,12 @@
 				        } 
 			        }
 				}
-
-				
 				var second = 0;
                 var internal;
                 /** 校验修改手机验证码 */
 				function validateModifyPhoneSMS(mobileNumber){
-					$("#checkOldMobileForm\\:checkOldMobileFormauthCode_message").remove();
+				    alert(111);
+					/*$("#checkOldMobileForm\\:checkOldMobileFormauthCode_message").remove();
 					if(mobileNumber == '请输入手机号'){
 		                return;
 					}
@@ -1275,7 +1286,7 @@
 							   }
 						   }
 					    });
-		               return returnResult;
+		               return returnResult;*/
 				}
 
 				 /** 校验修改邮箱验证码 */

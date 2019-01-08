@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>p2p网贷平台</title>
@@ -93,35 +94,47 @@
     <div class="personal-main">
       <div class="personal-investnote">
         <h3><i>投资记录</i></h3>
-        <div class="investnote-money"> <span><b class="fb">累计投资</b><br>
-          <i>0.00</i> 元 </span> <span><b class="fb">累计收益</b><br>
-          <i class="c-pink">0.00</i> 元 </span> <span><b class="fb">待收本金</b><br>
-          <i>0.00</i> 元 </span> <span class="none"><b class="fb">待收收益</b><br>
-          <i>0.00</i> 元 </span> </div>
-        <form id="form" name="form" method="post" action="">
-          <script type="text/javascript">clearPage = function() {PrimeFaces.ab({source:'form:j_idt82',formId:'form',process:'form:j_idt82',params:arguments[0]});}</script>
-          <span id="form:dataTable">
-          <div class="invest-tab">
-            <ul>
-              <li class="on"><span><a href="#" title="投标中">投标中 </a> </span> </li>
-              <li><a href="#" title="回款中">回款中 </a> </li>
-              <li><a href="#" title="已结束">已结束 </a> </li>
-            </ul>
+        <div class="investnote-money">
+          <span><b class="fb">累计投资</b><br><i th:text="${touderMoney}"></i> 元 </span>
+           <span><b class="fb">累计收益</b><br><i class="c-pink" th:text="${account.COLLECTPRINCIPAL}+${account.COLLECTINTEREST}"></i> 元 </span>
+           <span><b class="fb">待收本金</b><br> <i th:text="${account.COLLECTPRINCIPAL}"></i> 元 </span>
+          <span class="none"><b class="fb">待收收益</b><br> <i th:text="${account.COLLECTINTEREST}"></i> 元 </span>
+        </div>
+        <form action="/jump/deposits_record">
+          <div>
+              标的编号：<input type="text" name="borrownum">
+              <input type="submit" value="查询">
           </div>
+        <br>
           <div class="investnote-list">
-            <div class="investnote-contitle"> <span class="investnote-w1 fb">交易时间</span> <span class="investnote-w2 fb">项目</span> <span class="investnote-w3 fb">状态</span> <span class="investnote-hbw4 fb">我的投资</span> <span class="investnote-hbw5 fb">我的收益</span> <span class="investnote-hbw6 fb">操作</span> </div>
-            <ul>
-              <li><span class="investnote-w1">2015-10-1</span><span class="investnote-w2">债权转让</span><span class="investnote-w3">已还款</span><span class="investnote-hbw4">12000.00</span> <span class="investnote-hbw5">12000.00</span> <span class="investnote-hbw6"><a href="#">删除</a></span></li>
-              <li><span class="investnote-w1">2015-10-1</span><span class="investnote-w2">债权转让</span><span class="investnote-w3">已还款</span><span class="investnote-hbw4">12000.00</span> <span class="investnote-hbw5">12000.00</span> <span class="investnote-hbw6"><a href="#">删除</a></span></li>
-              <li><span class="investnote-w1">2015-10-1</span><span class="investnote-w2">债权转让</span><span class="investnote-w3">已还款</span><span class="investnote-hbw4">12000.00</span> <span class="investnote-hbw5">12000.00</span> <span class="investnote-hbw6"><a href="#">删除</a></span></li>
-              <li><span class="investnote-w1">2015-10-1</span><span class="investnote-w2">债权转让</span><span class="investnote-w3">已还款</span><span class="investnote-hbw4">12000.00</span> <span class="investnote-hbw5">12000.00</span> <span class="investnote-hbw6"><a href="#">删除</a></span></li>
-            </ul>
+            <div class="investnote-contitle">
+              <table width="800px">
+                <tr align="center" style="line-height: 3">
+                 <!-- <td>订单id</td>-->
+                  <td>投资编号</td>
+                  <td>真实姓名</td>
+                  <td>投资金额</td>
+                  <td>投资时间</td>
+                  <td>投资方式</td>
+                  <td>借款标号</td>
+                </tr>
+                <tr th:each="rows : ${recordByDeposits}" align="center" style="line-height: 3">
+                  <td th:text="${rows.TENDERNUM}"></td>
+                  <td th:text="${rows.REALNAME}" ></td>
+                  <td th:text="${rows.TAMOUNT}" ></td>
+                  <td th:text="${rows.TTIME}" ></td>
+                  <td th:text="${rows.TWAY}" ></td>
+                  <td th:text="${rows.BORROWNUM}" ></td>
+                </tr>
+                <tr align="center" style="line-height: 3">
+                  <td colspan="6" th:utext="${pageString}" STYLE="text-align: center;"></td>
+                </tr>
+              </table>
           </div>
-          </span>
-        </form>
       </div>
+        </form>
     </div>
-    <div class="clear"></div>
+    </div>
   </div>
 </div>
 <!--网站底部-->
@@ -170,4 +183,5 @@
   </div>
 </div>
 </body>
+</html>
 </html>
