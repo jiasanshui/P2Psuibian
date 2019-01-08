@@ -12,9 +12,10 @@
 <script type="text/javascript" src="../script/common.js"></script>
 <script src="../script/user.js" type="text/javascript"></script>
 
-  <!--查询是否已经认证过-->
+
   <script>
       $(function(){
+          <!--查询是否已经认证过-->
           var username=$("#userName").val();
           $.ajax({
               type:"post",
@@ -28,9 +29,30 @@
                       $("#liRenA").show();
                   }else {
                       $("#diva").attr("class","grzxbg p-danger");
+                      $("#liRen").show();
+                      $("#liRenA").hide();
                   }
               }
-          })
+          });
+
+          //查询是否已经绑定银行卡
+          $.ajax({
+              type:"post",
+              dataType:"json",
+              data:{userName:username},
+              url:"/bank/isBind",
+              success:function (data) {
+                  if(data==1){
+                      $("#divb").attr("class","grzxbg p-right");
+                      $("#bankA").hide();
+                      $("#bankB").show();
+                  }else{
+                      $("#divb").attr("class","grzxbg p-danger");
+                      $("#bankA").show();
+                      $("#bankB").hide();
+                  }
+              }
+          });
       })
   </script>
 </head>
@@ -363,15 +385,24 @@
           <li>
             <i id="diva" class="grzxbg p-danger"></i><span class="zhsz-span1">身份认证</span>
             <div id="liRen">
-            <span class="zhsz-span2">未认证</span><span class="zhsz-span3"><a href="#">认证</a></span>
+              <span class="zhsz-span2">未认证</span><span class="zhsz-span3"><a href="/jump/renzheng">认证</a></span>
             </div>
             <div id="liRenA">
-              <span class="zhsz-span2">已认证</span><span class="zhsz-span3">
+              <span class="zhsz-span2">已认证</span>
             </div>
           </li>
           <!--<li><i class="grzxbg p-danger"></i><span class="zhsz-span1">第三方支付</span><span class="zhsz-span2">未开通</span><span class="zhsz-span3"><a href="#">开通</a></span></li>-->
           <li> <i class="grzxbg p-right"></i> <span class="zhsz-span1">电子邮箱</span> <span class="zhsz-span2" th:text="${session.email}"></span> <span class="zhsz-span3"> <a href="#" onclick="showSpan('alert-updateEmail')">更改</a> </span> </li>
           <li><i class="grzxbg p-right"></i><span class="zhsz-span1">登录密码</span><span class="zhsz-span2">*********</span><span class="zhsz-span3"><a href="javascript:void(0)" onclick="showSpan('alert-updatePass')">更改</a></span></li>
+          <li>
+            <i id="divb" class="grzxbg p-danger"></i><span class="zhsz-span1">我的银行卡</span>
+            <div id="bankA">
+              <span class="zhsz-span2">未绑定</span><span class="zhsz-span3"><a href="/jump/renzheng">绑定银行卡</a></span>
+            </div>
+            <div id="bankB">
+              <span class="zhsz-span2">已绑定</span><span class="zhsz-span3"><a href="/bank/myBankCard">我的银行卡</a></span>
+            </div>
+          </li>
         </ul>
       </div>
     </div>

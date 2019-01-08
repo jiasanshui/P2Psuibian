@@ -157,4 +157,24 @@ public class UserInfoServiceImpl implements UserInfoService {
         map1.put("REMARK","该用户信用良好，无不良记录！");
         return map1;
     }
+
+    /**
+     * 修改头像
+     * @param map
+     * @return
+     */
+    @Override
+    public int updateHeadPhoto(Map map) {
+        return userInfoDao.updateHeadPhoto(map);
+    }
+
+    /**
+     * 判断用户是否上传了头像
+     * @param userName
+     * @return
+     */
+    @Override
+    public String getHPByUNname(String userName) {
+        return userInfoDao.getHPByUNname(userName);
+    }
 }

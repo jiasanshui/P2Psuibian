@@ -1,9 +1,7 @@
 package com.aaa.ssm.dao;
 
 import com.aaa.ssm.entity.Admin;
-import com.aaa.ssm.entity.User;
 import org.apache.ibatis.annotations.Select;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -13,7 +11,6 @@ import java.util.List;
  * author:fhm
  * createTime:2018-12-16 23:10
  */
-@Component
 public interface UserDao {
     /**
      * 根据用户名找用户

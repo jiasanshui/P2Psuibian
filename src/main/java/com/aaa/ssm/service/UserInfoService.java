@@ -89,4 +89,18 @@ public interface UserInfoService {
      * @return
      */
     Map getHistory(Map map);
+
+    /**
+     * 修改头像
+     * @param map
+     * @return
+     */
+    int updateHeadPhoto(Map map);
+
+    /**
+     * 判断用户是否上传了头像
+     * @param userName
+     * @return
+     */
+    String getHPByUNname(String userName);
 }

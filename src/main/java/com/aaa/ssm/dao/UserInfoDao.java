@@ -176,4 +176,20 @@ public interface UserInfoDao {
      */
     @Select("select * from blacklist where userid=#{USERID}")
     List<Map> getHistory(Map map);
+
+    /**
+     * 修改头像
+     * @param map
+     * @return
+     */
+    @Update("update userinfo set headphoto=#{headphoto} where uname=#{username}")
+    int updateHeadPhoto(Map map);
+
+    /**
+     * 判断用户是否上传了头像
+     * @param userNmae
+     * @return
+     */
+    @Select("select headphoto from userinfo where uname=#{userName}")
+    String getHPByUNname(String userNmae);
 }
