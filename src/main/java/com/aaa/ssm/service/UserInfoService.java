@@ -103,7 +103,7 @@ public interface UserInfoService {
     String getHPByUNname(String userName);
 
     /**
-     * 根据userid查找用户账户信息
+     * 根据userid查询用户的帐户
      * @param userId
      * @return
      */
@@ -115,4 +115,11 @@ public interface UserInfoService {
      * @return
      */
     double getTouderMoney(Integer userId);
+
+    /**
+     * 查询账户余额
+     * @param userName
+     * @return
+     */
+    double getAmountByUName(String userName);
 }

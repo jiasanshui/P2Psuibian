@@ -191,8 +191,8 @@ public interface UserInfoDao {
     String getHPByUNname(String userNmae);
 
     /**
-     * 根据userid查找用户账户信息
-     * @param userId
+     * 根据userId查找用户账户
+     * @param
      * @return
      */
     @Select("select * from userinfo where userid=#{userId}")
@@ -205,4 +205,16 @@ public interface UserInfoDao {
      */
     @Select("select sum(tamount) toudermoney from tender where userid=#{userId}")
     List<Map> getTouderMoney(Integer userId);
+
+    /**
+     * 查询账户余额
+     * @param userName
+     * @return
+     */
+    @Select("select amount from userinfo where uname=#{userName}")
+    double getAmountByUName(String userName);
+
+
+
+
 }
