@@ -91,6 +91,55 @@
                     <span class="dis">支付密码：</span><input class="input" type="password" name="password"  id="paynum" maxlength="24" tabindex="1" autocomplete="off" onblur="checkPaypwd()">
                     <span id="pay"></span>
                 </li>
+              <!--  <div class="alert-450 alert-h220" id="alert-notOpenAccount" style="display: block;">
+                    <div class="alert-title">
+                        <h3>提示</h3>
+                    </div>
+                    <div class="alert-main">
+                        <form id="notOpenAccountForm">
+                            <p class="msg6" align="center"> 用户在充值或提现前，需开通第三方账户。<br>
+                                此页面将在10秒后自动跳转到开通第三方账户页面<br>
+                                <em id="show-number">1</em> </p>
+                            <a href="#" id="openAccountAId" class="btn-ok txt-center">马上开通第三方账户</a>
+                        </form>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $("#form\\:actualMoney").focus(
+                        function(){
+                            $(this).css({"font-size":"24px","font-weight":"bold","font-family":"Arial","border":"1px solid #0caffe"});
+                            if($("#form\\:actualMoney").val() == value) {
+                                $("#form\\:actualMoney").val("")
+                                $(this).css({"font-size":"24px","font-weight":"bold","font-family":"Arial"});
+                            }
+                        }).blur(
+                        function(){
+                            $(this).css("border","1px solid #D0D0D0");
+                            if($("#form\\:actualMoney").val() == "") {
+                                $(this).css({"color":"#D0D0D0","font-size":"14px","font-weight":"normal"});
+                            }
+                        })
+
+                    function keyUpcheck()
+                    {
+                        $(this).css({"font-size":"24px","font-weight":"bold","font-family":"Arial"});
+                    }
+                </script>
+                <script type="text/javascript">
+                    var typeValue=$("#typeValue").html().trim();
+                    var url=""
+                    if(typeValue==1)
+                    {
+                        url="/user/regAuthentication"
+                    }
+                    else
+                    {
+                        url="/user/depositAuthenticationAccount"
+                    }
+                    $("#openAccountAId").attr("href",url);
+                    showSpan('alert-notOpenAccount');
+                    countDown('show-number',10,url);
+                </script>-->
                 <li>
                     <span class="dis">投标方式：</span>
                     <select  name="tway">
