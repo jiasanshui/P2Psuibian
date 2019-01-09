@@ -47,6 +47,14 @@ public class JumpController {
     //依赖注入
     @Autowired
     private WebService webService;
+
+    @Autowired
+    private  DepositsRecordService depositsRecordService;
+
+    //依赖注入
+    @Autowired
+    private AccountFlowService accountFlowService;
+
     /**
      * 跳转到前台首页
      * @return
@@ -81,6 +89,7 @@ public class JumpController {
             model.addAttribute("listCredit", listCredit);
         System.out.println(model);
             return "qiantai/index";
+        }
     }
 
     /**
@@ -290,6 +299,8 @@ public class JumpController {
             String pageString = new PageUtil(tPageNo, pageSize, depositsRecordService.getPageCount(map), request).getPageString();
             //pageUtil分页
             model.addAttribute("pageString",pageString);
+            //查询账户余额
+            model.addAttribute("amount",userInfoService.getAmountByUName(userName));
             return "qiantai/personal";
         }
     }
@@ -339,14 +350,11 @@ public class JumpController {
     public String contact_us() {
         return "qiantai/contact_us";
     }
+
     /**
      * 跳转到公司投资记录页面
      * @return
      */
-    @Autowired
-    private  DepositsRecordService depositsRecordService;
-
-
     @RequestMapping("/deposits_record")
     public Object deposits_record( Model model,HttpSession session,@RequestParam Map map,HttpServletRequest request) {
         UserRegister user=(UserRegister) session.getAttribute("user");
@@ -465,8 +473,33 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/money_record")
-    public String money_record(){
-        return "qiantai/money_record";
+    public String money_record(Model model,HttpSession session,@RequestParam Map map,HttpServletRequest request){
+        System.out.println(map);
+        UserRegister user=(UserRegister) session.getAttribute("user");
+        if (user==null){
+            return "qiantai/login";
+        }else{
+            Integer userId = user.getUserId();
+            map.put("userId",userId);
+            //获取分页总数量
+            int pageCount =accountFlowService.getPageCount(map);
+            int pageSize=8;
+            int pageNo=0;
+            Object tempPageNo=map.get("pageNo");
+            if (StringUtil.isEmpty(tempPageNo)){
+                pageNo=1;
+            }else {
+                pageNo=Integer.valueOf(tempPageNo+"");
+            }
+            map.put("pageSize",pageSize);
+            map.put("pageNo",pageNo);
+            //分页工具使用
+            String pageString = new PageUtil(pageNo, pageSize, pageCount, request).getPageString();
+            //List<Map> recordByDeposits = accountFlowService.getAccountFlow(map);
+            model.addAttribute("accountflow",accountFlowService.getAccountFlow(map));
+            model.addAttribute("pageString", pageString);
+            return "qiantai/money_record";
+        }
     }
 
     /**
@@ -502,7 +535,6 @@ public class JumpController {
      * 跳转到网站公告页面
      * @return
      */
-
     @RequestMapping("/site_notice")
     public String site_notice(Model model) {
         List<Map> webList = webService.getWebList();

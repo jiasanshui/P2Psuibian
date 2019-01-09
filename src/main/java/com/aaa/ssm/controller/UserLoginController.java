@@ -1,7 +1,6 @@
 package com.aaa.ssm.controller;
 
 import com.aaa.ssm.entity.UserRegister;
-import com.aaa.ssm.filter.SmcsSession;
 import com.aaa.ssm.service.UserLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

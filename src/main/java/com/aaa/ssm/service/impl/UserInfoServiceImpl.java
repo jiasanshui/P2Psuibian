@@ -154,15 +154,35 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     /**
-     * 根据userid查找用户账户信息
+     * 修改头像
+     * @param map
+     * @return
+     */
+    @Override
+    public int updateHeadPhoto(Map map) {
+        return userInfoDao.updateHeadPhoto(map);
+    }
+
+    /**
+     * 判断用户是否上传了头像
+     * @param userName
+     * @return
+     */
+    @Override
+    public String getHPByUNname(String userName) {
+        return userInfoDao.getHPByUNname(userName);
+    }
+
+    /**
+     * 根据userid查询用户的帐户
      * @param userId
      * @return
      */
     @Override
     public Map getUserAccount(Integer userId) {
-        List<Map> accountList=userInfoDao.getUserAccount(userId);
-        if (accountList!=null && accountList.size()>0){
-            return accountList.get(0);
+        List<Map> userAccount=userInfoDao.getUserAccount(userId);
+        if(userAccount!=null &&  userAccount.size()>0){
+            return userAccount.get(0);
         }
         return null;
     }
@@ -171,14 +191,23 @@ public class UserInfoServiceImpl implements UserInfoService {
      * 累计投资金额
      * @param userId
      * @return
-     * toudermoney
      */
     @Override
     public double getTouderMoney(Integer userId) {
-        List<Map> touderMoney=userInfoDao.getTouderMoney(userId);
-        if (touderMoney!=null && touderMoney.size()>0){
+        List<Map> touderMoney = userInfoDao.getTouderMoney(userId);
+        if (touderMoney!=null&&touderMoney.size()>0){
             return Double.parseDouble(touderMoney.get(0).get("TOUDERMONEY")+"");
         }
         return 0;
+    }
+
+    /**
+     * 查询账户余额
+     * @param userName
+     * @return
+     */
+    @Override
+    public double getAmountByUName(String userName) {
+        return userInfoDao.getAmountByUName(userName);
     }
 }
