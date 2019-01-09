@@ -90,7 +90,6 @@ public class JumpController {
         System.out.println(model);
             return "qiantai/index";
         }
-    }
 
     /**
      * 跳转到登录页面
