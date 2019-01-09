@@ -54,7 +54,11 @@ public class JumpController {
     @RequestMapping("/index")
     public String jumpIndex(Model model,HttpSession session) {
         String userName=(String) session.getAttribute("userName");
-        List<Map> userList = userInfoService.getUserList(userName);
+        if(userName!=null){
+            List<Map> userList = userInfoService.getUserList(userName);
+            //model.addAttribute("userList",userList);
+            model.addAttribute("userstate",userList.get(0).get("STATEID"));
+        }
         //显示房屋抵押招标
             List<Map> housePro = projectService.getHousePro();
             model.addAttribute("houseProList", housePro);
@@ -75,7 +79,7 @@ public class JumpController {
             model.addAttribute("listCar", listCar);
             model.addAttribute("listHouse", listHouse);
             model.addAttribute("listCredit", listCredit);
-            model.addAttribute("userList",userList);
+        System.out.println(model);
             return "qiantai/index";
     }
 
