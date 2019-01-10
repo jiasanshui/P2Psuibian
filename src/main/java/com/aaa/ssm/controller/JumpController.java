@@ -55,6 +55,9 @@ public class JumpController {
     @Autowired
     private AccountFlowService accountFlowService;
 
+    @Autowired
+    private  RepayRecordService repayRecordService;
+
     /**
      * 跳转到前台首页
      * @return
@@ -591,8 +594,6 @@ public class JumpController {
      * 跳转到我的还款页面
      * @return
      */
-    @Autowired
-    private  RepayRecordService repayRecordService;
     @RequestMapping("/yihuankuan")
     public Object yihuankuan(Model model,HttpSession session,@RequestParam Map map,HttpServletRequest request) {
         UserRegister user=(UserRegister) session.getAttribute("user");
