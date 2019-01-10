@@ -13,12 +13,18 @@
 <script src="../script/user.js" type="text/javascript"></script>
   <script type="text/javascript">
     $(function(){
+        var test='';
+        var test1='';
+        $(".selector").val(test);
+        $(".selector").val(test1);
         //查询交易类型
         $.ajax({
             type:"post",
             dataType:"json",
             url:"/accountflow/flowtype",
             success:function(data){
+                //flowtypeid==id 选中
+                //var typeid=[[${news.FLOWTYPEID}]];
                 if(data!=''){
                     var Str = "";
                     for (var i = 0; i < data.length; i++) {
@@ -28,6 +34,15 @@
                 }
             }
         });
+        $("#sel").change(function(){
+            test=$("#sel").val();
+            $(".selector").val(test);
+        });
+        $("#sel2").change(function(){
+            test1=$("#sel2").val();
+            $(".selector").val(test1);
+        });
+
     })
   </script>
 </head>
@@ -110,79 +125,23 @@
     <div class="personal-main">
       <div class="personal-money">
         <h3><i>资金记录</i></h3>
-
-        <!--<form id="form" name="form" method="post" action="">
-          <div class="money-choose">
-          <span class="money-date1">操作类型</span>
-            <div id="typeboxstyle" class="select-date">
-              <span class="select-title" style="display:inline-block;height:25px;line-height:20px;">全部</span>
-              <ul>
-                <li>全部</li>
-                <li value="ti_balance">转入到余额</li>
-                <li value="to_balance">从余额转出</li>
-                <li value="to_frozen">从冻结金额中转出</li>
-                <li value="freeze">冻结</li>
-                <li value="unfreeze">解冻</li>
-              </ul>
-            </div>
-            <span class="money-date2">查询时间</span>
-            <div id="select-date" class="select-date"> <span class="select-title" style="display:inline-block;height:25px;line-height:20px;">全部</span>
-              <ul>
-                <li value="0d">今天</li>
-                <li value="1w">最近一周</li>
-                <li value="1m">一个月</li>
-                <li value="6m">六个月</li>
-                <li>全部</li>
-              </ul>
-            </div>
-            <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn-sx"><span class="ui-button-text ui-c">筛选</span></button>
-            <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn-dc"><span class="ui-button-text ui-c">导出</span></button>
-          </div>
-          <span id="form:dataTable">
-          <div class="personal-moneylist">
-            <div class="pmain-contitle"> <span class="pmain-title1 fb">交易时间</span> <span class="pmain-title2 fb">交易类型</span> <span class="pmain-title3 fb">交易金额</span> <span class="pmain-title4 fb">余额</span> <span class="pmain-title5 fb">备注</span> </div>
-            <ul>
-              <li><span class="pmain-title1 pmain-height">2015-10-20</span><span class="pmain-title2 pmain-height">债权转让</span><span class="pmain-title3 pmain-height">10.00</span><span class="pmain-title4 pmain-height">10.00</span><span class="pmain-title5 pmain-height">备注</span></li>
-              <li><span class="pmain-title1 pmain-height">2015-10-20</span><span class="pmain-title2 pmain-height">债权转让</span><span class="pmain-title3 pmain-height">10.00</span><span class="pmain-title4 pmain-height">10.00</span><span class="pmain-title5 pmain-height">备注</span></li>
-              <li><span class="pmain-title1 pmain-height">2015-10-20</span><span class="pmain-title2 pmain-height">债权转让</span><span class="pmain-title3 pmain-height">10.00</span><span class="pmain-title4 pmain-height">10.00</span><span class="pmain-title5 pmain-height">备注</span></li>
-              <li><span class="pmain-title1 pmain-height">2015-10-20</span><span class="pmain-title2 pmain-height">债权转让</span><span class="pmain-title3 pmain-height">10.00</span><span class="pmain-title4 pmain-height">10.00</span><span class="pmain-title5 pmain-height">备注</span></li>
-              <li><span class="pmain-title1 pmain-height">2015-10-20</span><span class="pmain-title2 pmain-height">债权转让</span><span class="pmain-title3 pmain-height">10.00</span><span class="pmain-title4 pmain-height">10.00</span><span class="pmain-title5 pmain-height">备注</span></li>
-              <li><span class="pmain-title1 pmain-height">2015-10-20</span><span class="pmain-title2 pmain-height">债权转让</span><span class="pmain-title3 pmain-height">10.00</span><span class="pmain-title4 pmain-height">10.00</span><span class="pmain-title5 pmain-height">备注</span></li>
-              <li><span class="pmain-title1 pmain-height">2015-10-20</span><span class="pmain-title2 pmain-height">债权转让</span><span class="pmain-title3 pmain-height">10.00</span><span class="pmain-title4 pmain-height">10.00</span><span class="pmain-title5 pmain-height">备注</span></li>
-            </ul>
-          </div>
-          </span>
-        </form>-->
         <form action="/jump/money_record" method="post">
           <div class="money-choose">
             <span class="money-date1">交易类型</span>
             <div id="typeboxstyle" class="select-date">
-              <select id="sel" name="flowtypeid">
-               <!-- <option value="">全部</option>-->
+              <select name="flowtypeid" class="selector" id="sel">
+               <option value="">全部</option>
               </select>
             </div>
             <span class="money-date2">查询时间</span>
             <div id="select-date" class="select-date">
-              <select  name="selecttime">
-                <option>今天</option>
-                <option>最近一周</option>
-                <option>一个月</option>
-                <option>六个月</option>
-                <option selected="selected">全部</option>
+              <select  name="selecttime"  class="selector" id="sel2">
+                <option value="">全部</option>
+                <option value="0">今天</option>
+                <option value="7">最近一周</option>
+                <option value="1">一个月</option>
+                <option value="6">六个月</option>
               </select>
-            </div>
-           <!--<input type="submit" value="查询">-->
-            <span class="money-date1">操作类型</span>
-            <div  class="select-date">
-              <span class="select-title" style="display:inline-block;height:25px;line-height:20px;">全部</span>
-              <ul>
-                <li>全部</li>
-                <li value="1">转入到余额</li>
-                <li value="2">从余额转出</li>
-                <li value="3">从冻结金额中转出</li>
-                <li value="4">冻结</li>
-                <li value="5">解冻</li>
-              </ul>
             </div>
             <input type="submit" value="查询">
           </div>

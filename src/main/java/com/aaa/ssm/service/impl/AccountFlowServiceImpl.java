@@ -2,6 +2,7 @@ package com.aaa.ssm.service.impl;
 
 import com.aaa.ssm.dao.AccountFlowDao;
 import com.aaa.ssm.service.AccountFlowService;
+import com.aaa.ssm.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +52,22 @@ public class AccountFlowServiceImpl implements AccountFlowService {
      */
     @Override
     public int getPageCount(Map map) {
-        List<Map> pageCount = accountFlowDao.getPageCount(map);
+        List<Map> pageCount=null;
+        if(StringUtil.isEmpty(map.get("selecttime"))){
+            pageCount = accountFlowDao.getPageCount(map);
+        }else if (Integer.valueOf(map.get("selecttime")+"")==0){//今天
+            map.put("selecttoday",0);
+            pageCount = accountFlowDao.getPageCount(map);
+        }else if (Integer.valueOf(map.get("selecttime")+"")==1){//近一个月
+            map.put("selectmonth",1);
+            pageCount = accountFlowDao.getPageCount(map);
+        }else if (Integer.valueOf(map.get("selecttime")+"")==6){//近6个月
+            map.put("selectsix",6);
+            pageCount = accountFlowDao.getPageCount(map);
+        }else {//最近一周
+            map.put("selectseven",7);
+            pageCount = accountFlowDao.getPageCount(map);
+        }
         //判断集合，如果不为空，返回总数量
         if(pageCount!=null&&pageCount.size()>0){
             return Integer.valueOf(pageCount.get(0).get("CNT")+"");
@@ -70,6 +86,22 @@ public class AccountFlowServiceImpl implements AccountFlowService {
         int pageSize = map.get("pageSize")==null?10:Integer.valueOf(map.get("pageSize")+"");
         map.put("start",(pageNo-1)*pageSize);
         map.put("end",pageNo*pageSize+1);
-        return accountFlowDao.getAccountFlow(map);
+        List<Map> accountFlow=null;
+        if(StringUtil.isEmpty(map.get("selecttime"))){
+            accountFlow = accountFlowDao.getAccountFlow(map);
+        }else if (Integer.valueOf(map.get("selecttime")+"")==0){//今天
+            map.put("selecttoday",0);
+            accountFlow = accountFlowDao.getAccountFlow(map);
+        }else if (Integer.valueOf(map.get("selecttime")+"")==1){//近一个月
+            map.put("selectmonth",1);
+            accountFlow = accountFlowDao.getAccountFlow(map);
+        }else if (Integer.valueOf(map.get("selecttime")+"")==6){//近6个月
+            map.put("selectsix",6);
+            accountFlow = accountFlowDao.getAccountFlow(map);
+        }else {//最近一周
+            map.put("selectseven",7);
+            accountFlow = accountFlowDao.getAccountFlow(map);
+        }
+        return accountFlow;
     }
 }
