@@ -18,6 +18,12 @@
   <link rel="stylesheet" href="../css/elementui.css">
   <!-- 引入组件库 -->
   <script src="../js/elementui.js"></script>
+  <style>
+    .page{
+      text-align: center;
+      display: inline;
+    }
+  </style>
 </head>
 <body>
 <header>
@@ -100,9 +106,6 @@
         <h3><i>回款计划</i></h3>
         <form id="form" name="form" method="post" action="">
           <input type="hidden" name="form" value="form">
-          <div class="back-money"> <span class="back-own"><b class="fb">待收本金</b><br>
-            <i>0.00</i> 元</span> <span class="back-profit"><b class="fb">待收收益</b><br>
-            <i>0.00</i> 元</span> </div>
           <div class="back-choosedate"> <span class="choosedate">筛选时间</span>
             <div id="datebox" class="select-date"> <span class="select-title" style="display:inline-block;height:25px;line-height:20px;"></span>
               <ul>
@@ -122,10 +125,13 @@
             <div class="pmain-contitle"> <span class="pmain-titledate fb">计划回款时间</span> <span class="pmain-titleproject fb">项目</span> <span class="pmain-titletype fb">类型</span> <span class="pmain-titlemoney fb">回款金额</span> </div>
             <ul style="float:left;">
               <li th:each="list : ${huiList}">
-                <span class="pmain-titledate" th:text="${list.ENDTIME}"></span>
+                <span class="pmain-titledate" th:text="${list.STARTTIME}"></span>
                 <span class="pmain-titleproject" th:text="${list.DES}"></span>
                 <span class="pmain-titletype" th:text="${list.DANBAOSTYLE}"></span>
-                <span class="pmain-titlemoney" th:text="${list.TAMOUNT}"></span>
+                <span class="pmain-titlemoney" th:text="${list.mount}"></span>
+              </li>
+              <li >
+                <span th:utext="${pageString}" id="page"></span>
               </li>
             </ul>
           </div>
@@ -137,25 +143,7 @@
   </div>
 </div>
 <!--网站底部-->
-<!--底部分页工具条-->
-<div class="pagination clearfix mrt30" id="divPage">
-  <span class="page" th:utext="${pageString}"></span>
-</div>
 <script>
-    var vm = new Vue({
-        el:"#divPage",
-        data:{
-            currentPage:1,
-            pageSize:8
-        },
-        created:function(){
-            var self = this;
-            axios.post('/project/page',{'pageNo':this.currentPage,'pageSize':this.pageSize}).then(function(response){
-                self.total=response.data.total;
-                self.tableData = response.data.pageData;
-            })
-        },
-    })
 </script>
 <div id="footer" class="ft">
   <div class="ft-inner clearfix">

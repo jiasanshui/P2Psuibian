@@ -12,15 +12,20 @@ public interface HuiKuaiDao {
      * @param userId
      * @return
      */
-    @Select("<script> select t.tamount,b.apr,to_char(b.endtime,'yyyy-mm-dd HH24:mi:ss') as endtime,b.des,b.timelimit,b.danbaostyle from tender t,borrow b " +
-            "where t.borrownum=b.borrownum and t.userid = #{userId} " +
-            "</script>")
-    List<Map> getHuiKuaiList(Integer userId);
+    @Select("<script> select * from (select rownum rn,t.tamount,b.tapr,to_char(add_months(r.starttime,b.timelimit),'yyyy-mm-dd') " +
+            "as starttime, " +
+            "b.des,b.timelimit,b.danbaostyle from tender t " +
+            "left join borrow b on t.borrownum=b.borrownum left join " +
+            "repayinfo r on b.borrownum=r.borrownum where t.userid=#{userId} and rownum &lt; #{end} " +
+            "<if test=\"starttime!=null and starttime!=''\"> and r.starttime=#{startTime}</if>) " +
+            "a where a.rn &gt; #{start}</script>")
+    List<Map> getHuiKuaiList(Map map);
     /**
             * 获取分页总数量
      * @param map
      * @return
              */
-    @Select("<script> select count(*) cnt from tender where 1=1 and userid=#{userId} </script>")
-    int getPageCount(Map map);
+    @Select("<script> select count(*) cnt from tender where 1=1 and userid=#{userId} " +
+            "<if test=\"endtime!=null and endtime!=''\"> and b.endtime=#{endTime}</if></script>")
+    List<Map> getPageCount(Map map);
 }

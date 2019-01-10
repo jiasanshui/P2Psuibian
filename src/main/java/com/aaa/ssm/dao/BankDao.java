@@ -22,4 +22,12 @@ public interface BankDao {
      */
     @Select("select * from bankcard where uname=#{userName}")
     List<Map> getBankCardByUName(String userName);
+
+    /**
+     * 绑定银行时获取真实姓名
+     * @param map
+     * @return
+     */
+    @Select("select realname from userinfo where uname=#{userName}")
+    String getRealName(Map map);
 }

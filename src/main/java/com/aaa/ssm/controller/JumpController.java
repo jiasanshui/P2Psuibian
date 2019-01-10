@@ -3,6 +3,7 @@ package com.aaa.ssm.controller;
 import com.aaa.ssm.entity.Admin;
 import com.aaa.ssm.entity.UserRegister;
 import com.aaa.ssm.service.*;
+import com.aaa.ssm.util.DEBXUtil;
 import com.aaa.ssm.util.PageUtil;
 import com.aaa.ssm.util.RandomUtil;
 import com.aaa.ssm.util.StringUtil;
@@ -56,6 +57,9 @@ public class JumpController {
     //依赖注入
     @Autowired
     private AccountFlowService accountFlowService;
+
+    @Autowired
+    private  RepayRecordService repayRecordService;
 
     //依赖注入
     @Autowired
@@ -300,6 +304,7 @@ public class JumpController {
             int tPageNo = pageNo==null?1:pageNo;
             map.put("pageNo",tPageNo);
             map.put("pageSize",pageSize);
+
             model.addAttribute("recordByDeposits", depositsRecordService.getTender(map));
             String pageString = new PageUtil(tPageNo, pageSize, depositsRecordService.getPageCount(map), request).getPageString();
             //pageUtil分页
@@ -470,18 +475,36 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/money_plan")
-    public String money_plan(HttpSession session,Model model,HttpServletRequest request,Integer pageNo,@RequestParam Map map) {
-        //分页总数量
-        int pageSize=5;
-        int tPageNo = pageNo==null?1:pageNo;
-        map.put("pageNo",tPageNo);
-        map.put("pageSize",pageSize);
+    public String money_plan(HttpSession session,Model model,HttpServletRequest request,@RequestParam Map map) {
         String username = String.valueOf(session.getAttribute("userName"));
         List<Map> userList = userInfoService.getUserList(username);
         Integer userId = Integer.valueOf(userList.get(0).get("USERID")+"");
-        List<Map> huiKuaiList = huiKuanService.getHuiKuaiList(userId);
         map.put("userId",userId);
-        String pageString = new PageUtil(tPageNo, pageSize, huiKuanService.getPageCount(map), request).getPageString();
+        System.out.println(map);
+        //获取分页总数量
+        int pageCount = huiKuanService.getPageCount(map);
+        int pageSize=7;
+        int pageNo=0;
+        Object tempPageNo=map.get("pageNo");
+        if (StringUtil.isEmpty(tempPageNo)){
+            pageNo=1;
+        }else {
+            pageNo=Integer.valueOf(tempPageNo+"");
+        }
+        map.put("pageSize",pageSize);
+        map.put("pageNo",pageNo);
+        //分页工具使用
+        List<Map> huiKuaiList = huiKuanService.getHuiKuaiList(map);
+        if (huiKuaiList.size()>0&&huiKuaiList!=null) {
+            for (Map map1 : huiKuaiList) {
+                double mount=Double.parseDouble(map1.get("TAMOUNT")+"");
+                double apr =Double.parseDouble(map1.get("TAPR")+"");
+                int month = Integer.valueOf(map1.get("TIMELIMIT") +"");
+                double cMount = DEBXUtil.getPrincipalInterestCount(mount, apr, month);
+                map1.put("mount", cMount);
+            }
+        }
+        String pageString = new PageUtil(pageNo, pageSize, pageCount, request).getPageString();
         model.addAttribute("huiList",huiKuaiList);
         model.addAttribute("pageString",pageString);
         return "qiantai/money_plan";
@@ -492,7 +515,6 @@ public class JumpController {
      */
     @RequestMapping("/money_record")
     public String money_record(Model model,HttpSession session,@RequestParam Map map,HttpServletRequest request){
-        System.out.println(map);
         UserRegister user=(UserRegister) session.getAttribute("user");
         if (user==null){
             return "qiantai/login";
@@ -514,8 +536,17 @@ public class JumpController {
             //分页工具使用
             String pageString = new PageUtil(pageNo, pageSize, pageCount, request).getPageString();
             //List<Map> recordByDeposits = accountFlowService.getAccountFlow(map);
-            model.addAttribute("accountflow",accountFlowService.getAccountFlow(map));
+            //model.addAttribute("accountflow",accountFlowService.getAccountFlow(map));
             model.addAttribute("pageString", pageString);
+            if(StringUtil.isEmpty(map.get("selecttime"))){
+                System.out.println("138920405-");
+                map.put("selecttime","");
+            }
+            if(StringUtil.isEmpty(map.get("flowtypeid"))){
+                System.out.println("138920405---------------");
+                map.put("flowtypeid","");
+            }
+            model.addAttribute("map",map);
             return "qiantai/money_record";
         }
     }
@@ -611,8 +642,34 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/yihuankuan")
-    public String yihuankuan() {
-        return "qiantai/reimbursement";
+    public Object yihuankuan(Model model,HttpSession session,@RequestParam Map map,HttpServletRequest request) {
+        UserRegister user=(UserRegister) session.getAttribute("user");
+        if (user==null){
+            return "qiantai/login";
+        }else{
+            String uname = user.getUname();
+            map.put("userName",uname);
+            Map userAccount = userInfoService.getUser(uname);
+            model.addAttribute("account",userAccount);
+            //获取分页总数量
+           int pageCount = repayRecordService.getPageCount(map);
+            int pageSize=10;
+            int pageNo=0;
+            Object tempPageNo=map.get("pageNo");
+            if (StringUtil.isEmpty(tempPageNo)){
+                pageNo=1;
+            }else {
+                pageNo=Integer.valueOf(tempPageNo+"");
+            }
+            map.put("pageSize",pageSize);
+            map.put("pageNo",pageNo);
+            //分页工具使用
+            String pageString = new PageUtil(pageNo, pageSize, pageCount, request).getPageString();
+            model.addAttribute("recordByRepay",repayRecordService.getRepayPage(map));
+            model.addAttribute("pageString", pageString);
+            return "qiantai/reimbursement";
+        }
+
     }
 
     /**
@@ -667,5 +724,10 @@ public class JumpController {
     @RequestMapping("/fkcg")
     public String fkcg() {
         return "qiantai/fukuan/fkcg";
+    }
+
+    @RequestMapping("bankcard")
+    public Object bankcard(){
+        return "qiantai/bankcard";
     }
 }

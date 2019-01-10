@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -11,40 +10,6 @@
 <script type="text/javascript" src="../script/jquery.min.js"></script>
 <script type="text/javascript" src="../script/common.js"></script>
 <script src="../script/user.js" type="text/javascript"></script>
-  <script type="text/javascript">
-    $(function(){
-        var test='';
-        var test1='';
-        $(".selector").val(test);
-        $(".selector").val(test1);
-        //查询交易类型
-        $.ajax({
-            type:"post",
-            dataType:"json",
-            url:"/accountflow/flowtype",
-            success:function(data){
-                //flowtypeid==id 选中
-                //var typeid=[[${news.FLOWTYPEID}]];
-                if(data!=''){
-                    var Str = "";
-                    for (var i = 0; i < data.length; i++) {
-                        Str += "<option value='"+data[i].ID+"'>"+data[i].TYPE+"</option>";
-                    }
-                    $("#sel").append(Str);
-                }
-            }
-        });
-        $("#sel").change(function(){
-            test=$("#sel").val();
-            $(".selector").val(test);
-        });
-        $("#sel2").change(function(){
-            test1=$("#sel2").val();
-            $(".selector").val(test1);
-        });
-
-    })
-  </script>
 </head>
 <body>
 <header>
@@ -129,18 +94,22 @@
           <div class="money-choose">
             <span class="money-date1">交易类型</span>
             <div id="typeboxstyle" class="select-date">
-              <select name="flowtypeid" class="selector" id="sel">
-               <option value="">全部</option>
+              <select name="flowtypeid" class="selector" >
+               <option value="" th:selected="${map.flowtypeid==''}">全部</option>
+                <option value="1" th:selected="${map.flowtypeid=='1'}">借款</option>
+                <option value="2" th:selected="${map.flowtypeid=='2'}">投标</option>
+                <option value="3" th:selected="${map.flowtypeid=='3'}">流标</option>
+                <option value="4" th:selected="${map.flowtypeid=='4'}">投资收益</option>
               </select>
             </div>
             <span class="money-date2">查询时间</span>
             <div id="select-date" class="select-date">
-              <select  name="selecttime"  class="selector" id="sel2">
-                <option value="">全部</option>
-                <option value="0">今天</option>
-                <option value="7">最近一周</option>
-                <option value="1">一个月</option>
-                <option value="6">六个月</option>
+              <select  name="selecttime" class="selector" id="sel2">
+                <option value=""  th:selected="${map.selecttime==''}">全部</option>
+                <option value="0" th:selected="${map.selecttime=='0'}">今天</option>
+                <option value="7" th:selected="${map.selecttime=='7'}">最近一周</option>
+                <option value="1" th:selected="${map.selecttime=='1'}">一个月</option>
+                <option value="6" th:selected="${map.selecttime=='6'}">六个月</option>
               </select>
             </div>
             <input type="submit" value="查询">

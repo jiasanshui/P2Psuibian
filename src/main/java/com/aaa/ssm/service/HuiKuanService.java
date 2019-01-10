@@ -9,8 +9,7 @@ public interface HuiKuanService {
      * @param userId
      * @return
      */
-    List<Map> getHuiKuaiList(Integer userId);
-
+    List<Map> getHuiKuaiList(Map map);
 
     /**
      * 获取分页总数量

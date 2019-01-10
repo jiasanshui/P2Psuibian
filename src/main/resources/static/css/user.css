@@ -776,7 +776,7 @@ transition: transform 1s linear;}
 .pmain-conmain li:hover{ background:#F9F9F9; width:880px;color:#4A4A4A;}
 .pmain-conmain li .pmain-money{color:#0caffe}
 
-.pmain-conmain .pmain-contitle{ float:left; border-top:1px solid #E5E5E5; background-color:#F6F6F6; width:880px; height:42px; line-height:42px; margin-bottom:1px;}
+.pmain-conmain .pmain-contitle{ float:left; border-top:1px solid #E5E5E5; background-color:#F6F6F6; width:750px; height:42px; line-height:42px; margin-bottom:1px;}
 .pmain-conmain .pmain-contitle span{ float:left;}
 .pmain-conmain .pmain-morebtn{ float:left; margin-top:30px; width:760px; padding:30px 0; border-top:1px dashed #E5E5E5;}
 .pmain-conmain .pmain-morebtn a{ display: block; margin-left:305px; width:150px; height:30px; line-height:30px;text-align:center; font-size:16px;color:#848484;  border:1px solid #E5E5E5; border-radius:30px;}

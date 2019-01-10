@@ -22,12 +22,21 @@ public class HuiKuanServiceImpl implements HuiKuanService {
 
 
     @Override
-    public List<Map> getHuiKuaiList(Integer userId) {
-        return huiKuaiDao.getHuiKuaiList(userId);
+    public List<Map> getHuiKuaiList(Map map) {
+        int pageNo=map.get("pageNo")==null?1:Integer.valueOf(map.get("pageNo")+"");
+        int pageSize = map.get("pageSize")==null?7:Integer.valueOf(map.get("pageSize")+"");
+        map.put("start",(pageNo-1)*pageSize);
+        map.put("end",pageNo*pageSize+1);
+        return huiKuaiDao.getHuiKuaiList(map);
     }
 
     @Override
     public int getPageCount(Map map) {
-        return huiKuaiDao.getPageCount(map);
+        List<Map> pageCount = huiKuaiDao.getPageCount(map);
+        //判断集合，如果不为空，返回总数量
+        if(pageCount!=null&&pageCount.size()>0){
+            return Integer.valueOf(pageCount.get(0).get("CNT")+"");
+        }
+        return 0;
     }
 }
