@@ -23,4 +23,9 @@ public class BankServiceImpl implements BankService {
     public List<Map> getBankCardByUName(String userName) {
         return bankDao.getBankCardByUName(userName);
     }
+
+    @Override
+    public String getRealName(Map map) {
+        return bankDao.getRealName(map);
+    }
 }

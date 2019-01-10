@@ -17,4 +17,11 @@ public interface BankService {
      * @return
      */
     List<Map> getBankCardByUName(String userName);
+
+    /**
+     * 绑定银行时获取真实姓名
+     * @param map
+     * @return
+     */
+    String getRealName(Map map);
 }

@@ -616,4 +616,9 @@ public class JumpController {
     public String fkcg() {
         return "qiantai/fukuan/fkcg";
     }
+
+    @RequestMapping("bankcard")
+    public Object bankcard(){
+        return "qiantai/bankcard";
+    }
 }

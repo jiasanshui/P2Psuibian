@@ -127,7 +127,7 @@ public class UserInfoController {
         //修改个人信息头像
         int updateHeadPhoto = userInfoService.updateHeadPhoto(map);
         if(updateHeadPhoto>0){
-            return "forward:/jump/index";
+            return "forward:/jump/personal";
         }
         return "forward:/jump/index";
     }
