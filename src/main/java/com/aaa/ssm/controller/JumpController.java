@@ -1,5 +1,6 @@
 package com.aaa.ssm.controller;
 
+import com.aaa.ssm.entity.Admin;
 import com.aaa.ssm.entity.UserRegister;
 import com.aaa.ssm.service.*;
 import com.aaa.ssm.util.PageUtil;
@@ -469,14 +470,17 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/money_plan")
-    public String money_plan(HttpSession session,Model model,HttpServletRequest request,Integer pageNo,Map map) {
+    public String money_plan(HttpSession session,Model model,HttpServletRequest request,Integer pageNo,@RequestParam Map map) {
         //分页总数量
         int pageSize=5;
         int tPageNo = pageNo==null?1:pageNo;
         map.put("pageNo",tPageNo);
         map.put("pageSize",pageSize);
-        Integer userId = Integer.valueOf(session.getAttribute("userid")+"");
+        String username = String.valueOf(session.getAttribute("userName"));
+        List<Map> userList = userInfoService.getUserList(username);
+        Integer userId = Integer.valueOf(userList.get(0).get("USERID")+"");
         List<Map> huiKuaiList = huiKuanService.getHuiKuaiList(userId);
+        map.put("userId",userId);
         String pageString = new PageUtil(tPageNo, pageSize, huiKuanService.getPageCount(map), request).getPageString();
         model.addAttribute("huiList",huiKuaiList);
         model.addAttribute("pageString",pageString);
