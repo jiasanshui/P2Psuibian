@@ -32,4 +32,11 @@ public interface DepositsRecordService {
      * @return
      */
     List<Map> getTender(Map map);
+
+    /**
+     * 账户总揽3条投资记录
+     * @param map
+     * @return
+     */
+    List<Map> geThreeTender(Map map);
 }

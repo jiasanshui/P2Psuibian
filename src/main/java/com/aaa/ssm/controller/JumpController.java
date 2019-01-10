@@ -292,16 +292,13 @@ public class JumpController {
             map.put("userId",userId);
             Map accountInfo=userInfoService.getUserAccount(userId);
             model.addAttribute("account",accountInfo);
-            //分页总数量
-            int pageSize=3;
-            int tPageNo = pageNo==null?1:pageNo;
-            map.put("pageNo",tPageNo);
-            map.put("pageSize",pageSize);
+            //投资记录
+            model.addAttribute("recordByDeposits", depositsRecordService.geThreeTender(map));
+            //资金记录
+            List<Map> accountflow=accountFlowService.getThreeFlow(map);
+            //model.addAttribute("accountflow",accountFlowService.getAccountFlow(map));
+            //回款计划
 
-            model.addAttribute("recordByDeposits", depositsRecordService.getTender(map));
-            String pageString = new PageUtil(tPageNo, pageSize, depositsRecordService.getPageCount(map), request).getPageString();
-            //pageUtil分页
-            model.addAttribute("pageString",pageString);
             //查询账户余额
             model.addAttribute("amount",userInfoService.getAmountByUName(userName));
             return "qiantai/personal";

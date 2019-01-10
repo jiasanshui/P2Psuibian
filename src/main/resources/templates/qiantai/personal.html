@@ -225,15 +225,29 @@
             </ul>
             <div class="pmain-morebtn" style="border-top:0;margin-top:0"></div>
           </div>
+          // 交易时间 交易类型 交易金额  余额
           <div class="pmain-conmain2" style=" display:none;">
-            <div class="pmain-contitle"> <span class="pmain-titledate">交易时间</span><span class="pmain-w100">交易类型</span><span class="pmain-w120">交易金额</span><span class="pmain-w120">余额</span><span class="pmain-w200">备注</span> </div>
-            <ul style="float:left;">
-              <li><span class="pmain-titledate">2015-10-20</span><span class="pmain-w100">债权转让</span><span class="pmain-w120 pmain-money">10.00</span><span class="pmain-w120 pmain-money">10.00</span><span class="pmain-w200">备注</span></li>
-              <!--<div style=" width:760px;height:200px;padding-top:100px; text-align:center;color:#d4d4d4; font-size:16px;">
-										 <img src="images/nondata.png" width="60" height="60"><br><br>
-										   暂无资金记录</div>-->
-            </ul>
-            <div class="pmain-morebtn" style="border-top:0;margin-top:0"></div>
+            <div class="pmain-contitle" >
+              <table  width="740px">
+                <tr align="center" style="line-height: 3">
+                  <!-- <td>订单id</td>-->
+                  <td>交易时间</td>
+                  <td>交易类型</td>
+                  <td>交易金额</td>
+                  <td>余额</td>
+                </tr>
+                <tr th:each="rows : ${accountflow}" align="center" style="line-height: 3">
+                  <td th:text="${rows.FLOWDATE}"></td>
+                  <td th:text="${rows.TYPE}" ></td>
+                  <td th:text="${rows.CHANGEAMOUNT}" ></td>
+                  <td th:text="${rows.AMOUNT}" ></td>
+                </tr>
+                <!--底部分页工具条-->
+                <tr align="center" style="line-height: 3">
+                  <td colspan="6"><span style="float: right"><a href="/jump/money_record">查看更多</a></span></td>
+                </tr>
+              </table>
+            </div>
           </div>
           <div class="pmain-conmain3" style=" display:none;">
             <div class="pmain-contitle" >
@@ -257,7 +271,7 @@
                 </tr>
                 <!--底部分页工具条-->
                 <tr align="center" style="line-height: 3">
-                  <td colspan="6" th:utext="${pageString}" STYLE="text-align: center;"></td>
+                  <td colspan="6"><span style="float: right"><a href="/jump/deposits_record">查看更多</a></span></td>
                 </tr>
               </table>
             </div>
@@ -268,22 +282,6 @@
     </div>
   </div>
 </div>
-<script>
-    var vm = new Vue({
-        el:"#divPage",
-        data:{
-            currentPage:1,
-            pageSize:8
-        },
-        created:function(){
-            var self = this;
-            axios.post('/project/page',{'pageNo':this.currentPage,'pageSize':this.pageSize}).then(function(response){
-                self.total=response.data.total;
-                self.tableData = response.data.pageData;
-            })
-        },
-    })
-</script>
 </body>
 </html>
 </html>

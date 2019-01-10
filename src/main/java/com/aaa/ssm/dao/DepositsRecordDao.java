@@ -40,4 +40,13 @@ public interface DepositsRecordDao {
             "<if test=\"borrownum!=null and borrownum!=''\">  and t.borrownum =#{borrownum}</if> ) " +
             "a where a.rn &gt; #{start}</script>")
     List<Map> getTenderPage(Map map);
+
+    /**
+     * 账户总揽3条投资记录
+     * @param map
+     * @return
+     */
+    @Select("select rownum,id,realname,tamount,to_char(ttime,'yyyy-mm-dd HH24:mi:ss') ttime," +
+            "tway,borrownum,userid,tendernum from tender where userid=#{userId} and rownum<4")
+    List<Map> getThreeTender(Map map);
 }
