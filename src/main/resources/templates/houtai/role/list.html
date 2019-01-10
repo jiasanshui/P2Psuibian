@@ -197,7 +197,7 @@
             var start =this.currentPage;
             var end =this.pageSize;
             axios.post('/role/list',{'start':start,'end':end}).then(function(response){
-                alert(JSON.stringify(response.data.nameData));
+                //alert(JSON.stringify(response.data.nameData));
                 for (let obj of response.data.nameData) {
                     self.names.push(obj.NAME);
                 }
