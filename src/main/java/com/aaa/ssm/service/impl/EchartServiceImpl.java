@@ -19,8 +19,8 @@ public class EchartServiceImpl implements EchartService {
     @Autowired
     private EchartDao echartDao;
     @Override
-    public List<Map> getSystemFlowList() {
-        return echartDao.getSystemFlowList();
+    public List<Map> getSystemFlowList(Integer year) {
+        return echartDao.getSystemFlowList(year);
     }
 }
 
