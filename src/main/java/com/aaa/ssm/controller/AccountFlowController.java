@@ -1,11 +1,17 @@
 package com.aaa.ssm.controller;
 
+import com.aaa.ssm.entity.UserRegister;
 import com.aaa.ssm.service.AccountFlowService;
+import com.aaa.ssm.util.PageUtil;
+import com.aaa.ssm.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
@@ -34,13 +40,12 @@ public class AccountFlowController {
     @RequestMapping("/flowtype")
     public Object getFlowtype(){
         List<Map> flowtypeList=accountFlowService.getFlowtype();
-        System.out.println(flowtypeList);
         return flowtypeList;
     }
 
     @ResponseBody
     @RequestMapping("/userflow")
-    public Object accountFlow(Model model,@RequestParam Map map,HttpServletRequest request){
+    public Object accountFlow(Model model, @RequestParam Map map, HttpServletRequest request){
         System.out.println(map);
         UserRegister user=(UserRegister) session.getAttribute("user");
         if (user==null){
