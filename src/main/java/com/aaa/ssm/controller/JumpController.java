@@ -477,7 +477,6 @@ public class JumpController {
      */
     @RequestMapping("/money_record")
     public String money_record(Model model,HttpSession session,@RequestParam Map map,HttpServletRequest request){
-        System.out.println(map);
         UserRegister user=(UserRegister) session.getAttribute("user");
         if (user==null){
             return "qiantai/login";
@@ -499,7 +498,7 @@ public class JumpController {
             //分页工具使用
             String pageString = new PageUtil(pageNo, pageSize, pageCount, request).getPageString();
             //List<Map> recordByDeposits = accountFlowService.getAccountFlow(map);
-            model.addAttribute("accountflow",accountFlowService.getAccountFlow(map));
+            //model.addAttribute("accountflow",accountFlowService.getAccountFlow(map));
             model.addAttribute("pageString", pageString);
             if(StringUtil.isEmpty(map.get("selecttime"))){
                 System.out.println("138920405-");
