@@ -70,7 +70,7 @@ public interface ProjectDao {
      * 查询抵押项目(房屋、车辆、信用)
      * @return
      */
-    @Select("select borrowid,applicant,tel,timelimit,purpose,des,quantity,cost,CONCAT(TO_CHAR(tapr*100,'990.99'),'%') tapr,borrowmoney,danbaostyle,payment,username,stateid,borrownum,winbidmoney,concat(TO_CHAR((winbidmoney/borrowmoney*100),'990.99'),'%') jindu,round(winbidmoney/borrowmoney*10) jindua  from borrow where rownum<3 and stateid=2 and DANBAOSTYLE like '%'||#{parama}||'%'")
+    @Select("select borrowid,applicant,tel,timelimit,purpose,des,quantity,cost,CONCAT(TO_CHAR(tapr*100,'990.99'),'%') tapr,borrowmoney,danbaostyle,payment,username,stateid,borrownum,winbidmoney,concat((trunc(winbidmoney/borrowmoney,4)*100),'%') jindu,round(winbidmoney/borrowmoney*10) jindua  from borrow where rownum<3 and stateid=2 and DANBAOSTYLE like '%'||#{parama}||'%'")
     List<Map> getList(Map map);
 
     /**
