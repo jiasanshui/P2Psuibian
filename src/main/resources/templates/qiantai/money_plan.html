@@ -109,7 +109,15 @@
           <div class="back-choosedate"> <span class="choosedate">筛选时间</span>
             <div id="datebox" class="select-date"> <span class="select-title" style="display:inline-block;height:25px;line-height:20px;"></span>
               <ul>
-                <li>全部</li>
+                <li>
+                  <select  name="selecttime" class="selector" id="sel2">
+                  <option value=""  th:selected="${map.selecttime==''}">全部</option>
+                  <option value="0" th:selected="${map.selecttime=='0'}">今天</option>
+                  <option value="7" th:selected="${map.selecttime=='7'}">最近一周</option>
+                  <option value="1" th:selected="${map.selecttime=='1'}">一个月</option>
+                  <option value="6" th:selected="${map.selecttime=='6'}">六个月</option>
+                </select>
+                </li>
               </ul>
             </div>
             <span id="form:datapicker1" class="datepicker">

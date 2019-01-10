@@ -52,4 +52,14 @@ public class DepositsRecordServiceImpl implements DepositsRecordService {
         map.put("end",pageNo*pageSize+1);
         return depositsRecordDao.getTenderPage(map);
     }
+
+    /**
+     * 账户总揽3条投资记录
+     * @param map
+     * @return
+     */
+    @Override
+    public List<Map> geThreeTender(Map map) {
+        return depositsRecordDao.getThreeTender(map);
+    }
 }

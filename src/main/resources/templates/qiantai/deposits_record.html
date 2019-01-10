@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -102,7 +101,7 @@
         </div>
         <form action="/jump/deposits_record">
           <div>
-              标的编号：<input type="text" name="borrownum">
+              标的编号：<input type="text" name="borrownum" th:value="${map.borrownum}" id="bid">
               <input type="submit" value="查询">
           </div>
         <br>
@@ -116,7 +115,7 @@
                   <td>投资金额</td>
                   <td>投资时间</td>
                   <td>投资方式</td>
-                  <td>借款标号</td>
+                  <td>标的标号</td>
                 </tr>
                 <tr th:each="rows : ${recordByDeposits}" align="center" style="line-height: 3">
                   <td th:text="${rows.TENDERNUM}"></td>
@@ -182,6 +181,12 @@
     <div class="ft-identity">©2015 你我贷 All rights reserved&nbsp;&nbsp;&nbsp;<span class="color-e6">|</span>&nbsp;&nbsp;&nbsp;安徽省你我贷投资管理有限公司&nbsp;&nbsp;&nbsp;<span class="color-e6">|</span>&nbsp;&nbsp;&nbsp;<a target="_blank" href="http://www.miitbeian.gov.cn/">皖ICP备12345678号-1</a></div>
   </div>
 </div>
+<script>
+    var search = document.getElementById("bid");
+    search.onfocus = function(){
+        search.value="";
+    }
+</script>
 </body>
 </html>
 </html>

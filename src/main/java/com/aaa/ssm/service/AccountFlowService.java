@@ -47,4 +47,18 @@ public interface AccountFlowService {
      * @return
      */
     List<Map> getAccountFlow(Map map);
+
+    /**
+     * 账户总揽中资金记录3条流水
+     * @param map
+     * @return
+     */
+    List<Map> getThreeFlow(Map map);
+
+    /**
+     * 账户总揽中回款计划
+     * @param map
+     * @return
+     */
+    List<Map> getBackMoney(Map map);
 }
