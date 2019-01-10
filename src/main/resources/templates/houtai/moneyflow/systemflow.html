@@ -7,41 +7,31 @@
     <script src="/js/echarts.min.js"></script>
 </head>
 <body>
-年度：<select id="year"><option>2019</option><option>2018</option><option>2017</option></select>年
+<div style="color:cornflowerblue">
+    年度：<select id="year" style="color:cornflowerblue">
+          </select>年
+    <script>
+        $(function(){
+            var nowyear=new Date().getFullYear();
+            var lastyear=nowyear-1;
+            var llastyear=nowyear-2;
+            var sel=$("#year");
+            sel.append("<option selected value='"+nowyear+"'>"+nowyear+"</option>");
+            sel.append("<option value='"+lastyear+"'>"+lastyear+"</option>");
+            sel.append("<option value='"+llastyear+"'>"+llastyear+"</option>");
+        });
+    </script>
+</div>
 <div id="main" style="width: 800px;height:600px;"></div>
 
 <script type="text/javascript">
 
-   /* $(function(){
-        getData(); //初始化年份2018
-    })
-    function getData(){  //查询每年的数据
-        var data1 = [];
-        var data2 = [];
-        $.ajax({
-            url:"/echart/systemflow",
-            type:"post",
-            datatype:"json",
-            async:false,//同步
-            success:function(data){
-                if(data!=''){
-                    for(var i=0;i<data.length;i++){
-                        data1.push(data[i].INCOME);
-                        data2.push(data[i].OUTLAY);
-                    }
-                    showData(data1,data2);
-                }
-            }
-        });
-    }*/
-
    $(function(){
-       getData(2018); //初始化年份2018
+       getData(new Date().getFullYear()); //初始化年份2018
        $("#year").change(function(){  //当年份改变时
            getData($("#year").val());
        })
    })
-
 
    function getData(year){  //查询每年的数据
        var data1 = [];
