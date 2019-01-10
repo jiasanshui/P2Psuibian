@@ -1,10 +1,13 @@
 package com.aaa.ssm.controller;
 
+import com.aaa.ssm.entity.Admin;
 import com.aaa.ssm.entity.UserRegister;
 import com.aaa.ssm.service.*;
+import com.aaa.ssm.util.DEBXUtil;
 import com.aaa.ssm.util.PageUtil;
 import com.aaa.ssm.util.RandomUtil;
 import com.aaa.ssm.util.StringUtil;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,6 +60,13 @@ public class JumpController {
 
     @Autowired
     private  RepayRecordService repayRecordService;
+
+    //依赖注入
+    @Autowired
+    private  HuiKuanService huiKuanService;
+
+    @Autowired
+    private  MyOrderService myOrderService;
 
     /**
      * 跳转到前台首页
@@ -126,8 +136,6 @@ public class JumpController {
      * 跳转到我的订单页面
      * @return
      */
-    @Autowired
-    private  MyOrderService myOrderService;
     @RequestMapping("myorder")
     public Object myorder(HttpSession session,Model model){
         String username=(String) session.getAttribute("userName");
@@ -294,10 +302,9 @@ public class JumpController {
             //投资记录
             model.addAttribute("recordByDeposits", depositsRecordService.geThreeTender(map));
             //资金记录
-            List<Map> accountflow=accountFlowService.getThreeFlow(map);
-            //model.addAttribute("accountflow",accountFlowService.getAccountFlow(map));
+            model.addAttribute("accountflow",accountFlowService.getThreeFlow(map));
             //回款计划
-
+            model.addAttribute("backMoneyList",accountFlowService.getBackMoney(map));
             //查询账户余额
             model.addAttribute("amount",userInfoService.getAmountByUName(userName));
             return "qiantai/personal";
@@ -369,7 +376,7 @@ public class JumpController {
             model.addAttribute("touderMoney",money);
             //获取分页总数量
             int pageCount = depositsRecordService.getPageCount(map);
-            int pageSize=8;
+            int pageSize=7;
             int pageNo=0;
             Object tempPageNo=map.get("pageNo");
             if (StringUtil.isEmpty(tempPageNo)){
@@ -381,9 +388,12 @@ public class JumpController {
             map.put("pageNo",pageNo);
             //分页工具使用
             String pageString = new PageUtil(pageNo, pageSize, pageCount, request).getPageString();
-            //List<Map> recordByDeposits = depositsRecordService.getTender(map);
             model.addAttribute("recordByDeposits",depositsRecordService.getTender(map));
             model.addAttribute("pageString", pageString);
+            if(StringUtil.isEmpty(map.get("borrownum"))){
+                map.put("borrownum","");
+            }
+            model.addAttribute("map",map);
             return "qiantai/deposits_record";
         }
     }
@@ -464,7 +474,38 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/money_plan")
-    public String money_plan() {
+    public String money_plan(HttpSession session,Model model,HttpServletRequest request,@RequestParam Map map) {
+        String username = String.valueOf(session.getAttribute("userName"));
+        List<Map> userList = userInfoService.getUserList(username);
+        Integer userId = Integer.valueOf(userList.get(0).get("USERID")+"");
+        map.put("userId",userId);
+        System.out.println(map);
+        //获取分页总数量
+        int pageCount = huiKuanService.getPageCount(map);
+        int pageSize=7;
+        int pageNo=0;
+        Object tempPageNo=map.get("pageNo");
+        if (StringUtil.isEmpty(tempPageNo)){
+            pageNo=1;
+        }else {
+            pageNo=Integer.valueOf(tempPageNo+"");
+        }
+        map.put("pageSize",pageSize);
+        map.put("pageNo",pageNo);
+        //分页工具使用
+        List<Map> huiKuaiList = huiKuanService.getHuiKuaiList(map);
+        if (huiKuaiList.size()>0&&huiKuaiList!=null) {
+            for (Map map1 : huiKuaiList) {
+                double mount=Double.parseDouble(map1.get("TAMOUNT")+"");
+                double apr =Double.parseDouble(map1.get("TAPR")+"");
+                int month = Integer.valueOf(map1.get("TIMELIMIT") +"");
+                double cMount = DEBXUtil.getPrincipalInterestCount(mount, apr, month);
+                map1.put("mount", cMount);
+            }
+        }
+        String pageString = new PageUtil(pageNo, pageSize, pageCount, request).getPageString();
+        model.addAttribute("huiList",huiKuaiList);
+        model.addAttribute("pageString",pageString);
         return "qiantai/money_plan";
     }
     /**
@@ -473,6 +514,7 @@ public class JumpController {
      */
     @RequestMapping("/money_record")
     public String money_record(Model model,HttpSession session,@RequestParam Map map,HttpServletRequest request){
+        System.out.println(map);
         UserRegister user=(UserRegister) session.getAttribute("user");
         if (user==null){
             return "qiantai/login";
@@ -493,15 +535,12 @@ public class JumpController {
             map.put("pageNo",pageNo);
             //分页工具使用
             String pageString = new PageUtil(pageNo, pageSize, pageCount, request).getPageString();
-            //List<Map> recordByDeposits = accountFlowService.getAccountFlow(map);
-            //model.addAttribute("accountflow",accountFlowService.getAccountFlow(map));
+            model.addAttribute("accountflow",accountFlowService.getAccountFlow(map));
             model.addAttribute("pageString", pageString);
             if(StringUtil.isEmpty(map.get("selecttime"))){
-                System.out.println("138920405-");
                 map.put("selecttime","");
             }
             if(StringUtil.isEmpty(map.get("flowtypeid"))){
-                System.out.println("138920405---------------");
                 map.put("flowtypeid","");
             }
             model.addAttribute("map",map);
