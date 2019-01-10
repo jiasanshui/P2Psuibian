@@ -106,18 +106,13 @@
         <h3><i>回款计划</i></h3>
         <form id="form" name="form" method="post" action="">
           <input type="hidden" name="form" value="form">
+          <div class="back-money"> <span class="back-own"><b class="fb">待收本金</b><br>
+            <i>0.00</i> 元</span> <span class="back-profit"><b class="fb">待收收益</b><br>
+            <i>0.00</i> 元</span> </div>
           <div class="back-choosedate"> <span class="choosedate">筛选时间</span>
             <div id="datebox" class="select-date"> <span class="select-title" style="display:inline-block;height:25px;line-height:20px;"></span>
               <ul>
-                <li>
-                  <select  name="selecttime" class="selector" id="sel2">
-                  <option value=""  th:selected="${map.selecttime==''}">全部</option>
-                  <option value="0" th:selected="${map.selecttime=='0'}">今天</option>
-                  <option value="7" th:selected="${map.selecttime=='7'}">最近一周</option>
-                  <option value="1" th:selected="${map.selecttime=='1'}">一个月</option>
-                  <option value="6" th:selected="${map.selecttime=='6'}">六个月</option>
-                </select>
-                </li>
+                <li>全部</li>
               </ul>
             </div>
             <span id="form:datapicker1" class="datepicker">
