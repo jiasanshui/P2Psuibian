@@ -16,5 +16,5 @@ public interface EchartService {
      * 查询systemflow表资金流水
      * @return
      */
-    List<Map> getSystemFlowList();
+    List<Map> getSystemFlowList(Integer year);
 }

@@ -55,6 +55,9 @@ public class JumpController {
     @Autowired
     private AccountFlowService accountFlowService;
 
+    @Autowired
+    private  RepayRecordService repayRecordService;
+
     /**
      * 跳转到前台首页
      * @return
@@ -294,6 +297,7 @@ public class JumpController {
             int tPageNo = pageNo==null?1:pageNo;
             map.put("pageNo",tPageNo);
             map.put("pageSize",pageSize);
+
             model.addAttribute("recordByDeposits", depositsRecordService.getTender(map));
             String pageString = new PageUtil(tPageNo, pageSize, depositsRecordService.getPageCount(map), request).getPageString();
             //pageUtil分页
@@ -496,6 +500,15 @@ public class JumpController {
             //List<Map> recordByDeposits = accountFlowService.getAccountFlow(map);
             //model.addAttribute("accountflow",accountFlowService.getAccountFlow(map));
             model.addAttribute("pageString", pageString);
+            if(StringUtil.isEmpty(map.get("selecttime"))){
+                System.out.println("138920405-");
+                map.put("selecttime","");
+            }
+            if(StringUtil.isEmpty(map.get("flowtypeid"))){
+                System.out.println("138920405---------------");
+                map.put("flowtypeid","");
+            }
+            model.addAttribute("map",map);
             return "qiantai/money_record";
         }
     }
@@ -591,8 +604,34 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/yihuankuan")
-    public String yihuankuan() {
-        return "qiantai/reimbursement";
+    public Object yihuankuan(Model model,HttpSession session,@RequestParam Map map,HttpServletRequest request) {
+        UserRegister user=(UserRegister) session.getAttribute("user");
+        if (user==null){
+            return "qiantai/login";
+        }else{
+            String uname = user.getUname();
+            map.put("userName",uname);
+            Map userAccount = userInfoService.getUser(uname);
+            model.addAttribute("account",userAccount);
+            //获取分页总数量
+           int pageCount = repayRecordService.getPageCount(map);
+            int pageSize=10;
+            int pageNo=0;
+            Object tempPageNo=map.get("pageNo");
+            if (StringUtil.isEmpty(tempPageNo)){
+                pageNo=1;
+            }else {
+                pageNo=Integer.valueOf(tempPageNo+"");
+            }
+            map.put("pageSize",pageSize);
+            map.put("pageNo",pageNo);
+            //分页工具使用
+            String pageString = new PageUtil(pageNo, pageSize, pageCount, request).getPageString();
+            model.addAttribute("recordByRepay",repayRecordService.getRepayPage(map));
+            model.addAttribute("pageString", pageString);
+            return "qiantai/reimbursement";
+        }
+
     }
 
     /**
