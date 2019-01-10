@@ -254,6 +254,8 @@ public class RepayServiceImpl implements RepayService {
         double benjin = Double.parseDouble(map.get("BORROWMONEY").toString());
         //年利率
         double apr = Double.parseDouble(map.get("APR").toString());
+        //投资年利率
+        double tapr = Double.parseDouble(map.get("TAPR").toString());
         //还款总月数
         int totalMonth=Integer.valueOf(map.get("TIMELIMIT")+"");
         //调用等额本息工具类，算出待还金额,即本息和
@@ -293,7 +295,7 @@ public class RepayServiceImpl implements RepayService {
             //投标金额
             double tamount = Double.parseDouble(tenderList.get(0).get("TAMOUNT")+"");
             //调用等额本息工具类，算出总利息
-            double collectlixi = DEBXUtil.getInterestCount(benjin, apr, totalMonth);
+            double collectlixi = DEBXUtil.getInterestCount(benjin, tapr, totalMonth);
             //更改投资人的账户信息
             int n=userInfoDao.updateTrenderAccount(tamount,collectlixi,tUserid);
             if (n==0){
