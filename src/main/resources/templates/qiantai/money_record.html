@@ -12,38 +12,73 @@
 <script type="text/javascript" src="../script/common.js"></script>
 <script src="../script/user.js" type="text/javascript"></script>
   <script type="text/javascript">
+    function getFlow(pageNo) {
+        $("#tb").empty();
+        var sel = $("#sel").val();
+        var sel2 = $("#sel2").val();
+        $.ajax({
+            type:"post",
+            dataType:"json",
+            url:"/accountflow/getFlow",
+            data:{flowtypeid:sel,selecttime:sel2,pageNo:pageNo},
+            success:function(data){
+                if(data!=""&&data!=''){
+                    alert(JSON.stringify());
+                    var Str = "";
+                    for (var i = 0; i < data.length-1; i++) {
+                        Str += "<tr align='center'><td>"+data[i].FLOWDATE+"</td><td>"+data[i].TYPE+"</td><td>"+data[i].CHANGEAMOUNT+"</td><td>"+data[i].AMOUNT+"</td></tr>";
+                    }
+                 /*   alert(data[data.length].pageString)
+                    Str += $(data[data.length].pageString);
+                    $("#tb").html(Str);*/
+                    $("#tb").append(Str);
+                }
+            }
+        })
+    }
+    var page=1;
+    var pageNum=0;
+    $(function () {
+        getFlow(page);
+    })
     $(function(){
-        var test='';
-        var test1='';
-        $(".selector").val(test);
-        $(".selector").val(test1);
         //查询交易类型
         $.ajax({
             type:"post",
             dataType:"json",
             url:"/accountflow/flowtype",
             success:function(data){
-                //flowtypeid==id 选中
-                //var typeid=[[${news.FLOWTYPEID}]];
                 if(data!=''){
                     var Str = "";
                     for (var i = 0; i < data.length; i++) {
                         Str += "<option value='"+data[i].ID+"'>"+data[i].TYPE+"</option>";
                     }
+                    pageNum=data.pageTotal;
                     $("#sel").append(Str);
                 }
             }
         });
-        $("#sel").change(function(){
-            test=$("#sel").val();
-            $(".selector").val(test);
-        });
-        $("#sel2").change(function(){
-            test1=$("#sel2").val();
-            $(".selector").val(test1);
-        });
-
+        //查询记录
+        $("#btn").click(function () {
+            getFlow();
+        })
     })
+
+    function nextPage(){
+        page=page+1;
+        alert(pageNum);
+        if(page>pageNum){
+            page=pageNum;
+        }
+        getFlow(page);
+    }
+    function lastPage(){
+        page=page-1;
+        if(page<1){
+            page=1;
+        }
+        getFlow(page);
+    }
   </script>
 </head>
 <body>
@@ -125,12 +160,11 @@
     <div class="personal-main">
       <div class="personal-money">
         <h3><i>资金记录</i></h3>
-        <form action="/jump/money_record" method="post">
           <div class="money-choose">
             <span class="money-date1">交易类型</span>
             <div id="typeboxstyle" class="select-date">
               <select name="flowtypeid" class="selector" id="sel">
-               <option value="">全部</option>
+                 <option value="">全部</option>
               </select>
             </div>
             <span class="money-date2">查询时间</span>
@@ -143,32 +177,30 @@
                 <option value="6">六个月</option>
               </select>
             </div>
-            <input type="submit" value="查询">
+            <button id="btn" style="background-color: #0aaae1">查询</button>
           </div>
           <br>
           <div class="investnote-list">
             <div class="investnote-contitle">
               <table width="800px">
+                <thead>
+                  <tr align="center" style="line-height: 3">
+                    <!-- <td>订单id</td>-->
+                    <td>交易时间</td>
+                    <td>交易类型</td>
+                    <td>交易金额</td>
+                    <td>余额</td>
+                  </tr>
+                </thead>
+                <tbody id="tb">
+
+                </tbody>
                 <tr align="center" style="line-height: 3">
-                  <!-- <td>订单id</td>-->
-                  <td>交易时间</td>
-                  <td>交易类型</td>
-                  <td>交易金额</td>
-                  <td>余额</td>
-                </tr>
-                <tr th:each="rows : ${accountflow}" align="center" style="line-height: 3">
-                  <td th:text="${rows.FLOWDATE}"></td>
-                  <td th:text="${rows.TYPE}" ></td>
-                  <td th:text="${rows.CHANGEAMOUNT}" ></td>
-                  <td th:text="${rows.AMOUNT}" ></td>
-                </tr>
-                <tr align="center" style="line-height: 3">
-                  <td colspan="4" th:utext="${pageString}" STYLE="text-align: center;"></td>
+                  <td colspan="4" STYLE="text-align: center;"><a onclick="lastPage()">上一页</a>&nbsp;<a onclick="nextPage()">下一页</a> </td>
                 </tr>
               </table>
             </div>
           </div>
-        </form>
       </div>
     </div>
     <div class="clear"></div>
