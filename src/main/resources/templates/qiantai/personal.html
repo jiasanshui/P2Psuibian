@@ -210,22 +210,28 @@
         </div>
         <div class="pmain-conmain" id="pmain-conmain">
           <div class="pmain-conmain1">
-            <div class="pmain-contitle"> <span class="pmain-titledate">计划回款时间</span><span class="pmain-titleproject">项目</span><span class="pmain-titletype">类型</span><span class="pmain-titlemoney">回款金额</span> </div>
-            <ul style="float:left;">
-              <li><span class="pmain-titledate">2015-10-20</span><span class="pmain-titleproject">宝马汽车借贷业务</span><span class="pmain-titletype">债权转让</span><span class="pmain-titlemoney">10.00</span></li>
-              <li><span class="pmain-titledate">2015-10-20</span><span class="pmain-titleproject">宝马汽车借贷业务</span><span class="pmain-titletype">债权转让</span><span class="pmain-titlemoney">10.00</span></li>
-              <li><span class="pmain-titledate">2015-10-20</span><span class="pmain-titleproject">宝马汽车借贷业务</span><span class="pmain-titletype">债权转让</span><span class="pmain-titlemoney">10.00</span></li>
-              <li><span class="pmain-titledate">2015-10-20</span><span class="pmain-titleproject">宝马汽车借贷业务</span><span class="pmain-titletype">债权转让</span><span class="pmain-titlemoney">10.00</span></li>
-              <li><span class="pmain-titledate">2015-10-20</span><span class="pmain-titleproject">宝马汽车借贷业务</span><span class="pmain-titletype">债权转让</span><span class="pmain-titlemoney">10.00</span></li>
-              <li><span class="pmain-titledate">2015-10-20</span><span class="pmain-titleproject">宝马汽车借贷业务</span><span class="pmain-titletype">债权转让</span><span class="pmain-titlemoney">10.00</span></li>
-              <!--<div style=" width:
-										760px;height:200px;padding-top:100px; text-align:center;color:#d4d4d4; font-size:16px;">
-										 <img src="images/nondata.png" width="60" height="60"><br><br>
-										   暂无回款计划</div>-->
-            </ul>
-            <div class="pmain-morebtn" style="border-top:0;margin-top:0"></div>
+            <div class="pmain-contitle" >
+              <table  width="740px">
+                <tr align="center" style="line-height: 3">
+                  <!-- <td>订单id</td>-->
+                  <td>计划回款时间</td>
+                  <td>项目</td>
+                  <td>类型</td>
+                  <td>回款金额</td>
+                </tr>
+                <tr th:each="rows : ${backMoneyList}" align="center" style="line-height: 3">
+                  <td th:text="${rows.STARTTIME}"></td>
+                  <td th:text="${rows.DES}" ></td>
+                  <td th:text="${rows.DANBAOSTYLE}" ></td>
+                  <td th:text="${rows.backMoney}" ></td>
+                </tr>
+                <!--底部分页工具条-->
+                <tr align="center" style="line-height: 3">
+                  <td colspan="4"><span style="float: right"><a href="/jump/money_plan">查看更多</a></span></td>
+                </tr>
+              </table>
+            </div>
           </div>
-          // 交易时间 交易类型 交易金额  余额
           <div class="pmain-conmain2" style=" display:none;">
             <div class="pmain-contitle" >
               <table  width="740px">
@@ -244,7 +250,7 @@
                 </tr>
                 <!--底部分页工具条-->
                 <tr align="center" style="line-height: 3">
-                  <td colspan="6"><span style="float: right"><a href="/jump/money_record">查看更多</a></span></td>
+                  <td colspan="4"><span style="float: right"><a href="/jump/money_record">查看更多</a></span></td>
                 </tr>
               </table>
             </div>
@@ -259,7 +265,7 @@
                   <td>投资金额</td>
                   <td>投资时间</td>
                   <td>投资方式</td>
-                  <td>借款标号</td>
+                  <td>标的编号</td>
                 </tr>
                 <tr align="center" th:each="rows : ${recordByDeposits}" style="line-height: 3">
                   <td th:text="${rows.TENDERNUM}"></td>
