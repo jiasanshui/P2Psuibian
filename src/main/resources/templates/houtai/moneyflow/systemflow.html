@@ -7,12 +7,12 @@
     <script src="/js/echarts.min.js"></script>
 </head>
 <body>
-年度：<select id="year"><option>2018</option><option>2017</option><<option>2016</option></select>年0
+年度：<select id="year"><option>2018</option><option>2017</option><<option>2016</option></select>年
 <div id="main" style="width: 800px;height:600px;"></div>
 
 <script type="text/javascript">
 
-    $(function(){
+   /* $(function(){
         getData(); //初始化年份2018
     })
     function getData(){  //查询每年的数据
@@ -33,7 +33,36 @@
                 }
             }
         });
-    }
+    }*/
+
+   $(function(){
+       getData(2018); //初始化年份2018
+       $("#year").change(function(){  //当年份改变时
+           getData($("#year").val());
+       })
+   })
+
+
+   function getData(year){  //查询每年的数据
+       var data1 = [];
+       var data2 = [];
+       $.ajax({
+           url:"/echart/systemflow",
+           data:{year:year},
+           type:"post",
+           datatype:"json",
+           async:false,//同步
+           success:function(data){
+               if(data!=''){
+                   for(var i=0;i<data.length;i++){
+                       data1.push(data[i].INCOME);
+                       data2.push(data[i].OUTLAY);
+                   }
+                   showData(data1,data2);
+               }
+           }
+       });
+   }
 
 
     function showData(data1,data2){
