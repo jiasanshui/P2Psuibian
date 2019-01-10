@@ -1,7 +1,6 @@
 package com.aaa.ssm.controller;
 
 import com.aaa.ssm.service.RenzhengService;
-import com.aaa.ssm.util.FileUtil;
 import com.aaa.ssm.util.FtpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,7 +43,6 @@ public class RenzhengController {
     @RequestMapping("update")
     public Object update(@RequestParam Map map, @RequestParam MultipartFile idcarda, @RequestParam MultipartFile idcardb,
                          @RequestParam MultipartFile wageflow, @RequestParam MultipartFile creditreport) throws ParseException {
-        System.out.println(map);
         //上传图片
             //String newFileNameA = FileUtil.uploadFile(uploadPath, idcarda);
         String newFileNameA = ftpUtil.upLoad(idcarda);
@@ -55,8 +53,8 @@ public class RenzhengController {
             e.printStackTrace();
         }
         String newFileNameB = ftpUtil.upLoad(idcardb);
-            map.put("picA",newFileNameA);
-            map.put("picB",newFileNameB);
+        map.put("picA",newFileNameA);
+        map.put("picB",newFileNameB);
         String newFileNameC = ftpUtil.upLoad(wageflow);
         try {
             Thread.sleep(1000);

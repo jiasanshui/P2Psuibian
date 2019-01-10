@@ -3,10 +3,12 @@ package com.aaa.ssm.dao;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
 
+@Component
 public interface AccountFlowDao {
 
 
@@ -35,4 +37,39 @@ public interface AccountFlowDao {
      */
     @Update("update account_flow set amount=#{amount},flowdate#{flowdate},flowtypeid=#{flowtypeid},banknum=#{banknum} where userid = #{userid}")
     int update(Map map);
+
+    /**
+     * 查询流水类型
+     * @return
+     */
+    @Select("select * from flowtype")
+    List<Map> getFlowtype();
+
+    /**
+     * 获取分页总数量
+     * @param map
+     * @return
+     */
+    @Select("<script>select count(*) cnt from account_flow where 1=1 and userid=#{userId} " +
+            "<if test=\"flowtypeid!=null and flowtypeid!=''\">  and flowtypeid =#{flowtypeid}</if> " +
+            "<if test=\"selecttoday!=null and selecttoday!=''\">  and trunc(flowdate) = trunc(#{selecttoday})</if> " +
+            "<if test=\"selectseven!=null and selectseven!=''\">  and flowdate > sysdate - interval '7' day </if> " +
+            "<if test=\"selectmonth!=null and selectmonth!=''\">  and flowdate > sysdate - interval '1' month </if> " +
+            "<if test=\"selectsix!=null and selectsix!=''\">  and flowdate > sysdate - interval '6' month </if></script>")
+    List<Map> getPageCount(Map map);
+
+    /**
+     * 获取资金记录流水分页
+     * @param map
+     * @return
+     */
+    @Select("<script>select * from (select rownum rn,f.amount,f.flowdate,f.changeamount,f.flowtypeid,p.type " +
+            "from account_flow f left join flowtype p on p.id=f.flowtypeid where rownum &lt; #{end} and f.userid=#{userId} " +
+            "<if test=\"flowtypeid!=null and flowtypeid!=''\">  and f.flowtypeid =#{flowtypeid}</if> " +
+            "<if test=\"selecttoday!=null and selecttoday!=''\">  and trunc(f.flowdate) = trunc(#{selecttoday})</if> " +
+            "<if test=\"selectseven!=null and selectseven!=''\">  and f.flowdate > sysdate - interval '7' day </if> " +
+            "<if test=\"selectmonth!=null and selectmonth!=''\">  and f.flowdate > sysdate - interval '1' month </if> " +
+            "<if test=\"selectsix!=null and selectsix!=''\">  and f.flowdate > sysdate - interval '6' month </if> " +
+            ") a where a.rn &gt; #{start}</script>")
+    List<Map> getAccountFlow(Map map);
 }

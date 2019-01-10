@@ -175,8 +175,24 @@ public interface UserInfoDao {
     List<Map> getHistory(Map map);
 
     /**
-     * 根据userid查找用户账户信息
-     * @param userId
+     * 修改头像
+     * @param map
+     * @return
+     */
+    @Update("update userinfo set headphoto=#{headphoto} where uname=#{username}")
+    int updateHeadPhoto(Map map);
+
+    /**
+     * 判断用户是否上传了头像
+     * @param userNmae
+     * @return
+     */
+    @Select("select headphoto from userinfo where uname=#{userName}")
+    String getHPByUNname(String userNmae);
+
+    /**
+     * 根据userId查找用户账户
+     * @param
      * @return
      */
     @Select("select * from userinfo where userid=#{userId}")
@@ -189,4 +205,16 @@ public interface UserInfoDao {
      */
     @Select("select sum(tamount) toudermoney from tender where userid=#{userId}")
     List<Map> getTouderMoney(Integer userId);
+
+    /**
+     * 查询账户余额
+     * @param userName
+     * @return
+     */
+    @Select("select amount from userinfo where uname=#{userName}")
+    double getAmountByUName(String userName);
+
+
+
+
 }

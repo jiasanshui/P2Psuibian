@@ -1,14 +1,19 @@
 package com.aaa.ssm.controller;
 
 import com.aaa.ssm.service.UserInfoService;
+import com.aaa.ssm.util.FtpUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.core.io.ResourceLoader;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,15 +31,18 @@ public class UserInfoController {
     @Autowired
     private UserInfoService userInfoService;
 
-    private final ResourceLoader resourceLoader;
+    //private final ResourceLoader resourceLoader;
 
-    @Autowired
+    /*@Autowired
     public UserInfoController(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
-    }
+    }*/
     //取出配置文件中upload.path的值  赋给uploadPath类变量
     @Value(value = "${upload.path}")
     private String uploadPath;
+
+    @Autowired
+    private FtpUtil ftpUtil;
     /**
      * 用户分页列表数据
      * @param map
@@ -60,7 +68,7 @@ public class UserInfoController {
      * @param fileName
      * @return
      */
-    @RequestMapping("show")
+    /*@RequestMapping("show")
     public ResponseEntity show(String fileName){
         try {
             // 由于是读取本机的文件，file是一定要加上的， path是在application配置文件中的路径
@@ -70,7 +78,7 @@ public class UserInfoController {
             return ResponseEntity.notFound().build();
         }
 
-    }
+    }*/
 
     /**
      * 个人信息认证审核
@@ -105,5 +113,38 @@ public class UserInfoController {
     @RequestMapping("/history")
     private Object getHistory(@RequestBody Map map){
         return userInfoService.getHistory(map);
+    }
+
+    /**
+     * 上传头像
+     * @param headPhoto
+     * @return
+     */
+    @RequestMapping("uploadPhoto")
+    public Object uploadPhoto(@RequestParam Map map,@RequestParam MultipartFile headPhoto){
+        String headPhotoName = ftpUtil.upLoad(headPhoto);
+        map.put("headphoto",headPhotoName);
+        //修改个人信息头像
+        int updateHeadPhoto = userInfoService.updateHeadPhoto(map);
+        if(updateHeadPhoto>0){
+            return "forward:/jump/personal";
+        }
+        return "forward:/jump/index";
+    }
+
+    /**
+     * 判断用户是否上传了头像
+     * @param session
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("isBindHP")
+    public Object isBindHP(HttpSession session){
+        String userName = (String)session.getAttribute("userName");
+        String hFileName = userInfoService.getHPByUNname(userName);
+        if(hFileName!=null&&hFileName!=""){
+            return hFileName;
+        }
+        return 0;
     }
 }
