@@ -1,6 +1,7 @@
 package com.aaa.ssm.controller;
 
 import com.aaa.ssm.entity.UserRegister;
+import com.aaa.ssm.entity.UserRegister;
 import com.aaa.ssm.service.AccountFlowService;
 import com.aaa.ssm.util.PageUtil;
 import com.aaa.ssm.util.StringUtil;

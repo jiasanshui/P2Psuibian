@@ -1,10 +1,13 @@
 package com.aaa.ssm.controller;
 
+import com.aaa.ssm.entity.Admin;
 import com.aaa.ssm.entity.UserRegister;
 import com.aaa.ssm.service.*;
+import com.aaa.ssm.util.DEBXUtil;
 import com.aaa.ssm.util.PageUtil;
 import com.aaa.ssm.util.RandomUtil;
 import com.aaa.ssm.util.StringUtil;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,6 +60,10 @@ public class JumpController {
 
     @Autowired
     private  RepayRecordService repayRecordService;
+
+    //依赖注入
+    @Autowired
+    private  HuiKuanService huiKuanService;
 
     @Autowired
     private  MyOrderService myOrderService;
@@ -468,7 +475,38 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/money_plan")
-    public String money_plan() {
+    public String money_plan(HttpSession session,Model model,HttpServletRequest request,@RequestParam Map map) {
+        String username = String.valueOf(session.getAttribute("userName"));
+        List<Map> userList = userInfoService.getUserList(username);
+        Integer userId = Integer.valueOf(userList.get(0).get("USERID")+"");
+        map.put("userId",userId);
+        System.out.println(map);
+        //获取分页总数量
+        int pageCount = huiKuanService.getPageCount(map);
+        int pageSize=7;
+        int pageNo=0;
+        Object tempPageNo=map.get("pageNo");
+        if (StringUtil.isEmpty(tempPageNo)){
+            pageNo=1;
+        }else {
+            pageNo=Integer.valueOf(tempPageNo+"");
+        }
+        map.put("pageSize",pageSize);
+        map.put("pageNo",pageNo);
+        //分页工具使用
+        List<Map> huiKuaiList = huiKuanService.getHuiKuaiList(map);
+        if (huiKuaiList.size()>0&&huiKuaiList!=null) {
+            for (Map map1 : huiKuaiList) {
+                double mount=Double.parseDouble(map1.get("TAMOUNT")+"");
+                double apr =Double.parseDouble(map1.get("TAPR")+"");
+                int month = Integer.valueOf(map1.get("TIMELIMIT") +"");
+                double cMount = DEBXUtil.getPrincipalInterestCount(mount, apr, month);
+                map1.put("mount", cMount);
+            }
+        }
+        String pageString = new PageUtil(pageNo, pageSize, pageCount, request).getPageString();
+        model.addAttribute("huiList",huiKuaiList);
+        model.addAttribute("pageString",pageString);
         return "qiantai/money_plan";
     }
     /**
