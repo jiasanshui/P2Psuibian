@@ -30,6 +30,9 @@ public class AccountFlowController {
     @Autowired
     private AccountFlowService accountFlowService;
 
+    @Autowired
+    private HttpSession session;
+
     /**
      * 查询流水类型
      * @return
@@ -38,7 +41,38 @@ public class AccountFlowController {
     @RequestMapping("/flowtype")
     public Object getFlowtype(){
         List<Map> flowtypeList=accountFlowService.getFlowtype();
+        System.out.println(flowtypeList);
         return flowtypeList;
+    }
+
+    @ResponseBody
+    @RequestMapping("/userflow")
+    public Object accountFlow(Model model,@RequestParam Map map,HttpServletRequest request){
+        System.out.println(map);
+        UserRegister user=(UserRegister) session.getAttribute("user");
+        if (user==null){
+            Integer userId = user.getUserId();
+            map.put("userId",userId);
+            //获取分页总数量
+            int pageCount =accountFlowService.getPageCount(map);
+            int pageSize=8;
+            int pageNo=0;
+            Object tempPageNo=map.get("pageNo");
+            if (StringUtil.isEmpty(tempPageNo)){
+                pageNo=1;
+            }else {
+                pageNo=Integer.valueOf(tempPageNo+"");
+            }
+            map.put("pageSize",pageSize);
+            map.put("pageNo",pageNo);
+            //分页工具使用
+            String pageString = new PageUtil(pageNo, pageSize, pageCount, request).getPageString();
+            //List<Map> recordByDeposits = accountFlowService.getAccountFlow(map);
+            model.addAttribute("accountflow",accountFlowService.getAccountFlow(map));
+            model.addAttribute("pageString", pageString);
+            return "qiantai/money_record";
+        }
+        return null;
     }
 
 }

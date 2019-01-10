@@ -297,6 +297,7 @@ public class JumpController {
             int tPageNo = pageNo==null?1:pageNo;
             map.put("pageNo",tPageNo);
             map.put("pageSize",pageSize);
+
             model.addAttribute("recordByDeposits", depositsRecordService.getTender(map));
             String pageString = new PageUtil(tPageNo, pageSize, depositsRecordService.getPageCount(map), request).getPageString();
             //pageUtil分页
@@ -500,6 +501,15 @@ public class JumpController {
             //List<Map> recordByDeposits = accountFlowService.getAccountFlow(map);
             model.addAttribute("accountflow",accountFlowService.getAccountFlow(map));
             model.addAttribute("pageString", pageString);
+            if(StringUtil.isEmpty(map.get("selecttime"))){
+                System.out.println("138920405-");
+                map.put("selecttime","");
+            }
+            if(StringUtil.isEmpty(map.get("flowtypeid"))){
+                System.out.println("138920405---------------");
+                map.put("flowtypeid","");
+            }
+            model.addAttribute("map",map);
             return "qiantai/money_record";
         }
     }
