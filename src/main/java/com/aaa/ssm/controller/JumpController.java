@@ -47,6 +47,10 @@ public class JumpController {
     //依赖注入
     @Autowired
     private WebService webService;
+
+    @Autowired
+    private  DepositsRecordService depositsRecordService;
+
     /**
      * 跳转到前台首页
      * @return
@@ -341,10 +345,6 @@ public class JumpController {
      * 跳转到公司投资记录页面
      * @return
      */
-    @Autowired
-    private  DepositsRecordService depositsRecordService;
-
-
     @RequestMapping("/deposits_record")
     public Object deposits_record( Model model,HttpSession session,@RequestParam Map map,HttpServletRequest request) {
         UserRegister user=(UserRegister) session.getAttribute("user");
@@ -558,9 +558,37 @@ public class JumpController {
      * 跳转到我的还款页面
      * @return
      */
+    @Autowired
+    private  RepayRecordService repayRecordService;
     @RequestMapping("/yihuankuan")
-    public String yihuankuan() {
-        return "qiantai/reimbursement";
+    public Object yihuankuan(Model model,HttpSession session,@RequestParam Map map,HttpServletRequest request) {
+        UserRegister user=(UserRegister) session.getAttribute("user");
+        if (user==null){
+            return "qiantai/login";
+        }else{
+            String uname = user.getUname();
+            map.put("userName",uname);
+            Map userAccount = userInfoService.getUser(uname);
+            model.addAttribute("account",userAccount);
+            //获取分页总数量
+           int pageCount = repayRecordService.getPageCount(map);
+            int pageSize=10;
+            int pageNo=0;
+            Object tempPageNo=map.get("pageNo");
+            if (StringUtil.isEmpty(tempPageNo)){
+                pageNo=1;
+            }else {
+                pageNo=Integer.valueOf(tempPageNo+"");
+            }
+            map.put("pageSize",pageSize);
+            map.put("pageNo",pageNo);
+            //分页工具使用
+            String pageString = new PageUtil(pageNo, pageSize, pageCount, request).getPageString();
+            model.addAttribute("recordByRepay",repayRecordService.getRepayPage(map));
+            model.addAttribute("pageString", pageString);
+            return "qiantai/reimbursement";
+        }
+
     }
 
     /**

@@ -34,8 +34,10 @@ public interface DepositsRecordDao {
      * @param map
      * @return
      */
-    @Select("<script>select * from (select rownum rn,t.* from tender t where rownum &lt; #{end} and userid=#{userId}" +
-            "<if test=\"borrownum!=null and borrownum!=''\">  and borrownum =#{borrownum}</if> ) " +
+    @Select("<script>select * from (select rownum rn,t.id,t.realname,t.tamount," +
+            "to_char(t.ttime,'yyyy-mm-dd HH24:mi:ss') ttime,t.tway,t.borrownum,t.userid,t.tendernum " +
+            "from tender t where rownum &lt; #{end} and t.userid=#{userId}" +
+            "<if test=\"borrownum!=null and borrownum!=''\">  and t.borrownum =#{borrownum}</if> ) " +
             "a where a.rn &gt; #{start}</script>")
     List<Map> getTenderPage(Map map);
 }
