@@ -210,4 +210,18 @@ public class UserInfoServiceImpl implements UserInfoService {
     public double getAmountByUName(String userName) {
         return userInfoDao.getAmountByUName(userName);
     }
+
+    /**
+     * 提现
+     * @param map
+     * @return
+     */
+    @Override
+    public Boolean withdraw(Map map) {
+        int withdraw = userInfoDao.withdraw(map);
+        if(withdraw>0){
+            return true;
+        }
+        return false;
+    }
 }

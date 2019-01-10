@@ -28,4 +28,23 @@ public class BankServiceImpl implements BankService {
     public String getRealName(Map map) {
         return bankDao.getRealName(map);
     }
+
+    @Override
+    public String getBankName(String sixBC) {
+        return bankDao.getBankName(sixBC);
+    }
+
+    @Override
+    public int bindBankCard(Map map) {
+        return bankDao.bindBankCard(map);
+    }
+
+    @Override
+    public Boolean removeBind(String BCID) {
+        int i = bankDao.removeBind(BCID);
+        if(i>0){
+            return true;
+        }
+        return false;
+    }
 }

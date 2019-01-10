@@ -18,6 +18,11 @@
   <!-- 引入组件库 -->
   <script src="../js/elementui.js"></script>
 
+  <!--jquery.growl消息框-->
+  <script src="https://cdn.staticfile.org/jquery/2.0.2/jquery.min.js" type="text/javascript"></script>
+  <script src="http://static.runoob.com/assets/jquery/jquery.growl/javascripts/jquery.growl.js" type="text/javascript"></script>
+  <link href="http://static.runoob.com/assets/jquery/jquery.growl/stylesheets/jquery.growl.css" rel="stylesheet" type="text/css" />
+
   <style>
     #diva div div{
       width: 350px;
@@ -105,12 +110,10 @@
     <div class="personal-main" >
       <div class="personal-money">
         <h3><i>我的银行卡</i></h3>
-          <div id="divall">
-            <template>
-              <el-button type="text" @click="bindBankCard">添加银行卡</el-button>
-            </template>
+          <div id="divall" style="margin-top: 20px">
+            <div><a href="/jump/bindbankcard" style="color: red;"><span style="font-size: 20px">添加银行卡</span></a></div>
             <!--绑定弹出框-->
-            <el-dialog title="绑定银行卡" :visible.sync="dialogFormVisible" :close-on-click-modal="true">
+            <!--<el-dialog title="绑定银行卡" :visible.sync="dialogFormVisible" :close-on-click-modal="true">
               <el-form :model="form" label-width="80px" :rules="editFormRules" ref="editForm">
                 <el-form-item label="姓名" prop="BORROWNUM">
                   <el-input type="text" auto-complete="off" v-model="form.realname" :readonly="true"></el-input>
@@ -123,7 +126,7 @@
                 <el-button @click.native="dialogFormVisible = false">取消</el-button>
                 <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
               </div>
-            </el-dialog>
+            </el-dialog>-->
             <div class="money-choose" id="diva">
               <div>
                 <ul th:each="bankcard : ${bcList}">
@@ -131,11 +134,12 @@
                     <el-row :gutter="12">
                       <el-col :span="8">
                         <el-card shadow="always">
-                          <sapn th:text="${bankcard.BANKNAME}" style="font-size: 15px;margin-top: 5px"></sapn><br>
+                          <sapn th:text="${bankcard.BANKNAME}" style="font-size: 20px;margin-top: 5px"></sapn><br>
                           <br>
-                          <span th:text="${bankcard.newBankCard}" style="font-size: 15px"></span>
+                          <span th:text="${bankcard.newBankCard}" style="font-size: 20px"></span>
                           <span style="float: right;margin-right: 30px">
-                             <input type="button" value="取绑" onclick="removeBind()" style="background-color: #0aaae1"></span>
+                             <button th:onclick="'javascript:removeBind('+${bankcard.BCID}+')'" style="background-color: #0aaae1">取绑</button>
+                          </span>
                         </el-card>
                       </el-col>
                     </el-row>
@@ -153,31 +157,26 @@
 </div>
 </body>
 <script>
-  var vm = new Vue({
-      el:"#divall",
-      data:{
-          dialogFormVisible:false,
-          userName:'[[${session.userName}]]',
-          form:{
-              realname:'[[${session.userName}]]',
-              bankcard:''
-          },
-          formLabelWidth:'200px',
-      },
-      methods:{
-          bindBankCard:function () {
-              var self=this;
-              axios.post("/bank/getRealName",{'userName':this.userName}).then(function (response) {
-                    self.form.realname=response.data;
-              })
-              this.dialogFormVisible=true;
-          }
-      }
-  })
-</script>
-<script>
-
-
+    function removeBind(t) {
+        if(confirm("您确定解除绑定吗？")){
+            var bcid = t;
+            $.ajax({
+                type:"post",
+                dataType:"json",
+                url:"/bank/removeBind",
+                data:{BCID:bcid},
+                success:function (data) {
+                    if(data!=null&&data!=""){
+                        location.reload();
+                        $.growl({
+                            title: "操作提示",
+                            message: "解绑成功!"
+                        });
+                    }
+                }
+            })
+        }
+    }
 </script>
 </html>
 </html>

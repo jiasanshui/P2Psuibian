@@ -90,7 +90,6 @@ public class JumpController {
             model.addAttribute("listCar", listCar);
             model.addAttribute("listHouse", listHouse);
             model.addAttribute("listCredit", listCredit);
-        System.out.println(model);
             return "qiantai/index";
         }
 
@@ -571,19 +570,13 @@ public class JumpController {
     }
 
     /**
-     * 跳转到充值页面
-     * @return
-     */
-    @RequestMapping("/withdraw")
-    public String withdraw(){
-        return "qiantai/withdraw";
-    }
-    /**
-     * 跳转到充值页面
+     * 跳转到提现页面
      * @return
      */
     @RequestMapping("/withdraw1")
-    public String withdraw1() {
+    public String withdraw(Model model,HttpSession session){
+        String userName = (String) session.getAttribute("userName");
+        model.addAttribute("amount",userInfoService.getAmountByUName(userName));
         return "qiantai/withdraw1";
     }
 
@@ -632,7 +625,7 @@ public class JumpController {
     }
 
     /**
-     * 跳转到提现页面
+     * 跳转到充值页面
      * @return
      */
     @RequestMapping("/pay1")
@@ -685,8 +678,21 @@ public class JumpController {
         return "qiantai/fukuan/fkcg";
     }
 
+    /**
+     * 我的银行卡页面
+     * @return
+     */
     @RequestMapping("bankcard")
     public Object bankcard(){
         return "qiantai/bankcard";
+    }
+
+    /**
+     * 绑定银行卡
+     * @return
+     */
+    @RequestMapping("bindbankcard")
+    public Object bindbankcard(){
+        return "qiantai/open_three";
     }
 }
