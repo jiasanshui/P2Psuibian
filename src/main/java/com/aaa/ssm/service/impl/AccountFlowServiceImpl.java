@@ -2,6 +2,7 @@ package com.aaa.ssm.service.impl;
 
 import com.aaa.ssm.dao.AccountFlowDao;
 import com.aaa.ssm.service.AccountFlowService;
+import com.aaa.ssm.util.DEBXUtil;
 import com.aaa.ssm.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,7 +57,7 @@ public class AccountFlowServiceImpl implements AccountFlowService {
         if(StringUtil.isEmpty(map.get("selecttime"))){
             pageCount = accountFlowDao.getPageCount(map);
         }else if (Integer.valueOf(map.get("selecttime")+"")==0){//今天
-            map.put("selecttoday",0);
+            map.put("selecttoday",2);
             pageCount = accountFlowDao.getPageCount(map);
         }else if (Integer.valueOf(map.get("selecttime")+"")==1){//近一个月
             map.put("selectmonth",1);
@@ -90,7 +91,7 @@ public class AccountFlowServiceImpl implements AccountFlowService {
         if(StringUtil.isEmpty(map.get("selecttime"))){
             accountFlow = accountFlowDao.getAccountFlow(map);
         }else if (Integer.valueOf(map.get("selecttime")+"")==0){//今天
-            map.put("selecttoday",0);
+            map.put("selecttoday",2);
             accountFlow = accountFlowDao.getAccountFlow(map);
         }else if (Integer.valueOf(map.get("selecttime")+"")==1){//近一个月
             map.put("selectmonth",1);
@@ -103,5 +104,37 @@ public class AccountFlowServiceImpl implements AccountFlowService {
             accountFlow = accountFlowDao.getAccountFlow(map);
         }
         return accountFlow;
+    }
+
+    /**
+     * 账户总揽中资金记录3条流水
+     * @param map
+     * @return
+     */
+    @Override
+    public List<Map> getThreeFlow(Map map) {
+        return accountFlowDao.getThreeFlow(map);
+    }
+
+    /**
+     * 账户总揽中回款计划
+     * @param map
+     * @return
+     */
+    @Override
+    public List<Map> getBackMoney(Map map) {
+        List<Map> backMoneyList=accountFlowDao.getBackMoney(map);
+        System.out.println(backMoneyList);
+        if(backMoneyList!=null && backMoneyList.size()>0){
+            for (Map map1 : backMoneyList) {
+                Double tamount= Double.parseDouble(map1.get("TAMOUNT")+"");
+                int totolmonth=Integer.valueOf(map1.get("TIMELIMIT")+"");
+                Double tapr= Double.parseDouble(map1.get("TAPR")+"");
+                double backMoney = DEBXUtil.getPrincipalInterestCount(tamount, tapr, totolmonth);
+                map1.put("backMoney",backMoney);
+            }
+            return backMoneyList;
+        }
+        return null;
     }
 }
