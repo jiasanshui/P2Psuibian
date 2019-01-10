@@ -60,7 +60,7 @@ public interface AccountFlowDao {
      * @return
      */
     @Select("<script>select * from (select rownum rn,f.amount,f.flowdate,f.changeamount,f.flowtypeid,p.type " +
-            "from account_flow f left join flowtype p on p.id=f.flowtypeid where rownum &lt; #{end} and f.userid=#{userId} " +
+            "from account_flow f left join flowtype p on p.id=f.flowtypeid where rown.,um &lt; #{end} and f.userid=#{userId} " +
             "<if test=\"flowtypeid!=null and flowtypeid!=''\">  and f.flowtypeid =#{flowtypeid}</if> ) a " +
             "where a.rn &gt; #{start}</script>")
     List<Map> getAccountFlow(Map map);

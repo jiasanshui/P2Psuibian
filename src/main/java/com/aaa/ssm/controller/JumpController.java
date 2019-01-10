@@ -5,6 +5,7 @@ import com.aaa.ssm.service.*;
 import com.aaa.ssm.util.PageUtil;
 import com.aaa.ssm.util.RandomUtil;
 import com.aaa.ssm.util.StringUtil;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,6 +55,10 @@ public class JumpController {
     //依赖注入
     @Autowired
     private AccountFlowService accountFlowService;
+
+    //依赖注入
+    @Autowired
+    private  HuiKuanService huiKuanService;
 
     /**
      * 跳转到前台首页
@@ -478,7 +483,17 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/money_plan")
-    public String money_plan() {
+    public String money_plan(HttpSession session,Model model,HttpServletRequest request,Integer pageNo,Map map) {
+        //分页总数量
+        int pageSize=5;
+        int tPageNo = pageNo==null?1:pageNo;
+        map.put("pageNo",tPageNo);
+        map.put("pageSize",pageSize);
+        Integer userId = Integer.valueOf(session.getAttribute("userid")+"");
+        List<Map> huiKuaiList = huiKuanService.getHuiKuaiList(userId);
+        String pageString = new PageUtil(tPageNo, pageSize, huiKuanService.getPageCount(map), request).getPageString();
+        model.addAttribute("huiList",huiKuaiList);
+        model.addAttribute("pageString",pageString);
         return "qiantai/money_plan";
     }
     /**
