@@ -1,5 +1,7 @@
 package com.aaa.ssm.controller;
 
+import com.aaa.ssm.entity.UserRegister;
+import com.aaa.ssm.service.AccountFlowService;
 import com.aaa.ssm.service.UserInfoService;
 import com.aaa.ssm.util.FtpUtil;
 import com.github.pagehelper.PageHelper;
@@ -31,6 +33,11 @@ public class UserInfoController {
     @Autowired
     private UserInfoService userInfoService;
 
+    @Autowired
+    private AccountFlowService accountFlowService;
+
+    @Autowired
+    private HttpSession session;
     //private final ResourceLoader resourceLoader;
 
     /*@Autowired
@@ -134,12 +141,12 @@ public class UserInfoController {
 
     /**
      * 判断用户是否上传了头像
-     * @param session
+     * @param
      * @return
      */
     @ResponseBody
     @RequestMapping("isBindHP")
-    public Object isBindHP(HttpSession session){
+    public Object isBindHP(){
         String userName = (String)session.getAttribute("userName");
         String hFileName = userInfoService.getHPByUNname(userName);
         if(hFileName!=null&&hFileName!=""){
@@ -154,13 +161,27 @@ public class UserInfoController {
      * @return
      */
     @RequestMapping("withdraw")
-    public Object withdraw(@RequestParam Map map,HttpSession session){
-        String userName = (String) session.getAttribute("userName");
-        map.put("userName",userName);
+    public Object withdraw(@RequestParam Map map){
+        UserRegister user = (UserRegister)session.getAttribute("user");
+        Integer userId = user.getUserId();
+        map.put("userId",userId);
         Boolean isTrue = userInfoService.withdraw(map);
         if(isTrue){
             return "redirect:/jump/withdraw1";
         }
         return "redirect:/jump/withdraw1";
+    }
+
+
+    @RequestMapping("chongzhi")
+    public Object chongzhi(@RequestParam Map map){
+        UserRegister user = (UserRegister)session.getAttribute("user");
+        Integer userId = user.getUserId();
+        map.put("userId",userId);
+        Boolean isTrue = userInfoService.chongzhi(map);
+        if(isTrue){
+            return "redirect:/jump/pay1";
+        }
+        return "";
     }
 }

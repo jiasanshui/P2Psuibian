@@ -214,7 +214,20 @@ public interface UserInfoDao {
     @Select("select amount from userinfo where uname=#{userName}")
     double getAmountByUName(String userName);
 
+    /**
+     * 提现
+     * @param map
+     * @return
+     */
     @Update("update userinfo set amount=amount-#{actualMoney} where uname=#{userName}")
     int withdraw(Map map);
+
+    /**
+     * 充值修改账户余额
+     * @param map
+     * @return
+     */
+    @Update("update userinfo set amount=#{amount} where userid=#{userId}")
+    int chongzhi(Map map);
 
 }

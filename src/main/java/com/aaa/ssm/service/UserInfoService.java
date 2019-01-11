@@ -128,4 +128,11 @@ public interface UserInfoService {
      * @param map
      */
     Boolean withdraw(Map map);
+
+    /**
+     * 充值
+     * @param map
+     * @return
+     */
+    Boolean chongzhi(Map map);
 }

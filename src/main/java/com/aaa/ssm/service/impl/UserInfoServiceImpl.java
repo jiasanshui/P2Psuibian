@@ -1,5 +1,6 @@
 package com.aaa.ssm.service.impl;
 
+import com.aaa.ssm.dao.AccountFlowDao;
 import com.aaa.ssm.dao.AduitUserinfoDao;
 import com.aaa.ssm.dao.BorrowDao;
 import com.aaa.ssm.dao.UserInfoDao;
@@ -8,6 +9,7 @@ import com.aaa.ssm.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +31,12 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Autowired
     private AduitUserinfoDao aduitUserinfoDao;
+
+    @Autowired
+    private AccountFlowDao accountFlowDao;
+
+    @Autowired
+    private HttpSession session;
 
     @Override
     public List<Map> getList(Map map) {
@@ -218,8 +226,41 @@ public class UserInfoServiceImpl implements UserInfoService {
      */
     @Override
     public Boolean withdraw(Map map) {
+        String userName = (String) session.getAttribute("userName");
+        map.put("userName",userName);
         int withdraw = userInfoDao.withdraw(map);
-        if(withdraw>0){
+        //提现金额
+        double aAmount = userInfoDao.getAmountByUName(userName);
+        double actualmoney = Double.parseDouble(map.get("actualMoney")+"");
+        double chaAmount = aAmount + actualmoney;
+        map.put("amount",chaAmount);
+        //添加资金流水记录
+        int iAccountFlow = accountFlowDao.addTiXian(map);
+        if(withdraw>0&&iAccountFlow>0){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 充值
+     * @param map
+     * @return
+     */
+    @Override
+    public Boolean chongzhi(Map map) {
+        String userName = (String) session.getAttribute("userName");
+        //查询账户余额
+        double aAmount = userInfoDao.getAmountByUName(userName);
+        //充值金额
+        double actualmoney = Double.parseDouble(map.get("actualmoney")+"");
+        double sumAmount = aAmount + actualmoney;
+        map.put("amount",sumAmount);
+        //充值修改账户余额
+        int iUserInfo = userInfoDao.chongzhi(map);
+        //添加资金流水记录
+        int iAccountFlow = accountFlowDao.addChongzhi(map);
+        if(iUserInfo>0&&iAccountFlow>0){
             return true;
         }
         return false;

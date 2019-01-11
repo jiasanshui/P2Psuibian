@@ -47,4 +47,9 @@ public class BankServiceImpl implements BankService {
         }
         return false;
     }
+
+    @Override
+    public List<Map> getBankCards(Map map) {
+        return bankDao.getBankCards(map);
+    }
 }

@@ -91,4 +91,22 @@ public interface AccountFlowDao {
             "b.timelimit,b.danbaostyle from tender t left join borrow b on t.borrownum=b.borrownum left join repayinfo r " +
             "on b.borrownum=r.borrownum where t.userid = #{userId} and rownum < 4")
     List<Map> getBackMoney(Map map);
+
+    /**
+     * 添加充值流水
+     * @param map
+     * @return
+     */
+    @Insert("insert into account_flow(id,userid,amount,flowdate,flowtypeid,banknum,changeamount) " +
+            "values(seq_account_flow_id.nextval,#{userId},#{amount},sysdate,5,0,#{actualmoney})")
+    int addChongzhi(Map map);
+
+    /**
+     * 添加提现流水
+     * @param map
+     * @return
+     */
+    @Insert("insert into account_flow(id,userid,amount,flowdate,flowtypeid,banknum,changeamount) " +
+            "values(seq_account_flow_id.nextval,#{userId},#{amount},sysdate,6,0,#{actualMoney})")
+    int addTiXian(Map map);
 }

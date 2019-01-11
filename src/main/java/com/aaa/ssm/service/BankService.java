@@ -44,4 +44,6 @@ public interface BankService {
      * @return
      */
     Boolean removeBind(String BCID);
+
+    List<Map> getBankCards(Map map);
 }

@@ -209,10 +209,18 @@
                 </i>元 </span> <span class="txarrow-show">提现金额的0.1%，最低不低于2元，最高100元封顶</span><span class="txicon-show"></span> </li>
               <li><span class="deposit-formleft">实际到账金额</span> <em id="dzje" class="markicon fl"></em> <span class="deposit-formright deposit-formright1"> <i>
                 <span id="factmoney">0.00</span>
-                </i> 元</span> <span class="dzarrow-show">提现金额 - 提现费用</span><span class="dzicon-show"></span> </li>
+                </i> 元</span> <span class="dzarrow-show">提现金额 - 提现费用</span><span class="dzicon-show"></span>
+              </li>
+              <li><span class="deposit-formleft">银行卡</span> <em id="dzje" class="markicon fl"></em> <span class="deposit-formright deposit-formright1">
+                <select id="bindbankcard" style="height: 38px; *height:38px;line-height: 38px;width: 250px;margin-top: 0px;">
+                  <option selected="selected">---请选择您已经绑定的银行卡--</option>
+                </select>
+              </span> <span class="dzarrow-show">提现到您已经绑定的银行卡</span><span class="dzicon-show"></span>
+              </li>
               <li>
                 <input type="submit" name="form:j_idt78" value="提现" class="btn-depositok" onclick="return checkActualMoney()">
               </li>
+
             </ul>
           </div>
         </form>
@@ -226,6 +234,25 @@
       </div>
     </div>
     <script type="text/javascript">
+            //查询已经绑定的银行卡号
+            $(function () {
+                var userName='[[${session.userName}]]';
+                $.ajax({
+                    type:"post",
+                    dataType:"json",
+                    data:{userName:userName},
+                    url:"/bank/getBankCards",
+                    success:function (data) {
+                        var Str = "";
+                        if(data!=null&&data!=""){
+                            for (var i = 0; i < data.length; i++) {
+                                Str += "<option>"+data[i].bankCardInfo+"</option>";
+                            }
+                            $("#bindbankcard").append(Str);
+                        }
+                    }
+                })
+            })
 			$("#form\\:actualMoney").focus(
 					   function(){
 						   	$(this).css({"font-size":"24px","font-weight":"bold","font-family":"Arial","border":"1px solid #0caffe"});

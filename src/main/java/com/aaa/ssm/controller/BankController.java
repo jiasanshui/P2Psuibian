@@ -66,9 +66,7 @@ public class BankController {
     public Object bindBankCard(@RequestParam Map map,HttpSession session){
         //通过查询前六位是什么银行的，
         String sixBC = map.get("bankcard").toString().substring(0, 6);
-        System.out.println(sixBC);
         String bankName = bankService.getBankName(sixBC);
-        System.out.println(bankName);
         map.put("bankName",bankName);
         Object userName = session.getAttribute("userName");
         map.put("userName",userName);
@@ -105,4 +103,26 @@ public class BankController {
         }
         return "";
     }
+
+    /**
+     * 查看所有已经绑定的银行卡并处理
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("getBankCards")
+    public Object getBankCards(@RequestParam Map map){
+        List<Map> bankCards = bankService.getBankCards(map);
+        for (Map bankCard : bankCards) {
+            //获取银行名称
+            String bankname = bankCard.get("BANKNAME")+"";
+            //获取银行卡后四位
+            String bankcardNum = bankCard.get("BANKCARD")+"";
+            String newBankCard = bankcardNum.substring(bankcardNum.length() - 4);
+            //拼装隐藏的新银行卡
+            String newBcInfo = bankname.concat("(").concat(newBankCard).concat(")");
+            bankCard.put("bankCardInfo",newBcInfo);
+        }
+        return bankCards;
+    }
+
 }

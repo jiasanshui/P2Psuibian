@@ -57,4 +57,7 @@ public interface BankDao {
      */
     @Update("update bankcard set stateid=2 where BCID=#{bcid}")
     int removeBind(@Param("bcid") String BCID);
+
+    @Select("select * from bankcard where uname=#{userName} and stateid=1")
+    List<Map> getBankCards(Map map);
 }
