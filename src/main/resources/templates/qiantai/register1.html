@@ -9,6 +9,15 @@
 <link href="../css/register.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="../script/jquery.min.js"></script>
 <script type="text/javascript" src="../script/common.js"></script>
+  <script>
+    $(function () {
+        var url=window.location.search;
+        var s = url.substr(1);
+        var split = s.split("=");
+        var userName = split[1];
+        $("#span1").html(userName);
+    })
+  </script>
 </head>
 <body>
 <header>
@@ -59,8 +68,8 @@
     </div>
     <div class="registerCont">
       <ul>
-        <li class="scses"> zhuchaoyou， 恭喜您注册成功！<a class="blue" href="#" target="_blank">请立即登录-开通-双乾支付账户,即可投资！</a></li>
-        <li class="rz"><a href="/jump/login" class="btn">立即登录</a><a href="#" class="blue">进入我的账户</a></li>
+        <li class="scses"><span id="span1"></span> 恭喜您注册成功！<a class="blue" href="#" target="_blank">请立即登录-开通支付账户,即可投资！</a></li>
+        <li class="rz"><a href="/jump/login" class="btn">立即登录</a>   <a href="#" class="blue">进入我的账户</a></li>
       </ul>
     </div>
   </div>

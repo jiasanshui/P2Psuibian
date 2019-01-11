@@ -1,6 +1,7 @@
 package com.aaa.ssm.controller;
 
 import com.aaa.ssm.entity.UserRegister;
+import com.aaa.ssm.entity.UserRegister;
 import com.aaa.ssm.service.AccountFlowService;
 import com.aaa.ssm.util.PageUtil;
 import com.aaa.ssm.util.StringUtil;
@@ -40,7 +41,6 @@ public class AccountFlowController {
     @RequestMapping("/flowtype")
     public Object getFlowtype(){
         List<Map> flowtypeList=accountFlowService.getFlowtype();
-        System.out.println(flowtypeList);
         return flowtypeList;
     }
 

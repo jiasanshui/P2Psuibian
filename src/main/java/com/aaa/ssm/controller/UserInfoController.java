@@ -147,4 +147,20 @@ public class UserInfoController {
         }
         return 0;
     }
+
+    /**
+     * 提现
+     * @param map
+     * @return
+     */
+    @RequestMapping("withdraw")
+    public Object withdraw(@RequestParam Map map,HttpSession session){
+        String userName = (String) session.getAttribute("userName");
+        map.put("userName",userName);
+        Boolean isTrue = userInfoService.withdraw(map);
+        if(isTrue){
+            return "redirect:/jump/withdraw1";
+        }
+        return "redirect:/jump/withdraw1";
+    }
 }

@@ -45,6 +45,13 @@
                     width="120">
             </el-table-column>
             <el-table-column
+                    prop="TAPR"
+                    label="投资利率"
+                    align="center"
+                    v-if="false"
+                    width="70">
+            </el-table-column>
+            <el-table-column
                     prop="BORROWNUM"
                     label="借款标号"
                     align="center"
@@ -119,7 +126,7 @@
         </el-col>
     </el-row>
     <!--审核界面-->
-    <el-dialog title="满标二审" :visible.sync="editFormVisible" :close-on-click-modal="true" width="800px">
+    <el-dialog title="满标二审" :visible.sync="editFormVisible" :close-on-click-modal="true" width="700px">
         <fieldset>
             <legend><h3>**投资列表</h3></legend>
             <el-table
@@ -301,7 +308,7 @@
                 var _self = this;
                 _self.loading = true;
                 //var formData =this.editForm;
-                var formData ={'PAYMENT':this.editForm.PAYMENT,'DAYS':this.editForm.DAYS,'APR':this.editForm.APR,'BORROWMONEY':this.editForm.BORROWMONEY,
+                var formData ={'PAYMENT':this.editForm.PAYMENT,'DAYS':this.editForm.DAYS,'APR':this.editForm.APR,'TAPR':this.editForm.TAPR,'BORROWMONEY':this.editForm.BORROWMONEY,
                     'APPLICANT':this.editForm.APPLICANT,'TIMELIMIT':this.editForm.TIMELIMIT,'USERID':this.editForm.USERID,'DANBAOSTYLE':this.editForm.DANBAOSTYLE,
                 'WINBIDMONEY':this.editForm.WINBIDMONEY,'BORROWNUM':this.editForm.BORROWNUM,'BORROWID':this.editForm.BORROWID,'ADUITRESULT':this.editForm.ADUITRESULT,
                 'OPERATORID':this.editForm.OPERATORID,'ADUITREMARK':this.editForm.ADUITREMARK,'USERNAME':this.editForm.USERNAME,'submitArr':_self.submitArr};

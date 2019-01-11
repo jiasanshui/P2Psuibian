@@ -24,4 +24,24 @@ public interface BankService {
      * @return
      */
     String getRealName(Map map);
+
+    /**
+     * 通过银行卡查询银行
+     * @param sixBC
+     */
+    String getBankName(String sixBC);
+
+    /**
+     * 绑定银行卡
+     * @param map
+     * @return
+     */
+    int bindBankCard(Map map);
+
+    /**
+     * 解除绑定银行卡
+     * @param BCID
+     * @return
+     */
+    Boolean removeBind(String BCID);
 }

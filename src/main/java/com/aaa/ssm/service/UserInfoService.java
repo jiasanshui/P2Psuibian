@@ -122,4 +122,10 @@ public interface UserInfoService {
      * @return
      */
     double getAmountByUName(String userName);
+
+    /**
+     * 提现
+     * @param map
+     */
+    Boolean withdraw(Map map);
 }

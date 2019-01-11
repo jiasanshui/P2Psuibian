@@ -2,6 +2,7 @@ package com.aaa.ssm.controller;
 
 import com.aaa.ssm.entity.UserRegister;
 import com.aaa.ssm.service.*;
+import com.aaa.ssm.util.DEBXUtil;
 import com.aaa.ssm.util.PageUtil;
 import com.aaa.ssm.util.RandomUtil;
 import com.aaa.ssm.util.StringUtil;
@@ -58,6 +59,10 @@ public class JumpController {
     @Autowired
     private  RepayRecordService repayRecordService;
 
+    //依赖注入
+    @Autowired
+    private  HuiKuanService huiKuanService;
+
     @Autowired
     private  MyOrderService myOrderService;
 
@@ -85,15 +90,16 @@ public class JumpController {
             Map map3 = new HashMap();
             map3.put("parama", "信用");
             List<Map> listCredit = projectService.getList(map3);
+
             List<Map> webList = webService.getWebList();
             List<Map> mediaList = webService.getMediaList();
-            model.addAttribute("webList", webList);
-            model.addAttribute("mediaList", mediaList);
-
+            List<Map> liCaiList=webService.getLiCaiList();
             model.addAttribute("listCar", listCar);
             model.addAttribute("listHouse", listHouse);
             model.addAttribute("listCredit", listCredit);
-        System.out.println(model);
+            model.addAttribute("webList", webList);
+            model.addAttribute("mediaList", mediaList);
+            model.addAttribute("liCaiList",liCaiList);
             return "qiantai/index";
         }
 
@@ -457,8 +463,16 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/media_report")
-    public String media_report(Model model){
-       List<Map> mediaList=webService.getMediaList();
+    public String media_report(Model model,Integer pageNo,@RequestParam Map map,HttpServletRequest request){
+        //分页总数量
+        int pageSize=5;
+        int tPageNo = pageNo==null?1:pageNo;
+        map.put("pageNo",tPageNo);
+        map.put("pageSize",pageSize);
+        String pageString = new PageUtil(tPageNo, pageSize, webService.getPageCountM(map), request).getPageString();
+
+        List<Map> mediaList=webService.getMediaList();
+        model.addAttribute("pageString",pageString);
         model.addAttribute("mediaList",mediaList);
         return "qiantai/media_report";
     }
@@ -468,7 +482,42 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/money_plan")
-    public String money_plan() {
+    public String money_plan(HttpSession session,Model model,HttpServletRequest request,@RequestParam Map map) {
+        String username = String.valueOf(session.getAttribute("userName"));
+        List<Map> userList = userInfoService.getUserList(username);
+        Integer userId = Integer.valueOf(userList.get(0).get("USERID")+"");
+        map.put("userId",userId);
+        //获取分页总数量
+        int pageCount = huiKuanService.getPageCount(map);
+        int pageSize=7;
+        int pageNo=0;
+        Object tempPageNo=map.get("pageNo");
+        if (StringUtil.isEmpty(tempPageNo)){
+            pageNo=1;
+        }else {
+            pageNo=Integer.valueOf(tempPageNo+"");
+        }
+        map.put("pageSize",pageSize);
+        map.put("pageNo",pageNo);
+        //分页工具使用
+        List<Map> huiKuaiList = huiKuanService.getHuiKuaiList(map);
+        if (huiKuaiList.size()>0&&huiKuaiList!=null) {
+            for (Map map1 : huiKuaiList) {
+                double mount=Double.parseDouble(map1.get("TAMOUNT")+"");
+                double apr =Double.parseDouble(map1.get("TAPR")+"");
+                int month = Integer.valueOf(map1.get("TIMELIMIT") +"");
+                double cMount = DEBXUtil.getPrincipalInterestCount(mount, apr, month);
+                map1.put("mount", cMount);
+            }
+        }
+        System.out.println(map);
+        String pageString = new PageUtil(pageNo, pageSize, pageCount, request).getPageString();
+        model.addAttribute("huiList",huiKuaiList);
+        model.addAttribute("pageString",pageString);
+        if(StringUtil.isEmpty(map.get("selecttime"))){
+            map.put("selecttime","");
+        }
+        model.addAttribute("map",map);
         return "qiantai/money_plan";
     }
     /**
@@ -477,7 +526,6 @@ public class JumpController {
      */
     @RequestMapping("/money_record")
     public String money_record(Model model,HttpSession session,@RequestParam Map map,HttpServletRequest request){
-        System.out.println(map);
         UserRegister user=(UserRegister) session.getAttribute("user");
         if (user==null){
             return "qiantai/login";
@@ -545,8 +593,19 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/site_notice")
-    public String site_notice(Model model) {
+    public String site_notice(Model model,Integer pageNo,@RequestParam Map map,HttpServletRequest request) {
+
+        //分页总数量
+        int pageSize=5;
+        int tPageNo = pageNo==null?1:pageNo;
+        map.put("pageNo",tPageNo);
+        map.put("pageSize",pageSize);
+        String pageString = new PageUtil(tPageNo, pageSize, webService.getPageCount(map), request).getPageString();
+
         List<Map> webList = webService.getWebList();
+        //分页
+        model.addAttribute("pageString",pageString);
+
         model.addAttribute("webList", webList);
         return "qiantai/site_notice";
     }
@@ -572,19 +631,13 @@ public class JumpController {
     }
 
     /**
-     * 跳转到充值页面
-     * @return
-     */
-    @RequestMapping("/withdraw")
-    public String withdraw(){
-        return "qiantai/withdraw";
-    }
-    /**
-     * 跳转到充值页面
+     * 跳转到提现页面
      * @return
      */
     @RequestMapping("/withdraw1")
-    public String withdraw1() {
+    public String withdraw(Model model,HttpSession session){
+        String userName = (String) session.getAttribute("userName");
+        model.addAttribute("amount",userInfoService.getAmountByUName(userName));
         return "qiantai/withdraw1";
     }
 
@@ -625,7 +678,9 @@ public class JumpController {
             map.put("pageNo",pageNo);
             //分页工具使用
             String pageString = new PageUtil(pageNo, pageSize, pageCount, request).getPageString();
-            model.addAttribute("recordByRepay",repayRecordService.getRepayPage(map));
+            List<Map> repayPage = repayRecordService.getRepayPage(map);
+            System.out.println(repayPage);
+            //model.addAttribute("recordByRepay",repayRecordService.getRepayPage(map));
             model.addAttribute("pageString", pageString);
             return "qiantai/reimbursement";
         }
@@ -633,7 +688,7 @@ public class JumpController {
     }
 
     /**
-     * 跳转到提现页面
+     * 跳转到充值页面
      * @return
      */
     @RequestMapping("/pay1")
@@ -686,8 +741,21 @@ public class JumpController {
         return "qiantai/fukuan/fkcg";
     }
 
+    /**
+     * 我的银行卡页面
+     * @return
+     */
     @RequestMapping("bankcard")
     public Object bankcard(){
         return "qiantai/bankcard";
+    }
+
+    /**
+     * 绑定银行卡
+     * @return
+     */
+    @RequestMapping("bindbankcard")
+    public Object bindbankcard(){
+        return "qiantai/open_three";
     }
 }

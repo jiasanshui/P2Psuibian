@@ -42,7 +42,7 @@ public class UserLoginServiceImpl implements UserLoginService {
      */
     @Override
     public List<Map> getEmpByAdminid() {
-        Admin user=(Admin) session.getAttribute("user");
+        Admin user=(Admin) session.getAttribute("admin");
         Integer adminid = user.getId();
         List<Map> empList = userLoginDao.getEmpByAdminid(adminid);
         return empList;

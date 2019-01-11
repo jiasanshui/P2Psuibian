@@ -163,7 +163,7 @@ public interface UserInfoDao {
      * @return
      */
     @Insert("insert into account_flow(id,userid,amount,flowdate,flowtypeid,changeamount) " +
-            "values(seq_account_flow_id.nextval,#{USERID},#{taccount},sysdate,2,#{tamount})")
+            "values(seq_account_flow_id.nextval,#{tUserid},#{taccount},sysdate,2,#{tamount})")
     int addTaccountFlow(Map map);
 
     /**
@@ -203,7 +203,7 @@ public interface UserInfoDao {
      * @param userId
      * @return
      */
-    @Select("select sum(tamount) toudermoney from tender where userid=#{userId}")
+    @Select("select sum(tamount) as toudermoney from tender where userid=#{userId}")
     List<Map> getTouderMoney(Integer userId);
 
     /**
@@ -214,7 +214,7 @@ public interface UserInfoDao {
     @Select("select amount from userinfo where uname=#{userName}")
     double getAmountByUName(String userName);
 
-
-
+    @Update("update userinfo set amount=amount-#{actualMoney} where uname=#{userName}")
+    int withdraw(Map map);
 
 }

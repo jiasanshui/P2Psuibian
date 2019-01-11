@@ -190,15 +190,17 @@ public class UserInfoServiceImpl implements UserInfoService {
     /**
      * 累计投资金额
      * @param userId
-     * @return
+     * @return  toudermoney
      */
     @Override
     public double getTouderMoney(Integer userId) {
         List<Map> touderMoney = userInfoDao.getTouderMoney(userId);
-        if (touderMoney!=null&&touderMoney.size()>0){
+        try {
             return Double.parseDouble(touderMoney.get(0).get("TOUDERMONEY")+"");
+        } catch (NullPointerException e) {
+            //e.printStackTrace();
+            return 0;
         }
-        return 0;
     }
 
     /**
@@ -209,5 +211,19 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public double getAmountByUName(String userName) {
         return userInfoDao.getAmountByUName(userName);
+    }
+
+    /**
+     * 提现
+     * @param map
+     * @return
+     */
+    @Override
+    public Boolean withdraw(Map map) {
+        int withdraw = userInfoDao.withdraw(map);
+        if(withdraw>0){
+            return true;
+        }
+        return false;
     }
 }

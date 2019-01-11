@@ -139,7 +139,7 @@ public class RepayServiceImpl implements RepayService {
                     map.put("TIMELIMIT",i);
                     map.put("REPAYLIMIT",format);
                     //2.向还款表中插入数据
-                    System.out.println(map);
+                    System.out.println("等额本息——————————————————————"+map);
                     int s = repayDao.add(map);
                     if (s==0){
                         flag=false;
@@ -254,6 +254,8 @@ public class RepayServiceImpl implements RepayService {
         double benjin = Double.parseDouble(map.get("BORROWMONEY").toString());
         //年利率
         double apr = Double.parseDouble(map.get("APR").toString());
+        //投资年利率
+        double tapr = Double.parseDouble(map.get("TAPR").toString());
         //还款总月数
         int totalMonth=Integer.valueOf(map.get("TIMELIMIT")+"");
         //调用等额本息工具类，算出待还金额,即本息和
@@ -270,7 +272,7 @@ public class RepayServiceImpl implements RepayService {
         if(i==0){
             flag=false;
         }
-        //2、插入账户流水列表 id,userid,amount,flowdate,flowtypeid,changeamount
+        //2、插入账户流水列表 id,tUserid,amount,flowdate,flowtypeid,changeamount
         int m = userInfoDao.addAccountFlow(map);
         if (m==0){
             flag=false;
@@ -293,7 +295,7 @@ public class RepayServiceImpl implements RepayService {
             //投标金额
             double tamount = Double.parseDouble(tenderList.get(0).get("TAMOUNT")+"");
             //调用等额本息工具类，算出总利息
-            double collectlixi = DEBXUtil.getInterestCount(benjin, apr, totalMonth);
+            double collectlixi = DEBXUtil.getInterestCount(benjin, tapr, totalMonth);
             //更改投资人的账户信息
             int n=userInfoDao.updateTrenderAccount(tamount,collectlixi,tUserid);
             if (n==0){
@@ -303,6 +305,7 @@ public class RepayServiceImpl implements RepayService {
             map.put("taccount",yamount-tamount);
             //插入账户流水列表 id,userid,amount,flowdate,flowtypeid,changeamount
             map.put("tamount",tamount);
+            map.put("tUserid",tUserid);
             int add=userInfoDao.addTaccountFlow(map);
             if (add==0){
                 flag=false;
