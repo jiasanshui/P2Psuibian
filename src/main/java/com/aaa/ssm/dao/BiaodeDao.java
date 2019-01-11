@@ -54,7 +54,7 @@ public interface BiaodeDao {
      * 获取待放款的投标信息
      * @param map
      */
-    @Select("<script>select borrowid,username,userid,applicant,tel,danbaostyle,quantity,cost,days,borrowmoney,timelimit,apr,tapr" +
+    @Select("<script>select borrowid,username,userid,applicant,tel,danbaostyle,quantity,cost,days,borrowmoney,timelimit,apr,tapr," +
             "purpose,des,payment,borrownum,winbidmoney from borrow where stateid=7 \n "+
             "<if test=\"applicant!=null and applicant!=''\">  and applicant like '%'||#{applicant}||'%'</if>" +
             "<if test=\"borrownum!=null and borrownum!=''\">  and borrownum =#{borrownum}</if>" +
