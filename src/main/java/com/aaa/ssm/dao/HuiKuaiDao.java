@@ -28,7 +28,7 @@ public interface HuiKuaiDao {
      * @return
              */
     @Select("<script> select count(*) cnt from (select rownum,t.ttime from tender t left join borrow b on b.borrownum = t.borrownum left join " +
-            "repayinfo r on b.borrownum=r.borrownum where t.userid=#{userId} " +
+            "repayinfo r on b.borrownum=r.borrownum where t.userid=#{userId}  and r.stateid=2 and b.timelimit = r.timelimit " +
             " <if test=\"selecttoday!=null and selecttoday!=''\">  and trunc(t.ttime)=trunc(sysdate) </if> " +
             " <if test=\"selectmonth!=null and selectmonth!=''\">  and t.ttime > sysdate - interval '1' month </if> " +
             " <if test=\"selectsix!=null and selectsix!=''\">  and t.ttime > sysdate - interval '6' month </if>)</script>")
