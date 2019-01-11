@@ -9,6 +9,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -161,26 +162,28 @@ public class UserInfoController {
      * @return
      */
     @RequestMapping("withdraw")
-    public Object withdraw(@RequestParam Map map){
+    public Object withdraw(@RequestParam Map map,Model model){
         UserRegister user = (UserRegister)session.getAttribute("user");
         Integer userId = user.getUserId();
         map.put("userId",userId);
         Boolean isTrue = userInfoService.withdraw(map);
         if(isTrue){
-            return "redirect:/jump/withdraw1";
+            model.addAttribute("success",true);
+            return "forward:/jump/personal";
         }
         return "redirect:/jump/withdraw1";
     }
 
 
     @RequestMapping("chongzhi")
-    public Object chongzhi(@RequestParam Map map){
+    public Object chongzhi(@RequestParam Map map, Model model){
         UserRegister user = (UserRegister)session.getAttribute("user");
         Integer userId = user.getUserId();
         map.put("userId",userId);
         Boolean isTrue = userInfoService.chongzhi(map);
         if(isTrue){
-            return "redirect:/jump/pay1";
+            model.addAttribute("success",true);
+            return "forward:/jump/personal";
         }
         return "";
     }

@@ -127,8 +127,8 @@ public interface HuankuanDao {
      * @param borrownum
      * @return
      */
-    @Select("select timelimit from borrow where borrownum=#{borrownum}")
-    int getlimits(@Param("borrownum") String borrownum);
+    @Select("select timelimit,payment from borrow where borrownum=#{borrownum}")
+    Map getlimits(@Param("borrownum") String borrownum);
 
     /**
      * 修改已还完得订单状态

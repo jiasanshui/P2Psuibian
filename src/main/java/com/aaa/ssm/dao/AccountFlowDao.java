@@ -87,9 +87,9 @@ public interface AccountFlowDao {
      * @param map
      * @return
      */
-    @Select("select t.ttime,b.des,bm.tamount,bm.backtime,bm.backmoney from backmoney bm " +
-            "left join borrow b on bm.borrownum=b.borrownum left join tender t on t.borrownum = bm.borrownum " +
-            "where t.userid = #{userId} and rownum<4")
+    @Select("select b.des,bm.tamount,bm.backtime,bm.backmoney from backmoney bm " +
+            "left join borrow b on bm.borrownum=b.borrownum " +
+            "where bm.userid = #{userId} and rownum<4")
     List<Map> getBackMoney(Map map);
 
     /**

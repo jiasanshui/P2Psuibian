@@ -304,7 +304,7 @@ public class JumpController {
             model.addAttribute("recordByDeposits", depositsRecordService.geThreeTender(map));
             //资金记录
             model.addAttribute("accountflow",accountFlowService.getThreeFlow(map));
-            //回款计划  t.ttime,b.des,bm.tamount,bm.backtime,bm.backmoney
+            //回款计划  b.des,bm.tamount,bm.backtime,bm.backmoney
             model.addAttribute("backMoneyList",accountFlowService.getBackMoney(map));
             return "qiantai/personal";
         }

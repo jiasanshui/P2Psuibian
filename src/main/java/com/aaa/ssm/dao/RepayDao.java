@@ -82,7 +82,7 @@ public interface RepayDao {
      */
     @Insert("insert into repayinfo(rid,borrownum,username,realname,benjin,lixi,timelimit,starttime,stateid,repaylimit,currentmoney,nextmoney,overtimelixi) " +
             "values(seq_repayinfo_rid.nextval,#{BORROWNUM},#{USERNAME},#{APPLICANT},#{BORROWMONEY}," +
-            "#{LIXI},#{TIMELIMIT},to_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd'),1,to_date(#{REPAYLIMIT},'yyyy-mm-dd')," +
+            "#{LIXI},#{sumlimit},to_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd'),1,to_date(#{REPAYLIMIT},'yyyy-mm-dd')," +
             "#{repayMoney},0,0)")
     int addLast(Map map);
 

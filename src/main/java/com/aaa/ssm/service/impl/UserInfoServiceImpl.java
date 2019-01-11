@@ -233,9 +233,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         int withdraw = userInfoDao.withdraw(map);
         //提现金额
         double aAmount = userInfoDao.getAmountByUName(userName);
-        double actualmoney = Double.parseDouble(map.get("actualMoney")+"");
-        double chaAmount = aAmount + actualmoney;
-        map.put("amount",chaAmount);
+        map.put("amount",aAmount);
         //添加资金流水记录
         int iAccountFlow = accountFlowDao.addTiXian(map);
         if(withdraw>0&&iAccountFlow>0){
