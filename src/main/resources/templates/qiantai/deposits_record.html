@@ -93,15 +93,9 @@
     <div class="personal-main">
       <div class="personal-investnote">
         <h3><i>投资记录</i></h3>
-        <div class="investnote-money">
-          <span><b class="fb">累计投资</b><br><i th:text="${touderMoney}"></i> 元 </span>
-           <span><b class="fb">累计收益</b><br><i class="c-pink" th:text="${account.COLLECTPRINCIPAL}+${account.COLLECTINTEREST}"></i> 元 </span>
-           <span><b class="fb">待收本金</b><br> <i th:text="${account.COLLECTPRINCIPAL}"></i> 元 </span>
-          <span class="none"><b class="fb">待收收益</b><br> <i th:text="${account.COLLECTINTEREST}"></i> 元 </span>
-        </div>
         <form action="/jump/deposits_record">
-          <div>
-              标的编号：<input type="text" name="borrownum" th:value="${map.borrownum}" id="bid">
+          <div style="line-height: 3">
+              标的编号：<input type="text" name="borrownum" th:value="${map.borrownum}" id="bid" >
               <input type="submit" value="查询">
           </div>
         <br>

@@ -360,6 +360,7 @@
                 $("#city").empty();
                 var pname = $(this).val();
                 $.ajax({
+                    async:false,
                     type:"post",
                     dataType:"json",
                     data:{pname:pname},
@@ -373,6 +374,24 @@
                             $("#city").append(Str);
                         }
                     }
+                });
+                var cname = $("#city").val();
+                $("#area").empty();
+                $.ajax({
+                    async:false,
+                    type:"post",
+                    dataType:"json",
+                    data:{cname:cname},
+                    url:"/pca/area",
+                    success:function(data){
+                        if(data!=''){
+                            var Str = "";
+                            for (var i = 0; i < data.length; i++) {
+                                Str += "<option value='"+data[i].AREA+"'>"+data[i].AREA+"</option>";
+                            }
+                            $("#area").append(Str);
+                        }
+                    }
                 })
             });
 
@@ -381,6 +400,7 @@
                 $("#area").empty();
                 var cname = $(this).val();
                 $.ajax({
+                    async:false,
                     type:"post",
                     dataType:"json",
                     data:{cname:cname},
