@@ -64,8 +64,10 @@ public class BorrowController {
         map.put("physicapic",newFileNameB);
         int add = borrowService.addOne(map);
         if (add==0) {
+            System.out.println("借款失败");
             return "redirect:/jump/borrow";
         }
+        System.out.println("借款成功");
         return "redirect:/jump/index";
     }
 
