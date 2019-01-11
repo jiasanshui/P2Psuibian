@@ -202,6 +202,7 @@
 </div>
 <body class="bor_con_wper">
 <input type="hidden" th:value="${userid}" name="userid" id="userid">
+<input type="hidden" th:value="${num}" name="borrownum" id="bnum">
 	  <div class="bor_con px1000">
 	  	    <div class="bor_detail">
 	  	    	   <h2 class="bor_detail_tit" align="center" >
@@ -322,12 +323,10 @@
 							</div>
 							<div id="third" style="display:none; margin:35px auto;float: left;
 							width:560px; height:600px;background:#48ade5;padding-top:20px;" >
-
 								<span style="font-size:35px;">您的申请已通过审核！</span><br />
 								<span style="font-size:18px;margin-left:450px;">
 									<a href="/jump/list">去看项目</a>
 								</span>
-
 							</div>
 							<div id="fourth"  style="display:none;margin:35px auto;float: left;
 							width:560px; height:600px;background:#ff3366;padding-top:20px;text-align: center;" >
@@ -494,6 +493,7 @@
             data:{userid:userid},
             success:function (data) {
                 if(data==0){//可以借款（新人） || 上次还款结束
+					alert(1);
                     $("#first").show();
                     $("#first1").show();
                 } else if(data==1){//待放款（放款中）
@@ -505,6 +505,7 @@
                 }else if(data==4){//申请失败
                     $("#fourth").show();
 				}else {//有贷款未还清，不能申请
+					alert(555);
                     $("#fifth").show();
 				}
             }

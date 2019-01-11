@@ -211,7 +211,7 @@ public class RepayServiceImpl implements RepayService {
                 calendar.add(Calendar.MONTH,limit);
                 SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
                 String dformat = d.format(calendar.getTime());
-                map.put("TIMELIMIT",limit);
+                map.put("TIMELIMIT",1);
                 map.put("REPAYLIMIT",dformat);
                 map.put("repayMoney",benjin+lixi);
                 int bx = repayDao.addLast(map);

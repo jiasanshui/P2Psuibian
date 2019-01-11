@@ -78,7 +78,8 @@ public interface BorrowDao {
      * @param userid
      * @return
      */
-    @Select("select stateid from borrow where userid=#{userid}")
+    @Select("select stateid from " +
+            "(select starttime,stateid from borrow where userid=#{userid} order by starttime desc) where rownum=1")
     List<Map> isBorrow(Integer userid);
 
     /**
