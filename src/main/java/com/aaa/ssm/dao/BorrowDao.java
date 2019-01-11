@@ -22,9 +22,9 @@ public interface BorrowDao {
      * @param map
      * @return
      */
-    @Insert("insert into borrow(borrowid,applicant,tel,timelimit,purpose,des,apr,tapr,borrowmoney,danbaostyle,payment,username,stateid,days,borrownum,userid,bidapplydate,winbidmoney) " +
+    @Insert("insert into borrow(borrowid,applicant,tel,timelimit,purpose,des,apr,tapr,borrowmoney,danbaostyle,payment,username,stateid,days,borrownum,userid,bidapplydate,winbidmoney,yettime) " +
             "values(seq_tbborrowid.nextval,#{applicant},#{tel},#{timelimit},#{purpose},#{des}," +
-            "#{apr},#{apr}-0.03,#{borrowmoney},#{danbaostyle},#{payment},#{username},1,#{days},#{borrownum},#{userid},sysdate,0)")
+            "#{apr},#{apr}-0.03,#{borrowmoney},#{danbaostyle},#{payment},#{username},1,#{days},#{borrownum},#{userid},sysdate,0,0)")
     int add(Map map);
 
     /**
@@ -32,9 +32,9 @@ public interface BorrowDao {
      * @param map
      * @return
      */
-    @Insert("insert into borrow(borrowid,applicant,tel,timelimit,purpose,des,apr,tapr,borrowmoney,danbaostyle,payment,username,stateid,days,borrownum,userid,bidapplydate,winbidmoney,cost,documentpic,physicapic) " +
+    @Insert("insert into borrow(borrowid,applicant,tel,timelimit,purpose,des,apr,tapr,borrowmoney,danbaostyle,payment,username,stateid,days,borrownum,userid,bidapplydate,winbidmoney,cost,documentpic,physicapic,yettime) " +
             "values(seq_tbborrowid.nextval,#{applicant},#{tel},#{timelimit},#{purpose},#{des}," +
-            "#{apr},#{apr}-0.03,#{borrowmoney},#{danbaostyle},#{payment},#{username},1,#{days},#{borrownum},#{userid},sysdate,0,#{cost},#{documentpic},#{physicapic})")
+            "#{apr},#{apr}-0.03,#{borrowmoney},#{danbaostyle},#{payment},#{username},1,#{days},#{borrownum},#{userid},sysdate,0,#{cost},#{documentpic},#{physicapic},0)")
     int addOne(Map map);
 
 
@@ -78,7 +78,8 @@ public interface BorrowDao {
      * @param userid
      * @return
      */
-    @Select("select stateid from borrow where userid=#{userid}")
+    @Select("select stateid from " +
+            "(select starttime,stateid from borrow where userid=#{userid} order by starttime desc) where rownum=1")
     List<Map> isBorrow(Integer userid);
 
     /**

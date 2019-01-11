@@ -31,7 +31,6 @@ public interface RepayDao {
             "#{LIXI},#{TIMELIMIT},to_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd'),1,to_date(#{REPAYLIMIT},'yyyy-mm-dd')," +
             "#{moneyPer},#{moneyPer},0)")
     int add(Map map);
-
     /**
      * 审核通过,向还款表中插入数据，等额本息 （最后一期）
      * @param map

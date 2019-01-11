@@ -153,23 +153,23 @@
 				if(nullFlag)
 				{
 					var $span = "<em></em>请输入充值金额";
-					$(".quick-error").html($span);
+					$("#quickerror").html($span);
 					return false;
 				}
 				else
 				{
-					$(".quick-error").html("");
+					$("#quickerror").html("");
 				}
 				//如果输入的不是数字
 				if(numberFlag)
 				{
 					var $span = "<em></em>请输入数字";
-					$(".quick-error").html($span);
+					$("#quickerror").html($span);
 					return false;
 				}
 				else
 				{
-					$(".quick-error").html("");
+					$("#quickerror").html("");
 				}
 				//输入金额是否合法
 				var moneyPattern = new RegExp(moneyRegex);
@@ -177,21 +177,21 @@
 				if(!legalFlag)
 				{
 					var $span = "<em></em>金额必须大于0且为整数或小数，小数点后不超过2位";
-					$(".quick-error").html($span);
+					$("#quickerror").html($span);
 					return false;		
 				}
 				else
 				{
-					$(".quick-error").html("");
+					$("#quickerror").html("");
 				}
 
 				if(parseInt(money) > 50000){
 					var $span = "<em></em>充值金额超过50000元";
-					$(".quick-error").html($span);
+					$("#quickerror").html($span);
 					return false;
 				}else
 				{
-					$(".quick-error").html("");
+					$("#quickerror").html("");
 				}
 				return true;
 			}
@@ -214,7 +214,7 @@
 				/*var defaultBankName = $("#form\\:defaultBankName").text();
 				if(defaultBankName.replace(/(^\s*)|(\s*$)/g,"")=="此银行暂不支持"){
 					var $span = "<em></em>此银行暂不支持";
-					$(".quick-error3").html($span);
+					$("#quickerror3").html($span);
 					return false;
 				}*/
 				return false;
@@ -264,8 +264,8 @@
                       $("#btn1").attr("disabled",false);
                       $("#btn1").attr("class",'btn-paycz');
                   }
+              });
 
-              })
           })
         </script>
 
@@ -282,10 +282,10 @@
                   <em>元</em> </span> <span class="quick-error" id="quickerror"> </span> </div>
                 <div class="info-tips">随便贷提醒您：银行卡每次充值金额最大为50000元</div>
                 <div class="info-2"> <span class="info-tit">银行卡号</span>
-                   <select id="bindbankcard" style="height: 38px; *height:38px;line-height: 38px;width: 250px;margin-top: 20px;">
+                   <select id="bindbankcard" style="height: 38px; *height:38px;line-height: 38px;width: 200px;margin-top: 20px;">
                      <option selected="selected">---请选择您已经绑定的银行卡--</option>
                    </select>
-                </div>
+                </div><div style="margin-top: 30px;float:left;margin-left: 30px" id="yinhangkaid" class="quick-yinhangka"></div>
                 <div class="info-3" id="bankname"></div>
                 <div class="bank-check" id="bank-check2"> <b class="selected" id="bankProtocol1"></b><span class="bank-agree">我同意并接受<a href="#" target="_blank">《你我贷投资咨询与管理服务电子协议》</a></span> <span class="error" id="bankProtocol_message" style="display:none;margin-top:-3px;">请同意协议内容！</span> </div>
                 <!--<button id="btn1" class="btn-paycz" onclick="return getShowPayVal1()">充值</button>-->
@@ -431,19 +431,28 @@
                                      Str += "<option>"+data[i].bankCardInfo+"</option>";
                                 }
                                 $("#bindbankcard").append(Str);
+                            }else{
+                                var $span = "<em></em>未绑定银行卡<a href='/jump/bindbankcard' style='color: red;'>去绑定银行卡</a>";
+                                $("#yinhangkaid").html($span);
+                                $("#btn1").attr("disabled",true);
+                                $("#btn1").attr("class",'btn-paycz2');
                             }
                         }
                     })
                 })
 			</script>
+
       <div class="alert-450" id="alert-tyht" style="display:none;">
-        <div class="alert-title">
-          <h3>提示信息</h3>
-          <span class="alert-close" onclick="displaySpan('alert-tyht')"></span></div>
-        <div class="alert-main" style="margin-bottom: 35px;margin-left: 25px;">
-          <p class="msg4"> 你需要阅读并同意《你我贷金融投资咨询与管理服务电子协议》 </p>
-        </div>
+      <div class="alert-title">
+        <h3>提示信息</h3>
+        <span class="alert-close" onclick="displaySpan('alert-tyht')">
+          </span>
       </div>
+      <div class="alert-main" style="margin-bottom: 35px;margin-left: 25px;">
+        <p class="msg4"> 你需要阅读并同意《你我贷金融投资咨询与管理服务电子协议》 </p>
+      </div>
+    </div>
+
     </div>
     <div class="clear"></div>
   </div>

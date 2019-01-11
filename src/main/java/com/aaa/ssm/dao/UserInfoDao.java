@@ -207,7 +207,7 @@ public interface UserInfoDao {
     List<Map> getTouderMoney(Integer userId);
 
     /**
-     * 查询账户余额
+     * 查询账户
      * @param userName
      * @return
      */

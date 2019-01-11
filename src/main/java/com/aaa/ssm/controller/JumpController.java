@@ -297,16 +297,15 @@ public class JumpController {
             UserRegister user=(UserRegister) session.getAttribute("user");
             Integer userId = user.getUserId();
             map.put("userId",userId);
+            //查询账户
             Map accountInfo=userInfoService.getUserAccount(userId);
             model.addAttribute("account",accountInfo);
             //投资记录
             model.addAttribute("recordByDeposits", depositsRecordService.geThreeTender(map));
             //资金记录
             model.addAttribute("accountflow",accountFlowService.getThreeFlow(map));
-            //回款计划
+            //回款计划  t.ttime,b.des,bm.tamount,bm.backtime,bm.backmoney
             model.addAttribute("backMoneyList",accountFlowService.getBackMoney(map));
-            //查询账户余额
-            model.addAttribute("amount",userInfoService.getAmountByUName(userName));
             return "qiantai/personal";
         }
     }
@@ -371,9 +370,6 @@ public class JumpController {
             map.put("userId",userId);
             Map accountInfo=userInfoService.getUserAccount(userId);
             model.addAttribute("account",accountInfo);
-            //累计投资金额
-            double money=userInfoService.getTouderMoney(userId);
-            model.addAttribute("touderMoney",money);
             //获取分页总数量
             int pageCount = depositsRecordService.getPageCount(map);
             int pageSize=7;

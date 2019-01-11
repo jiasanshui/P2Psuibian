@@ -25,7 +25,7 @@ public interface RepayRecordDao {
      * @param map
      * @return
      */
-    @Select("<script>select count(*) cnt from repayinfo where 1=1 and username=#{userName} " +
+    @Select("<script>select count(*) cnt from repayinfo where 1=1 and username=#{userName} and stateid=2 " +
             "<if test=\"borrownum!=null and borrownum!=''\">  and borrownum =#{borrownum}</if></script>")
     List<Map> getPageCount(Map map);
 
