@@ -64,7 +64,7 @@ public interface HuiKuaiDao {
      * @return
      */
     @Insert("insert into backmoney(id,userid,tamount,backtime,backmoney,borrownum,status) " +
-            "values(seq_backmoney_id.nextval,#{tUserid},#{tamount},sysdate + interval '#{TIMELIMIT}' month ,#{backmoney},#{BORROWNUM},'未回款')")
+            "values(seq_backmoney_id.nextval,#{tUserid},#{tamount},add_months(sysdate,#{TIMELIMIT}),#{backmoney},#{BORROWNUM},'未回款')")
     int addBackMoneyPlan(Map map);
 
 

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.net.Socket;
 import java.util.List;
 import java.util.Map;
 
@@ -107,9 +108,13 @@ public class HuankuanServiceImpl implements HuankuanService {
                 isUpdate = false;
             }
             //判断当前还款期数是否是最后一期
-            int getlimits = huankuanDao.getlimits(borrownum);
-            if(timelimit==getlimits){
+            Map getlimits = huankuanDao.getlimits(borrownum);
+            if("到期付本付息".equals(getlimits.get("PAYMENT"))){
                 huankuanDao.updateStatus(borrownum);
+            }else{
+                if(timelimit==Integer.valueOf(getlimits.get("TIMELIMIT")+"")){
+                    huankuanDao.updateStatus(borrownum);
+                }
             }
             sumTime++;
         }

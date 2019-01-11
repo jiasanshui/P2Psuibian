@@ -214,7 +214,7 @@ public class RepayServiceImpl implements RepayService {
                 calendar.add(Calendar.MONTH,limit);
                 SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
                 String dformat = d.format(calendar.getTime());
-                map.put("TIMELIMIT",1);
+                map.put("sumlimit",1);
                 map.put("REPAYLIMIT",dformat);
                 map.put("repayMoney",benjin+lixi);
                 int bx = repayDao.addLast(map);
@@ -299,7 +299,7 @@ public class RepayServiceImpl implements RepayService {
             //投标金额
             double tamount = Double.parseDouble(tenderList.get(0).get("TAMOUNT")+"");
             //调用等额本息工具类，算出总利息
-            double collectlixi = DEBXUtil.getInterestCount(benjin, tapr, totalMonth);
+            double collectlixi = DEBXUtil.getInterestCount(tamount, tapr, totalMonth);
             //更改投资人的账户信息
             int n=userInfoDao.updateTrenderAccount(tamount,collectlixi,tUserid);
             if (n==0){
