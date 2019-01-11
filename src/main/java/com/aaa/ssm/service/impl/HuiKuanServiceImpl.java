@@ -47,6 +47,11 @@ public class HuiKuanServiceImpl implements HuiKuanService {
         return huiKuanList;
     }
 
+   /* @Override
+    public List<Map> panDuanStarttime(Map map) {
+        return huiKuaiDao.panDuanStarttime(map);
+    }*/
+
     @Override
     public int getPageCount(Map map) {
         List<Map> pageCount=null;

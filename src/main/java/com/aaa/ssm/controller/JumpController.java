@@ -370,9 +370,6 @@ public class JumpController {
             map.put("userId",userId);
             Map accountInfo=userInfoService.getUserAccount(userId);
             model.addAttribute("account",accountInfo);
-            //累计投资金额
-            double money=userInfoService.getTouderMoney(userId);
-            model.addAttribute("touderMoney",money);
             //获取分页总数量
             int pageCount = depositsRecordService.getPageCount(map);
             int pageSize=7;
