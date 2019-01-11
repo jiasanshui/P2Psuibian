@@ -1,5 +1,6 @@
 package com.aaa.ssm.dao;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 
@@ -33,6 +34,15 @@ public interface HuiKuaiDao {
             " <if test=\"selectmonth!=null and selectmonth!=''\">  and t.ttime > sysdate - interval '1' month </if> " +
             " <if test=\"selectsix!=null and selectsix!=''\">  and t.ttime > sysdate - interval '6' month </if>)</script>")
     List<Map> getPageCount(Map map);
+
+    /**
+     * 生成回款计划表  id,tUserid,tamount,backtime,backmoney,borrownum
+     * @param map
+     * @return
+     */
+    @Insert("insert into backmoney(id,userid,tamount,backtime,backmoney,borrownum,status) " +
+            "values(seq_backmoney_id.nextval,#{tUserid},#{tamount},sysdate + interval '#{TIMELIMIT}' month ,#{backmoney},#{BORROWNUM},'未回款')")
+    int addBackMoneyPlan(Map map);
 
 
     /**

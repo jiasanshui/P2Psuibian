@@ -83,13 +83,13 @@ public interface AccountFlowDao {
     List<Map> getThreeFlow(Map map);
 
     /**
-     * 账户总揽中回款计划
+     * 账户总揽中回款计划(按月付息，到期还本、等额本息)
      * @param map
      * @return
      */
-    @Select("select rownum,t.tamount,b.tapr,to_char(add_months(r.starttime,b.timelimit),'yyyy-mm-dd') as starttime,b.des," +
-            "b.timelimit,b.danbaostyle from tender t left join borrow b on t.borrownum=b.borrownum left join repayinfo r " +
-            "on b.borrownum=r.borrownum where t.userid = #{userId} and rownum < 4")
+    @Select("select t.ttime,b.des,bm.tamount,bm.backtime,bm.backmoney from backmoney bm " +
+            "left join borrow b on bm.borrownum=b.borrownum left join tender t on t.borrownum = bm.borrownum " +
+            "where t.userid = #{userId} and rownum<4")
     List<Map> getBackMoney(Map map);
 
     /**

@@ -4,6 +4,7 @@ import com.aaa.ssm.dao.AccountFlowDao;
 import com.aaa.ssm.service.AccountFlowService;
 import com.aaa.ssm.util.DEBXUtil;
 import com.aaa.ssm.util.StringUtil;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -124,15 +125,7 @@ public class AccountFlowServiceImpl implements AccountFlowService {
     @Override
     public List<Map> getBackMoney(Map map) {
         List<Map> backMoneyList=accountFlowDao.getBackMoney(map);
-        System.out.println(backMoneyList);
-        if(backMoneyList!=null && backMoneyList.size()>0){
-            for (Map map1 : backMoneyList) {
-                Double tamount= Double.parseDouble(map1.get("TAMOUNT")+"");
-                int totolmonth=Integer.valueOf(map1.get("TIMELIMIT")+"");
-                Double tapr= Double.parseDouble(map1.get("TAPR")+"");
-                double backMoney = DEBXUtil.getPrincipalInterestCount(tamount, tapr, totolmonth);
-                map1.put("backMoney",backMoney);
-            }
+        if (backMoneyList!=null&&backMoneyList.size()>0){
             return backMoneyList;
         }
         return null;
