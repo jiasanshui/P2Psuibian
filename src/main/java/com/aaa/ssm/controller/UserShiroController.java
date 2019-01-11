@@ -52,7 +52,7 @@ public class UserShiroController {
             //没有异常，则登录成功，跳转到主页
             session.setAttribute("username",token.getUsername());
             Admin user = userService.getUserByuserName(name);
-            session.setAttribute("user",user);
+            session.setAttribute("admin",user);
             return "redirect:/backjump/index";
         } catch (UnknownAccountException e) {
             //e.printStackTrace();

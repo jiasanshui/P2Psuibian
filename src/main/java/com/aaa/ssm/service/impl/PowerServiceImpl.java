@@ -39,7 +39,7 @@ public class PowerServiceImpl implements PowerService{
 
     @Override
     public List<TreeNode> getPowerList() {
-        Admin user = (Admin)session.getAttribute("user");
+        Admin user = (Admin)session.getAttribute("admin");
         Integer userid=0;
         if(user!=null) {
             userid=user.getId();
