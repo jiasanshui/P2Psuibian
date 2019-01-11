@@ -17,11 +17,17 @@ public interface HuiKuanService {
      * @return
      */
     int getPageCount(Map map);
-
-   /* *//**
-     * 判断 starttime,timelimit 是否为空
-     * @param userId
+    /**
+     * 到期付本付息
+     * @param map
      * @return
-     *//*
-    List<Map> panDuanStarttime(Map map);*/
+     */
+    List<Map> getHuiKuanList(Map map);
+
+    /**
+     * 查询还款方式
+     * @param map
+     * @return
+     */
+    List<Map> getpaymentList(Map map);
 }

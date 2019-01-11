@@ -47,10 +47,35 @@ public class HuiKuanServiceImpl implements HuiKuanService {
         return huiKuanList;
     }
 
-   /* @Override
-    public List<Map> panDuanStarttime(Map map) {
-        return huiKuaiDao.panDuanStarttime(map);
-    }*/
+    @Override
+    public List<Map> getHuiKuanList(Map map) {
+        int pageNo=map.get("pageNo")==null?1:Integer.valueOf(map.get("pageNo")+"");
+        int pageSize = map.get("pageSize")==null?7:Integer.valueOf(map.get("pageSize")+"");
+        map.put("start",(pageNo-1)*pageSize);
+        map.put("end",pageNo*pageSize+1);
+        List<Map> huiKuanList =null;
+        if(StringUtil.isEmpty(map.get("selecttime"))){
+            huiKuanList =  huiKuaiDao.getHuiKuanList(map);
+        }else if (Integer.valueOf(map.get("selecttime")+"")==0){//今天
+            map.put("selecttoday",2);
+            huiKuanList =  huiKuaiDao.getHuiKuanList(map);
+        }else if (Integer.valueOf(map.get("selecttime")+"")==1){//近一个月
+            map.put("selectmonth",1);
+            huiKuanList =  huiKuaiDao.getHuiKuanList(map);
+        }else if (Integer.valueOf(map.get("selecttime")+"")==6){//近6个月
+            map.put("selectsix",6);
+            huiKuanList =  huiKuaiDao.getHuiKuanList(map);
+        }else {//最近一周
+            map.put("selectseven",7);
+            huiKuanList =  huiKuaiDao.getHuiKuanList(map);
+        }
+        return huiKuanList;
+    }
+
+    @Override
+    public List<Map> getpaymentList(Map map) {
+        return huiKuaiDao.getpaymentList(map);
+    }
 
     @Override
     public int getPageCount(Map map) {

@@ -16,12 +16,35 @@ public interface HuiKuaiDao {
             "as endtime, " +
             "b.des,b.timelimit,b.danbaostyle from tender t " +
             "left join borrow b on t.borrownum=b.borrownum left join " +
-            "repayinfo r on b.borrownum=r.borrownum where t.userid=#{userId} and r.stateid=2 and b.timelimit = r.timelimit and rownum &lt; #{end} " +
+            "repayinfo r on b.borrownum=r.borrownum where t.userid=#{userId} and r.stateid!=1 and b.timelimit = r.timelimit and rownum &lt; #{end} " +
             " <if test=\"selecttoday!=null and selecttoday!=''\">  and trunc(t.ttime)=trunc(sysdate) </if> " +
             " <if test=\"selectmonth!=null and selectmonth!=''\">  and t.ttime > sysdate - interval '1' month </if> "  +
             " <if test=\"selectsix!=null and selectsix!=''\">  and t.ttime > sysdate - interval '6' month </if>) " +
             "a where a.rn &gt; #{start}</script>")
     List<Map> getHuiKuaiList(Map map);
+
+
+    /**
+     * 查询还款方式
+     * @param map
+     * @return
+     */
+    @Select("select b.payment from tender t left join borrow b on t.borrownum=b.borrownum left join repayinfo r on b.borrownum=r.borrownum where t.userid=#{userId} and r.stateid=2 ")
+    List<Map> getpaymentList(Map map);
+
+    /**
+     * 到期付本付息
+     * @param map
+     * @return
+     */
+    @Select("select * from (select rownum rn,t.tamount,t.ttime,b.tapr,to_char(add_months(r.starttime,b.timelimit),'yyyy-mm-dd') " +
+            " as endtime,b.des,b.timelimit,b.danbaostyle from tender t left join borrow b on t.borrownum=b.borrownum left join " +
+            "repayinfo r on b.borrownum=r.borrownum where t.userid=#{userId} and r.stateid=2 and b.payment='到期付本付息' and rownum &lt; #{end}" +
+            "<if test=\"selecttoday!=null and selecttoday!=''\">  and trunc(t.ttime)=trunc(sysdate) </if> " +
+            "<if test=\"selectmonth!=null and selectmonth!=''\">  and t.ttime > sysdate - interval '1' month </if> " +
+            "<if test=\"selectsix!=null and selectsix!=''\">  and t.ttime > sysdate - interval '6' month </if>)  " +
+            "a where a.rn &gt; #{start}</script>")
+    List<Map> getHuiKuanList(Map map);
     /**
             * 获取分页总数量
      * @param map
@@ -35,12 +58,4 @@ public interface HuiKuaiDao {
     List<Map> getPageCount(Map map);
 
 
-    /**
-     * 判断 starttime,timelimit 是否为空
-     * @param userId
-     * @return
-     *//*
-    @Select("select r.starttime,b.timelimit from tender t left join borrow b on b.borrownum=t.borrownum left join repayinfo r on b.borrownum " +
-            " =r.borrownum where t.userid=#{userId}")
-    List<Map> panDuanStarttime(Map map);*/
 }

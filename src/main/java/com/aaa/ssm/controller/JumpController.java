@@ -496,26 +496,55 @@ public class JumpController {
         }
         map.put("pageSize",pageSize);
         map.put("pageNo",pageNo);
-        //分页工具使用
-        List<Map> huiKuaiList = huiKuanService.getHuiKuaiList(map);
-        if (huiKuaiList.size()>0&&huiKuaiList!=null) {
-            for (Map map1 : huiKuaiList) {
-                double mount=Double.parseDouble(map1.get("TAMOUNT")+"");
-                double apr =Double.parseDouble(map1.get("TAPR")+"");
-                int month = Integer.valueOf(map1.get("TIMELIMIT") +"");
-                double cMount = DEBXUtil.getPrincipalInterestCount(mount, apr, month);
-                map1.put("mount", cMount);
+        List<Map> mapList = huiKuanService.getpaymentList(map);
+        for (Map map2 : mapList) {
+            System.out.println(String.valueOf(map2.get("PAYMENT")+""));
+            if (String.valueOf(map2.get("PAYMENT")+"")=="到期付本付息"){
+                System.out.println(123);
+                //分页工具使用
+                List<Map> huiKuanList = huiKuanService.getHuiKuanList(map);
+                if (huiKuanList.size()>0&&huiKuanList!=null) {
+                    for (Map map1 : huiKuanList) {
+                        double mount=Double.parseDouble(map1.get("TAMOUNT")+"");
+                        double apr =Double.parseDouble(map1.get("TAPR")+"");
+                        int month = Integer.valueOf(map1.get("TIMELIMIT") +"");
+                        double cMount = DEBXUtil.getPrincipalInterestCount(mount, apr, month);
+                        map1.put("mount", cMount);
+                    }
+                }
+                System.out.println(map);
+                String pageString = new PageUtil(pageNo, pageSize, pageCount, request).getPageString();
+                model.addAttribute("huiList",huiKuanList);
+                model.addAttribute("pageString",pageString);
+                if(StringUtil.isEmpty(map.get("selecttime"))){
+                    map.put("selecttime","");
+                }
+                model.addAttribute("map",map);
+                return "qiantai/money_plan";
+            }else {
+                //分页工具使用
+                List<Map> huiKuaiList = huiKuanService.getHuiKuaiList(map);
+                if (huiKuaiList.size()>0&&huiKuaiList!=null) {
+                    for (Map map1 : huiKuaiList) {
+                        double mount=Double.parseDouble(map1.get("TAMOUNT")+"");
+                        double apr =Double.parseDouble(map1.get("TAPR")+"");
+                        int month = Integer.valueOf(map1.get("TIMELIMIT") +"");
+                        double cMount = DEBXUtil.getPrincipalInterestCount(mount, apr, month);
+                        map1.put("mount", cMount);
+                    }
+                }
+                System.out.println(map);
+                String pageString = new PageUtil(pageNo, pageSize, pageCount, request).getPageString();
+                model.addAttribute("huiList",huiKuaiList);
+                model.addAttribute("pageString",pageString);
+                if(StringUtil.isEmpty(map.get("selecttime"))){
+                    map.put("selecttime","");
+                }
+                model.addAttribute("map",map);
+                return "qiantai/money_plan";
             }
         }
-        System.out.println(map);
-        String pageString = new PageUtil(pageNo, pageSize, pageCount, request).getPageString();
-        model.addAttribute("huiList",huiKuaiList);
-        model.addAttribute("pageString",pageString);
-        if(StringUtil.isEmpty(map.get("selecttime"))){
-            map.put("selecttime","");
-        }
-        model.addAttribute("map",map);
-        return "qiantai/money_plan";
+        return null;
     }
     /**
      * 跳转到资金记录页面
