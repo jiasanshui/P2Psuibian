@@ -142,7 +142,19 @@
               </span>
               <input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="2696547217205030168:-301641994240890871" autocomplete="off">
             </form>
-            </span> <span class="head-icon"> <a href="#"><i title="第三方资金账户未认证" class="headiconbg headicon01"></i></a> <a href="#"><i class="headiconbg headicon2"></i></a> <a href="#"><i class="headiconbg headicon03"></i></a> </span> </div>
+            </span>
+            <span class="head-icon">
+              <a href="#">
+                <i title="第三方资金账户未认证" class="headiconbg headicon01"></i>
+              </a>
+              <a href="#">
+                <i class="headiconbg headicon2"></i>
+              </a>
+              <a href="#">
+                <i class="headiconbg headicon03"></i>
+              </a>
+            </span>
+          </div>
           <div class="user-info user-info1">
             <ul>
               <li>用户名<span th:text="${session.userName}"></span></li>
@@ -163,7 +175,7 @@
             </li>
             <li><span><em>待收本息</em><i id="dsbx" class="markicon"></i><span class="arrow-show2" style="display:none;">未到账的投资项目的本金、利息总额</span><span class="icon-show2" style="display:none;"></span></span> <span class="truemoney"><i class="f26 fb" th:text="${account.COLLECTPRINCIPAL}+${account.COLLECTINTEREST}"> </i>元</span> </li>
             <li><span><em>累计收益</em><i id="ljsy" class="markicon"></i><span class="arrow-show3" style="display: none;">已到账的投资收益+未到账的投资收益</span><span class="icon-show3" style="display: none;"></span></span> <span class="truemoney"><i class="f26 fb c-pink" th:text="${account.COLLECTINTEREST}"> </i> 元</span> </li>
-            <li><span><em>冻结金额</em><i id="ljsy" class="markicon"></i><span class="arrow-show4" style="display: none;">已到账的投资收益+未到账的投资收益</span><span class="icon-show4" style="display: none;"></span></span> <span class="truemoney"><i class="f26 fb c-pink" th:text="${account.FREEZAMOUNT}"> </i> 元</span> </li>
+            <li><span><em>冻结金额</em><i id="dzje" class="markicon"></i><span class="arrow-show4" style="display: none;">投资金额+未到投资人账户金额</span><span class="icon-show4" style="display: none;"></span></span> <span class="truemoney"><i class="f26 fb c-pink" th:text="${account.FREEZAMOUNT}"> </i> 元</span> </li>
           </ul>
         </div>
       </div>
@@ -213,20 +225,22 @@
               <table  width="740px">
                 <tr align="center" style="line-height: 3">
                   <!-- <td>订单id</td>-->
-                  <td>计划回款时间</td>
+                  <td>投标时间</td>
                   <td>项目</td>
-                  <td>类型</td>
+                  <td>投资金额</td>
+                  <td>回款时间</td>
                   <td>回款金额</td>
                 </tr>
                 <tr th:each="rows : ${backMoneyList}" align="center" style="line-height: 3">
-                  <td th:text="${rows.STARTTIME}"></td>
+                  <td th:text="${rows.TTIME}"></td>
                   <td th:text="${rows.DES}" ></td>
-                  <td th:text="${rows.DANBAOSTYLE}" ></td>
-                  <td th:text="${rows.backMoney}" ></td>
+                  <td th:text="${rows.TAMOUNT}" ></td>
+                  <td th:text="${rows.BACKTIME}" ></td>
+                  <td th:text="${rows.BACKMONEY}" ></td>
                 </tr>
                 <!--底部分页工具条-->
                 <tr align="center" style="line-height: 3">
-                  <td colspan="4"><span style="float: right"><a href="/jump/money_plan">查看更多</a></span></td>
+                  <td colspan="5"><span style="float: right"><a href="/jump/money_plan">查看更多</a></span></td>
                 </tr>
               </table>
             </div>

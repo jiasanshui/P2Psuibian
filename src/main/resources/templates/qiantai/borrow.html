@@ -493,7 +493,6 @@
             data:{userid:userid},
             success:function (data) {
                 if(data==0){//可以借款（新人） || 上次还款结束
-					alert(1);
                     $("#first").show();
                     $("#first1").show();
                 } else if(data==1){//待放款（放款中）
