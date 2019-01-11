@@ -678,9 +678,7 @@ public class JumpController {
             map.put("pageNo",pageNo);
             //分页工具使用
             String pageString = new PageUtil(pageNo, pageSize, pageCount, request).getPageString();
-            List<Map> repayPage = repayRecordService.getRepayPage(map);
-            System.out.println(repayPage);
-            //model.addAttribute("recordByRepay",repayRecordService.getRepayPage(map));
+            model.addAttribute("recordByRepay",repayRecordService.getRepayPage(map));
             model.addAttribute("pageString", pageString);
             return "qiantai/reimbursement";
         }

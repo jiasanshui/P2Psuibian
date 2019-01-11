@@ -36,7 +36,7 @@ public interface RepayRecordDao {
      */
     @Select("<script>select * from (select rownum rn,t.rid,t.borrownum,t.username,t.realname,t.benjin,t.lixi,t.timelimit," +
             "to_char(t.starttime,'yyyy-mm-dd HH24:mi:ss') starttime,to_char(t.huankuantime,'yyyy-mm-dd HH24:mi:ss') huankuantime,to_char(t.repaylimit,'yyyy-mm-dd HH24:mi:ss') repaylimit " +
-            "from repayinfo t where rownum &lt; #{end} and username=#{userName} and t.stateid=1 " +
+            "from repayinfo t where rownum &lt; #{end} and username=#{userName} and t.stateid=2 " +
             "<if test=\"borrownum!=null and borrownum!=''\">  and borrownum =#{borrownum}</if> ) " +
             "a where a.rn &gt; #{start}</script>")
     List<Map> getRepayPage(Map map);
