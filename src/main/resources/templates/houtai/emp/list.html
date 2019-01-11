@@ -33,7 +33,6 @@
         });
         <!-- 查询市 -->
         $("#province").change(function(){
-            alert(222);
             $("#city").empty();
             var pname = $(this).val();
             $.ajax({
@@ -54,7 +53,6 @@
         });
         <!-- 根据城市查询县 -->
         $("#city").change(function(){
-            alert(3333);
             $("#area").empty();
             var cname = $(this).val();
             $.ajax({
@@ -102,18 +100,6 @@
                     </el-select>
                 </template>
             </el-form-item>
-            <!--<el-form-item label="状态">-->
-                <!--<template>-->
-                    <!--<el-select v-model="searchForm.State" placeholder="请选择">-->
-                        <!--<el-option-->
-                                <!--v-for="item in options"-->
-                                <!--:key="item.EID"-->
-                                <!--:label="item.STATES"-->
-                                <!--:value="item.EID">-->
-                        <!--</el-option>-->
-                    <!--</el-select>-->
-                <!--</template>-->
-            <!--</el-form-item>-->
             <el-form-item>
                 <el-button type="primary" icon="search" @click="searchClick">查询</el-button>
                 <el-button type="success" icon="plus" @click="addClick">新增</el-button>
@@ -136,7 +122,7 @@
             <el-table-column
                     prop="EMPNO"
                     label="员工编号"
-                    width="150">
+                    width="120">
             </el-table-column>
             <el-table-column
                     prop="ENAME"
@@ -146,12 +132,12 @@
             <el-table-column
                     prop="IDCARD"
                     label="身份证号"
-                    width="200">
+                    width="180">
             </el-table-column>
             <el-table-column
                     prop="PHONE"
                     label="电话"
-                    width="150">
+                    width="120">
             </el-table-column>
             <el-table-column
                     prop="ADDRESS"
@@ -161,27 +147,32 @@
             <el-table-column
                     prop="RUZHITIME"
                     label="入职日期"
-                    width="150">
+                    width="120">
             </el-table-column>
             <el-table-column
                     prop="STATES"
                     label="状态"
-                    width="80">
+                    width="60">
             </el-table-column>
             <el-table-column
                     prop="DNAME"
                     label="所在部门"
+                    width="100">
+            </el-table-column>
+            <el-table-column
+                    prop="NAME"
+                    label="角色名称"
                     width="110">
             </el-table-column>
             <el-table-column
                     prop="COMM"
                     label="奖金"
-                    width="90">
+                    width="80">
             </el-table-column>
             <el-table-column
                     prop="SAL"
                     label="薪水"
-                    width="90">
+                    width="80">
             </el-table-column>
             <el-table-column
                     label="操作">
@@ -252,7 +243,7 @@
                                 :value="item.AREA">
                         </el-option>
                     </el-select>
-                <el-input v-model="editForm.ADDRESS"   placeholder="具体地址" ></el-input>
+                <el-input v-model="editForm.ADDR"   placeholder="具体地址" ></el-input>
             </el-form-item>
 
             <el-form-item label="入职日期" v-if="isShow">
@@ -271,6 +262,18 @@
                     </el-select>
                 </template>
             </el-form-item>
+            <el-form-item label="角色">
+                <template>
+                    <el-select v-model="editForm.ROLEID" placeholder="请选择">
+                        <el-option
+                                v-for="item in optiones"
+                                :key="item.ID"
+                                :label="item.NAME"
+                                :value="item.ID">
+                        </el-option>
+                    </el-select>
+                </template>
+            </el-form-item>
             <el-form-item label="状态" v-if="isShow">
                 <template>
                     <el-select v-model="editForm.STATE" placeholder="请选择">
@@ -284,10 +287,10 @@
                 </template>
             </el-form-item>
             <el-form-item label="奖金">
-                <el-input-number  v-model="editForm.COMM" :min="0" :max="2000"></el-input-number>
+                <el-input-number  v-model="editForm.COMM" :min="0" :max="20000"></el-input-number>
             </el-form-item>
             <el-form-item label="薪水">
-                <el-input-number v-model="editForm.SAL" :min="0" :max="20000"></el-input-number>
+                <el-input-number v-model="editForm.SAL" :min="0" :max="80000"></el-input-number>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -310,6 +313,7 @@
             isShow:false,
             //类型select
             option: [],
+            optiones:[],
             options: [],
             province: [],
             shi: [],
@@ -334,6 +338,7 @@
                 RUZHITIME: '',
                 STATE: 0,
                 DEPTID: 0,
+                ROLEID:0,
                 COMM: 0,
                 SAL: 0,
               address:"",
@@ -343,8 +348,7 @@
             searchForm: {
                 id: '',
                 name: '',
-                deptId: '',
-//                State: ''
+                deptId: ''
             },
             //多选值
             multipleSelection: [],
@@ -394,9 +398,12 @@
                 self.total = response.data.total;
                 self.tableData = response.data.pageData;
             });
-//            axios.post('/emp/list').then(function (response) {
-//                self.options = response.data;
-//            });
+          axios.post('/role/lists').then(function (response) {
+               self.optiones = response.data;
+            });
+            axios.post('/emp/getLists').then(function (response) {
+                self.options = response.data;
+            });
             axios.post('/dept/list').then(function (response) {
                 self.option = response.data;
             });
@@ -411,19 +418,16 @@
                     id: '',
                     name: '',
                     deptId: '',
-//                    State: ''
                 }
                 this.loadingData();
             },
             getCity:function(){
-                alert(this.editForm.SHENGNAME);
                 var _self=this;
                 axios.post("/pca/getcity",{pname:this.editForm.SHENGNAME}).then(function (response) {
                     _self.shi = response.data;
                 })
             },
             getArea:function () {
-                alert(this.editForm.SHINAME);
                 var _self=this;
                 axios.post("/pca/getarea",{cname:this.editForm.SHINAME}).then(function (response) {
                     _self.qu = response.data;
@@ -438,7 +442,6 @@
                     'empNo': this.searchForm.id,
                     'ename': this.searchForm.name,
                     'deptid': this.searchForm.deptId
-//                    'state': this.searchForm.State
                 };
                 axios.post('/emp/page', searchForm).then(function (response) {
                     _self.total = response.data.total;
@@ -497,13 +500,13 @@
                     ENAME: '',
                     IDCARD: '',
                     PHONE: '',
-                  //  ADDRESS:[],
                     SHENGNAME:'',
                     SHINAME:'',
                     QUNAME:'',
                     RUZHITIME: '',
                     STATE: '',
                     DEPTID: '',
+                    ROLEID:0,
                     COMM: 0,
                     SAL: 0,
                     address:""
@@ -512,8 +515,6 @@
                 this.editFormVisible = true;
                 _self.loadingData();//重新加载数据
             },
-
-
             //表格查询事件
             searchClick: function () {
                 var self = this;
@@ -548,7 +549,6 @@
                 }).then(function () {
                     var url = "/emp/batchDel/" + ids;
                     axios.get(url).then(function (response) {
-                        //alert(response.data);
                         var temp = "";
                         if (response.data > 0) {
                             temp = "删除成功";
@@ -586,7 +586,6 @@
                 var _self = this;
                 _self.loading = true;
                 var formData = this.editForm;
-                //alert(formData);
                 var goUrl = this.goUrl;
                 axios.post(goUrl, formData).then(function (response) {
                     if (response.data > 0) {

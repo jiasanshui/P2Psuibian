@@ -21,26 +21,9 @@
     <el-row>
 
         <el-form :inline="true" :model="searchForm" class="demo-form-inline">
-
-            <el-form-item label="部门编号">
-                <el-input v-model="searchForm.id" placeholder="ID"></el-input>
-            </el-form-item>
-
             <el-form-item label="部门名称">
                 <el-input v-model="searchForm.name" placeholder="名称"></el-input>
             </el-form-item>
-            <!--<el-form-item label="状态">-->
-                <!--<template>-->
-                    <!--<el-select v-model="searchForm.Dstatus" placeholder="请选择">-->
-                        <!--<el-option-->
-                                <!--v-for="item in options"-->
-                                <!--:key="item.ID"-->
-                                <!--:label="item.STATE"-->
-                                <!--:value="item.ID">-->
-                        <!--</el-option>-->
-                    <!--</el-select>-->
-                <!--</template>-->
-            <!--</el-form-item>-->
             <el-form-item>
             <el-button type="primary" icon="search" @click="searchClick">查询</el-button>
             <el-button type="success" icon="plus" @click="addClick">新增</el-button>
@@ -56,15 +39,6 @@
                 border
                 @selection-change="selectionChange"
                 style="width: 100%">
-            <!--<el-table-column-->
-                    <!--type="selection"-->
-                    <!--width="55">-->
-            <!--</el-table-column>-->
-            <el-table-column
-                    prop="DEPTID"
-                    label="部门编号"
-                    width="150">
-            </el-table-column>
             <el-table-column
                     prop="DNAME"
                     label="部门名称"
@@ -85,7 +59,6 @@
                     label="部门状态"
                     width="120"
                    >
-
             </el-table-column>
             <el-table-column
                     label="操作">
@@ -99,9 +72,6 @@
 
     <!--列表底部工具条和分页符-->
     <el-row style="margin-top: 20px" type="flex" justify="end">
-        <!--<el-col :span="6" >-->
-            <!--<el-button :plain="true" type="danger" size="small" icon="delete" @click="removeSelection">删除所选</el-button>-->
-        <!--</el-col>-->
         <el-col :span="18" >
             <el-pagination
                     style="float: right"
@@ -128,7 +98,7 @@
                 <el-input v-model="editForm.DESCRIBES"></el-input>
             </el-form-item>
 
-            <el-form-item label="建立时间">
+            <el-form-item label="建立时间" v-if="isShow">
                 <el-date-picker type="date" value-format="yyyy-MM-dd"
                                 placeholder="选择日期" v-model="editForm.DTIME"></el-date-picker>
             </el-form-item>
@@ -152,8 +122,6 @@
     </el-dialog>
 
 </div>
-
-
 <script type="text/javascript">
     var app = new Vue({
         el: '#app',
@@ -165,7 +133,7 @@
     var tableView = new Vue({
         el: '#tableView',
         data: {
-            Dstatus:'',
+            DSTATUS:'',
             options:[],
             //列表数据
             tableData: [],
@@ -173,9 +141,7 @@
             loading:false,
             //搜索表单
             searchForm: {
-                id: '',
                 name: '',
-                Dstatus:''
             },
             //多选值
             multipleSelection: [],
@@ -194,15 +160,18 @@
             editFormRules: {
                DNAME: [
                     { required: true, message: '请输入部门名称', trigger: 'blur' },
+                   {pattern: /^([\u4e00-\u9fa5]){2,5}$/, message: '请输入两到五个汉字'}
                 ],
+                DESCRIBES:[
+                    {required: true, message:'200字以内',trigger:'blur'}
+                ]
             },
             //编辑界面数据
             editForm: {
                DNAME: '',
                DESCRIBES: '',
                 DTIME: '',
-                //DSTATUS:''
-                STATE:''
+                DSTATUS:0
             },
         },
         created:function(){
@@ -212,19 +181,15 @@
                 self.total=response.data.total;
                 self.tableData = response.data.pageData;
             });
-            //查询下拉框
-            axios.post('/dept/deptState').then(function (response) {
-                self.options=response.data;
-            })
-
+            axios.post('/dept/getDeptInfo').then(function (response) {
+                self.options = response.data;
+            });
         },
         methods: {
             //刷新
             toFlush: function () {
                 this.searchForm = {
-                    deptid: '',
                     dname: '',
-                    dstatus:''
                 }
                 this.loadingData();
             },
@@ -234,7 +199,7 @@
                 _self.loading = true;
                 var self = this;
                 var searchForm = {
-                    'pageNo': this.currentPage, 'pageSize': this.pageSize, 'deptid':this.searchForm.id,'dname': this.searchForm.name,'dstatus':this.searchForm.Dstatus};
+                    'pageNo': this.currentPage, 'pageSize': this.pageSize,'dname': this.searchForm.name};
                 axios.post('/dept/page', searchForm).then(function (response) {
                     _self.total = response.data.total;
                     _self.tableData = response.data.pageData;
@@ -271,7 +236,6 @@
                                 message: row.DEPTID + '删除失败,该部门下有员工',
                                 type: 'error'
                             });
-
                         }
                     });
                 }).catch(function (e) {
@@ -287,8 +251,7 @@
                 this.editForm = {
                     DNAME: '',
                     DESCRIBES: '',
-                    DTIME: '',
-                    DSTATUS:''
+                    DSTATUS:0
                 },
                     this.editFormVisible = true;
                 _self.loadingData();//重新加载数据
@@ -325,10 +288,7 @@
                 var _self = this;
                 _self.loading = true;
                 var formData = this.editForm;
-                //alert(formData);
                 var goUrl = this.goUrl;
-                //alert(goUrl);
-                //alert(JSON.stringify(formData));
                 axios.post(goUrl, formData).then(function (response) {
                     if (response.data > 0) {
                         _self.editFormVisible = false;
@@ -337,8 +297,12 @@
                             message: response.data.msg,
                             type: 'error'
                         });
-                    }
-                    else {
+                    }else if(response.data == -1 ){
+                        _self.$message({
+                            message: '该部门下有员工，请勿禁用！！',
+                            type: 'error'
+                        });
+                    }else {
                         _self.$message({
                             message: '操作失败',
                             type: 'error'
@@ -349,7 +313,6 @@
                 })
                 console.info(this.editForm);
             },
-
         }
     })
 </script>

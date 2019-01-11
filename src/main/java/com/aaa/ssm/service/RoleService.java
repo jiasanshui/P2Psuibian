@@ -14,6 +14,11 @@ import java.util.Map;
  */
 public interface RoleService {
     /**
+     * 员工下拉框
+     * @return
+     */
+    List<Map>getList();
+    /**
      * 获取所有角色信息
      * @return
      */

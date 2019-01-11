@@ -28,6 +28,10 @@ public class DeptServiceImpl implements DeptService {
         return deptDao.getDeptByDname(dname);
     }
 
+    @Override
+    public List<Map> getDeptInfo() {
+        return deptDao.getDeptInfo();
+    }
 
 
     @Override
@@ -40,16 +44,6 @@ public class DeptServiceImpl implements DeptService {
         return deptDao.getDeptList(map);
     }
 
-//    /**
-//     * 部门状态下拉
-//     * @return
-//     */
-//    @Override
-//    public List<Map> getState() {
-//        return deptDao.getState();
-//    }
-
-
     @Override
     public int add(Map map) {
         return deptDao.add(map);
@@ -57,6 +51,14 @@ public class DeptServiceImpl implements DeptService {
 
     @Override
     public int update(Map map) {
+        Integer dstate=Integer.valueOf(map.get("DSTATUS")+"");
+        if(dstate==2){
+            //查询该部门下是否有员工
+            List<Map> ishaveEmp=empDao.isHaveEmp(map);
+            if (ishaveEmp!=null && ishaveEmp.size()>0){
+                return -1;
+            }
+        }
         return deptDao.update(map);
     }
 
