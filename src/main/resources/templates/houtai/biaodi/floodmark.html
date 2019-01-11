@@ -125,7 +125,7 @@
         </el-col>
     </el-row>
     <!--查看详情界面-->
-    <el-dialog title="查询详情" :visible.sync="lookFormVisible" :close-on-click-modal="false" width="1000px">
+    <el-dialog title="查询详情" :visible.sync="lookFormVisible" :close-on-click-modal="false" width="1110px">
         <el-form :model="lookForm" label-width="100px" :rules="lookFormRules" ref="lookForm" >
             <fieldset>
                 <legend><h3>**借款人实名信息</h3></legend>
@@ -217,13 +217,13 @@
                                     prop="USERID"
                                     label="账户Id"
                                     align="center"
-                                    width="70">
+                                    width="50">
                             </el-table-column>
                             <el-table-column
                                     prop="REALNAME"
                                     label="真实姓名"
                                     align="center"
-                                    width="100">
+                                    width="80">
                             </el-table-column>
                             <el-table-column
                                     prop="IDCARD"
@@ -247,13 +247,13 @@
                                     prop="WORKING"
                                     align="center"
                                     label="工作"
-                                    width="110">
+                                    width="100">
                             </el-table-column>
                             <el-table-column
                                     prop="INCOME"
                                     align="center"
                                     label="月收入(元)"
-                                    width="110">
+                                    width="100">
                             </el-table-column>
                             <el-table-column
                                     prop="TENDERNUM"

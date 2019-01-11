@@ -258,6 +258,9 @@ $(function(){
                         <div th:if=" ${userstate} eq 1">
                           <a class="ui-btn btn-gray" href="/jump/renzheng">请先查看信息认证</a>
                         </div>
+                        <div th:if=" ${userstate} eq 3">
+                          <a class="ui-btn btn-gray" href="/jump/renzheng">请先查看信息认证</a>
+                        </div>
                         <div th:if="${session.userName} eq null">
 
                         </div>
@@ -317,6 +320,9 @@ $(function(){
                         <div th:if=" ${userstate} eq 1">
                           <a class="ui-btn btn-gray" href="/jump/renzheng">请先查看信息认证</a>
                         </div>
+                        <div th:if=" ${userstate} eq 3">
+                          <a class="ui-btn btn-gray" href="/jump/renzheng">请先查看信息认证</a>
+                        </div>
                         <div th:if="${session.userName} eq null">
 
                         </div>
@@ -370,6 +376,9 @@ $(function(){
                         <a class="ui-btn btn-gray"  th:href="@{/jump/infor(BORROWNUM=${house.BORROWNUM})}">我要放款</a>
                       </div>
                       <div th:if=" ${userstate} eq 1">
+                        <a class="ui-btn btn-gray" href="/jump/renzheng">请先查看信息认证</a>
+                      </div>
+                      <div th:if=" ${userstate} eq 3">
                         <a class="ui-btn btn-gray" href="/jump/renzheng">请先查看信息认证</a>
                       </div>
                       <div th:if="${session.userName} eq null">
@@ -426,6 +435,9 @@ $(function(){
                         <a class="ui-btn btn-gray"  th:href="@{/jump/infor(BORROWNUM=${credit.BORROWNUM})}">我要放款</a>
                       </div>
                       <div th:if=" ${userstate} eq 1">
+                        <a class="ui-btn btn-gray" href="/jump/renzheng">请先查看信息认证</a>
+                      </div>
+                      <div th:if=" ${userstate} eq 3">
                         <a class="ui-btn btn-gray" href="/jump/renzheng">请先查看信息认证</a>
                       </div>
                       <div th:if="${session.userName} eq null">

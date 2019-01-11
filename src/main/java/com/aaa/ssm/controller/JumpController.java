@@ -1,13 +1,11 @@
 package com.aaa.ssm.controller;
 
-import com.aaa.ssm.entity.Admin;
 import com.aaa.ssm.entity.UserRegister;
 import com.aaa.ssm.service.*;
 import com.aaa.ssm.util.DEBXUtil;
 import com.aaa.ssm.util.PageUtil;
 import com.aaa.ssm.util.RandomUtil;
 import com.aaa.ssm.util.StringUtil;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -479,7 +477,6 @@ public class JumpController {
         List<Map> userList = userInfoService.getUserList(username);
         Integer userId = Integer.valueOf(userList.get(0).get("USERID")+"");
         map.put("userId",userId);
-        System.out.println(map);
         //获取分页总数量
         int pageCount = huiKuanService.getPageCount(map);
         int pageSize=7;
@@ -514,7 +511,6 @@ public class JumpController {
      */
     @RequestMapping("/money_record")
     public String money_record(Model model,HttpSession session,@RequestParam Map map,HttpServletRequest request){
-        System.out.println(map);
         UserRegister user=(UserRegister) session.getAttribute("user");
         if (user==null){
             return "qiantai/login";
@@ -656,7 +652,9 @@ public class JumpController {
             map.put("pageNo",pageNo);
             //分页工具使用
             String pageString = new PageUtil(pageNo, pageSize, pageCount, request).getPageString();
-            model.addAttribute("recordByRepay",repayRecordService.getRepayPage(map));
+            List<Map> repayPage = repayRecordService.getRepayPage(map);
+            System.out.println(repayPage);
+            //model.addAttribute("recordByRepay",repayRecordService.getRepayPage(map));
             model.addAttribute("pageString", pageString);
             return "qiantai/reimbursement";
         }
