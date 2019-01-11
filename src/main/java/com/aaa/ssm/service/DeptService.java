@@ -46,5 +46,10 @@ public interface DeptService {
      * 根据部门编号获取部门名称
      */
     List<Map>getDeptByDname(String dname);
+    /**
+     * 部门状态下拉框
+     * @return
+     */
+    List<Map>getDeptInfo();
 
 }

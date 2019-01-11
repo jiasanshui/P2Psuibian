@@ -29,7 +29,7 @@ public class DeptController {
     private DeptService deptService;
 
     /**
-     * 部门列表方法
+     * 部门列表方法(员工下拉框)
      *
      * @return
      */
@@ -43,14 +43,6 @@ public class DeptController {
     public String toState(){
         return "houtai/dept/list";
     }
-//    /**
-//     * 部门状态下拉框
-//     */
-//    @ResponseBody
-//    @RequestMapping("/deptState")
-//    public Object getState(){
-//        return  deptService.getState();
-//    }
 
     /**
      * 部门分页列表
@@ -101,6 +93,7 @@ public class DeptController {
     @ResponseBody
     @RequestMapping("/update")
     public Object update(@RequestBody Map map) {
+        System.out.println(map);
         return deptService.update(map);
     }
 
@@ -115,5 +108,16 @@ public class DeptController {
     public Object delete(Integer deptid) {
         return deptService.delete(deptid);
     }
+
+    /**
+     * 部门状态下拉框
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getDeptInfo")
+    public  Object getDeptInfo(){
+       return deptService.getDeptInfo();
+    }
+
 }
 

@@ -19,6 +19,12 @@ import java.util.Map;
 @Component
 public interface RoleDao {
     /**
+     * 员工下拉框
+     * @return
+     */
+    @Select("select id,name,descp,addtime,state from tb_role")
+    List<Map>getList();
+    /**
      * 获取所有角色信息
      * @return
      */

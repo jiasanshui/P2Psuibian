@@ -139,7 +139,7 @@ public class RepayServiceImpl implements RepayService {
                     map.put("TIMELIMIT",i);
                     map.put("REPAYLIMIT",format);
                     //2.向还款表中插入数据
-                    System.out.println(map);
+                    System.out.println("等额本息——————————————————————"+map);
                     int s = repayDao.add(map);
                     if (s==0){
                         flag=false;
@@ -272,7 +272,7 @@ public class RepayServiceImpl implements RepayService {
         if(i==0){
             flag=false;
         }
-        //2、插入账户流水列表 id,userid,amount,flowdate,flowtypeid,changeamount
+        //2、插入账户流水列表 id,tUserid,amount,flowdate,flowtypeid,changeamount
         int m = userInfoDao.addAccountFlow(map);
         if (m==0){
             flag=false;
@@ -305,6 +305,7 @@ public class RepayServiceImpl implements RepayService {
             map.put("taccount",yamount-tamount);
             //插入账户流水列表 id,userid,amount,flowdate,flowtypeid,changeamount
             map.put("tamount",tamount);
+            map.put("tUserid",tUserid);
             int add=userInfoDao.addTaccountFlow(map);
             if (add==0){
                 flag=false;

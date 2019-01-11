@@ -28,42 +28,39 @@ public class HuiKuanServiceImpl implements HuiKuanService {
         int pageSize = map.get("pageSize")==null?7:Integer.valueOf(map.get("pageSize")+"");
         map.put("start",(pageNo-1)*pageSize);
         map.put("end",pageNo*pageSize+1);
-        List<Map> accountFlow =null;
+        List<Map> huiKuanList =null;
         if(StringUtil.isEmpty(map.get("selecttime"))){
-            accountFlow =  huiKuaiDao.getHuiKuaiList(map);
+            huiKuanList =  huiKuaiDao.getHuiKuaiList(map);
         }else if (Integer.valueOf(map.get("selecttime")+"")==0){//今天
             map.put("selecttoday",2);
-            accountFlow =  huiKuaiDao.getHuiKuaiList(map);
+            huiKuanList =  huiKuaiDao.getHuiKuaiList(map);
         }else if (Integer.valueOf(map.get("selecttime")+"")==1){//近一个月
             map.put("selectmonth",1);
-            accountFlow =  huiKuaiDao.getHuiKuaiList(map);
+            huiKuanList =  huiKuaiDao.getHuiKuaiList(map);
         }else if (Integer.valueOf(map.get("selecttime")+"")==6){//近6个月
             map.put("selectsix",6);
-            accountFlow =  huiKuaiDao.getHuiKuaiList(map);
+            huiKuanList =  huiKuaiDao.getHuiKuaiList(map);
         }else {//最近一周
             map.put("selectseven",7);
-            accountFlow =  huiKuaiDao.getHuiKuaiList(map);
+            huiKuanList =  huiKuaiDao.getHuiKuaiList(map);
         }
-        return accountFlow;
+        return huiKuanList;
     }
 
     @Override
     public int getPageCount(Map map) {
         List<Map> pageCount=null;
         if(StringUtil.isEmpty(map.get("selecttime"))){
-            pageCount = huiKuaiDao.getHuiKuaiList(map);
+            pageCount = huiKuaiDao.getPageCount(map);
         }else if (Integer.valueOf(map.get("selecttime")+"")==0){//今天
             map.put("selecttoday",2);
-            pageCount = huiKuaiDao.getHuiKuaiList(map);
+            pageCount = huiKuaiDao.getPageCount(map);
         }else if (Integer.valueOf(map.get("selecttime")+"")==1){//近一个月
             map.put("selectmonth",1);
-            pageCount = huiKuaiDao.getHuiKuaiList(map);
-        }else if (Integer.valueOf(map.get("selecttime")+"")==6){//近6个月
+            pageCount = huiKuaiDao.getPageCount(map);
+        }else {//近6个月
             map.put("selectsix",6);
-            pageCount = huiKuaiDao.getHuiKuaiList(map);
-        }else {//最近一周
-            map.put("selectseven",7);
-            pageCount = huiKuaiDao.getHuiKuaiList(map);
+            pageCount = huiKuaiDao.getPageCount(map);
         }
         //判断集合，如果不为空，返回总数量
         if(pageCount!=null&&pageCount.size()>0){

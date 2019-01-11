@@ -51,7 +51,6 @@ public class BorrowController {
     @RequestMapping("/addBorrowOne")
     public Object addBorrowOne(@RequestParam Map map, @RequestParam MultipartFile documentpic, @RequestParam MultipartFile physicapic){
         System.out.println(map);
-        System.out.println(documentpic+","+physicapic);
         //上传图片
         String newFileNameA = ftpUtil.upLoad(documentpic);
         try {
@@ -63,9 +62,12 @@ public class BorrowController {
         map.put("documentpic",newFileNameA);
         map.put("physicapic",newFileNameB);
         int add = borrowService.addOne(map);
+        System.out.println(add);
         if (add==0) {
+            System.out.println("借款失败");
             return "redirect:/jump/borrow";
         }
+        System.out.println("借款成功");
         return "redirect:/jump/index";
     }
 

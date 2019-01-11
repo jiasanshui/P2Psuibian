@@ -32,6 +32,16 @@ public class RoleController {
     private RoleService roleService;
 
     /**
+     * 员工下拉框
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/lists")
+    public  Object getList(){
+       return roleService.getList();
+    }
+
+    /**
      * 展示所有角色信息
      * @return
      */
