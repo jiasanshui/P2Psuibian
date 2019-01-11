@@ -47,6 +47,12 @@ public class WebServiceImpl implements WebService {
     public List<Map> getTeamSList() {
         return webDao.getTeamSList();
     }
+
+    @Override
+    public List<Map> getLiCaiList() {
+        return webDao.getLiCaiList();
+    }
+
     @Override
     public List<Map> getList(Integer noticeid) {
         return webDao.getList(noticeid);

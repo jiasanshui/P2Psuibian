@@ -92,14 +92,16 @@ public class JumpController {
             Map map3 = new HashMap();
             map3.put("parama", "信用");
             List<Map> listCredit = projectService.getList(map3);
+
             List<Map> webList = webService.getWebList();
             List<Map> mediaList = webService.getMediaList();
-            model.addAttribute("webList", webList);
-            model.addAttribute("mediaList", mediaList);
-
+            List<Map> liCaiList=webService.getLiCaiList();
             model.addAttribute("listCar", listCar);
             model.addAttribute("listHouse", listHouse);
             model.addAttribute("listCredit", listCredit);
+            model.addAttribute("webList", webList);
+            model.addAttribute("mediaList", mediaList);
+            model.addAttribute("liCaiList",liCaiList);
             return "qiantai/index";
         }
 

@@ -56,6 +56,13 @@ public interface WebDao {
      */
     @Select("select noticeid,title,picture,content,typeid,to_char(addtime,'yyyy-mm-dd')as addtime from notice where typeid=6")
     List<Map> getTeamSList( );
+    /**
+     * 根据类型查询理财知识
+     * @param
+     * @return
+     */
+    @Select("select noticeid,title,picture,content,typeid,to_char(addtime,'yyyy-mm-dd')as addtime from notice where typeid=7")
+    List<Map> getLiCaiList( );
 
     /**
      * 根据ID查询各条信息

@@ -16,6 +16,7 @@ public interface WebService {
     List<Map> getTeamList( );
     List<Map> getPartnerList( );
     List<Map> getTeamSList( );
+    List<Map> getLiCaiList( );
     List<Map> getList(Integer noticeid);
 
     /**
