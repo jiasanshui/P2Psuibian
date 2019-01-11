@@ -64,4 +64,20 @@ public interface WebDao {
      */
     @Select("select noticeid,title,picture,content,typeid,to_char(addtime,'yyyy-mm-dd')as addtime,type from notice left join noticetype on typeid=id where noticeid=#{noticeid}")
     List<Map> getList(Integer noticeid);
+
+
+    /**
+     * 获取网站公告分页总数量
+     * @param map
+     * @return
+     */
+    @Select("select count(*) cnt from notice where typeid=1")
+    int getPageCount(Map map);
+    /**
+     * 获取媒体报道分页总数量
+     * @param map
+     * @return
+     */
+    @Select("select count(*) cnt from notice where typeid=2")
+    int getPageCountM(Map map);
 }
