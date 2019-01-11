@@ -167,12 +167,11 @@
                 data:{BCID:bcid},
                 success:function (data) {
                     if(data!=null&&data!=""){
-
-                        $.growl({
+                        $.growl.notice({
                             title: "操作提示",
                             message: "解绑成功!"
                         });
-                        setTimeout(function(){location.reload();},3000);
+                        setTimeout(function(){location.reload();},2000);
                     }
                 }
             })

@@ -84,4 +84,11 @@ public interface HuankuanService {
      * @return
      */
     String gethuankuanTime(String limits,String borrownum);
+
+    /**
+     * 修改账户余额
+     * @param map
+     * @return
+     */
+    Boolean updateAmount(Map map);
 }

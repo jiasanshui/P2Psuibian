@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -158,12 +159,19 @@ public class HuankuanController {
                 return 1;
             }
         }
-        return "";
+        return 0;
     }
 
     @RequestMapping("gethuankuanInfo")
-    public Object gethuankuanInfo(String limits,String borrownum,String allMoney,Model model){
+    public Object gethuankuanInfo(String limits, String borrownum, String allMoney, Model model, HttpSession session){
+        //获取还款时间
         String huankuantime = huankuanService.gethuankuanTime(limits, borrownum);
+        Map map = new HashMap();
+        double huanMoney = Double.parseDouble(allMoney);
+        map.put("huanMoney",huanMoney);
+        map.put("borrownum",borrownum);
+        //减去账户余额
+        huankuanService.updateAmount(map);
         model.addAttribute("huankuantime",huankuantime);
         model.addAttribute("allMoney",allMoney);
         return "qiantai/fukuan/fkcg";
