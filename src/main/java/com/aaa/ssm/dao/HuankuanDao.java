@@ -112,4 +112,37 @@ public interface HuankuanDao {
      */
     @Select("select to_char(huankuantime,'yyyy-mm-dd hh:mi:ss') from repayinfo where borrownum=#{borrownum} and timelimit=#{limit}")
     String gethuankuanTime(@Param("limit") Integer limit,@Param("borrownum") String borrownum);
+
+    /**
+     * 添加已还期数
+     * @param borrownum
+     * @param sumTime
+     * @return
+     */
+    @Update("update borrow set yettime=yettime+#{sumTime} where borrownum=#{borrownum}")
+    int updateBorrowYetLimit(@Param("borrownum") String borrownum,@Param("sumTime") Integer sumTime);
+
+    /**
+     * 查询订单的期数
+     * @param borrownum
+     * @return
+     */
+    @Select("select timelimit from borrow where borrownum=#{borrownum}")
+    int getlimits(@Param("borrownum") String borrownum);
+
+    /**
+     * 修改已还完得订单状态
+     * @param borrownum
+     * @return
+     */
+    @Update("update borrow set stateid=10 where borrownum=#{borrownum} and stateid=8")
+    int updateStatus(@Param("borrownum") String borrownum);
+
+    /**
+     * 修改用户账户余额
+     * @param map
+     * @return
+     */
+    @Update("update userinfo set amount=amount-#{huanMoney} where uname=#{userName}")
+    int updateAmount(Map map);
 }

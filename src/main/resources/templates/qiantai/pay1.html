@@ -205,15 +205,12 @@
             }*/
 
 			function getShowPayVal1(){
-                alert(111)
 				var rechargeFlag=checkRecharge1();
 				var agreeFlag=validateAgree2();
 				var payflag=rechargeFlag && bankCardFlag && agreeFlag && btnformFlag;
-				alert(payflag)
 				if(payflag==true){
 				    return true;
                 }
-
 				/*var defaultBankName = $("#form\\:defaultBankName").text();
 				if(defaultBankName.replace(/(^\s*)|(\s*$)/g,"")=="此银行暂不支持"){
 					var $span = "<em></em>此银行暂不支持";
@@ -222,8 +219,6 @@
 				}*/
 				return false;
 			}
-
-
 			$(document).ready(function(){
 				  if("false"=='true'){
 					 //("alert-ClickDialog");

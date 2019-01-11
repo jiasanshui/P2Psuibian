@@ -66,7 +66,7 @@
 		<ul class="top-nav fn-clear">
 			<li > <a href="/jump/index">首页</a> </li>
 			<li> <a href="/jump/list" class="">我要投资</a> </li>
-			<li class="on"><a href="/jump/borrow" class="">我要借款</a> </li>
+			<li ><a href="/jump/borrow" class="">我要借款</a> </li>
 			<li> <a href="/jump/help">安全保障</a> </li>
 			<li class="top-nav-safe"> <a href="/jump/personal">我的账户</a> </li>
 			<li> <a href="/jump/about">关于我们</a> </li>
@@ -220,8 +220,8 @@
 							</el-row>
 							<el-row style="margin-top: 20px" type="flex" justify="end">
 								<el-col :span="6" >
-									<el-button :plain="true" type="primary"  v-if="isDisabled"  disabled size="small" icon="delete">一键还清</el-button>
-									<el-button :plain="true" type="primary"  v-else="!isDisabled"  size="small" icon="delete" @click="returnSelection">一键还清</el-button>
+									<el-button :plain="true" type="primary"  v-if="isDisabled"  disabled size="small" icon="delete">还款</el-button>
+									<el-button :plain="true" type="primary"  v-else="!isDisabled"  size="small" icon="delete" @click="returnSelection">还款</el-button>
 								</el-col>
 								<el-col :span="18" >
 									<el-pagination

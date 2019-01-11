@@ -1,10 +1,14 @@
 package com.aaa.ssm.service.impl;
 
+import com.aaa.ssm.dao.AccountFlowDao;
 import com.aaa.ssm.dao.HuankuanDao;
+import com.aaa.ssm.entity.UserRegister;
 import com.aaa.ssm.service.HuankuanService;
+import com.aaa.ssm.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +23,15 @@ public class HuankuanServiceImpl implements HuankuanService {
 
     @Autowired
     private HuankuanDao huankuanDao;
+
+    @Autowired
+    private AccountFlowDao accountFlowDao;
+
+    @Autowired
+    private HttpSession session;
+
+    @Autowired
+    private UserInfoService userInfoService;
 
     @Override
     public List<Map> getListByUName(Map map) {
@@ -69,9 +82,7 @@ public class HuankuanServiceImpl implements HuankuanService {
     @Override
     public Boolean balancePwd(String pwd,String username) {
         //结算时判断是否密码正确
-        System.out.println(pwd+" "+username);
         String password = huankuanDao.balancePwd(username);
-        System.out.println(password);
         if (pwd.equals(password)){
             return true;
         }else {
@@ -83,14 +94,30 @@ public class HuankuanServiceImpl implements HuankuanService {
     public int balanceUpdateLimit(String limits,String borrownum) {
         String[] limitArr = limits.split(",");
         Boolean isUpdate = false;
+        //还的总期数
+        Integer sumTime=0;
         for (String s : limitArr) {
             Integer timelimit = Integer.valueOf(s);
-            int i = huankuanDao.balanceUpdateLimit(borrownum,timelimit);
-            if(i>0){
+            //修改还款记录表
+            int balanceUpdateLimit = huankuanDao.balanceUpdateLimit(borrownum,timelimit);
+            //修改订单表的已还期数
+            if(balanceUpdateLimit>0){
                 isUpdate = true;
             }else {
                 isUpdate = false;
             }
+            //判断当前还款期数是否是最后一期
+            int getlimits = huankuanDao.getlimits(borrownum);
+            if(timelimit==getlimits){
+                huankuanDao.updateStatus(borrownum);
+            }
+            sumTime++;
+        }
+        int updateBorrowYetLimit = huankuanDao.updateBorrowYetLimit(borrownum, sumTime);
+        if(updateBorrowYetLimit>0&&isUpdate==true){
+            isUpdate=true;
+        }else{
+            isUpdate=false;
         }
         if(isUpdate){
             return 1;
@@ -106,5 +133,24 @@ public class HuankuanServiceImpl implements HuankuanService {
         String s = limitArr[0];
         Integer limit = Integer.valueOf(s);
         return huankuanDao.gethuankuanTime(limit,borrownum);
+    }
+
+    @Override
+    public Boolean updateAmount(Map map) {
+        String userName = (String)session.getAttribute("userName");
+        UserRegister user = (UserRegister) session.getAttribute("user");
+        Integer userId = user.getUserId();
+        map.put("userId",userId);
+        map.put("userName",userName);
+        //修改用户余额
+        int updateAmount = huankuanDao.updateAmount(map);
+        //获取账户余额
+        map.put("amount",userInfoService.getAmountByUName(userName));
+        //添加资金流水
+        int accountFlow = accountFlowDao.huankuanFlow(map);
+        if(updateAmount>0&&accountFlow>0){
+            return true;
+        }
+        return false;
     }
 }

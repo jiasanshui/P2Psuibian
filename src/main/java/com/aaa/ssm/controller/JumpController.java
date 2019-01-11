@@ -722,11 +722,13 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/fukuan")
-    public String fukuan(String borrownum,String limits,Model model){
+    public String fukuan(String borrownum,String limits,Model model,HttpSession session){
+        String userName = (String) session.getAttribute("userName");
         double moneyAll = huankuanService.getMoneyAll(borrownum,limits);
         model.addAttribute("allMoney",moneyAll);
         model.addAttribute("limits",limits);
         model.addAttribute("borrownum",borrownum);
+        model.addAttribute("amount",userInfoService.getAmountByUName(userName));
         return "qiantai/fukuan/fukuan";
     }
 

@@ -7,11 +7,28 @@
 <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no" />
 <link rel="stylesheet" type="text/css" href="../css/wxzf.css">
 <script src="../js/jquery.js"></script>
+  <!--jquery.growl消息框-->
+  <script src="https://cdn.staticfile.org/jquery/2.0.2/jquery.min.js" type="text/javascript"></script>
+  <script src="http://static.runoob.com/assets/jquery/jquery.growl/javascripts/jquery.growl.js" type="text/javascript"></script>
+  <link href="http://static.runoob.com/assets/jquery/jquery.growl/stylesheets/jquery.growl.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
+
 $(function(){
 	//出现浮动层
 	$(".ljzf_but").click(function(){
-		$(".ftc_wzsf").show();
+	    //支付金额
+        var allMoney = '[[${allMoney}]]';
+        //账户余额
+        var accountMoney = '[[${amount}]]';
+        if(allMoney-accountMoney>0){
+            $.growl.error({
+                title: "操作提示",
+                message: "余额不足，请充值！"
+            });
+            setTimeout(function(){location.reload();},2000);
+        }else{
+            $(".ftc_wzsf").show();
+        }
 		});
 	//关闭浮动
 	$(".close").click(function(){
@@ -52,8 +69,16 @@ $(function(){
                                 location.href="/jump/fkcg";
                             },500);
                         }else {  //支付错误
-                            alert(222222);
-                            location.reload();
+                            $.growl.error({
+                                title: "操作提示",
+                                message: "密码错误，请重新输入！"
+                            });
+                            setTimeout(function(){
+                                //location.reload();
+                                $(".mm_box li").removeAttr("class");
+                                i=0;
+                                pwd='';
+                            },2300);
                         }
                     }
                 })
@@ -97,12 +122,12 @@ $(function(){
   <div class="srzfmm_box">
     <div class="qsrzfmm_bt clear_wl"> <img src="../images/xx_03.jpg" class="tx close fl" > <img src="../images/jftc_03.jpg" class="tx fl" ><span class="fl">请输入支付密码</span> </div>
     <div class="zfmmxx_shop">
-      <div class="mz">楚楚街</div>
+      <div class="mz">随便贷科技有限公司</div>
       <div class="wxzf_price"><span th:text="${allMoney}"></span></div>
     </div>
     <!--修改部分-->
     <a href="#" class="blank_yh"> <img src="../images/jftc_07.jpg" class="fl"  >
-      <span class="fl ml5">招商银行信用卡</span> <img src="../images/jftc_09.jpg" class="fr"></a>
+      <span class="fl ml5">余额</span> <img src="../images/jftc_09.jpg" class="fr"></a>
     <ul class="mm_box">
       <li></li>
       <li></li>

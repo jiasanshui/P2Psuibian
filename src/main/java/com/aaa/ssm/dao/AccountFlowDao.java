@@ -109,4 +109,11 @@ public interface AccountFlowDao {
     @Insert("insert into account_flow(id,userid,amount,flowdate,flowtypeid,banknum,changeamount) " +
             "values(seq_account_flow_id.nextval,#{userId},#{amount},sysdate,6,0,#{actualMoney})")
     int addTiXian(Map map);
+
+    /**
+     * 添加还款流水
+     */
+    @Insert("insert into account_flow(id,userid,amount,flowdate,flowtypeid,banknum,changeamount) " +
+            "values(seq_account_flow_id.nextval,#{userId},#{amount},sysdate,7,0,#{huanMoney})")
+    int huankuanFlow(Map map);
 }
