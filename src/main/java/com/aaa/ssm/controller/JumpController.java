@@ -297,6 +297,7 @@ public class JumpController {
             UserRegister user=(UserRegister) session.getAttribute("user");
             Integer userId = user.getUserId();
             map.put("userId",userId);
+            //查询账户
             Map accountInfo=userInfoService.getUserAccount(userId);
             model.addAttribute("account",accountInfo);
             //投资记录
@@ -305,8 +306,6 @@ public class JumpController {
             model.addAttribute("accountflow",accountFlowService.getThreeFlow(map));
             //回款计划
             model.addAttribute("backMoneyList",accountFlowService.getBackMoney(map));
-            //查询账户余额
-            model.addAttribute("amount",userInfoService.getAmountByUName(userName));
             return "qiantai/personal";
         }
     }

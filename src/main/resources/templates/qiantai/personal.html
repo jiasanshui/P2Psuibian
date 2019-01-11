@@ -162,7 +162,7 @@
               <span class="truemoney"><i class="f26 fb" th:text="${account.AMOUNT}"></i> 元</span>
             </li>
             <li><span><em>待收本息</em><i id="dsbx" class="markicon"></i><span class="arrow-show2" style="display:none;">未到账的投资项目的本金、利息总额</span><span class="icon-show2" style="display:none;"></span></span> <span class="truemoney"><i class="f26 fb" th:text="${account.COLLECTPRINCIPAL}+${account.COLLECTINTEREST}"> </i>元</span> </li>
-            <li><span><em>累计收益</em><i id="ljsy" class="markicon"></i><span class="arrow-show3" style="display: none;">已到账的投资收益+未到账的投资收益</span><span class="icon-show3" style="display: none;"></span></span> <span class="truemoney"><i class="f26 fb c-pink" th:text="${account.COLLECTPRINCIPAL}+${account.COLLECTINTEREST}"> </i> 元</span> </li>
+            <li><span><em>累计收益</em><i id="ljsy" class="markicon"></i><span class="arrow-show3" style="display: none;">已到账的投资收益+未到账的投资收益</span><span class="icon-show3" style="display: none;"></span></span> <span class="truemoney"><i class="f26 fb c-pink" th:text="${account.COLLECTINTEREST}"> </i> 元</span> </li>
             <li><span><em>冻结金额</em><i id="ljsy" class="markicon"></i><span class="arrow-show4" style="display: none;">已到账的投资收益+未到账的投资收益</span><span class="icon-show4" style="display: none;"></span></span> <span class="truemoney"><i class="f26 fb c-pink" th:text="${account.FREEZAMOUNT}"> </i> 元</span> </li>
           </ul>
         </div>
