@@ -1,6 +1,7 @@
 package com.aaa.ssm.controller;
 
 import com.aaa.ssm.dao.EmpDao;
+import com.aaa.ssm.service.DeptService;
 import com.aaa.ssm.service.EmpService;
 import com.alibaba.druid.sql.visitor.functions.If;
 import com.github.pagehelper.PageHelper;
@@ -32,46 +33,6 @@ public class EmpController {
     public String toPage(){
         return "houtai/emp/list";
     }
-
-//    /**
-//     * 员工状态下拉框
-//     * @param
-//     * @return
-//     */
-//    @ResponseBody
-//    @RequestMapping("/list")
-//    public  Object getEmpList(){
-//        return empService.getEmpList();
-//    }
-//
-//    /**
-//     * 省下拉框
-//     * @return
-//     */
-//    @ResponseBody
-//    @RequestMapping("/sheng")
-//    public  Object getShengList(){
-//        return  empService.getShengList();
-//    }
-//    /**
-//     * 市下拉框
-//     * @return
-//     */
-//    @ResponseBody
-//    @RequestMapping("/shi")
-//    public  Object getShiList(){
-//        return  empService.getShiList();
-//    }
-//    /**
-//     * 市下拉框
-//     * @return
-//     */
-//    @ResponseBody
-//    @RequestMapping("/qu")
-//    public  Object getQuList(){
-//        return  empService.getQuList();
-//    }
-
     @ResponseBody //返回json
     @RequestMapping("/page")
     public Object page(@RequestBody Map map){
@@ -86,6 +47,16 @@ public class EmpController {
         resultMap.put("total", pageInfo.getTotal());
         return resultMap;
     }
+
+    /**
+     * 员工状态下拉框
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getLists")
+    public  Object getLists(){
+        return  empService.getLists();
+    }
     /**
      * 添加
      *
@@ -94,14 +65,14 @@ public class EmpController {
      * @ResponseBody 该方法接收的数据为json对象
      * @RequestBody 该方法返回值为json对象
      */
+    private DeptService deptService;
+
     @ResponseBody
     @RequestMapping("/add")
     public Object add(@RequestBody Map map) {
             Map map1=new HashMap();
-
-        String address = map.get("SHENGNAME").toString().concat(map.get("SHINAME").toString().concat(map.get("QUNAME").toString().concat(map.get("ADDRESS")+"")));
-        map.put("address",address);
-
+           String address = map.get("SHENGNAME").toString().concat(map.get("SHINAME").toString().concat(map.get("QUNAME").toString().concat(map.get("ADDR")+"")));
+            map.put("address",address);
             String empno = (String) map.get("EMPNO");
             String phones= (String) map.get("PHONE");
             String idcard = (String) map.get("IDCARD");
@@ -133,6 +104,9 @@ public class EmpController {
     @ResponseBody
     @RequestMapping("/update")
     public Object update(@RequestBody Map map){
+        System.out.println(map);
+        String address = map.get("SHENGNAME").toString().concat(map.get("SHINAME").toString().concat(map.get("QUNAME").toString().concat(map.get("ADDR")+"")));
+        map.put("address",address);
         return empService.update(map);
     }
     /**

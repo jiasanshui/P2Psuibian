@@ -258,12 +258,13 @@
 				var $checkname=$("#bank-check2").children("b").hasClass("selected");
 				if(!($checkname))
 				{
-					showSpan('alert-tyht');
-					return false;
+					//showSpan('alert-tyht');
+                    alert(1111111111);
+					return true;
 				}
 				else
 				{
-					return true;		
+					return false;
 				}
 			}
 			
@@ -459,7 +460,10 @@
                   <label id="defaultBankName" style="font-size:16px;"> </label>
                   </em> </span> <span class="quick-error3" id="bankCardError"></span></div>-->
                 <div class="info-3" id="bankname"></div>
-                <div class="bank-check" id="bank-check2"> <b class="selected" id="bankProtocol1"></b><span class="bank-agree">我同意并接受<a href="#" target="_blank">《你我贷投资咨询与管理服务电子协议》</a></span> <span class="error" id="bankProtocol_message" style="display:none;margin-top:-3px;">请同意协议内容！</span> </div>
+                <div class="bank-check" id="bank-check2">
+                  <b class="selected" id="bankProtocol1"></b>
+                  <span class="bank-agree">我同意并接受<a href="#" target="_blank">《你我贷投资咨询与管理服务电子协议》</a>
+                  </span> <span class="error" id="bankProtocol_message" style="display:none;margin-top:-3px;">请同意协议内容！</span> </div>
                 <input type="submit" name="" value="充值" class="btn-paycz" onclick="return getShowPayVal1()">
               </div>
               <div class="fr bank-info">

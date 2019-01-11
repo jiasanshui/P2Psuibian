@@ -57,41 +57,15 @@ public class EmpServiveImpl implements EmpService {
         return null;
     }
 
-//    /**
-//     * 员工状态下拉
-//     * @return
-//     */
-//    @Override
-//    public List<Map> getEmpList() {
-//        return empDao.getEmpList();
-//    }
+    /**
+     * 员工状态下拉
+     * @return
+     */
+    @Override
+    public List<Map> getLists() {
+        return empDao.getLists();
+    }
 
-//    /**
-//     * 省下拉框
-//     * @return
-//     */
-//    @Override
-//    public List<Map> getShengList() {
-//        return empDao.getShengList();
-//    }
-
-//    /**
-//     * 市下拉框
-//     * @return
-//     */
-//    @Override
-//    public List<Map> getShiList() {
-//        return empDao.getShiList();
-//    }
-
-//    /**
-//     * 区下拉框
-//     * @return
-//     */
-//    @Override
-//    public List<Map> getQuList() {
-//        return empDao.getQuList();
-//    }
 
     @Override
     public int add(Map map) {
