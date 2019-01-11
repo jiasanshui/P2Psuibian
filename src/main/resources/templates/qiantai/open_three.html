@@ -211,7 +211,7 @@
               </li>
               <li>
                 <label>银行卡号</label>
-                <input type="text" id="bankCardNo" name="bankcard" onblur="return checkBankCardNo()" class="pay-txt" maxlength="18" placeholder="您的银行卡号" oninput="changeValue()">
+                <input type="text" id="bankCardNo" name="bankcard" onblur="return checkBankCardNo()" class="pay-txt" maxlength="19" placeholder="您的银行卡号" oninput="changeValue()">
                 <div id="bankCardError">
 
                 </div>
@@ -233,7 +233,7 @@
             function checkBankCardNo() {
                 //$("#form\\:defaultBankName").text("");
                 var cardNo = $("#bankCardNo").val();
-                var reg = /^\d{16,19}$/g; // 以19位数字开头，以19位数字结尾
+                var reg = /^\d{19}$/g; // 以19位数字开头，以19位数字结尾
                 if( !reg.test(cardNo) )
                 {
                     //$(".info2-bank").css({"display":"none"});

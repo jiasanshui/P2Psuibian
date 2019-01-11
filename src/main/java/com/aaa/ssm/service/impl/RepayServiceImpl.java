@@ -46,6 +46,9 @@ public class RepayServiceImpl implements RepayService {
     @Autowired
     private TenderDao tenderDao;
 
+    @Autowired
+    private HuiKuaiDao huiKuaiDao;
+
     /**
      * 满标二审通过操作
      * 1、更改标的状态
@@ -211,7 +214,7 @@ public class RepayServiceImpl implements RepayService {
                 calendar.add(Calendar.MONTH,limit);
                 SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
                 String dformat = d.format(calendar.getTime());
-                map.put("TIMELIMIT",limit);
+                map.put("TIMELIMIT",1);
                 map.put("REPAYLIMIT",dformat);
                 map.put("repayMoney",benjin+lixi);
                 int bx = repayDao.addLast(map);
@@ -281,6 +284,7 @@ public class RepayServiceImpl implements RepayService {
          * 更改投资人的账户
          * 1、投资人账户：冻结金额=原冻结金额-投资金额 、代收本金=投资金额+原本金、代收利息=总利息+原利息
          * 2、插入账户流水列表
+         * 3、生成回款计划表  id,userid,tamount,backtime,backmoney,borrownum
          */
         //拿出投标人的tendernum
         List list = (ArrayList)map.get("submitArr");
@@ -308,6 +312,12 @@ public class RepayServiceImpl implements RepayService {
             map.put("tUserid",tUserid);
             int add=userInfoDao.addTaccountFlow(map);
             if (add==0){
+                flag=false;
+            }
+            //生成回款计划表  id,tUserid,tamount,backtime,backmoney,borrownum
+            map.put("backmoney",tamount+collectlixi);
+            int addPlan=huiKuaiDao.addBackMoneyPlan(map);
+            if (addPlan==0){
                 flag=false;
             }
         }

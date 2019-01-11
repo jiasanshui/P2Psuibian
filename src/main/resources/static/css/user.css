@@ -1394,7 +1394,7 @@ transition: transform 1s linear;}
 .online-mar { padding-top:40px; }
 .quick-main { min-height: 300px; padding: 40px 29px; border: 1px solid #dcdcdc; }
 .quick-main .bank-info  { margin-top: -5px; }
-.quick-info {  width: 430px; }
+.quick-info {  width: 600px; }
 .quick-info .info-1 { height: 40px; line-height: 40px; position: relative;}
 .quick-info .info-tit { display: inline-block; font-size: 14px; font-weight: bold; color: #4a4a4a; margin-right: 20px; float: left; }
 .quick-info .info1-input { display: inline-block; }
@@ -1402,6 +1402,8 @@ transition: transform 1s linear;}
 .quick-info .info1-input em { float:left; margin-left: 15px; }
 .quick-info .quick-error { position: absolute; top:0; left: 250px; z-index:9; font-size: 12px; color: #FF6565; white-space:nowrap;}
 .quick-info .quick-error em { display: inline-block; width: 24px; height: 33px; background: url(../../images/top-icon.png) -10px -410px no-repeat; vertical-align: middle; }
+
+.quick-info .quick-yinhangka em { display: inline-block; width: 24px; height: 33px; background: url(../../images/top-icon.png) -10px -410px no-repeat; vertical-align: middle; }
 
 
 .quick-info .quick-error2 { position: absolute; top:0; left: 250px; font-size: 12px; color: #FF6565;}
