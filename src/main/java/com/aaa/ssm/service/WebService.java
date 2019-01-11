@@ -17,4 +17,17 @@ public interface WebService {
     List<Map> getPartnerList( );
     List<Map> getTeamSList( );
     List<Map> getList(Integer noticeid);
+
+    /**
+     * 获取网站公告分页总数量
+     * @param map
+     * @return
+     */
+    int getPageCount(Map map);
+    /**
+     * 获取媒体报道分页总数量
+     * @param map
+     * @return
+     */
+    int getPageCountM(Map map);
 }

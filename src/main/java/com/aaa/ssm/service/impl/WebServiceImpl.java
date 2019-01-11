@@ -51,5 +51,12 @@ public class WebServiceImpl implements WebService {
     public List<Map> getList(Integer noticeid) {
         return webDao.getList(noticeid);
     }
-
+    @Override
+    public int getPageCount(Map map) {
+        return webDao.getPageCount(map);
+    }
+    @Override
+    public int getPageCountM(Map map) {
+        return webDao.getPageCountM(map);
+    }
 }

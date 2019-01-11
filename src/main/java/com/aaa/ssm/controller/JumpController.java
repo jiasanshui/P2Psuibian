@@ -463,8 +463,16 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/media_report")
-    public String media_report(Model model){
-       List<Map> mediaList=webService.getMediaList();
+    public String media_report(Model model,Integer pageNo,@RequestParam Map map,HttpServletRequest request){
+        //分页总数量
+        int pageSize=5;
+        int tPageNo = pageNo==null?1:pageNo;
+        map.put("pageNo",tPageNo);
+        map.put("pageSize",pageSize);
+        String pageString = new PageUtil(tPageNo, pageSize, webService.getPageCountM(map), request).getPageString();
+
+        List<Map> mediaList=webService.getMediaList();
+        model.addAttribute("pageString",pageString);
         model.addAttribute("mediaList",mediaList);
         return "qiantai/media_report";
     }
@@ -587,8 +595,19 @@ public class JumpController {
      * @return
      */
     @RequestMapping("/site_notice")
-    public String site_notice(Model model) {
+    public String site_notice(Model model,Integer pageNo,@RequestParam Map map,HttpServletRequest request) {
+
+        //分页总数量
+        int pageSize=5;
+        int tPageNo = pageNo==null?1:pageNo;
+        map.put("pageNo",tPageNo);
+        map.put("pageSize",pageSize);
+        String pageString = new PageUtil(tPageNo, pageSize, webService.getPageCount(map), request).getPageString();
+
         List<Map> webList = webService.getWebList();
+        //分页
+        model.addAttribute("pageString",pageString);
+
         model.addAttribute("webList", webList);
         return "qiantai/site_notice";
     }
