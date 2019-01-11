@@ -503,9 +503,14 @@ public class JumpController {
                 map1.put("mount", cMount);
             }
         }
+        System.out.println(map);
         String pageString = new PageUtil(pageNo, pageSize, pageCount, request).getPageString();
         model.addAttribute("huiList",huiKuaiList);
         model.addAttribute("pageString",pageString);
+        if(StringUtil.isEmpty(map.get("selecttime"))){
+            map.put("selecttime","");
+        }
+        model.addAttribute("map",map);
         return "qiantai/money_plan";
     }
     /**
