@@ -543,7 +543,7 @@ public class JumpController {
                 return "qiantai/money_plan";
             }
         }
-        return null;
+        return "qiantai/money_plan";
     }
     /**
      * 跳转到资金记录页面
