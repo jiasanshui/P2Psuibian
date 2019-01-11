@@ -234,7 +234,7 @@ $(function(){
                 <div class="title">
                     <i class="icon icon-zhai" title="债权贷"></i>
                     <!--<p id="Project" class="f18" title="金女士债权质押借款1万元" target="_blank"><span th:text="${house.DES}" style="font-size: 20px;"></span></p>-->
-                    <a th:href="'/jump/infor?borrowNum='+${house.BORROWNUM}" class="f18" title="金女士债权质押借款1万元" target="_blank"><span th:text="${house.DES}" style="font-size: 20px;"></span></a>
+                    <span  class="f18" title="金女士债权质押借款1万元" target="_blank"><span th:text="${house.DES}" style="font-size: 20px;"></span></span>
                 </div>
                 <table width="100%" border="0" cellpadding="0" cellspacing="0">
                   <tbody>
@@ -292,12 +292,12 @@ $(function(){
                   <a href="#" target="_blank">
                   <i class="icon icon-che" title="车易贷"></i>
                   </a>
-                  <a th:href="@{'/jump/infor?borrownum='+${car.BORROWNUM}}" class="f18" title="毕先生宝马320汽车质押贷款10万元" target="_blank">
+                  <span  class="f18" title="毕先生宝马320汽车质押贷款10万元" target="_blank">
                     <!--<a th:href="'@{/jump/infor(borrownum=${car.BORROWNUM})}'" class="f18" target="_blank">-->
                     <span th:text="${car.APPLICANT}"></span>
                     <span th:text="${car.DANBAOSTYLE}"></span>
                     <span th:text="${car.BORROWMONEY}"></span>
-                  </a>
+                  </span>
                 </div>
                 <table width="100%" border="0" cellpadding="0" cellspacing="0">
                   <tbody>
@@ -350,13 +350,13 @@ $(function(){
               <li>
                 <div class="title">
                   <a href="#" target="_blank">
-                    <i class="icon icon-che" title="房易贷"></i>
+                    <i class="icon icon-fang" title="房易贷"></i>
                   </a>
-                  <a th:href="@{'/jump/infor?borrownum='+${house.BORROWNUM}}" class="f18" title="毕先生宝马320汽车质押贷款10万元" target="_blank">
+                  <span  class="f18" title="毕先生宝马320汽车质押贷款10万元" target="_blank">
                     <span th:text="${house.APPLICANT}"></span>
                     <span th:text="${house.DANBAOSTYLE}"></span>
                     <span th:text="${house.BORROWMONEY}"></span>
-                  </a>
+                  </span>
                 </div>
                 <table width="100%" border="0" cellpadding="0" cellspacing="0">
                   <tbody>
@@ -409,13 +409,13 @@ $(function(){
               <li>
                 <div class="title">
                   <a href="#" target="_blank">
-                    <i class="icon icon-che" title="车易贷"></i>
+                    <i class="icon icon-zhai" title="信用贷"></i>
                   </a>
-                  <a th:href="@{'/jump/infor?borrownum='+${credit.BORROWNUM}}"  class="f18" title="毕先生宝马320汽车质押贷款10万元" target="_blank">
+                  <span   class="f18" title="毕先生宝马320汽车质押贷款10万元" target="_blank">
                     <span th:text="${credit.APPLICANT}"></span>
                     <span th:text="${credit.DANBAOSTYLE}"></span>
                     <span th:text="${credit.BORROWMONEY}"></span>
-                  </a>
+                  </span>
                 </div>
                 <table width="100%" border="0" cellpadding="0" cellspacing="0">
                   <tbody>
@@ -456,11 +456,11 @@ $(function(){
 
     </div>
     <div class="page-right fn-right" style="top: 0px;">
-      <div class="mod-risk-tip"><i class="icon icon-tip"></i><a href="/jump/bxbz/index" class="c-orange">收益与风险并存，请理性选择平台</a></div>
+      <div class="mod-risk-tip"><i class="icon icon-tip"></i><span class="c-orange">收益与风险并存，请理性选择平台</span></div>
       <div class="mod mod-notice mrt20">
         <div class="hd">
           <h3>网站公告</h3>
-          <a href="/jump/gonggao/news/index" class="fn-right">更多&gt;</a></div>
+          <a href="/jump/site_notice" class="fn-right">更多&gt;</a></div>
         <div class="bd">
           <div class="article-list clearfix" th:each="web : ${webList}">
             <ul>
@@ -523,13 +523,8 @@ $(function(){
             </div>
             <div class="ui-tab-item">
               <div class="article-list">
-                <ul>
-                  <li>[<a href="#">P2P网贷</a>]<a href="#" title="随着互联网金融的快速发展，越来越多的人开始加入到p2p网贷投资行列，作为一种相对来说还比较新兴的理财产品" target="_blank"> 合肥p2p网贷哪家好，投资新人该如何选择p2p网贷平台</a></li>
-                  <li>[<a href="#">外汇</a>]<a href="#" title="投资者应知道，外汇交易市场是一个保证金交易市场，投资者可以利用外汇保证金交易进行更有收益空间的交易" target="_blank"> 什么是外汇保证金交易有哪些方式</a></li>
-                  <li>[<a href="#">外汇</a>]<a href="#" title="很多的投资者都听说过外汇保证金交易，他们都知道该交易方式可以让投资者有机会进行更有收益空间的交易" target="_blank"> 外汇保证金交易开户有什么样的具体优势呢？</a></li>
-                  <li>[<a href="#">保险理财</a>]<a href="#" title="保险理财因为其特殊性而对人员专业知识、道德标准以及人生阅历提出了较高要求。但是我国的保险业人才还存在很多问题" target="_blank"> 保险公司存在的人才需求问题</a></li>
-                  <li>[<a href="#">保险理财</a>]<a href="#" title="保险理财的专业人士缺乏已经成为我国保险公司个人理财业务发展的一大瓶颈，保险公司的员工要能够成为一个好的客户经理" target="_blank"> 保险理财产品销售人员需要具备的基本素质</a></li>
-                  <li>[<a href="#">外汇</a>]<a href="#" title="外货期货也叫货币期货，所谓期货自然与现货有着明显的区别，外汇期货除了价格表现形式上与现货有所差异之外，外汇期货交易是用一种货币按照汇率兑换成另一种货币的期货合约" target="_blank"> 什么是外汇期货及其套利形式介绍</a></li>
+                <ul th:each="liCai : ${liCaiList}">
+                  <li><a th:href="@{'http://'+${liCai.CONTENT}}" th:text="${liCai.TITLE}" target="_blank"></a></li>
                 </ul>
               </div>
             </div>

@@ -102,43 +102,44 @@
       </ul>
     </div>
     <div class="personal-main">
-      <div class="personal-back">
+      <div class="personal-money">
         <h3><i>回款计划</i></h3>
-        <form id="form" name="form" method="post" action="">
-          <input type="hidden" name="form" value="form">
-          <div class="back-money"> <span class="back-own"><b class="fb">待收本金</b><br>
-            <i>0.00</i> 元</span> <span class="back-profit"><b class="fb">待收收益</b><br>
-            <i>0.00</i> 元</span> </div>
-          <div class="back-choosedate"> <span class="choosedate">筛选时间</span>
-            <div id="datebox" class="select-date"> <span class="select-title" style="display:inline-block;height:25px;line-height:20px;"></span>
-              <ul>
-                <li>全部</li>
-              </ul>
+        <form action="/jump/money_plan" method="post">
+          <div class="money-choose">
+            <span class="money-date2">筛选时间</span>
+            <div>
+              <select  name="selecttime" >
+                <option value=""  th:selected="${map.selecttime==''}">全部</option>
+                <option value="0" th:selected="${map.selecttime=='0'}">今天</option>
+                <option value="1" th:selected="${map.selecttime=='1'}">一个月</option>
+                <option value="6" th:selected="${map.selecttime=='6'}">六个月</option>
+              </select>
+              <input type="submit" value="查询">
             </div>
-            <span id="form:datapicker1" class="datepicker">
-            <input type="text" class="ui-inputfield ui-widget ui-state-default ui-corner-all hasDatepicker" id="">
-            </span> - <span id="form:datapicker2" class="datepicker">
-            <input type="text" class="ui-inputfield ui-widget ui-state-default ui-corner-all hasDatepicker" id="datetimepicker20">
-            </span>
-            <input type="hidden" name="">
-            <button  name="" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn-ok btn-235 txt-right"  type="submit"><span class="ui-button-text ui-c">查询</span></button>
           </div>
-          <span id="form:dataTable">
-          <div class="personal-backlist">
-            <div class="pmain-contitle"> <span class="pmain-titledate fb">计划回款时间</span> <span class="pmain-titleproject fb">项目</span> <span class="pmain-titletype fb">类型</span> <span class="pmain-titlemoney fb">回款金额</span> </div>
-            <ul style="float:left;">
-              <li th:each="list : ${huiList}">
-                <span class="pmain-titledate" th:text="${list.STARTTIME}"></span>
-                <span class="pmain-titleproject" th:text="${list.DES}"></span>
-                <span class="pmain-titletype" th:text="${list.DANBAOSTYLE}"></span>
-                <span class="pmain-titlemoney" th:text="${list.mount}"></span>
-              </li>
-              <li >
-                <span th:utext="${pageString}" id="page"></span>
-              </li>
-            </ul>
+          <br>
+          <div class="investnote-list">
+            <div class="investnote-contitle">
+              <table width="800px">
+                <tr align="center" style="line-height: 3">
+                  <!-- <td>订单id</td>-->
+                  <td>计划回款时间</td>
+                  <td>项目</td>
+                  <td>项目类型</td>
+                  <td>回款金额</td>
+                </tr>
+                <tr th:each="list : ${huiList}" align="center" style="line-height: 3">
+                  <td th:text="${list.ENDTIME}"></td>
+                  <td th:text="${list.DES}" ></td>
+                  <td th:text="${list.DANBAOSTYLE}" ></td>
+                  <td th:text="${list.mount}" ></td>
+                </tr>
+                <tr align="center" style="line-height: 3">
+                  <td colspan="4" th:utext="${pageString}" STYLE="text-align: center;"></td>
+                </tr>
+              </table>
+            </div>
           </div>
-          </span>
         </form>
       </div>
     </div>
