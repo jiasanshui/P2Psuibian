@@ -58,7 +58,7 @@ public interface RoleDao {
      * @param roleid
      * @return
      */
-    @Select("select count(*) from emp where roleid=#{roleid}")
+    @Select("select count(*) from emp where roleid=#{roleid} and state=1")
     int haveEmp(Integer roleid);
 
     /**
