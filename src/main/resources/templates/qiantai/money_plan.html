@@ -106,17 +106,6 @@
         <h3><i>回款计划</i></h3>
         <form action="/jump/money_plan" method="post">
           <div class="money-choose">
-            <span class="money-date2">筛选时间</span>
-            <div>
-              <select  name="selecttime" >
-                <option value=""  th:selected="${map.selecttime==''}">全部</option>
-                <option value="0" th:selected="${map.selecttime=='0'}">今天</option>
-                <option value="1" th:selected="${map.selecttime=='1'}">一个月</option>
-                <option value="6" th:selected="${map.selecttime=='6'}">六个月</option>
-              </select>
-              <input type="submit" value="查询">
-            </div>
-          </div>
           <br>
           <div class="investnote-list">
             <div class="investnote-contitle">
@@ -128,14 +117,11 @@
                   <td>项目类型</td>
                   <td>回款金额</td>
                 </tr>
-                <tr th:each="list : ${huiList}" align="center" style="line-height: 3">
-                  <td th:text="${list.ENDTIME}"></td>
-                  <td th:text="${list.DES}" ></td>
-                  <td th:text="${list.DANBAOSTYLE}" ></td>
-                  <td th:text="${list.mount}" ></td>
-                </tr>
-                <tr align="center" style="line-height: 3">
-                  <td colspan="4" th:utext="${pageString}" STYLE="text-align: center;"></td>
+                <tr th:each="rows : ${huiList}" align="center" style="line-height: 3">
+                  <td th:text="${rows.DES}" ></td>
+                  <td th:text="${rows.TAMOUNT}" ></td>
+                  <td th:text="${rows.BACKTIME}" ></td>
+                  <td th:text="${rows.BACKMONEY}" ></td>
                 </tr>
               </table>
             </div>
