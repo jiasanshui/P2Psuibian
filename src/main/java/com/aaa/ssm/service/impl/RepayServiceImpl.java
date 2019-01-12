@@ -142,7 +142,6 @@ public class RepayServiceImpl implements RepayService {
                     map.put("TIMELIMIT",i);
                     map.put("REPAYLIMIT",format);
                     //2.向还款表中插入数据
-                    System.out.println("等额本息——————————————————————"+map);
                     int s = repayDao.add(map);
                     if (s==0){
                         flag=false;
@@ -264,7 +263,6 @@ public class RepayServiceImpl implements RepayService {
         //调用等额本息工具类，算出待还金额,即本息和
         double total = DEBXUtil.getPrincipalInterestCount(benjin, apr, totalMonth);
         map.put("total",total);
-        System.out.println(benjin+"------------------------"+total+"------------------"+userid);
         int i=0;
         if ("信用贷款".equals(map.get("DANBAOSTYLE"))){
             i=userInfoDao.updateAccountOne(map);
@@ -314,7 +312,7 @@ public class RepayServiceImpl implements RepayService {
             if (add==0){
                 flag=false;
             }
-            //生成回款计划表  id,tUserid,tamount,backtime,backmoney,borrownum
+            //生成回款计划表
             map.put("backmoney",tamount+collectlixi);
             int addPlan=huiKuaiDao.addBackMoneyPlan(map);
             if (addPlan==0){

@@ -3,6 +3,7 @@ package com.aaa.ssm.dao;
 import com.aaa.ssm.entity.UserRegister;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import java.util.Map;
  * author:fhm
  * createTime:2018-12-07 22:17
  */
+@Component
 public interface UserRegisterDao {
     /**
      * 根据用户名找用户

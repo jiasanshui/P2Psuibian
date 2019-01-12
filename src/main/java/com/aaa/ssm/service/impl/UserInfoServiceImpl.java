@@ -27,9 +27,6 @@ public class UserInfoServiceImpl implements UserInfoService {
     private UserInfoDao userInfoDao;
 
     @Autowired
-    private BorrowDao borrowDao;
-
-    @Autowired
     private AduitUserinfoDao aduitUserinfoDao;
 
     @Autowired
@@ -206,7 +203,6 @@ public class UserInfoServiceImpl implements UserInfoService {
         try {
             return Double.parseDouble(touderMoney.get(0).get("TOUDERMONEY")+"");
         } catch (NullPointerException e) {
-            //e.printStackTrace();
             return 0;
         }
     }

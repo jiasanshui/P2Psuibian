@@ -1,5 +1,7 @@
 package com.aaa.ssm.dao;
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +11,7 @@ import java.util.Map;
  * author:hulu
  * createTime:2018-12-21 14:28
  */
+@Component
 public interface PageDao {
     /**
      * 获取分页数据

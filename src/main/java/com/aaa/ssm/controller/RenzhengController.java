@@ -44,9 +44,9 @@ public class RenzhengController {
     public Object update(@RequestParam Map map, @RequestParam MultipartFile idcarda, @RequestParam MultipartFile idcardb,
                          @RequestParam MultipartFile wageflow, @RequestParam MultipartFile creditreport) throws ParseException {
         //上传图片
-            //String newFileNameA = FileUtil.uploadFile(uploadPath, idcarda);
+        //String newFileNameA = FileUtil.uploadFile(uploadPath, idcarda);
         String newFileNameA = ftpUtil.upLoad(idcarda);
-           // String newFileNameB = FileUtil.uploadFile(uploadPath, idcardb);
+        // String newFileNameB = FileUtil.uploadFile(uploadPath, idcardb);
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {

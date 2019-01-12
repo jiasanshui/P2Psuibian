@@ -69,9 +69,7 @@ public class DeptServiceImpl implements DeptService {
      */
     @Override
     public int delete(Integer deptid) {
-
         List<Map> list = empDao.getempInfo(deptid);
-
         if (list!=null&&list.size()>0){
             return 0;
         }else{

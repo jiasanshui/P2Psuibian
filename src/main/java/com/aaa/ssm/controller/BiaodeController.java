@@ -46,7 +46,6 @@ public class BiaodeController {
         PageHelper.startPage(Integer.valueOf(map.get("pageNo") + ""), Integer.valueOf(map.get("pageSize") + ""));
         //用pageInfo对结果进行封装
         PageInfo<Map> pageInfo = new PageInfo<Map>(biaodeService.getList(map));
-        //System.out.println(map);
         Map resultMap = new HashMap();
         //获取当前页数据
         resultMap.put("pageData", pageInfo.getList());
@@ -68,7 +67,6 @@ public class BiaodeController {
         PageHelper.startPage(Integer.valueOf(map.get("pageNo") + ""), Integer.valueOf(map.get("pageSize") + ""));
         //用pageInfo对结果进行封装
         PageInfo<Map> pageInfo = new PageInfo<Map>(biaodeService.getListOne(map));
-        //System.out.println(map);
         Map resultMap = new HashMap();
         //获取当前页数据
         resultMap.put("pageData", pageInfo.getList());
@@ -136,7 +134,6 @@ public class BiaodeController {
     @ResponseBody
     @RequestMapping("/userinfo")
     public Object getAllUserByUserid(@RequestBody Map paramMap) {
-        //System.out.println(paramMap);
         Map map = userInfoService.getAllUserByuserid(Integer.valueOf(paramMap.get("userid") + "")).get(0);
         Map aduitBid = biaodeService.getAduitBid((String) paramMap.get("borrownum"));
         map.put("ENAME", aduitBid.get("ENAME"));

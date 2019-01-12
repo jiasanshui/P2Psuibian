@@ -41,7 +41,6 @@ public class LoanController {
         PageHelper.startPage(Integer.valueOf(map.get("pageNo")+""),Integer.valueOf(map.get("pageSize")+""));
         //用pageInfo对结果进行封装
         PageInfo<Map> pageInfo=new PageInfo<Map>(biaodeService.getPageByLoan(map));
-        //System.out.println(map);
         Map resultMap=new HashMap();
         //获取当前页数据
         resultMap.put("pageData",pageInfo.getList());
@@ -58,18 +57,12 @@ public class LoanController {
      * 4、用户账户表（借款人账户余额：+借款金额；待还金额：本息和
      *                投资人账户：冻结金额=原冻结金额-投资金额 、代收本金=投资金额、代收利息=总利息  ）
      * 5、账户流水表（变动）
-     * {PAYMENT=按月付息，到期还本, DAYS=4, APR=0.05, BORROWMONEY=99995,
-     * APPLICANT=贾源浩, TIMELIMIT=3, USERID=3, DANBAOSTYLE=车辆之押贷款,
-     * WINBIDMONEY=100000, BORROWNUM=BD0000004, BORROWID=26, ADUITRESULT=1,
-     * OPERATORID=44, ADUITREMARK=rtyyh, submitArr=[4, 4, 4, 4, 4]}
      * @param map
      * @return
      */
     @ResponseBody
     @RequestMapping("/check")
     public Object loanRepay(@RequestBody Map map){
-        //System.out.println(map);
-        //System.out.println(map.get("submitArr"));
         return repayService.repayPlan(map);
     }
 }

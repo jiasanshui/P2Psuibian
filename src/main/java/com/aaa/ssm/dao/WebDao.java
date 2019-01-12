@@ -1,6 +1,7 @@
 package com.aaa.ssm.dao;
 
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.Map;
  * author:hulu
  * createTime:2018-12-18 11:17
  */
+@Component
 public interface WebDao {
     /**
      * 根据类型查询网站公告

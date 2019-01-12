@@ -1,6 +1,7 @@
 package com.aaa.ssm.dao;
 
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.Map;
  * author:yb
  * createTime:2019-01-04 17:18
  */
+@Component
 public interface DepositsRecordDao {
     /**
      * 通过投资得到记录表

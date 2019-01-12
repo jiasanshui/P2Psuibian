@@ -13,7 +13,7 @@ import java.util.Map;
  * createTime:2018-12-10 08:18
  * appcode:c79abd4066734ca8a6a297d1a5cded83
  * appcode:83604d48b8dd49ba8aa501b77ad4a164
- * appcode:
+ * appcode:a9b30219e50b4fc085c213714919b59c(1次)
  */
 public class SendMsgUtil {
     private String phone;
@@ -23,7 +23,7 @@ public class SendMsgUtil {
         String host = "https://fesms.market.alicloudapi.com";
         String path = "/sms/";
         String method = "GET";
-        String appcode = "a9b30219e50b4fc085c213714919b59c";
+        String appcode = "c79abd4066734ca8a6a297d1a5cded83";
         Map<String, String> headers = new HashMap<String, String>();
         String code="";
         //最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105

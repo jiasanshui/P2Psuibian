@@ -47,7 +47,6 @@ public class AccountFlowController {
     @ResponseBody
     @RequestMapping("/userflow")
     public Object accountFlow(Model model, @RequestParam Map map, HttpServletRequest request){
-        System.out.println(map);
         UserRegister user=(UserRegister) session.getAttribute("user");
         if (user==null){
             Integer userId = user.getUserId();
@@ -66,7 +65,6 @@ public class AccountFlowController {
             map.put("pageNo",pageNo);
             //分页工具使用
             String pageString = new PageUtil(pageNo, pageSize, pageCount, request).getPageString();
-            //List<Map> recordByDeposits = accountFlowService.getAccountFlow(map);
             model.addAttribute("accountflow",accountFlowService.getAccountFlow(map));
             model.addAttribute("pageString", pageString);
             return "qiantai/money_record";

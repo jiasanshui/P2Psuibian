@@ -1,6 +1,7 @@
 package com.aaa.ssm.dao;
 
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.Map;
  * author:hulu
  * createTime:2018-12-28 13:13
  */
+@Component
 public interface EchartDao {
     /**
      * 查询systemflow表资金流水

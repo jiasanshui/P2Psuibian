@@ -45,22 +45,6 @@ public class NoticeController {
     private String uploadPath;
 
     /**
-     * 显示图片
-     * @param fileName
-     * @return
-     */
-/*    @RequestMapping("show")
-    public ResponseEntity show(String fileName){
-        try {
-            //System.out.println("1111");
-            // 由于是读取本机的文件，file是一定要加上的， path是在application配置文件中的路径
-            //uploadPath = D:/files/   fileName=332854a6-e3a1-4b90-973a-4fca79068017.jpg
-            return ResponseEntity.ok(resourceLoader.getResource("file:" + uploadPath + fileName));
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
-    }*/
-    /**
      * 上传方法
      * @param file
      * @return

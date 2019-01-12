@@ -56,7 +56,6 @@ public class PowerController {
     @RequestMapping("/saverolepower")
     @ResponseBody
     public Object saverolepower(@RequestBody TbRole role){
-        // System.out.println(role.getPowersid());
         return powerService.saveRolePower(role);
     }
 

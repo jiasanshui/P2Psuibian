@@ -93,7 +93,6 @@ public class DeptController {
     @ResponseBody
     @RequestMapping("/update")
     public Object update(@RequestBody Map map) {
-        System.out.println(map);
         return deptService.update(map);
     }
 

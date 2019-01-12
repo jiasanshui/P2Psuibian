@@ -31,7 +31,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public Admin getUserByuserName(String username) {
         List<Admin> userList = userDao.getUserByuserName(username);
-        //System.out.println(userList.get(0).getId()+"----------"+userList.get(0).getAname());
         if (userList!=null&&userList.size()>0){
             return userList.get(0);
         }

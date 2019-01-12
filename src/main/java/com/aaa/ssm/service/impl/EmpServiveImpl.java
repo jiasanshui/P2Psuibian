@@ -86,10 +86,8 @@ public class EmpServiveImpl implements EmpService {
     public int bathDelete(String ids) {
         String[] idsArray = ids.split(",");
         List list = new ArrayList();
-
         for (String s : idsArray) {
             list.add(s);
-
         }
         return empDao.batchDelete(list);
     }

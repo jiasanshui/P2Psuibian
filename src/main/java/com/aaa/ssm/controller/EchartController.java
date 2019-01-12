@@ -25,7 +25,6 @@ public class EchartController {
     @ResponseBody
     public Object getSystemFlow(Integer year){
         List<Map> systemFlowList = echartService.getSystemFlowList(year);
-        System.out.println(systemFlowList);
         return  systemFlowList;
     }
 }

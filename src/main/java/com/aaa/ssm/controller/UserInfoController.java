@@ -39,12 +39,7 @@ public class UserInfoController {
 
     @Autowired
     private HttpSession session;
-    //private final ResourceLoader resourceLoader;
 
-    /*@Autowired
-    public UserInfoController(ResourceLoader resourceLoader) {
-        this.resourceLoader = resourceLoader;
-    }*/
     //取出配置文件中upload.path的值  赋给uploadPath类变量
     @Value(value = "${upload.path}")
     private String uploadPath;
@@ -70,24 +65,7 @@ public class UserInfoController {
         resultMap.put("total",pageInfo.getTotal());
         return resultMap;
     }
-
-    /**
-     * 显示图片
-     * @param fileName
-     * @return
-     */
-    /*@RequestMapping("show")
-    public ResponseEntity show(String fileName){
-        try {
-            // 由于是读取本机的文件，file是一定要加上的， path是在application配置文件中的路径
-            //uploadPath = D:/files/   fileName=332854a6-e3a1-4b90-973a-4fca79068017.jpg
-            return ResponseEntity.ok(resourceLoader.getResource("file:" + uploadPath + fileName));
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
-
-    }*/
-
+    
     /**
      * 个人信息认证审核
      * @return

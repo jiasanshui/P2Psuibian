@@ -32,16 +32,11 @@ public class UserShiroController {
     @Autowired
     private UserService userService;
     /**
-     * 登录逻辑处理
+     * 登录逻辑处理 (使用shiro认证操作)
      * @return
      */
     @RequestMapping("login")
     public String login(String name, String password, Model model, HttpSession session){
-        System.out.println("用户名："+name+"，密码："+password);
-
-        /**
-         * 使用shiro认证操作
-         */
         //1、获取subject
         Subject subject = SecurityUtils.getSubject();
         //2、封装用户数据
@@ -55,7 +50,6 @@ public class UserShiroController {
             session.setAttribute("admin",user);
             return "redirect:/backjump/index";
         } catch (UnknownAccountException e) {
-            //e.printStackTrace();
             //登录失败：用户名不存在
             model.addAttribute("msg","用户名不存在");
             return "forward:/backjump/backlogin";

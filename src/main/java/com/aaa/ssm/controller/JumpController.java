@@ -2,7 +2,6 @@ package com.aaa.ssm.controller;
 
 import com.aaa.ssm.entity.UserRegister;
 import com.aaa.ssm.service.*;
-import com.aaa.ssm.util.DEBXUtil;
 import com.aaa.ssm.util.PageUtil;
 import com.aaa.ssm.util.RandomUtil;
 import com.aaa.ssm.util.StringUtil;
@@ -75,7 +74,6 @@ public class JumpController {
         String userName=(String) session.getAttribute("userName");
         if(userName!=null){
             List<Map> userList = userInfoService.getUserList(userName);
-            //model.addAttribute("userList",userList);
             model.addAttribute("userstate",userList.get(0).get("STATEID"));
         }
         //显示房屋抵押招标
@@ -228,7 +226,6 @@ public class JumpController {
         }if("month".equals(map.get("rs"))){
             map.put("repayment","等额本息");
         }
-        //if (StringUtil.isEmpty(msg)){
         String pageString = new PageUtil(tPageNo, pageSize, projectService.getPageCount(map), request).getPageString();
         List<Map> houseProAll = projectService.getHouseProAll(map);
         //pageUtil分页
@@ -304,7 +301,7 @@ public class JumpController {
             model.addAttribute("recordByDeposits", depositsRecordService.geThreeTender(map));
             //资金记录
             model.addAttribute("accountflow",accountFlowService.getThreeFlow(map));
-            //回款计划  b.des,bm.tamount,bm.backtime,bm.backmoney
+            //回款计划
             model.addAttribute("backMoneyList",accountFlowService.getBackMoney(map));
             return "qiantai/personal";
         }

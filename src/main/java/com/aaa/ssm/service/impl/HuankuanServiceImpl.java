@@ -66,12 +66,10 @@ public class HuankuanServiceImpl implements HuankuanService {
 
     @Override
     public double getMoneyAll(String borrownum,String limits) {
-        System.out.println(borrownum);
         String[] limitArr = limits.split(",");
         double moneyAll = 0;
         for (String s : limitArr) {
             Integer limit = Integer.valueOf(s);
-            System.out.println("____________"+borrownum+","+limit);
             double money = huankuanDao.getMoneyAll(borrownum,limit);
             System.out.println(money);
             moneyAll += money;
